@@ -1,0 +1,24 @@
+service: tuango-tw-aws
+frameworkVersion: "2 || 3"
+
+provider:
+  name: aws
+  lambdaHashingVersion: "20201221"
+  runtime: nodejs14.x
+  memorySize: 256
+  region: ap-east-1
+
+functions:
+  api:
+    handler: handler.handler
+    events:
+      - httpApi: "*"
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-dotenv-plugin
+  - serverless-offline
+
+custom:
+  serverless-offline:
+    httpPort: 5000
