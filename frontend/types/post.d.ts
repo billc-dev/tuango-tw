@@ -3,4 +3,29 @@ export interface Post {
   postNum: number;
   title: string;
   displayName: string;
+  userId: string;
+  pictureUrl: string;
+  imageUrls: ImageUrl[];
+  body: string;
+  items: Item[];
+  createdAt: string;
+  deadline: string;
+  deliveryDate: string;
+  likeCount: number;
+  commentCount: number;
+  orderCount: number;
+  storageType: "roomTemp" | "refrigerated" | "frozen";
+  status: "open" | "closed" | "completed" | "canceled";
+}
+
+interface ImageUrl {
+  sm: string;
+  md: string;
+  lg: string;
+}
+interface Item {
+  id: string;
+  item: string;
+  price: number;
+  itemQty: number;
 }
