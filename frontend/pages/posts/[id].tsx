@@ -52,7 +52,8 @@ const ID: NextPage<Props> = ({ props }) => {
           itemProp="name"
           content={`#${post?.postNum} ${post?.title} #${post?.displayName} - 開心團購`}
         />
-        <meta itemProp="image" content={post?.imageUrls[0].md} />
+        <meta name="description" content={post?.body} />
+        <meta property="og:image" content={post?.imageUrls[0].md} />
       </Head>
       <div className="fixed top-0 z-50 h-14 w-full bg-white p-4 dark:bg-zinc-800">
         Header
@@ -60,7 +61,11 @@ const ID: NextPage<Props> = ({ props }) => {
       <div className="py-2 px-6">
         <div className="flex items-center py-4">
           <div className="h-10 w-10">
-            <LazyLoadImage className="rounded-full" src={post?.pictureUrl} />
+            <LazyLoadImage
+              alt="product"
+              className="rounded-full"
+              src={post?.pictureUrl}
+            />
           </div>
           <div className="flex flex-col pl-2">
             <div className="truncate text-sm">{post?.displayName}</div>
