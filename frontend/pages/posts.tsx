@@ -31,19 +31,17 @@ const Posts: NextPage<Props> = (props) => {
   if (isLoading) return <div>loading</div>; // loading skeleton
   return (
     <>
-      {post && (
-        <Head>
-          <title>
-            #{post?.postNum} {post?.title} #{post?.displayName} - 開心團購
-          </title>
-          <meta
-            itemProp="name"
-            content={`#${post?.postNum} ${post?.title} #${post?.displayName} - 開心團購`}
-          />
-          <meta name="description" content={post?.body} />
-          <meta property="og:image" content={post?.imageUrls[0].md} />
-        </Head>
-      )}
+      <Head>
+        <title>
+          #{post?.postNum} {post?.title} #{post?.displayName} - 開心團購
+        </title>
+        <meta
+          itemProp="name"
+          content={`#${post?.postNum} ${post?.title} #${post?.displayName} - 開心團購`}
+        />
+        <meta name="description" content={post?.body} />
+        <meta property="og:image" content={post?.imageUrls[0].md} />
+      </Head>
       <div className="flex min-h-screen justify-center">
         <div className="max-w-4xl">
           <Button onClick={() => router.push("/login")}>Login</Button>
