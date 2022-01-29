@@ -18,6 +18,16 @@ export interface Post {
   status: "open" | "closed" | "completed" | "canceled";
 }
 
+export interface PostCard {
+  _id: string;
+  postNum: number;
+  title: string;
+  displayName: string;
+  imageUrls: ImageUrl[];
+  items: Item[];
+  orderCount: number;
+}
+
 interface ImageUrl {
   sm: string;
   md: string;

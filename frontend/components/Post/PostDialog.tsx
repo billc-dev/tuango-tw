@@ -15,7 +15,8 @@ const PostDialog: FC<Props> = (props) => {
   const { id } = props;
   const [open, setOpen] = useState(false);
   const { data } = useQuery(["post", id], () => fetchPost(id as string), {
-    staleTime: 1000 * 60,
+    staleTime: 1000 * 60 * 1,
+    refetchOnWindowFocus: true,
   });
 
   const handleClose = () => {

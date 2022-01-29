@@ -1,19 +1,18 @@
-import { fetchPosts } from "api/posts";
+import { fetchPostCards, fetchPosts } from "api/posts";
 import Button from "components/Core/Button";
-import router, { useRouter } from "next/router";
+import router from "next/router";
 import React, { Fragment } from "react";
-import InfiniteScroll from "react-infinite-scroller";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { useInfiniteQuery } from "react-query";
 import PostCard from "./PostCard";
 
 const PostCards = () => {
-  // const router = useRouter()
-  const { data, isLoading, fetchNextPage } = useInfiniteQuery(
+  const { data, fetchNextPage } = useInfiniteQuery(
     "posts",
-    ({ pageParam = "initial" }) => fetchPosts(pageParam),
+    ({ pageParam = "initial" }) => fetchPostCards(pageParam),
     {
       getNextPageParam: (lastPage) => lastPage.nextId,
-      staleTime: 1000 * 60 * 5,
+      staleTime: 1000 * 60 * 1,
       refetchOnWindowFocus: true,
     }
   );
@@ -24,8 +23,13 @@ const PostCards = () => {
         <Button onClick={() => router.push("/")}>Index</Button>
         <Button onClick={fetchNextPage}>Index</Button>
         <InfiniteScroll
-          pageStart={0}
-          loadMore={() => fetchNextPage()}
+          dataLength={
+            data?.pages.reduce((sum, post) => {
+              return post.posts.length + sum;
+            }, 0) || 0
+          }
+          loader={<h4>Loading...</h4>}
+          next={fetchNextPage}
           hasMore={true}
         >
           <div className="grid grid-cols-2 gap-2 p-2 sm:grid-cols-3 md:grid-cols-4">
