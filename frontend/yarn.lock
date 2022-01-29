@@ -73,6 +73,11 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@headlessui/react@^1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@headlessui/react/-/react-1.4.3.tgz#f77c6bb5cb4a614a5d730fb880cab502d48abf37"
+  integrity sha512-n2IQkaaw0aAAlQS5MEXsM4uRK+w18CrM72EqnGRl/UBOQeQajad8oiKXR9Nk15jOzTFQjpxzrZMf1NxHidFBiw==
+
 "@heroicons/react@^1.0.5":
   version "1.0.5"
   resolved "https://registry.npmjs.org/@heroicons/react/-/react-1.0.5.tgz"
@@ -226,13 +231,6 @@
   version "15.7.4"
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.4.tgz"
   integrity sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==
-
-"@types/react-infinite-scroller@^1.2.2":
-  version "1.2.2"
-  resolved "https://registry.npmjs.org/@types/react-infinite-scroller/-/react-infinite-scroller-1.2.2.tgz"
-  integrity sha512-3Tu/wspMKAOH/YkGmTrXgfYizL9DnMb4opksrl+m5jiESxGkRN4tiKf6lr7SN0FUgoFyQyK9o+yMKn1bWMTVmA==
-  dependencies:
-    "@types/react" "*"
 
 "@types/react-lazy-load-image-component@^1.5.2":
   version "1.5.2"
@@ -1648,14 +1646,6 @@ next@12.0.8:
     "@next/swc-win32-ia32-msvc" "12.0.8"
     "@next/swc-win32-x64-msvc" "12.0.8"
 
-nextjs-progressbar@^0.0.13:
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/nextjs-progressbar/-/nextjs-progressbar-0.0.13.tgz#2bea52d7c09af5edc101e80484103fb7bee04726"
-  integrity sha512-vuE9/j1yaFyHhMVwdlPZbGbcwnvoZZMH8fXUG+HCa+w5uojRNOMO43EL+o9YZ53QwQHsjWdfUapz+J8D/u3jFw==
-  dependencies:
-    nprogress "^0.2.0"
-    prop-types "^15.7.2"
-
 node-fetch@2.6.1:
   version "2.6.1"
   resolved "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.1.tgz"
@@ -1675,11 +1665,6 @@ normalize-range@^0.1.2:
   version "0.1.2"
   resolved "https://registry.npmjs.org/normalize-range/-/normalize-range-0.1.2.tgz"
   integrity sha1-LRDAa9/TEuqXd2laTShDlFa3WUI=
-
-nprogress@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/nprogress/-/nprogress-0.2.0.tgz#cb8f34c53213d895723fcbab907e9422adbcafb1"
-  integrity sha1-y480xTIT2JVyP8urkH6UIq28r7E=
 
 object-assign@^4.1.1:
   version "4.1.1"

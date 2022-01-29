@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import React, { FC } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { Post, PostCard } from "types";
+import { PostCard } from "types";
+import "react-lazy-load-image-component/src/effects/opacity.css";
 
 interface PostCardProps {
   post: PostCard;
@@ -14,7 +15,6 @@ const PostCard: FC<PostCardProps> = ({ post, pageIndex, postIndex }) => {
 
   return (
     <div
-      key={post._id}
       className="flex max-w-[180px] flex-col overflow-hidden rounded-3xl bg-white shadow-md hover:shadow-2xl
               dark:bg-zinc-800 dark:hover:shadow-gray-900"
       onClick={() => {
@@ -26,11 +26,12 @@ const PostCard: FC<PostCardProps> = ({ post, pageIndex, postIndex }) => {
       }}
     >
       <LazyLoadImage
-        src={post.imageUrls[0].sm}
-        className="h-[180px] object-cover"
+        src={post.imageUrls && post.imageUrls[0].sm}
+        className="h-[180px] w-[180px] object-cover transition-opacity "
+        effect="opacity"
       />
+
       <div className="px-2 pt-2 pb-1">
-        <div className="truncate">{post.postNum}</div>
         <div className="truncate">{post.title}</div>
         <div className="truncate text-xs">{post.displayName}</div>
         <div className="flex justify-between pt-2">

@@ -23,7 +23,7 @@ export interface PostCard {
   postNum: number;
   title: string;
   displayName: string;
-  imageUrls: ImageUrl[];
+  imageUrls?: ImageUrl[];
   items: Item[];
   orderCount: number;
 }

@@ -1,10 +1,11 @@
-import { fetchPostCards, fetchPosts } from "api/posts";
+import { fetchPostCards } from "api/posts";
 import Button from "components/Core/Button";
 import router from "next/router";
 import React, { Fragment } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useInfiniteQuery } from "react-query";
 import PostCard from "./PostCard";
+import PostCardSkeleton from "./PostCardSkeleton";
 
 const PostCards = () => {
   const { data, fetchNextPage } = useInfiniteQuery(
@@ -17,18 +18,22 @@ const PostCards = () => {
     }
   );
   return (
-    <div className="flex min-h-screen justify-center">
+    <div className="flex min-h-screen w-full justify-center">
       <div className="max-w-4xl">
         <Button onClick={() => router.push("/login")}>Login</Button>
         <Button onClick={() => router.push("/")}>Index</Button>
         <Button onClick={fetchNextPage}>Index</Button>
         <InfiniteScroll
           dataLength={
-            data?.pages.reduce((sum, post) => {
-              return post.posts.length + sum;
-            }, 0) || 0
+            data?.pages.reduce((sum, post) => post.posts.length + sum, 0) || 0
           }
-          loader={<h4>Loading...</h4>}
+          loader={
+            <div className="grid grid-cols-2 gap-2 px-2 py-0 sm:grid-cols-3 md:grid-cols-4">
+              {[...Array(4)].map((_, i) => (
+                <PostCardSkeleton key={i} />
+              ))}
+            </div>
+          }
           next={fetchNextPage}
           hasMore={true}
         >
