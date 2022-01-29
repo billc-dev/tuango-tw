@@ -25,7 +25,6 @@ const Posts: NextPage<Props> = (props) => {
       <Head>
         {post ? (
           <>
-            {" "}
             <title>
               #{post?.postNum} {post?.title} #{post?.displayName} - 開心團購
             </title>
@@ -39,6 +38,10 @@ const Posts: NextPage<Props> = (props) => {
         ) : (
           <>
             <title>開心團購</title>
+            <meta
+              name="description"
+              content="開心鮮拼鮮難瘦團，就是買買買，不買難受，買了難瘦，歡迎加入買買買。"
+            />
           </>
         )}
       </Head>
