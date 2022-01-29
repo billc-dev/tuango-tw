@@ -7,9 +7,6 @@ const Home: NextPage = () => {
   const router = useRouter();
   return (
     <div>
-      <Head>
-        <title>開心團購</title>
-      </Head>
       <Button onClick={() => router.push("/posts")}>Posts</Button>
       {/* <Link href="/posts">posts</Link> */}
       <br />

@@ -3,6 +3,7 @@ import BottomNavbar from "components/Navigation/BottomNavbar";
 import TopNavbar from "components/Navigation/TopNavbar";
 import { ThemeProvider } from "next-themes";
 import type { AppProps } from "next/app";
+import Head from "next/head";
 import { useState } from "react";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
@@ -23,6 +24,13 @@ export function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
         <ThemeProvider attribute="class">
+          <Head>
+            <title>開心團購</title>
+            <meta
+              name="description"
+              content="開心鮮拼鮮難瘦團，就是買買買，不買難受，買了難瘦，歡迎加入買買買。"
+            />
+          </Head>
           <TopNavbar />
           <Component {...pageProps} />
           <BottomNavbar />
