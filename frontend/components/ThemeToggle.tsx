@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Button from "./Button";
+import Button from "./Core/Button";
 import { useTheme } from "next-themes";
 
 const ThemeToggle = () => {

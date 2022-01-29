@@ -1,9 +1,8 @@
 import axios from "axios";
-import BottomNavbar from "components/BottomNavbar";
-import ThemeToggle from "components/ThemeToggle";
+import BottomNavbar from "components/Navigation/BottomNavbar";
+import TopNavbar from "components/Navigation/TopNavbar";
 import { ThemeProvider } from "next-themes";
 import type { AppProps } from "next/app";
-// import NextNprogress from "nextjs-progressbar";
 import { useState } from "react";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
@@ -24,14 +23,8 @@ export function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
         <ThemeProvider attribute="class">
-          {/* <NextNprogress color="#22c55e" /> */}
-          <div className="sticky top-0 flex h-14 items-center bg-white p-3 shadow-md dark:bg-zinc-800">
-            top navbar
-            <ThemeToggle />
-          </div>
-          <div className="transition-shadow">
-            <Component {...pageProps} />
-          </div>
+          <TopNavbar />
+          <Component {...pageProps} />
           <BottomNavbar />
         </ThemeProvider>
       </Hydrate>
