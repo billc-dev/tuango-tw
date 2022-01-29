@@ -23,15 +23,24 @@ const Posts: NextPage<Props> = (props) => {
   return (
     <>
       <Head>
-        <title>
-          #{post?.postNum} {post?.title} #{post?.displayName} - 開心團購
-        </title>
-        <meta
-          itemProp="name"
-          content={`#${post?.postNum} ${post?.title} #${post?.displayName} - 開心團購`}
-        />
-        <meta name="description" content={post?.body} />
-        <meta property="og:image" content={post?.imageUrls[0].md} />
+        {post ? (
+          <>
+            {" "}
+            <title>
+              #{post?.postNum} {post?.title} #{post?.displayName} - 開心團購
+            </title>
+            <meta
+              itemProp="name"
+              content={`#${post?.postNum} ${post?.title} #${post?.displayName} - 開心團購`}
+            />
+            <meta name="description" content={post?.body} />
+            <meta property="og:image" content={post?.imageUrls[0].md} />
+          </>
+        ) : (
+          <>
+            <title>開心團購</title>
+          </>
+        )}
       </Head>
       <PostCards />
       {typeof id === "string" && <PostDialog id={id} />}
