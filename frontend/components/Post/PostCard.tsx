@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React, { FC } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { PostCard } from "types";
-import "react-lazy-load-image-component/src/effects/opacity.css";
+// import "react-lazy-load-image-component/src/effects/opacity.css";
 
 interface PostCardProps {
   post: PostCard;
@@ -27,8 +27,8 @@ const PostCard: FC<PostCardProps> = ({ post, pageIndex, postIndex }) => {
     >
       <LazyLoadImage
         src={post.imageUrls && post.imageUrls[0].sm}
-        className="h-[180px] w-[180px] object-cover transition-opacity "
-        effect="opacity"
+        className="h-[180px] w-[180px] object-cover"
+        // effect="opacity"
       />
 
       <div className="px-2 pt-2 pb-1">
