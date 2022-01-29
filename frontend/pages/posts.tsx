@@ -1,6 +1,7 @@
 import { fetchPost, fetchPosts } from "api/posts";
 import Button from "components/Core/Button";
 import PostCard from "components/Post/PostCard";
+import PostCards from "components/Post/PostCards";
 import PostDialog from "components/Post/PostDialog";
 import type { NextPage, NextPageContext } from "next";
 import Head from "next/head";
@@ -18,17 +19,7 @@ const Posts: NextPage<Props> = (props) => {
   const { post } = props;
   const router = useRouter();
   const { id } = router.query;
-  const { data, isLoading, fetchNextPage } = useInfiniteQuery(
-    "posts",
-    ({ pageParam = "initial" }) => fetchPosts(pageParam),
-    {
-      getNextPageParam: (lastPage) => lastPage.nextId,
-      staleTime: 1000 * 60 * 5,
-      refetchOnWindowFocus: true,
-    }
-  );
 
-  if (isLoading) return <div>loading</div>; // loading skeleton
   return (
     <>
       <Head>
@@ -42,33 +33,7 @@ const Posts: NextPage<Props> = (props) => {
         <meta name="description" content={post?.body} />
         <meta property="og:image" content={post?.imageUrls[0].md} />
       </Head>
-      <div className="flex min-h-screen justify-center">
-        <div className="max-w-4xl">
-          <Button onClick={() => router.push("/login")}>Login</Button>
-          <Button onClick={() => router.push("/")}>Index</Button>
-          <Button onClick={fetchNextPage}>Index</Button>
-          <InfiniteScroll
-            pageStart={0}
-            loadMore={() => fetchNextPage()}
-            hasMore={true}
-          >
-            <div className="grid grid-cols-2 gap-2 p-2 sm:grid-cols-3 md:grid-cols-4">
-              {data?.pages.map((page, pageIndex) => (
-                <Fragment key={page.nextId}>
-                  {page.posts.map((post, postIndex) => (
-                    <PostCard
-                      key={post._id}
-                      post={post}
-                      pageIndex={pageIndex}
-                      postIndex={postIndex}
-                    />
-                  ))}
-                </Fragment>
-              ))}
-            </div>
-          </InfiniteScroll>
-        </div>
-      </div>
+      <PostCards />
       {typeof id === "string" && <PostDialog id={id} />}
     </>
   );
