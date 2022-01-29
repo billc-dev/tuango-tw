@@ -1,6 +1,3 @@
-import IconButton from "components/Core/IconButton";
-import Head from "next/head";
-import { useRouter } from "next/router";
 import React, { FC } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { date } from "services/date";
@@ -12,7 +9,6 @@ interface Props {
 
 const PostContent: FC<Props> = (props) => {
   const { post } = props;
-  const router = useRouter();
   return (
     <>
       {/* <Head>

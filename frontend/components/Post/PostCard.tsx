@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import React, { FC } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { Post } from "types";
+import { Post, PostCard } from "types";
 
 interface PostCardProps {
-  post: Post;
+  post: PostCard;
   pageIndex: number;
   postIndex: number;
 }
