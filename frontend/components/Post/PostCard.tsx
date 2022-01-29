@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Post } from "types";
 
@@ -15,21 +15,19 @@ const PostCard: FC<PostCardProps> = ({ post, pageIndex, postIndex }) => {
   return (
     <div
       key={post._id}
-      className="flex flex-col overflow-hidden rounded-3xl bg-white shadow-md hover:shadow-2xl dark:bg-zinc-800
-              dark:hover:shadow-gray-900"
+      className="flex max-w-[180px] flex-col overflow-hidden rounded-3xl bg-white shadow-md hover:shadow-2xl
+              dark:bg-zinc-800 dark:hover:shadow-gray-900"
       onClick={() => {
         router.push(
-          { pathname: `/posts/${post._id}`, query: { pageIndex, postIndex } },
+          { query: { pageIndex, postIndex, id: post._id } },
           undefined,
-          {
-            shallow: true,
-          }
+          { shallow: true }
         );
       }}
     >
       <LazyLoadImage
         src={post.imageUrls[0].sm}
-        className="h-2/3 max-h-48 object-cover"
+        className="h-[180px] object-cover"
       />
       <div className="px-2 pt-2 pb-1">
         <div className="truncate">{post.postNum}</div>

@@ -1,4 +1,4 @@
-import Button from "components/Button";
+import Button from "components/Core/Button";
 import type { NextPage } from "next";
 import { LINE_LOGIN_URL } from "utils/urls";
 

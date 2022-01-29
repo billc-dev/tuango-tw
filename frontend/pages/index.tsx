@@ -1,6 +1,5 @@
-import Button from "components/Button";
+import Button from "components/Core/Button";
 import type { NextPage } from "next";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
