@@ -1,4 +1,4 @@
-export interface Post {
+export interface IPost {
   _id: string;
   postNum: number;
   title: string;
@@ -18,22 +18,23 @@ export interface Post {
   status: "open" | "closed" | "completed" | "canceled";
 }
 
-export interface PostCard {
+export interface IPostCard {
   _id: string;
   postNum: number;
   title: string;
   displayName: string;
   imageUrls?: ImageUrl[];
   items: Item[];
-  orderCount: number;
+  orderCount?: number;
 }
 
-interface ImageUrl {
+export interface ImageUrl {
   sm: string;
   md: string;
   lg: string;
 }
-interface Item {
+export interface Item {
+  _id: string;
   id: string;
   item: string;
   price: number;
