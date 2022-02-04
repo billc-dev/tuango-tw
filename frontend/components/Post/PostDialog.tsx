@@ -1,10 +1,9 @@
 import { fetchPost } from "api/posts";
 import Dialog from "components/Core/Dialog";
-import { route } from "next/dist/server/router";
 import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import PostContent from "./PostContent";
+import PostContent from "./components/PostContent";
 
 interface Props {
   id: string;

@@ -1,11 +1,11 @@
 import axios from "axios";
-import { Post, PostCard } from "types";
+import { IPost, IPostCard } from "types";
 
 export const fetchPosts = async (
   pageParam: string,
   option?: { cookie: any }
 ): Promise<{
-  posts: Post[];
+  posts: IPost[];
   nextId: number;
 }> => {
   const options = option?.cookie ? { headers: { Cookie: option.cookie } } : {};
@@ -22,7 +22,7 @@ export const fetchPostCards = async (
   pageParam: string,
   option?: { cookie: any }
 ): Promise<{
-  posts: PostCard[];
+  posts: IPostCard[];
   nextId: number;
 }> => {
   const options = option?.cookie ? { headers: { Cookie: option.cookie } } : {};
@@ -38,7 +38,7 @@ export const fetchPostCards = async (
   };
 };
 
-export const fetchPost = async (id: string): Promise<{ post: Post }> => {
+export const fetchPost = async (id: string): Promise<{ post: IPost }> => {
   const res = await axios.get(`/posts/post/${id}`);
   return { post: res.data.post };
 };

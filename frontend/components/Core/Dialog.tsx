@@ -16,8 +16,8 @@ const Dialog: FC<DialogProps> = (props) => {
   }, [open]);
 
   return open ? (
-    <div className="fixed inset-0 z-50 h-screen overflow-x-hidden overscroll-y-auto bg-zinc-600">
-      <div className="fixed flex w-full items-center p-3 dark:bg-zinc-700">
+    <div className="fixed inset-0 h-screen overflow-x-hidden overscroll-y-auto bg-white dark:bg-zinc-700">
+      <div className="fixed z-10 flex w-full items-center p-3 shadow dark:bg-zinc-800">
         <IconButton
           onClick={() => {
             document.body.style.overflow = "initial";

@@ -1,7 +1,8 @@
 import React, { FC } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { date } from "services/date";
+import { date, fullDateFromNow } from "services/date";
 import { Post } from "types";
+import PostImageCarousel from "./PostImageCarousel";
 
 interface Props {
   post: Post;
@@ -43,12 +44,12 @@ const PostContent: FC<Props> = (props) => {
           </div>
           <div className="flex w-4/5 flex-col pl-2">
             <div className="truncate text-sm">{post?.displayName}</div>
-            <div className="text-sm">{post?.createdAt}</div>
+            <div className="text-xs text-zinc-400">
+              {fullDateFromNow(post?.createdAt)}
+            </div>
           </div>
         </div>
-        <div className="flex items-center justify-center">
-          <LazyLoadImage className="max-h-72" src={post?.imageUrls[0].md} />
-        </div>
+        <PostImageCarousel imageUrls={post.imageUrls} />
         <div className="py-4">
           <p className="font-bold">
             #{post?.postNum} {post?.title} #{post?.displayName}
