@@ -1,5 +1,5 @@
 import { XIcon } from "@heroicons/react/outline";
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import IconButton from "./IconButton";
 
 interface DialogProps {
@@ -10,14 +10,22 @@ interface DialogProps {
 
 const Dialog: FC<DialogProps> = (props) => {
   const { children, open, handleClose, title } = props;
-
+  const [animate, setAnimate] = useState(false);
   useEffect(() => {
-    if (open) document.body.style.overflow = "hidden";
+    if (open) {
+      document.body.style.overflow = "hidden";
+      setAnimate(true);
+    }
   }, [open]);
 
-  return open ? (
-    <div className="fixed inset-0 h-screen overflow-x-hidden overscroll-y-auto bg-white dark:bg-zinc-700">
-      <div className="fixed z-10 flex w-full items-center p-3 shadow dark:bg-zinc-800">
+  return (
+    <dialog
+      open={open}
+      className={`fixed top-0 z-10 h-full w-full overflow-x-hidden overscroll-y-auto p-0 transition-all duration-300 dark:bg-zinc-900 ${
+        animate ? "opacity-100" : "opacity-0"
+      }`}
+    >
+      <div className="sticky top-0 z-10 flex w-full items-center bg-white p-3 shadow dark:bg-zinc-800">
         <IconButton
           onClick={() => {
             document.body.style.overflow = "initial";
@@ -28,9 +36,9 @@ const Dialog: FC<DialogProps> = (props) => {
         </IconButton>
         <h1 className="truncate text-xl">{title}</h1>
       </div>
-      <div className="mt-10">{children}</div>
-    </div>
-  ) : null;
+      <div className="mx-auto max-w-lg px-6 pb-4">{children}</div>
+    </dialog>
+  );
 };
 
 export default Dialog;

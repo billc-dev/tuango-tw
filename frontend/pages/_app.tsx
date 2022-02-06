@@ -19,7 +19,12 @@ axios.defaults.baseURL = IS_DEV
 axios.defaults.withCredentials = true;
 
 export function App({ Component, pageProps }: AppProps) {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: { queries: { staleTime: 1000 * 60 * 5 } },
+      })
+  );
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
