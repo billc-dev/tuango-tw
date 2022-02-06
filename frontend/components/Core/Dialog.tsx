@@ -21,7 +21,7 @@ const Dialog: FC<DialogProps> = (props) => {
   return (
     <dialog
       open={open}
-      className={`fixed top-0 z-10 h-full w-full overflow-x-hidden overscroll-y-auto p-0 transition-all duration-300 dark:bg-zinc-900 ${
+      className={`fixed top-0 z-10 h-full w-full overflow-x-hidden overscroll-y-auto bg-white p-0 transition-all duration-300 dark:bg-zinc-900 ${
         animate ? "opacity-100" : "opacity-0"
       }`}
     >
