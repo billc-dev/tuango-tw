@@ -4,10 +4,10 @@ import PostDialog from "components/Post/PostDialog";
 import type { NextPage, NextPageContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { Post } from "types";
+import { IPost } from "types";
 
 interface Props {
-  post: Post | undefined;
+  post: IPost | undefined;
 }
 
 const Posts: NextPage<Props> = (props) => {

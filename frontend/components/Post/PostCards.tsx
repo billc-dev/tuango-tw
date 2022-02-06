@@ -5,45 +5,38 @@ import React, { Fragment } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useInfiniteQuery } from "react-query";
 import PostCard from "./components/PostCard";
+import PostCardGrid from "./components/PostCardGrid";
 import PostCardSkeleton from "./components/PostCardSkeleton";
+import PostCardSkeletons from "./components/PostCardSkeletons";
 
 const PostCards = () => {
-  const { data, fetchNextPage } = useInfiniteQuery(
+  const { data, fetchNextPage, isFetching, isLoading } = useInfiniteQuery(
     "posts",
     ({ pageParam = "initial" }) => fetchPostCards(pageParam),
-    {
-      getNextPageParam: (lastPage) => lastPage.nextId,
-      staleTime: 1000 * 60 * 1,
-      refetchOnWindowFocus: true,
-    }
+    { getNextPageParam: (lastPage) => lastPage.nextId }
   );
   // return <div className="p-4">{JSON.stringify(data?.pages, null, 2)}</div>;
   return (
-    <div className="flex min-h-screen w-full justify-center">
-      <div className="max-w-4xl">
+    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-zinc-200 dark:bg-zinc-900">
+      <div>
         <Button onClick={() => router.push("/login")}>Login</Button>
         <Button onClick={() => router.push("/")}>Index</Button>
-        <InfiniteScroll
-          dataLength={
-            data?.pages.reduce((sum, post) => post.posts.length + sum, 0) || 0
-          }
-          loader={
-            <div
-              className="grid grid-cols-2 gap-2 px-2 py-0 sm:grid-cols-3 md:grid-cols-4"
-              data-testid="post-card-skeletons"
-            >
-              {[...Array(4)].map((_, i) => (
-                <PostCardSkeleton key={i} />
-              ))}
-            </div>
-          }
-          next={() => fetchNextPage}
-          hasMore={true} // add to api => read last page
-        >
-          <div
-            className="grid grid-cols-2 gap-2 p-2 sm:grid-cols-3 md:grid-cols-4"
-            data-testid="post-cards"
-          >
+      </div>
+      <InfiniteScroll
+        className="p-2"
+        loader={
+          <div data-testid="post-card-skeletons">
+            <PostCardSkeletons />
+          </div>
+        }
+        next={fetchNextPage}
+        hasMore={true} // add to api => read last page
+        dataLength={
+          data?.pages.reduce((sum, post) => post.posts.length + sum, 0) || 0
+        }
+      >
+        <div data-testid="post-cards">
+          <PostCardGrid>
             {data?.pages.map((page) => (
               <Fragment key={page.nextId}>
                 {page.posts.map((post) => (
@@ -51,9 +44,9 @@ const PostCards = () => {
                 ))}
               </Fragment>
             ))}
-          </div>
-        </InfiniteScroll>
-      </div>
+          </PostCardGrid>
+        </div>
+      </InfiniteScroll>
     </div>
   );
 };

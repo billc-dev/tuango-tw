@@ -1,68 +1,35 @@
+import Header from "components/Core/Header";
+import ProfileImage from "components/Core/ProfileImage";
 import React, { FC } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import { date, fullDateFromNow } from "services/date";
-import { Post } from "types";
+import { IPost } from "types";
 import PostImageCarousel from "./PostImageCarousel";
 
 interface Props {
-  post: Post;
+  post: IPost;
 }
 
 const PostContent: FC<Props> = (props) => {
   const { post } = props;
   return (
     <>
-      {/* <Head>
-        <title>
-          #{post?.postNum} {post?.title} #{post?.displayName} - 開心團購
-        </title>
-        <meta
-          itemProp="name"
-          content={`#${post?.postNum} ${post?.title} #${post?.displayName} - 開心團購`}
-        />
-        <meta name="description" content={post?.body} />
-        <meta property="og:image" content={post?.imageUrls[0].md} />
-      </Head> */}
-      {/* <div className="fixed top-0 z-50 h-14 w-full truncate bg-white p-4 dark:bg-zinc-800">
-        <IconButton
-          onClick={() => {
-            // isSSR ? router.push("/posts") : router.back();
-          }}
-        >
-          <XIcon />
-        </IconButton>
-        <title>{post?.title}</title>
-      </div> */}
-      <div className="py-2 px-6">
-        <div className="flex items-center py-4">
-          <div className="h-10 w-10">
-            <LazyLoadImage
-              alt="product"
-              className="rounded-full"
-              src={post?.pictureUrl}
-            />
-          </div>
-          <div className="flex w-4/5 flex-col pl-2">
-            <div className="truncate text-sm">{post?.displayName}</div>
-            <div className="text-xs text-zinc-400">
-              {fullDateFromNow(post?.createdAt)}
-            </div>
-          </div>
-        </div>
-        <PostImageCarousel imageUrls={post.imageUrls} />
-        <div className="py-4">
-          <p className="font-bold">
-            #{post?.postNum} {post?.title} #{post?.displayName}
-          </p>
-          <p className="pt-4">
-            ❤️ #結單日: {post?.deadline ? date(post?.deadline) : "成團通知"}
-          </p>
-          <p>
-            💚 #到貨日:{" "}
-            {post?.deliveryDate ? date(post?.deliveryDate) : "貨到通知"}
-          </p>
-          <p className="whitespace-pre-line pt-4">{post?.body}</p>
-        </div>
+      <Header
+        img={post.pictureUrl}
+        title={post.displayName}
+        subtitle={fullDateFromNow(post.createdAt)}
+      />
+      <PostImageCarousel imageUrls={post.imageUrls} />
+      <div className="py-4">
+        <p className="font-bold">
+          #{post.postNum} {post.title} #{post.displayName}
+        </p>
+        <p className="pt-4">
+          ❤️ #結單日: {post.deadline ? date(post.deadline) : "成團通知"}
+        </p>
+        <p>
+          💚 #到貨日: {post.deliveryDate ? date(post.deliveryDate) : "貨到通知"}
+        </p>
+        <p className="whitespace-pre-line pt-4">{post.body}</p>
       </div>
     </>
   );

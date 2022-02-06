@@ -3,6 +3,7 @@ import Dialog from "components/Core/Dialog";
 import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import PostActions from "./components/PostActions";
 import PostContent from "./components/PostContent";
 
 interface Props {
@@ -34,6 +35,7 @@ const PostDialog: FC<Props> = (props) => {
       title={data.post.title}
     >
       <PostContent post={data.post} />
+      <PostActions post={data.post} />
     </Dialog>
   ) : null;
 };
