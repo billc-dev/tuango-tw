@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import { ImageUrl } from "types";
@@ -10,6 +10,7 @@ interface Props {
 }
 
 const PostImageCarousel: FC<Props> = ({ imageUrls }) => {
+  const [loaded, setLoaded] = useState(false);
   return (
     // <Swiper
     //   pagination
@@ -32,9 +33,9 @@ const PostImageCarousel: FC<Props> = ({ imageUrls }) => {
       {imageUrls.map((image, index) => {
         if (image.md)
           return (
-            <div className="outline-none">
+            <div key={index} className="outline-none">
               <LazyLoadImage
-                key={index}
+                placeholder={<div className="h-72 w-full bg-zinc-500" />}
                 className="mx-auto max-h-72"
                 src={image.md}
               />
