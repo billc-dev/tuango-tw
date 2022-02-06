@@ -22,11 +22,11 @@ const Orders: FC<Props> = ({ postId, items }) => {
             >
               {`${item.id}.${item.item} $${item.price}`}
               <div className="flex items-center justify-center">
-                <button className="rounded-full p-3 hover:bg-zinc-300">
+                <button className="rounded-full p-3 active:bg-zinc-400 md:hover:bg-zinc-300">
                   <MinusIcon className="h-6 w-6" />
                 </button>
                 <div className="px-2">{0}</div>
-                <button className="rounded-full p-3 hover:bg-zinc-300">
+                <button className="rounded-full p-3 active:bg-zinc-400 md:hover:bg-zinc-300">
                   <PlusIcon className="h-6 w-6" />
                 </button>
               </div>
