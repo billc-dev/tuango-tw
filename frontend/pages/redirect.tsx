@@ -1,27 +1,28 @@
+import Button from "components/Core/Button";
 import { useGetCode } from "hooks/login";
+import { useMutateLogin } from "hooks/mutation/useMutateLogin";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-// import { useLoginMutation } from "redux/user";
+import { WINDOW_URL } from "utils/urls";
 
 const Redirect: NextPage = () => {
   const code = useGetCode();
   const router = useRouter();
-  // const [login, res] = useLoginMutation();
+  const login = useMutateLogin();
 
-  // useEffect(() => {
-  //   const asyncLogin = async () => {
-  //     if (code && typeof window !== "undefined") {
-  //       const url = window.location.protocol + "//" + window.location.host;
-  //       await login({ code, url });
-  //       console.log(res.data);
-  //       if (res.data?.username) router.push("/");
-  //     }
-  //   };
-  //   asyncLogin();
-  // }, [code]);
+  useEffect(() => {
+    if (typeof window !== "undefined" && code) {
+      login.mutate({ code, url: WINDOW_URL });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [code]);
 
-  return <div></div>;
+  return (
+    <div>
+      <Button onClick={() => router.push("/login")}>Login</Button>
+    </div>
+  );
 };
 
 export default Redirect;
