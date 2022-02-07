@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import { Item } from "types";
 import { PlusIcon, MinusIcon } from "@heroicons/react/outline";
 import OrderList from "./OrderList";
+import OrderForm from "./OrderForm";
 
 interface Props {
   postId: string;
@@ -13,27 +14,7 @@ const Orders: FC<Props> = ({ postId, items }) => {
   return (
     <>
       <OrderList postId={postId} />
-      <Card>
-        <div className="flex flex-col items-center justify-center p-3">
-          {items.map((item) => (
-            <div
-              key={item._id}
-              className="flex flex-col items-center justify-center"
-            >
-              {`${item.id}.${item.item} $${item.price}`}
-              <div className="flex items-center justify-center">
-                <button className="rounded-full p-3 active:bg-zinc-400 md:hover:bg-zinc-300">
-                  <MinusIcon className="h-6 w-6" />
-                </button>
-                <div className="px-2">{0}</div>
-                <button className="rounded-full p-3 active:bg-zinc-400 md:hover:bg-zinc-300">
-                  <PlusIcon className="h-6 w-6" />
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </Card>
+      <OrderForm postId={postId} items={items} />
     </>
   );
 };

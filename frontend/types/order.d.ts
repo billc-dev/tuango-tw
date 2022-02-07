@@ -17,10 +17,14 @@ export interface IOrder {
   createdAt: string;
   deliveredAt: string;
   canceledAt: string;
-  //   orderHistory: { type: Array; required: true };
+  orderHistory: OrderHistory[];
   status: "ordered" | "delivered" | "completed" | "missing" | "canceled";
 }
 
+interface OrderHistory {
+  status: "ordered" | "delivered" | "completed" | "missing" | "canceled";
+  createdAt: string;
+}
 interface SingleOrder {
   id: string;
   item: string;
