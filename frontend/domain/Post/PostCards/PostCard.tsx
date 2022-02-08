@@ -25,7 +25,6 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
         className="h-[180px] w-[180px] object-cover"
         onClick={openDialog}
       />
-
       <div className="px-2 pt-2 pb-1">
         <div onClick={openDialog}>
           <div className="truncate">{post.title}</div>
