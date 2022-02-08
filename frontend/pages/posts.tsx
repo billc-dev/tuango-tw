@@ -1,5 +1,5 @@
-import Post from "domain/Post";
 import { fetchPost } from "domain/Post/api/post";
+import PostCards from "domain/Post/PostCards";
 import PostDialog from "domain/Post/PostDialog";
 import type { NextPage, NextPageContext } from "next";
 import Head from "next/head";
@@ -40,7 +40,7 @@ const Posts: NextPage<Props> = (props) => {
           </>
         )}
       </Head>
-      <Post />
+      <PostCards />
       {typeof id === "string" && <PostDialog id={id} />}
     </>
   );
