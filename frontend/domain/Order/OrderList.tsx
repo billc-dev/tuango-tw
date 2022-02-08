@@ -1,17 +1,21 @@
-import { fetchOrders } from "api/orders";
-import Header from "components/Core/Header";
+import { fetchOrders } from "domain/Order/api/order";
+import Header from "components/Card/CardHeader";
 import React, { FC, Fragment, useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
 import { ChevronDownIcon } from "@heroicons/react/outline";
-import Card from "components/Core/Card";
+import Card from "components/Card";
 
 interface Props {
   postId: string;
 }
 const Order: FC<Props> = ({ postId }) => {
-  const { data, isLoading } = useQuery(postId, () => fetchOrders(postId), {
-    refetchOnMount: "always",
-  });
+  const { data, isLoading } = useQuery(
+    ["order", postId],
+    () => fetchOrders(postId),
+    {
+      refetchOnMount: "always",
+    }
+  );
   const [scrolled, setScrolled] = useState(true);
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);

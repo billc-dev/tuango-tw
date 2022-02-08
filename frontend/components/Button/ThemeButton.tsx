@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Button from "./Core/Button";
+import Button from ".";
 import { useTheme } from "next-themes";
 
-const ThemeToggle = () => {
+const ThemeButton = () => {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
   useEffect(() => setMounted(true), []);
@@ -14,4 +14,4 @@ const ThemeToggle = () => {
   );
 };
 
-export default ThemeToggle;
+export default ThemeButton;

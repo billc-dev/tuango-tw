@@ -1,10 +1,9 @@
-import Button from "components/Core/Button";
-import { useGetCode } from "hooks/login";
-import { useMutateLogin } from "hooks/mutation/useMutateLogin";
+import Button from "components/Button";
+import { useGetCode, useMutateLogin } from "domain/Login/hooks";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { WINDOW_URL } from "utils/urls";
+import { WINDOW_URL } from "utils/constants";
 
 const Redirect: NextPage = () => {
   const code = useGetCode();

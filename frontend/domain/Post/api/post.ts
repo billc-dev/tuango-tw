@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IPost, IPostCard } from "types";
+import { IPost, IPostCard } from "../post";
 
 export const fetchPosts = async (
   pageParam: string,

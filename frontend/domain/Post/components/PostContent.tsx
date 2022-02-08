@@ -1,8 +1,7 @@
-import Header from "components/Core/Header";
-import ProfileImage from "components/Core/ProfileImage";
+import Header from "components/Card/CardHeader";
 import React, { FC } from "react";
 import { date, fullDateFromNow } from "services/date";
-import { IPost } from "types";
+import { IPost } from "../post";
 import PostImageCarousel from "./PostImageCarousel";
 
 interface Props {

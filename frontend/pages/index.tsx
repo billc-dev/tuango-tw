@@ -1,4 +1,4 @@
-import Button from "components/Core/Button";
+import Button from "components/Button";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 

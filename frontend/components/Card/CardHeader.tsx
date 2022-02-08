@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import ProfileImage from "./ProfileImage";
+import CardAvatar from "./CardAvatar";
 
 interface Props {
   img: string;
@@ -7,11 +7,11 @@ interface Props {
   subtitle?: string;
 }
 
-const Header: FC<Props> = (props) => {
+const CardHeader: FC<Props> = (props) => {
   const { img, title, subtitle } = props;
   return (
     <div className="flex items-center py-4">
-      <ProfileImage img={img} alt={title} />
+      <CardAvatar img={img} alt={title} />
       <div className="flex w-4/5 flex-col pl-2">
         <div className="truncate text-sm">{title}</div>
         <div className="text-xs text-zinc-400">{subtitle}</div>
@@ -20,4 +20,4 @@ const Header: FC<Props> = (props) => {
   );
 };
 
-export default Header;
+export default CardHeader;
