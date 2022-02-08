@@ -1,13 +1,12 @@
-import { fetchPostCards } from "api/posts";
-import Button from "components/Core/Button";
+import { fetchPostCards } from "domain/Post/api/post";
+import Button from "components/Button";
 import router from "next/router";
 import React, { Fragment } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useInfiniteQuery } from "react-query";
-import PostCard from "./components/PostCard";
-import PostCardGrid from "./components/PostCardGrid";
-import PostCardSkeleton from "./components/PostCardSkeleton";
-import PostCardSkeletons from "./components/PostCardSkeletons";
+import PostCard from "./PostCard";
+import PostCardGrid from "./PostCardGrid";
+import PostCardSkeletons from "./PostCardSkeletons";
 
 const PostCards = () => {
   const { data, fetchNextPage, isFetching, isLoading } = useInfiniteQuery(

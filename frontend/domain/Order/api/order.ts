@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IOrder } from "types/order";
+import { IOrder } from "../order";
 
 export const fetchOrders = async (
   postId: string

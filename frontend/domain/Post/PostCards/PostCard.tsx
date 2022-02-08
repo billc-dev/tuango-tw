@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import React, { FC } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { IPostCard } from "types";
-import { HeartIcon } from "@heroicons/react/outline";
+import { IPostCard } from "../post";
+// import { HeartIcon } from "@heroicons/react/outline";
 
 interface PostCardProps {
   post: IPostCard;

@@ -1,11 +1,12 @@
 import { MinusIcon, PlusIcon } from "@heroicons/react/outline";
-import Card from "components/Core/Card";
+import axios from "axios";
+import Card from "components/Card";
+import produce from "immer";
 import React, { FC } from "react";
-import { Item } from "types";
+import { useQueryClient } from "react-query";
+import { Item } from "../Post/post";
 import { useImmer } from "use-immer";
 import * as yup from "yup";
-import produce from "immer";
-import axios from "axios";
 
 const orderFormSchema = yup.object({
   items: yup
@@ -41,6 +42,8 @@ const OrderForm: FC<Props> = ({ items, postId }) => {
     })),
   });
 
+  const queryClient = useQueryClient();
+
   const validate = async () => {
     const cleanedOrderForm = produce(orderForm, (draft) => {
       if (!draft.items) return;
@@ -48,11 +51,10 @@ const OrderForm: FC<Props> = ({ items, postId }) => {
         if (item.qty <= 0) draft.items?.splice(index, 1);
       });
     });
-    console.log(cleanedOrderForm);
 
     try {
       const validated = await orderFormSchema.validate(cleanedOrderForm, {
-        abortEarly: false,
+        abortEarly: true,
       });
       return validated;
     } catch (error) {
@@ -73,9 +75,13 @@ const OrderForm: FC<Props> = ({ items, postId }) => {
   const handleSubmit = async () => {
     const order = await validate();
     if (order) {
-      axios.put("/orders/order", { orderForm: order, postId });
+      await axios.put("/orders/order", { orderForm: order, postId });
+      queryClient.invalidateQueries(["order", postId]);
+      queryClient.invalidateQueries(["post", postId]);
     }
   };
+
+  // useEffect(() => {} ,[post]);
 
   return (
     <Card>

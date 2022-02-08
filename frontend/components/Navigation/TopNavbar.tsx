@@ -1,11 +1,11 @@
-import ThemeToggle from "components/ThemeToggle";
+import ThemeButton from "components/Button/ThemeButton";
 import React from "react";
 
 const TopNavbar = () => {
   return (
     <div className="sticky top-0 z-10 flex h-14 items-center bg-white p-3 shadow-md dark:bg-zinc-800">
       top navbar
-      <ThemeToggle />
+      <ThemeButton />
     </div>
   );
 };

@@ -1,6 +1,6 @@
-import Button from "components/Core/Button";
+import Button from "components/Button";
+import { LINE_LOGIN_URL } from "domain/Login/urls";
 import type { NextPage } from "next";
-import { LINE_LOGIN_URL } from "utils/urls";
 
 const Login: NextPage = () => {
   return (

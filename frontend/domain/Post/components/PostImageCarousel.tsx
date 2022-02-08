@@ -1,10 +1,10 @@
 import React, { FC, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-
-import { ImageUrl } from "types";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import { ImageUrl } from "../post";
+
 interface Props {
   imageUrls: ImageUrl[];
 }

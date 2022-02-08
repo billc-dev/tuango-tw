@@ -1,4 +1,4 @@
-import { login } from "api/login";
+import { login } from "domain/Login/api/login";
 import { AxiosError, AxiosResponse } from "axios";
 import { useRouter } from "next/router";
 import { useMutation, useQueryClient } from "react-query";

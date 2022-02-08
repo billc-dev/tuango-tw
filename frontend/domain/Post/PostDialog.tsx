@@ -1,5 +1,5 @@
-import { fetchPost } from "api/posts";
-import Dialog from "components/Core/Dialog";
+import { fetchPost } from "domain/Post/api/post";
+import Dialog from "components/Dialog";
 import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
 import { useQuery } from "react-query";

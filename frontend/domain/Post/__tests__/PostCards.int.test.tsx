@@ -2,8 +2,8 @@ import { cleanup, render, waitFor } from "@testing-library/react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { QueryClient, QueryClientProvider } from "react-query";
-import * as mockPosts from "__mock__/post.mock";
-import PostCards from "./PostCards";
+import * as mockPosts from "domain/Post/__mock__/post.mock";
+import PostCards from "../PostCards";
 
 const mock = new MockAdapter(axios, { onNoMatch: "throwException" });
 

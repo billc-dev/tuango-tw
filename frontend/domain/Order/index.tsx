@@ -1,7 +1,5 @@
-import Card from "components/Core/Card";
 import React, { FC } from "react";
-import { Item } from "types";
-import { PlusIcon, MinusIcon } from "@heroicons/react/outline";
+import { Item } from "../Post/post";
 import OrderList from "./OrderList";
 import OrderForm from "./OrderForm";
 

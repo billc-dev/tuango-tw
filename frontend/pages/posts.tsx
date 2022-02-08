@@ -1,10 +1,10 @@
-import { fetchPost } from "api/posts";
-import PostCards from "components/Post/PostCards";
-import PostDialog from "components/Post/PostDialog";
+import { fetchPost } from "domain/Post/api/post";
+import PostCards from "domain/Post/PostCards";
+import PostDialog from "domain/Post/PostDialog";
 import type { NextPage, NextPageContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { IPost } from "types";
+import { IPost } from "../domain/Post/post";
 
 interface Props {
   post: IPost | undefined;

@@ -1,8 +1,8 @@
-import TabButton from "components/Core/Tab/TabButton";
-import Orders from "components/Order/Order";
+import TabButton from "components/Tab/TabButton";
+import Orders from "domain/Order";
 import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
-import { IPost } from "types";
+import { IPost } from "../post";
 
 interface Props {
   post: IPost;
