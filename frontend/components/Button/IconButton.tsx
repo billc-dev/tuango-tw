@@ -1,4 +1,4 @@
-import React, { FC, SVGProps } from "react";
+import React, { FC } from "react";
 
 interface Props {
   onClick: Function;
