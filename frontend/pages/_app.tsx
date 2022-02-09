@@ -12,7 +12,7 @@ import "../styles/globals.css";
 // ANALYZE=true yarn build
 
 axios.defaults.baseURL = IS_DEV
-  ? "http://localhost:5000/tuango-tw-firebase/asia-east1/api_tw_firebase"
+  ? "http://172.20.10.3:5000/tuango-tw-firebase/asia-east1/api_tw_firebase"
   : "https://asia-east1-tuango-tw-firebase.cloudfunctions.net/api_tw_firebase";
 // axios.defaults.baseURL =
 //   "https://lhlnrflto9.execute-api.ap-east-1.amazonaws.com";
