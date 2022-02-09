@@ -1,17 +1,18 @@
-import React, { FC, SVGProps } from "react";
+import React, { ButtonHTMLAttributes, DetailedHTMLProps, FC } from "react";
 
-interface Props {
-  onClick: Function;
-}
+type Props = DetailedHTMLProps<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+>;
 
-const IconButton: FC<Props> = ({ children, onClick }) => {
+const IconButton: FC<Props> = ({ children, ...props }) => {
   return (
-    <div
-      className="-m-2 mr-1 rounded-full p-2 opacity-70 hover:bg-zinc-600"
-      onClick={() => onClick()}
+    <button
+      {...props}
+      className="rounded-full p-2 active:bg-zinc-300 disabled:text-gray-300 disabled:hover:bg-transparent disabled:active:bg-transparent sm:hover:bg-zinc-300"
     >
       <div className="h-6 w-6">{children}</div>
-    </div>
+    </button>
   );
 };
 
