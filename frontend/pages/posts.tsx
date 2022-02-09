@@ -48,6 +48,8 @@ const Posts: NextPage<Props> = (props) => {
 
 Posts.getInitialProps = async (ctx: NextPageContext) => {
   const id = ctx.query.id as string;
+  console.log(ctx.req?.headers.cookie);
+
   if (!id || typeof id !== "string") return { post: undefined };
   const data = await fetchPost(id);
   return { post: data.post };

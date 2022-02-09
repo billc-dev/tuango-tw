@@ -1,5 +1,5 @@
 import TabButton from "components/Tab/TabButton";
-import Orders from "domain/Order";
+import Order from "domain/Order";
 import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
 import { IPost } from "../post";
@@ -10,7 +10,9 @@ interface Props {
 
 const PostActions: FC<Props> = ({ post }) => {
   const router = useRouter();
-  const [action, setAction] = useState("order");
+  const [action, setAction] = useState<"order" | "comment">(
+    window.location.hash === "#comment" ? "comment" : "order"
+  );
 
   return (
     <>
@@ -35,7 +37,7 @@ const PostActions: FC<Props> = ({ post }) => {
           {post.orderCount} 訂單
         </TabButton>
       </div>
-      {action === "order" && <Orders postId={post._id} items={post.items} />}
+      <Order post={post} action={action} />
     </>
   );
 };

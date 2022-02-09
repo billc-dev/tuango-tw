@@ -1,3 +1,6 @@
+import * as yup from "yup";
+import { orderItemSchema, orderFormSchema } from "./orderSchema";
+
 export interface IOrder {
   _id: string;
   orderNum: number;
@@ -34,3 +37,6 @@ interface SingleOrder {
   location: string;
   hasName: boolean;
 }
+
+export interface IOrderItem extends yup.InferType<typeof orderItemSchema> {}
+export interface IOrderForm extends yup.InferType<typeof orderFormSchema> {}
