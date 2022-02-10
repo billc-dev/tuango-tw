@@ -8,5 +8,5 @@ interface LoginProps {
 type Login = (variables: LoginProps) => Promise<AxiosResponse>;
 
 export const login: Login = ({ code, url }) => {
-  return axios.post("/login", { code, url }, { withCredentials: true });
+  return axios.post("/login", { code, url });
 };
