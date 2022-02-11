@@ -1,18 +1,14 @@
+import Button from "components/Button";
 import type { NextPage } from "next";
-import { useGetPostsQuery } from "../redux/postApi";
-import Link from "next/link";
-const Home: NextPage = () => {
-  const { data, error, isLoading } = useGetPostsQuery(1);
-  console.log(data);
+import { useRouter } from "next/router";
 
+const Home: NextPage = () => {
+  const router = useRouter();
   return (
-    <div className="bg-indigo-400">
-      <Link href="/posts">Posts</Link>
-      {data?.map((post) => (
-        <div key={post._id}>
-          #{post.postNum} {post.title} {post.displayName}
-        </div>
-      ))}
+    <div>
+      <Button onClick={() => router.push("/posts")}>Posts</Button>
+      <br />
+      <Button onClick={() => router.push("/login")}>Login</Button>
     </div>
   );
 };

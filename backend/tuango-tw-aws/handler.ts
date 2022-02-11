@@ -5,9 +5,9 @@ import * as express from "express";
 import { Post } from "./postDB";
 const app = express();
 
-app.get("/", async (req, res, next) => {
+app.get("/posts", async (req, res, next) => {
   try {
-    const posts = await Post.find({}).sort("createdAt").limit(10);
+    const posts = await Post.find({}).sort("-postNum").limit(20);
     return res.status(200).json({ posts });
   } catch (error) {
     return res.status(404).json({
