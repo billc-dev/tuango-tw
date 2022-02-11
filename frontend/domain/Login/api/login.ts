@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { WINDOW_URL } from "utils/constants";
 
 interface LoginProps {
   code: string;
@@ -8,5 +9,5 @@ interface LoginProps {
 type Login = (variables: LoginProps) => Promise<AxiosResponse>;
 
 export const login: Login = ({ code, url }) => {
-  return axios.post("/login", { code, url });
+  return axios.post(`${WINDOW_URL}/api/auth/login`, { code, url });
 };
