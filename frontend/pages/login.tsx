@@ -1,5 +1,5 @@
 import Button from "components/Button";
-import { LINE_LOGIN_URL } from "domain/Login/urls";
+import { LINE_LOGIN_URL } from "domain/User/urls";
 import type { NextPage } from "next";
 
 const Login: NextPage = () => {

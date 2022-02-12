@@ -1,5 +1,5 @@
 import Button from "components/Button";
-import { useGetCode, useMutateLogin } from "domain/Login/hooks";
+import { useGetCode, useMutateLogin } from "domain/User/hooks";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";

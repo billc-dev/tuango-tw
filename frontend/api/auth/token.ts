@@ -29,9 +29,9 @@ export const sendRefreshToken = (res: NextApiResponse, token: string) => {
     "Set-Cookie",
     cookie.serialize("aid", token, {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      // path: "/api/auth/refresh_token",
+      path: "/api/auth",
     })
   );
 };

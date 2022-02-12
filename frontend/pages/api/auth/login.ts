@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { lineLogin } from "services/auth/lineLogin";
+import { lineLogin } from "api/auth/lineLogin";
 import {
   createAccessToken,
   createRefreshToken,
   sendRefreshToken,
-} from "services/auth/token";
-import { findOrCreateUser } from "services/auth/user";
+} from "api/auth/token";
+import { findOrCreateUser } from "api/auth/user";
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req;

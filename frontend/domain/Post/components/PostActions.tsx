@@ -3,16 +3,19 @@ import Order from "domain/Order";
 import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
 import { IPost } from "../post";
+import { useUser } from "domain/User/hooks";
 
 interface Props {
   post: IPost;
 }
 
 const PostActions: FC<Props> = ({ post }) => {
+  const { data } = useUser();
   const router = useRouter();
   const [action, setAction] = useState<"order" | "comment">(
     window.location.hash === "#comment" ? "comment" : "order"
   );
+  console.log(data);
 
   return (
     <>
@@ -37,7 +40,7 @@ const PostActions: FC<Props> = ({ post }) => {
           {post.orderCount} 訂單
         </TabButton>
       </div>
-      <Order post={post} action={action} />
+      {data?.data.user && <Order post={post} action={action} />}
     </>
   );
 };
