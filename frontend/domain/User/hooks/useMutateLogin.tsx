@@ -1,4 +1,4 @@
-import { login } from "domain/Login/api/login";
+import { login } from "domain/User/api/login";
 import { useRouter } from "next/router";
 import { useMutation, useQueryClient } from "react-query";
 

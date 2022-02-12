@@ -1,6 +1,12 @@
 import { useQuery } from "react-query";
-import { fetchUser } from "../api";
+import { fetchUser, getAid } from "../api";
+
+export * from "./useGetCode";
+export * from "./useMutateLogin";
 
 export const useUser = () => {
-  return useQuery("user", fetchUser, { retry: false });
+  return useQuery("user", fetchUser, {
+    refetchOnReconnect: "always",
+    retry: 1,
+  });
 };
