@@ -1,3 +1,4 @@
+import Container from "components/Container";
 import { fetchPost } from "domain/Post/api/post";
 import PostCards from "domain/Post/PostCards";
 import PostDialog from "domain/Post/PostDialog";
@@ -40,7 +41,9 @@ const Posts: NextPage<Props> = (props) => {
           </>
         )}
       </Head>
-      <PostCards />
+      <Container>
+        <PostCards />
+      </Container>
       {typeof id === "string" && <PostDialog id={id} />}
     </>
   );
