@@ -9,7 +9,7 @@ interface Props {
 const CardAvatar: FC<Props> = ({ img, alt }) => {
   const [error, setError] = useState(false);
   return (
-    <div className="mr-1 flex h-10 w-10 select-none items-center justify-center rounded-full bg-gray-400 text-xl text-white dark:bg-zinc-500">
+    <div className="flex h-10 w-10 select-none items-center justify-center rounded-full bg-gray-400 text-xl text-white dark:bg-zinc-500">
       {!error ? (
         <LazyLoadImage
           alt={alt}

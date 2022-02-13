@@ -1,17 +1,22 @@
 import React, { ButtonHTMLAttributes, DetailedHTMLProps, FC } from "react";
 
-type Props = DetailedHTMLProps<
-  ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
->;
+interface Props
+  extends DetailedHTMLProps<
+    ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
+  avatar?: JSX.Element;
+}
 
-const IconButton: FC<Props> = ({ children, ...props }) => {
+const IconButton: FC<Props> = ({ children, avatar, ...props }) => {
   return (
     <button
       {...props}
-      className="rounded-full p-2 active:bg-zinc-300 disabled:text-gray-300 disabled:hover:bg-transparent disabled:active:bg-transparent dark:active:bg-zinc-600 sm:hover:bg-zinc-300 sm:dark:hover:bg-zinc-600"
+      className={`flex items-center rounded-full p-2 active:bg-zinc-300 disabled:text-gray-300 disabled:hover:bg-transparent disabled:active:bg-transparent dark:active:bg-zinc-600 sm:hover:bg-zinc-300 sm:dark:hover:bg-zinc-600 ${
+        avatar && "p-0"
+      }`}
     >
-      <div className="h-6 w-6">{children}</div>
+      {avatar ? avatar : <div className="h-6 w-6">{children}</div>}
     </button>
   );
 };
