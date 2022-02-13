@@ -14,9 +14,7 @@ const PostDialog: FC<Props> = (props) => {
   const router = useRouter();
   const { id } = props;
   const [open, setOpen] = useState(false);
-  const { data } = useQuery(["post", id], () => fetchPost(id as string), {
-    staleTime: 1000 * 10,
-  });
+  const { data } = useQuery(["post", id], () => fetchPost(id as string));
 
   const handleClose = () => {
     router.push({ query: {} }, undefined, { shallow: true });
