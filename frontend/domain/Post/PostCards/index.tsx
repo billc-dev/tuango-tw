@@ -14,7 +14,7 @@ const PostCards = () => {
   );
   // return <div className="p-4">{JSON.stringify(data?.pages, null, 2)}</div>;
   return (
-    <div className="flex min-h-screen w-full flex-col items-center bg-zinc-100 dark:bg-zinc-900">
+    <div className="flex w-full flex-col items-center">
       <InfiniteScroll
         className="p-2"
         loader={

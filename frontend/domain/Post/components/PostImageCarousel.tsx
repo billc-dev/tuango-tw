@@ -11,7 +11,7 @@ interface Props {
 
 const PostImageCarousel: FC<Props> = ({ imageUrls }) => {
   return (
-    <Slider arrows={false} dots className="mb-4 w-full">
+    <Slider arrows={false} dots className="-mx-6 mb-4 w-screen">
       {imageUrls.map((image, index) => {
         if (image.md)
           return (
