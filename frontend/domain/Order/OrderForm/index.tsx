@@ -1,5 +1,4 @@
 import Card from "components/Card";
-import { isAuthenticated } from "domain/User/api";
 import React, { FC } from "react";
 import { Updater } from "use-immer";
 import { useCreateOrder } from "../hooks";
@@ -14,7 +13,6 @@ interface Props {
 
 const OrderForm: FC<Props> = ({ orderForm, setOrderForm }) => {
   const createOrder = useCreateOrder();
-  console.log(isAuthenticated());
 
   const handleCreateOrder = async () => {
     const validatedOrderForm = await validateOrder(orderForm);
