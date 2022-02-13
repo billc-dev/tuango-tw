@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
 import { IPost } from "../post";
 import { useUser } from "domain/User/hooks";
+import LoginCard from "domain/User/LoginCard";
 
 interface Props {
   post: IPost;
@@ -15,9 +16,8 @@ const PostActions: FC<Props> = ({ post }) => {
   const [action, setAction] = useState<"order" | "comment">(
     window.location.hash === "#comment" ? "comment" : "order"
   );
-  console.log(data);
 
-  return (
+  return data?.data.user ? (
     <>
       <div className="flex select-none space-x-1 rounded-lg bg-zinc-100 p-1 dark:bg-zinc-800">
         <TabButton selected={false}>{post.likeCount} 喜歡</TabButton>
@@ -40,8 +40,10 @@ const PostActions: FC<Props> = ({ post }) => {
           {post.orderCount} 訂單
         </TabButton>
       </div>
-      {data?.data.user && <Order post={post} action={action} />}
+      <Order post={post} action={action} />
     </>
+  ) : (
+    <LoginCard />
   );
 };
 
