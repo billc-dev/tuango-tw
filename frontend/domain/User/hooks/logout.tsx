@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "react-query";
+import { setAccessToken } from "utils/accessToken";
 import { logout } from "../api";
 
 export const useMutateLogout = () => {
@@ -8,6 +9,7 @@ export const useMutateLogout = () => {
     onSuccess: () => {
       queryClient.invalidateQueries("verify");
       queryClient.removeQueries("user");
+      setAccessToken("");
     },
   });
 };

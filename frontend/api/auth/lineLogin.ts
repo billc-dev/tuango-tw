@@ -22,7 +22,7 @@ export const lineLogin = async ({ code, url }: lineLoginProps) => {
   const form = Object.entries({
     grant_type: "authorization_code",
     code,
-    redirect_uri: url + "/redirect",
+    redirect_uri: url,
     client_id: process.env.LINE_ID,
     client_secret: process.env.LINE_SECRET,
   })
@@ -47,6 +47,7 @@ export const lineLogin = async ({ code, url }: lineLoginProps) => {
       pictureUrl: picture,
     };
   } catch (error) {
+    console.log(error);
     throw "code is invalid";
   }
 };

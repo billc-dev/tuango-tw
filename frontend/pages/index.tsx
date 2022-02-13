@@ -1,21 +1,14 @@
-import Button from "components/Button";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useQueryClient } from "react-query";
+import { useEffect } from "react";
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const queryClient = useQueryClient();
-  return (
-    <div>
-      <Button onClick={() => router.push("/posts")}>Posts</Button>
-      <br />
-      <Button onClick={() => router.push("/login")}>Login</Button>
-      <Button onClick={() => queryClient.refetchQueries("user")}>
-        reset user
-      </Button>
-    </div>
-  );
+  useEffect(() => {
+    router.push("/posts");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return null;
 };
 
 export default Home;

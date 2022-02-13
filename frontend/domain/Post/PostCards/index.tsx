@@ -1,6 +1,4 @@
 import { fetchPostCards } from "domain/Post/api/post";
-import Button from "components/Button";
-import router from "next/router";
 import React, { Fragment } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useInfiniteQuery } from "react-query";
@@ -17,10 +15,6 @@ const PostCards = () => {
   // return <div className="p-4">{JSON.stringify(data?.pages, null, 2)}</div>;
   return (
     <div className="flex min-h-screen w-full flex-col items-center bg-zinc-100 dark:bg-zinc-900">
-      <div>
-        <Button onClick={() => router.push("/login")}>Login</Button>
-        <Button onClick={() => router.push("/")}>Index</Button>
-      </div>
       <InfiniteScroll
         className="p-2"
         loader={

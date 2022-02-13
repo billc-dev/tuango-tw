@@ -12,5 +12,6 @@ export const useUser = () => {
   return useQuery("user", fetchUser, {
     refetchOnReconnect: "always",
     enabled: !!data?.data.authenticated,
+    retry: !!data?.data.authenticated,
   });
 };

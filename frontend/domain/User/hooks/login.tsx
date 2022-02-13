@@ -12,6 +12,16 @@ export function useGetCode() {
   return code;
 }
 
+export const getRedirectUrl = () => {
+  let url;
+  if (typeof window !== "undefined") {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    url = urlParams.get("redirect");
+  }
+  return url;
+};
+
 export const useMutateLogin = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
