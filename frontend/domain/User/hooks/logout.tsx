@@ -7,9 +7,9 @@ export const useMutateLogout = () => {
 
   return useMutation(logout, {
     onSuccess: () => {
-      queryClient.invalidateQueries("verify");
-      queryClient.removeQueries("user");
       setAccessToken("");
+      queryClient.removeQueries("verify");
+      queryClient.removeQueries("user");
     },
   });
 };
