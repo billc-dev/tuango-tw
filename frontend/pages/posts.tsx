@@ -5,6 +5,8 @@ import PostDialog from "domain/Post/PostDialog";
 import type { NextPage, NextPageContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useQueryClient } from "react-query";
 import { IPost } from "../domain/Post/post";
 
 interface Props {
@@ -12,10 +14,14 @@ interface Props {
 }
 
 const Posts: NextPage<Props> = (props) => {
-  const { post } = props;
   const router = useRouter();
+  const { post } = props;
   const { id } = router.query;
-
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    if (post) queryClient.setQueryData(["post", post._id], { post });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [post]);
   return (
     <>
       <Head>
@@ -51,8 +57,6 @@ const Posts: NextPage<Props> = (props) => {
 
 Posts.getInitialProps = async (ctx: NextPageContext) => {
   const id = ctx.query.id as string;
-  console.log(ctx.req?.headers.cookie);
-
   if (!id || typeof id !== "string") return { post: undefined };
   const data = await fetchPost(id);
   return { post: data.post };
