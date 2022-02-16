@@ -1,16 +1,13 @@
-import {
-  getRedirectUrl,
-  useGetCode,
-  useMutateLogin,
-  useUser,
-} from "domain/User/hooks";
-import { REDIRECT_URL } from "domain/User/urls";
+import { useMutateLogin, useUser } from "domain/User/hooks";
+import { getCode, getRedirectUrl } from "domain/User/services";
+import { LINE_REDIRECT_URL } from "domain/User/services/urls";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 const Redirect: NextPage = () => {
-  const code = useGetCode();
+  const code = getCode();
   const router = useRouter();
   const login = useMutateLogin();
   const userQuery = useUser();
@@ -18,11 +15,24 @@ const Redirect: NextPage = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined" && code) {
-      const url = getRedirectUrl()
-        ? `${REDIRECT_URL}?redirect=${getRedirectUrl()}`
-        : REDIRECT_URL;
-
-      login.mutate({ code, url });
+      const url = `${LINE_REDIRECT_URL}?redirect=${getRedirectUrl()}`;
+      toast.promise(
+        login.mutateAsync(
+          { code, url },
+          {
+            onSuccess: () => {
+              const previousUrl = getRedirectUrl();
+              if (previousUrl) router.push(previousUrl);
+              else router.push("/posts");
+            },
+          }
+        ),
+        {
+          loading: "登入中...",
+          success: "登入成功！",
+          error: "登入失敗！",
+        }
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);

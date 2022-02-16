@@ -7,7 +7,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useQueryClient } from "react-query";
-import { IPost } from "../domain/Post/post";
+import { IPost } from "../domain/Post/types";
 
 interface Props {
   post: IPost | undefined;

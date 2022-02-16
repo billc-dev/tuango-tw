@@ -16,6 +16,8 @@
     "incremental": true,
     "baseUrl": ".",
     "types": ["jest", "@testing-library/jest-dom"]
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

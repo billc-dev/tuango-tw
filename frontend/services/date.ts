@@ -11,11 +11,11 @@ export const date = (date: string) => {
   return dayjs(date).format("LLLL").slice(0, -6);
 };
 
-export const fullDate = (date: string) => {
+export const getFullDate = (date: string) => {
   return dayjs(date).format("LLL");
 };
 
-export const fullDateFromNow = (date: string) => {
+export const getFullDateFromNow = (date: string) => {
   return `${dayjs(date).format("LLLL")} ${dayjs(date).fromNow()}`;
 };
 

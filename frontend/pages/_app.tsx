@@ -9,14 +9,14 @@ import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { IS_DEV } from "utils/constants";
 import "../styles/globals.css";
+import { Toaster } from "react-hot-toast";
 
 // ANALYZE=true yarn build
 
 axios.defaults.baseURL = IS_DEV
   ? "http://localhost:5000/tuango-tw-firebase/asia-east1/api_tw_firebase"
   : "https://asia-east1-tuango-tw-firebase.cloudfunctions.net/api_tw_firebase";
-// axios.defaults.baseURL =
-//   "https://lhlnrflto9.execute-api.ap-east-1.amazonaws.com";
+
 axios.defaults.withCredentials = true;
 
 export function App({ Component, pageProps }: AppProps) {
@@ -41,6 +41,7 @@ export function App({ Component, pageProps }: AppProps) {
           <TopNavbar />
           <Component {...pageProps} />
           <BottomNavbar />
+          <Toaster toastOptions={{ duration: 5000 }} />
         </ThemeProvider>
       </Hydrate>
       <ReactQueryDevtools initialIsOpen={false} />
