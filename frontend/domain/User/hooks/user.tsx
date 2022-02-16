@@ -13,5 +13,6 @@ export const useUser = () => {
     refetchOnReconnect: "always",
     enabled: !!data?.data.authenticated,
     retry: !!data?.data.authenticated,
+    staleTime: 1000 * 60,
   });
 };

@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import jwt_decode from "jwt-decode";
 import { getAccessToken, setAccessToken } from "utils/accessToken";
 import { WINDOW_URL } from "utils/constants";
-import { User } from "../user";
+import { User } from "../types";
 
 type FetchVerifyStatus = () => Promise<
   AxiosResponse<{ authenticated: boolean }>
