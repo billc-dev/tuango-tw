@@ -1,25 +1,50 @@
+import AnimatedSpinner from "components/svg/AnimatedSpinner";
 import React, { FC, HTMLAttributes } from "react";
 
 interface Props extends HTMLAttributes<HTMLButtonElement> {
   size?: "sm" | "lg";
-  type?: "primary" | "secondary" | "danger" | "gray";
+  variant?: "primary" | "secondary" | "danger";
   fullWidth?: boolean;
+  iconButton?: JSX.Element;
+  loading?: boolean;
+  pill?: boolean;
 }
 
 const Button: FC<Props> = (props) => {
-  const { children, size, type, fullWidth, className, ...rest } = props;
+  const {
+    children,
+    size,
+    variant,
+    fullWidth,
+    className,
+    iconButton,
+    loading,
+    pill,
+    ...rest
+  } = props;
+  const renderedChildren = () => {
+    if (loading) return <AnimatedSpinner />;
+    return (
+      <>
+        {iconButton}
+        {children}
+      </>
+    );
+  };
+  // ${variant === "" && "bg-gray-400 hover:bg-gray-600"}
   return (
-    <div className="p-2">
+    <div className="p-1">
       <button
-        className={`select-none rounded-full bg-green-500 py-1 px-3 text-white shadow transition hover:bg-green-600 dark:text-gray-100 ${
+        className={`select-none bg-zinc-400 py-1 px-3 text-white shadow transition hover:bg-zinc-600 disabled:text-gray-300 dark:text-gray-100 ${
           fullWidth && "w-full"
         } 
-        ${type === "gray" && "bg-gray-400 hover:bg-gray-600"}
-        ${size === "lg" && "py-2 text-xl"}
+        ${variant === "primary" && "bg-green-500 hover:bg-green-600"}
+        ${size === "lg" && "px-4 text-lg"}
+        ${pill ? "rounded-full" : "rounded-md"}
         ${className}`}
         {...rest}
       >
-        {children}
+        {renderedChildren()}
       </button>
     </div>
   );

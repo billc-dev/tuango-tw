@@ -1,3 +1,4 @@
+import AnimatedSpinner from "components/svg/AnimatedSpinner";
 import React, { ButtonHTMLAttributes, DetailedHTMLProps, FC } from "react";
 
 interface Props
@@ -6,9 +7,15 @@ interface Props
     HTMLButtonElement
   > {
   avatar?: JSX.Element;
+  loading?: boolean;
 }
 
-const IconButton: FC<Props> = ({ children, avatar, ...props }) => {
+const IconButton: FC<Props> = ({ children, avatar, loading, ...props }) => {
+  const renderedChildren = () => {
+    if (loading) return <AnimatedSpinner />;
+    if (avatar) return avatar;
+    return <div className="h-6 w-6">{children}</div>;
+  };
   return (
     <button
       {...props}
@@ -16,7 +23,7 @@ const IconButton: FC<Props> = ({ children, avatar, ...props }) => {
         avatar && "p-0"
       }`}
     >
-      {avatar ? avatar : <div className="h-6 w-6">{children}</div>}
+      {renderedChildren()}
     </button>
   );
 };
