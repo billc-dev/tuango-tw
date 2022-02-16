@@ -2,7 +2,7 @@ import { MinusIcon, PlusIcon } from "@heroicons/react/outline";
 import IconButton from "components/Button/IconButton";
 import React, { FC } from "react";
 import { Updater } from "use-immer";
-import { IOrderForm, IOrderItem } from "../order";
+import { IOrderForm, IOrderItem } from "../types";
 import { handleChangeItemQty } from "../services";
 
 interface Props {

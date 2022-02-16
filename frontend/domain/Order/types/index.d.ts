@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { orderItemSchema, orderFormSchema } from "./orderSchema";
+import { orderItemSchema, orderFormSchema } from "../orderSchema";
 
 export interface IOrder {
   _id: string;

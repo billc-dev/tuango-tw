@@ -1,21 +1,19 @@
-import { fetchOrders } from "domain/Order/api/order";
-import Header from "components/Card/CardHeader";
-import React, { FC, Fragment, useEffect, useRef, useState } from "react";
-import { useQuery } from "react-query";
 import { ChevronDownIcon } from "@heroicons/react/outline";
 import Card from "components/Card";
+import { usePost } from "domain/Post/hooks";
+import { useUser } from "domain/User/hooks";
+import React, { FC, Fragment, useEffect, useRef, useState } from "react";
+import { useOrder } from "../hooks";
+import OrderListItem from "./OrderListItem";
 
 interface Props {
   postId: string;
 }
+
 const Order: FC<Props> = ({ postId }) => {
-  const { data, isLoading } = useQuery(
-    ["order", postId],
-    () => fetchOrders(postId),
-    {
-      refetchOnMount: "always",
-    }
-  );
+  const userQuery = useUser();
+  const postQuery = usePost(postId);
+  const { data, isLoading } = useOrder(postId);
   const [scrolled, setScrolled] = useState(true);
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -47,17 +45,11 @@ const Order: FC<Props> = ({ postId }) => {
         <div ref={ref} className="absolute -top-28" />
         {data?.orders.slice(open ? 0 : -3).map((order) => (
           <Fragment key={order._id}>
-            <Header
-              img={order.pictureUrl}
-              title={order.displayName}
-              subtitle={order.createdAt}
+            <OrderListItem
+              post={postQuery.data?.post}
+              order={order}
+              user={userQuery.data?.data.user}
             />
-            <ul className="-mt-2 text-sm">序號: {order.orderNum}</ul>
-            {order.order.map((item, index) => (
-              <ul key={index} className="text-sm">
-                {`${item.id}. ${item.item}+${item.qty} $${item.price}`}
-              </ul>
-            ))}
           </Fragment>
         ))}
       </div>

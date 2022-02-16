@@ -1,9 +1,13 @@
 import Card from "components/Card";
+import AnimatedSpinner from "components/svg/AnimatedSpinner";
+import TextArea from "components/TextField/TextArea";
 import React, { FC } from "react";
+import toast from "react-hot-toast";
 import { Updater } from "use-immer";
 import { useCreateOrder } from "../hooks";
-import { IOrderForm } from "../order";
 import { validateOrder } from "../services";
+import { getOrderSum } from "../services/calc";
+import { IOrderForm } from "../types";
 import OrderItem from "./OrderItem";
 
 interface Props {
@@ -12,14 +16,14 @@ interface Props {
 }
 
 const OrderForm: FC<Props> = ({ orderForm, setOrderForm }) => {
-  const createOrder = useCreateOrder();
-
+  const sum = getOrderSum(orderForm.items);
+  const createOrder = useCreateOrder(setOrderForm);
   const handleCreateOrder = async () => {
     const validatedOrderForm = await validateOrder(orderForm);
     if (!validatedOrderForm) return;
+    toast.loading("訂單製作中...", { id: "orderToast" });
     createOrder.mutate({ orderForm: validatedOrderForm });
   };
-  // create async catcher that shows toast
 
   return (
     <Card>
@@ -33,8 +37,9 @@ const OrderForm: FC<Props> = ({ orderForm, setOrderForm }) => {
           />
         ))}
       </div>
-      <div>
-        <input
+      <div className="px-2">
+        <TextArea
+          placeholder="備註"
           value={orderForm.comment}
           onChange={(e) =>
             setOrderForm((draft) => {
@@ -44,10 +49,11 @@ const OrderForm: FC<Props> = ({ orderForm, setOrderForm }) => {
         />
       </div>
       <button
-        className="bg-line-400 active:bg-line-800 h-12 w-full text-lg font-semibold text-white"
+        disabled={sum <= 0 || createOrder.isLoading}
+        className="bg-line-400 hover:bg-line-700 active:bg-line-800 flex h-12 w-full items-center justify-center text-lg font-semibold text-white transition disabled:bg-zinc-300"
         onClick={() => handleCreateOrder()}
       >
-        合計${"amount"}
+        {createOrder.isLoading ? <AnimatedSpinner /> : `合計$${sum}`}
       </button>
     </Card>
   );

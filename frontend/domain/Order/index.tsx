@@ -1,9 +1,10 @@
 import React, { FC, useEffect } from "react";
-import { IPost } from "../Post/post";
+import { IPost } from "../Post/types";
 import OrderList from "./OrderList";
 import OrderForm from "./OrderForm";
 import { useImmer } from "use-immer";
-import { IOrderForm } from "./order";
+import { IOrderForm } from "./types";
+import { getInitialOrderForm } from "./services";
 
 interface Props {
   post: IPost;
@@ -11,18 +12,9 @@ interface Props {
 }
 
 const Order: FC<Props> = ({ post, action }) => {
-  const [orderForm, setOrderForm] = useImmer<IOrderForm>({
-    postId: post._id,
-    items: post.items.map((item) => ({
-      _id: item._id,
-      id: item.id,
-      item: item.item,
-      price: item.price,
-      itemQty: item.itemQty,
-      qty: 0,
-    })),
-    comment: "",
-  });
+  const [orderForm, setOrderForm] = useImmer<IOrderForm>(
+    getInitialOrderForm(post)
+  );
 
   useEffect(() => {
     setOrderForm((draft) => {
