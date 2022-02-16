@@ -24,10 +24,12 @@
     "next-themes": "^0.0.15",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-hot-toast": "^2.2.0",
     "react-infinite-scroll-component": "^6.1.0",
     "react-lazy-load-image-component": "^1.5.1",
     "react-query": "^3.34.12",
     "react-slick": "^0.28.1",
+    "react-textarea-autosize": "^8.3.3",
     "slick-carousel": "^1.8.1",
     "use-immer": "^0.6.0",
     "yup": "^0.32.11"
