@@ -2,7 +2,7 @@ import TabButton from "components/Tab/TabButton";
 import Order from "domain/Order";
 import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
-import { IPost } from "../post";
+import { IPost } from "../types";
 import { useUser } from "domain/User/hooks";
 import LoginCard from "domain/User/LoginCard";
 

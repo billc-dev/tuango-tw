@@ -16,11 +16,12 @@ const PostCards = () => {
   return (
     <div className="flex w-full flex-col items-center">
       <InfiniteScroll
-        className="p-2"
         loader={
-          <div data-testid="post-card-skeletons">
-            <PostCardSkeletons />
-          </div>
+          isFetching && (
+            <div data-testid="post-card-skeletons">
+              <PostCardSkeletons />
+            </div>
+          )
         }
         next={fetchNextPage}
         hasMore={true} // add to api => read last page
@@ -28,17 +29,19 @@ const PostCards = () => {
           data?.pages.reduce((sum, post) => post.posts.length + sum, 0) || 0
         }
       >
-        <div data-testid="post-cards">
-          <PostCardGrid>
-            {data?.pages.map((page) => (
-              <Fragment key={page.nextId}>
-                {page.posts.map((post) => (
-                  <PostCard key={post._id} post={post} />
-                ))}
-              </Fragment>
-            ))}
-          </PostCardGrid>
-        </div>
+        {!isLoading && (
+          <div data-testid="post-cards">
+            <PostCardGrid>
+              {data?.pages.map((page) => (
+                <Fragment key={page.nextId}>
+                  {page.posts.map((post) => (
+                    <PostCard key={post._id} post={post} />
+                  ))}
+                </Fragment>
+              ))}
+            </PostCardGrid>
+          </div>
+        )}
       </InfiniteScroll>
     </div>
   );
