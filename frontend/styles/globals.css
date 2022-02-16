@@ -9,3 +9,13 @@ select,
 a {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
+textarea {
+  resize: none;
+}
+
+@layer components {
+  .nav-wrapper {
+    @apply max-w-[384px] sm:max-w-[572px] md:max-w-[760px] lg:max-w-[896px];
+  }
+}

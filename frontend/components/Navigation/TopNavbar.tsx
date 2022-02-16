@@ -12,7 +12,7 @@ const TopNavbar = () => {
   const router = useRouter();
   return (
     <div className="sticky top-0 z-10 bg-white py-1 px-1 shadow-md dark:bg-zinc-800">
-      <div className="m-auto flex max-w-lg items-center justify-between py-1">
+      <div className="nav-wrapper m-auto flex items-center justify-between py-1">
         <div className="pl-2">
           {!isVerified.isLoading && (
             <>
@@ -27,11 +27,12 @@ const TopNavbar = () => {
                   onClick={() => router.push("/user")}
                 />
               )}
-              {!isVerified.data?.data.authenticated && <LineLoginButton />}
+              {!isVerified.data?.data.authenticated && (
+                <LineLoginButton size="lg" />
+              )}
             </>
           )}
         </div>
-
         <div className="flex items-center justify-center pr-2">
           <ThemeButton />
         </div>

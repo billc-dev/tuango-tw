@@ -25,7 +25,7 @@ const Dialog: FC<DialogProps> = (props) => {
         animate ? "opacity-100" : "opacity-0"
       }`}
     >
-      <div className="sticky top-0 z-10 flex w-full items-center bg-white p-3 shadow dark:bg-zinc-800">
+      <div className="sticky top-0 z-10 flex w-full items-center bg-white p-1 shadow dark:bg-zinc-800">
         <IconButton
           onClick={() => {
             document.body.style.overflow = "initial";
