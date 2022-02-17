@@ -16,8 +16,10 @@ const Dialog: FC<DialogProps> = (props) => {
       document.body.style.overflow = "hidden";
       setAnimate(true);
     }
+    return () => {
+      document.body.style.overflow = "initial";
+    };
   }, [open]);
-
   return (
     <dialog
       open={open}
@@ -26,12 +28,7 @@ const Dialog: FC<DialogProps> = (props) => {
       }`}
     >
       <div className="sticky top-0 z-10 flex w-full items-center bg-white p-1 shadow dark:bg-zinc-800">
-        <IconButton
-          onClick={() => {
-            document.body.style.overflow = "initial";
-            handleClose();
-          }}
-        >
+        <IconButton onClick={() => handleClose()}>
           <XIcon />
         </IconButton>
         <h1 className="truncate text-xl">{title}</h1>
