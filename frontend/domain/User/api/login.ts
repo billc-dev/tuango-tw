@@ -1,6 +1,5 @@
-import axios, { AxiosResponse } from "axios";
 import { IUser } from "api/auth/userDB";
-import { setAccessToken } from "domain/User/services/accessToken";
+import axios, { AxiosResponse } from "axios";
 import { WINDOW_URL } from "utils/constants";
 
 interface LoginProps {
@@ -12,11 +11,9 @@ type Login = (
   variables: LoginProps
 ) => Promise<AxiosResponse<{ user: IUser; accessToken: string }>>;
 
-export const login: Login = async ({ code, url }) => {
-  const res = await axios.post<{ user: IUser; accessToken: string }>(
+export const login: Login = ({ code, url }) => {
+  return axios.post<{ user: IUser; accessToken: string }>(
     `${WINDOW_URL}/api/auth/login`,
     { code, url }
   );
-  setAccessToken(res.data.accessToken);
-  return res;
 };
