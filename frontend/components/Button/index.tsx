@@ -32,7 +32,7 @@ const Button: FC<Props> = (props) => {
     );
   };
   const variantStyles = () => {
-    if (!variant) return "";
+    if (!variant) return "bg-zinc-400 hover:bg-zinc-600";
     else if (variant === "primary") {
       return "bg-green-500 hover:bg-green-700";
     } else if (variant === "danger") {
