@@ -32,6 +32,7 @@ export const sendRefreshToken = (res: NextApiResponse, token: string) => {
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       path: "/api/auth",
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
     })
   );
 };
