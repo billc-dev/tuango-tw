@@ -25,12 +25,12 @@ const NormalDialog: FC<Props> = ({ open, setOpen, title, children }) => {
             as={Fragment}
             enter="ease-out duration-300"
             enterFrom="opacity-0"
-            enterTo="opacity-100"
+            enterTo="opacity-25"
             leave="ease-in duration-200"
-            leaveFrom="opacity-100"
+            leaveFrom="opacity-25"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-zinc-800 opacity-25" />
+            <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
           </Transition.Child>
           <span
             className="inline-block h-screen align-middle"
@@ -47,32 +47,14 @@ const NormalDialog: FC<Props> = ({ open, setOpen, title, children }) => {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="my-8 inline-block w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+            <div className="my-8 inline-block w-full max-w-md transform overflow-hidden rounded-2xl bg-white px-6 py-4 text-left align-middle shadow-xl transition-all">
               <Dialog.Title
                 as="h3"
                 className="text-lg font-medium leading-6 text-gray-900"
               >
                 {title}
               </Dialog.Title>
-              {/* <div className="mt-2">
-                <p className="text-sm text-gray-500">{content}</p>
-              </div> */}
               {children}
-              <div className="mt-4">
-                <button
-                  type="button"
-                  className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                  onClick={handleClose}
-                >
-                  Got it, thanks!
-                </button>
-                <button
-                  className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                  onClick={handleClose}
-                >
-                  取消
-                </button>
-              </div>
             </div>
           </Transition.Child>
         </div>
