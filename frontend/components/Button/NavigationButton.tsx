@@ -11,7 +11,7 @@ const NavigationButton: FC<Props> = ({ path, text, children }) => {
   const selected = router.pathname === path;
   return (
     <div
-      className={`flex w-12 transform flex-col items-center transition active:scale-[1.1]  ${
+      className={`flex w-full transform flex-col items-center transition active:scale-[1.1]  ${
         selected && "scale-[1.1] text-blue-500"
       }`}
       onClick={() => {
