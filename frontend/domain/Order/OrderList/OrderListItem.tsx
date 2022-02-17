@@ -1,10 +1,12 @@
 import { XCircleIcon } from "@heroicons/react/outline";
+import Button from "components/Button";
 import IconButton from "components/Button/IconButton";
 import Header from "components/Card/CardHeader";
 import NormalDialog from "components/Dialog/NormalDialog";
 import { IPost } from "domain/Post/types";
 import { User } from "domain/User/types";
 import React, { FC, useState } from "react";
+import toast from "react-hot-toast";
 import { getFullDate } from "services/date";
 import { useDeleteOrder } from "../hooks";
 import { IOrder } from "../types";
@@ -37,21 +39,38 @@ const OrderListItem: FC<Props> = ({ order, user, post }) => {
             <IconButton
               loading={deleteOrder.isLoading}
               disabled={deleteOrder.isLoading}
-              onClick={() =>
-                // toast.promise(deleteOrder.mutateAsync(order._id), {
-                //   loading: "刪除中...",
-                //   success: "您的訂單已刪除！",
-                //   error: "刪除失敗！",
-                // })
-                setOpen(true)
-              }
+              onClick={() => setOpen(true)}
             >
               <XCircleIcon className="text-zinc-500" />
+              <NormalDialog
+                open={open}
+                setOpen={setOpen}
+                title="您確定要取消這筆訂單嗎？"
+              >
+                <div className="flex justify-end pt-2">
+                  <Button
+                    size="lg"
+                    variant="danger"
+                    onClick={() =>
+                      toast.promise(deleteOrder.mutateAsync(order._id), {
+                        loading: "刪除中...",
+                        success: "您的訂單已刪除！",
+                        error: "刪除失敗！",
+                      })
+                    }
+                  >
+                    刪除
+                  </Button>
+                  <Button size="lg" onClick={() => setOpen(false)}>
+                    取消
+                  </Button>
+                </div>
+              </NormalDialog>
             </IconButton>
           ) : null
         }
       />
-      <div>
+      <div className="-mt-2">
         序號: {order.orderNum} {order.status === "delivered" && "已到貨 🚚"}
         {order.status === "completed" && "已取貨 ✅"}
         {order.status === "missing" && "尋貨中 🔍"}
@@ -64,11 +83,6 @@ const OrderListItem: FC<Props> = ({ order, user, post }) => {
       {order.comment && (
         <p className="whitespace-pre pt-1 text-sm">備註: {order.comment}</p>
       )}
-      <NormalDialog
-        open={open}
-        setOpen={setOpen}
-        title="您確定要取消這筆訂單嗎？"
-      />
     </>
   );
 };
