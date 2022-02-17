@@ -43,10 +43,10 @@ const Button: FC<Props> = (props) => {
     <div className="p-1">
       <button
         className={`select-none bg-zinc-400 py-1 px-3 text-white shadow transition hover:bg-zinc-600 disabled:text-gray-300 dark:text-gray-100 ${
-          fullWidth && "w-full"
+          fullWidth ? "w-full" : ""
         } 
         ${variantStyles()}
-        ${size === "lg" && "px-4 text-lg"}
+        ${size === "lg" ? "px-4 text-lg" : ""}
         ${pill ? "rounded-full" : "rounded-md"}
         ${className}`}
         {...rest}
