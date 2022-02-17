@@ -7,7 +7,7 @@ const TextArea: FC<
 > = (props) => {
   return (
     <TextareaAutosize
-      className="outline-line-400 mb-2 w-full rounded-lg border py-4 px-3 text-base placeholder-gray-400 focus:outline focus:outline-1"
+      className="focus:border-line-400 focus:ring-line-400 mb-2 w-full rounded-lg border py-4 px-3 placeholder-gray-400 focus:ring-1 dark:bg-zinc-700"
       {...props}
     />
   );
