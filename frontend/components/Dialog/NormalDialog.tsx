@@ -1,5 +1,4 @@
 import { Dialog, Transition } from "@headlessui/react";
-import Button from "components/Button";
 import React, { Dispatch, FC, Fragment, SetStateAction } from "react";
 
 interface Props {

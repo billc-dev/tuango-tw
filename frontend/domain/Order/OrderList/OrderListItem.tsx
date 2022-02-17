@@ -5,7 +5,6 @@ import NormalDialog from "components/Dialog/NormalDialog";
 import { IPost } from "domain/Post/types";
 import { User } from "domain/User/types";
 import React, { FC, useState } from "react";
-import toast from "react-hot-toast";
 import { getFullDate } from "services/date";
 import { useDeleteOrder } from "../hooks";
 import { IOrder } from "../types";
