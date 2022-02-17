@@ -1,6 +1,9 @@
 import axios, { AxiosResponse } from "axios";
 import jwt_decode from "jwt-decode";
-import { getAccessToken, setAccessToken } from "utils/accessToken";
+import {
+  getAccessToken,
+  setAccessToken,
+} from "domain/User/services/accessToken";
 import { WINDOW_URL } from "utils/constants";
 import { User } from "../types";
 
@@ -18,11 +21,9 @@ const fetchNewAccessToken = async () => {
     url: `${WINDOW_URL}/api/auth/refresh`,
   });
 
-  if (res.data.tokenError) {
-    return;
-  }
+  if (res.data.tokenError) return;
+
   setAccessToken(res.data.accessToken);
-  axios.defaults.headers.common["Authorization"] = res.data.accessToken;
 };
 
 export const isAuthenticated = () => {
