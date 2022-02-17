@@ -1,8 +1,9 @@
 import produce from "immer";
 import { Updater } from "use-immer";
 import { ValidationError } from "yup";
-import { IOrderForm } from "../order";
+import { IOrderForm } from "../types";
 import { orderFormSchema } from "../orderSchema";
+import { IPost } from "domain/Post/types";
 
 type HandleChangeItemQty = (
   amount: number,
@@ -29,7 +30,6 @@ export const validateOrder = async (orderForm: IOrderForm) => {
     if (!draft.items) return;
     draft.items = draft.items.filter((item) => item.qty > 0);
   });
-  console.log(cleanedOrderForm);
 
   try {
     return await orderFormSchema.validate(cleanedOrderForm, {
@@ -40,4 +40,19 @@ export const validateOrder = async (orderForm: IOrderForm) => {
       console.log(error.errors);
     }
   }
+};
+
+export const getInitialOrderForm = (post: IPost) => {
+  return {
+    postId: post._id,
+    items: post.items.map((item) => ({
+      _id: item._id,
+      id: item.id,
+      item: item.item,
+      price: item.price,
+      itemQty: item.itemQty,
+      qty: 0,
+    })),
+    comment: "",
+  };
 };

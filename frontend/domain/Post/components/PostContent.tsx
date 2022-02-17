@@ -1,7 +1,7 @@
 import Header from "components/Card/CardHeader";
 import React, { FC } from "react";
-import { date, fullDateFromNow } from "services/date";
-import { IPost } from "../post";
+import { date, getFullDateFromNow } from "services/date";
+import { IPost } from "../types";
 import PostImageCarousel from "./PostImageCarousel";
 
 interface Props {
@@ -15,7 +15,7 @@ const PostContent: FC<Props> = (props) => {
       <Header
         img={post.pictureUrl}
         title={post.displayName}
-        subtitle={fullDateFromNow(post.createdAt)}
+        subtitle={getFullDateFromNow(post.createdAt)}
       />
       <PostImageCarousel imageUrls={post.imageUrls} />
       <div className="py-4">

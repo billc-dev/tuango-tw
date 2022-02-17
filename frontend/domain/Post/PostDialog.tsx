@@ -1,10 +1,9 @@
-import { fetchPost } from "domain/Post/api/post";
 import Dialog from "components/Dialog";
 import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
-import { useQuery } from "react-query";
 import PostActions from "./components/PostActions";
 import PostContent from "./components/PostContent";
+import { usePost } from "./hooks";
 
 interface Props {
   id: string;
@@ -14,10 +13,7 @@ const PostDialog: FC<Props> = (props) => {
   const router = useRouter();
   const { id } = props;
   const [open, setOpen] = useState(false);
-  const { data } = useQuery(["post", id], () => fetchPost(id as string), {
-    staleTime: 1000 * 10,
-  });
-
+  const { data } = usePost(id);
   const handleClose = () => {
     router.push({ query: {} }, undefined, { shallow: true });
   };

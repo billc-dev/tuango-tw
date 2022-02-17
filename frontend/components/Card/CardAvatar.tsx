@@ -9,16 +9,19 @@ interface Props {
 const CardAvatar: FC<Props> = ({ img, alt }) => {
   const [error, setError] = useState(false);
   return (
-    <div className="mr-1 flex h-10 w-10 select-none items-center justify-center rounded-full bg-gray-400 text-xl text-white dark:bg-zinc-500">
+    <div className="select-none">
       {!error ? (
         <LazyLoadImage
           alt={alt}
-          className="rounded-full"
+          className="h-10 w-10 rounded-full bg-zinc-400 dark:bg-zinc-500"
           src={img}
+          placeholder={<div className="h-10 w-10 rounded-full bg-zinc-400" />}
           onError={() => setError(true)}
         />
       ) : (
-        alt.substring(0, 1)
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-400 text-xl text-white dark:bg-zinc-500">
+          {alt.substring(0, 1)}
+        </div>
       )}
     </div>
   );

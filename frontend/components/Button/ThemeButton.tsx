@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
-import Button from ".";
+import { MoonIcon, SunIcon } from "@heroicons/react/outline";
 import { useTheme } from "next-themes";
+import React, { useEffect, useState } from "react";
+import IconButton from "./IconButton";
 
 const ThemeButton = () => {
   const [mounted, setMounted] = useState(false);
@@ -8,9 +9,9 @@ const ThemeButton = () => {
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
   return (
-    <Button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-      Theme Mode
-    </Button>
+    <IconButton onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
+      {theme === "light" ? <MoonIcon /> : <SunIcon />}
+    </IconButton>
   );
 };
 

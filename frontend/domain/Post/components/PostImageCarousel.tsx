@@ -3,7 +3,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import { ImageUrl } from "../post";
+import { ImageUrl } from "../types";
 
 interface Props {
   imageUrls: ImageUrl[];
@@ -11,7 +11,7 @@ interface Props {
 
 const PostImageCarousel: FC<Props> = ({ imageUrls }) => {
   return (
-    <Slider arrows={false} dots className="mb-4 w-full">
+    <Slider arrows={false} dots className="mb-4">
       {imageUrls.map((image, index) => {
         if (image.md)
           return (

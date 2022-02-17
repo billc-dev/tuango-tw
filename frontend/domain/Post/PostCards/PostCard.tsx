@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import React, { FC } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { IPostCard } from "../post";
+import { getProductPriceRange } from "../services/price";
+import { IPostCard } from "../types";
 // import { HeartIcon } from "@heroicons/react/outline";
 
 interface PostCardProps {
@@ -16,8 +17,8 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
 
   return (
     <div
-      className="flex max-w-[180px] transform flex-col overflow-hidden rounded-3xl bg-white shadow-md
-              transition hover:scale-[1.02] hover:shadow-lg dark:bg-zinc-800 dark:hover:shadow-gray-900"
+      className="flex h-[264px] max-w-[180px] transform flex-col overflow-hidden rounded-3xl bg-white
+              shadow-md transition hover:scale-[1.02] hover:shadow-lg dark:bg-zinc-800 dark:hover:shadow-gray-900"
     >
       <LazyLoadImage
         src={post.imageUrls && post.imageUrls[0].sm}
@@ -34,7 +35,7 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
             <div aria-label="orderCount" className="w-2/5 truncate">
               {post.orderCount ? `${post.orderCount} 訂單` : ""}
             </div>
-            <div className="truncate">$100~$5000</div>
+            <div className="truncate">${getProductPriceRange(post.items)}</div>
           </div>
         </div>
         {/* <button className="mt-2 mb-1 w-full rounded-2xl py-1 outline outline-2 outline-pink-400 hover:bg-pink-200">

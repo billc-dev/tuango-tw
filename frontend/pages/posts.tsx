@@ -1,20 +1,27 @@
+import Container from "components/Container";
 import { fetchPost } from "domain/Post/api/post";
 import PostCards from "domain/Post/PostCards";
 import PostDialog from "domain/Post/PostDialog";
 import type { NextPage, NextPageContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { IPost } from "../domain/Post/post";
+import { useEffect } from "react";
+import { useQueryClient } from "react-query";
+import { IPost } from "../domain/Post/types";
 
 interface Props {
   post: IPost | undefined;
 }
 
 const Posts: NextPage<Props> = (props) => {
-  const { post } = props;
   const router = useRouter();
+  const { post } = props;
   const { id } = router.query;
-
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    if (post) queryClient.setQueryData(["post", post._id], { post });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [post]);
   return (
     <>
       <Head>
@@ -40,7 +47,9 @@ const Posts: NextPage<Props> = (props) => {
           </>
         )}
       </Head>
-      <PostCards />
+      <Container>
+        <PostCards />
+      </Container>
       {typeof id === "string" && <PostDialog id={id} />}
     </>
   );
@@ -48,8 +57,6 @@ const Posts: NextPage<Props> = (props) => {
 
 Posts.getInitialProps = async (ctx: NextPageContext) => {
   const id = ctx.query.id as string;
-  console.log(ctx.req?.headers.cookie);
-
   if (!id || typeof id !== "string") return { post: undefined };
   const data = await fetchPost(id);
   return { post: data.post };
