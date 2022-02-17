@@ -16,7 +16,7 @@ const TopNavbar = () => {
         <div className="pl-2">
           {!isVerified.isLoading && (
             <>
-              {data?.data.user && (
+              {data?.data.user ? (
                 <IconButton
                   avatar={
                     <CardAvatar
@@ -26,8 +26,7 @@ const TopNavbar = () => {
                   }
                   onClick={() => router.push("/user")}
                 />
-              )}
-              {!isVerified.data?.data.authenticated && (
+              ) : (
                 <LineLoginButton size="lg" />
               )}
             </>
