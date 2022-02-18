@@ -1,4 +1,5 @@
 import Card from "components/Card";
+import CardSubmitButton from "components/Card/CardSubmitButton";
 import AnimatedSpinner from "components/svg/AnimatedSpinner";
 import TextArea from "components/TextField/TextArea";
 import React, { FC } from "react";
@@ -48,13 +49,11 @@ const OrderForm: FC<Props> = ({ orderForm, setOrderForm }) => {
           }
         />
       </div>
-      <button
-        disabled={sum <= 0 || createOrder.isLoading}
-        className="bg-line-400 hover:bg-line-700 active:bg-line-800 flex h-12 w-full items-center justify-center text-lg font-semibold text-white transition disabled:bg-zinc-300 dark:disabled:bg-zinc-600"
+      <CardSubmitButton
+        disabled={sum <= 0}
+        loading={createOrder.isLoading}
         onClick={() => handleCreateOrder()}
-      >
-        {createOrder.isLoading ? <AnimatedSpinner /> : `合計$${sum}`}
-      </button>
+      >{`合計$${sum}`}</CardSubmitButton>
     </Card>
   );
 };
