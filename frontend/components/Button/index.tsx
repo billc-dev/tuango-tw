@@ -1,7 +1,7 @@
 import AnimatedSpinner from "components/svg/AnimatedSpinner";
-import React, { FC, HTMLAttributes } from "react";
+import React, { ButtonHTMLAttributes, FC } from "react";
 
-interface Props extends HTMLAttributes<HTMLButtonElement> {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: "sm" | "lg";
   variant?: "primary" | "secondary" | "danger";
   fullWidth?: boolean;
