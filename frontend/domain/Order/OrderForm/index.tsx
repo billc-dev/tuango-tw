@@ -1,6 +1,5 @@
 import Card from "components/Card";
 import CardSubmitButton from "components/Card/CardSubmitButton";
-import AnimatedSpinner from "components/svg/AnimatedSpinner";
 import TextArea from "components/TextField/TextArea";
 import React, { FC } from "react";
 import toast from "react-hot-toast";
