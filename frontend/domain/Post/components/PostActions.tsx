@@ -5,6 +5,7 @@ import React, { FC, useState } from "react";
 import { IPost } from "../types";
 import { useUser } from "domain/User/hooks";
 import LoginCard from "domain/User/LoginCard";
+import Comment from "domain/Comment";
 
 interface Props {
   post: IPost;
@@ -41,6 +42,7 @@ const PostActions: FC<Props> = ({ post }) => {
         </TabButton>
       </div>
       <Order post={post} action={action} />
+      <Comment postId={post._id} action={action} />
     </>
   ) : (
     <LoginCard />
