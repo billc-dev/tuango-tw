@@ -18,7 +18,7 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
   return (
     <div
       className="flex h-[264px] max-w-[180px] transform flex-col overflow-hidden rounded-3xl bg-white
-              shadow-md transition hover:scale-[1.02] hover:shadow-lg dark:bg-zinc-800 dark:hover:shadow-gray-900"
+              shadow-md transition hover:shadow-2xl dark:bg-zinc-800 dark:hover:shadow-gray-900"
     >
       <LazyLoadImage
         src={post.imageUrls && post.imageUrls[0].sm}

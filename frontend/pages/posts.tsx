@@ -58,8 +58,12 @@ const Posts: NextPage<Props> = (props) => {
 Posts.getInitialProps = async (ctx: NextPageContext) => {
   const id = ctx.query.id as string;
   if (!id || typeof id !== "string") return { post: undefined };
-  const data = await fetchPost(id);
-  return { post: data.post };
+  try {
+    const data = await fetchPost(id);
+    return { post: data.post };
+  } catch (error) {
+    return { post: undefined };
+  }
 };
 
 export default Posts;
