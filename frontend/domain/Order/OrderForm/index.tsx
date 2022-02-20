@@ -1,10 +1,11 @@
 import Card from "components/Card";
 import CardSubmitButton from "components/Card/CardSubmitButton";
 import TextArea from "components/TextField/TextArea";
+import { useScrollIntoView } from "hooks/useScrollIntoView";
 import React, { FC } from "react";
 import toast from "react-hot-toast";
 import { Updater } from "use-immer";
-import { useCreateOrder } from "../hooks";
+import { useCreateOrder, useOrder } from "../hooks";
 import { validateOrder } from "../services";
 import { getOrderSum } from "../services/calc";
 import { IOrderForm } from "../types";
@@ -16,6 +17,7 @@ interface Props {
 }
 
 const OrderForm: FC<Props> = ({ orderForm, setOrderForm }) => {
+  const { isLoading } = useOrder(orderForm.postId);
   const sum = getOrderSum(orderForm.items);
   const createOrder = useCreateOrder(setOrderForm);
   const handleCreateOrder = async () => {
@@ -24,9 +26,12 @@ const OrderForm: FC<Props> = ({ orderForm, setOrderForm }) => {
     toast.loading("訂單製作中...", { id: "orderToast" });
     createOrder.mutate({ orderForm: validatedOrderForm });
   };
-
+  const { ref } = useScrollIntoView("orderForm", isLoading, "#order");
   return (
     <Card>
+      <div className="relative">
+        <div ref={ref} className="absolute -top-12" />
+      </div>
       <div className="flex flex-col items-center justify-center p-3">
         {orderForm?.items?.map((item, index) => (
           <OrderItem
