@@ -32,26 +32,24 @@ const Button: FC<Props> = (props) => {
     );
   };
   const variantStyles = () => {
-    if (!variant) return "bg-zinc-400 hover:bg-zinc-600";
+    if (!variant) return "bg-zinc-300 hover:bg-zinc-400 text-zinc-900";
     else if (variant === "primary") {
-      return "bg-green-500 hover:bg-green-700";
+      return "bg-line-400 hover:bg-line-800 text-white";
     } else if (variant === "danger") {
-      return "bg-red-500 hover:bg-red-700";
-    } else return "bg-zinc-400 hover:bg-zinc-600";
+      return "bg-red-500 hover:bg-red-700 text-white";
+    }
   };
   return (
-    <div className="p-1">
-      <button
-        className={`select-none py-1 px-3 text-white shadow transition disabled:text-gray-300 dark:text-gray-100 ${
-          fullWidth ? "w-full" : ""
-        } ${variantStyles()} ${size === "lg" ? "px-4 text-lg" : ""} ${
-          pill ? "rounded-full" : "rounded-md"
-        } ${className}`}
-        {...rest}
-      >
-        {renderedChildren()}
-      </button>
-    </div>
+    <button
+      className={`select-none py-1 px-3 shadow transition disabled:bg-zinc-300  ${
+        fullWidth ? "w-full" : ""
+      } ${variantStyles()} ${size === "lg" ? "px-4 text-lg" : ""} ${
+        pill ? "rounded-full" : "rounded-md"
+      } ${className}`}
+      {...rest}
+    >
+      {renderedChildren()}
+    </button>
   );
 };
 

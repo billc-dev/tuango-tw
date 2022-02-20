@@ -5,6 +5,10 @@ import { createOrder } from "../api/order";
 import { getInitialOrderForm } from "../services";
 import { IOrder, IOrderForm } from "../types";
 
+interface OrderQueryData {
+  orders: IOrder[];
+}
+
 export const useCreateOrder = (setOrderForm: Updater<IOrderForm>) => {
   const queryClient = useQueryClient();
   return useMutation(createOrder, {
@@ -14,12 +18,9 @@ export const useCreateOrder = (setOrderForm: Updater<IOrderForm>) => {
     ) => {
       if (!post) return;
       queryClient.setQueryData(["post", postId], { post });
-      const data = queryClient.getQueryData<{ orders: IOrder[] }>([
-        "order",
-        postId,
-      ]);
+      const data = queryClient.getQueryData<OrderQueryData>(["order", postId]);
       if (data?.orders && order) {
-        queryClient.setQueryData(["order", postId], {
+        queryClient.setQueryData<OrderQueryData>(["order", postId], {
           orders: [...data.orders, order],
         });
       }
@@ -28,7 +29,9 @@ export const useCreateOrder = (setOrderForm: Updater<IOrderForm>) => {
         toast.error(error, { id: "orderToast" });
         return;
       }
+
       toast.success("您的訂單已成立！", { id: "orderToast" });
+
       setOrderForm((draft) => {
         const { postId, items, comment } = getInitialOrderForm(post);
         draft.postId = postId;
