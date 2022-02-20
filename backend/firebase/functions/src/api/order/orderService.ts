@@ -2,7 +2,7 @@ import { getCurrentDate } from "../../utils/date";
 import { IPost, Item } from "../post/post";
 import { IUser } from "../user/userDB";
 import { MongooseOrder } from "./order";
-import { Order } from "./orderDB";
+import Order from "./orderDB";
 import { IOrderForm, orderFormSchema } from "./orderSchema";
 
 export const validateOrderForm = (orderForm: IOrderForm) => {
