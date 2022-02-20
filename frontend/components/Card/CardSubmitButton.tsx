@@ -14,7 +14,7 @@ const CardSubmitButton: FC<Props> = ({
   return (
     <button
       disabled={disabled || loading}
-      className="bg-line-400 hover:bg-line-700 active:bg-line-800 flex h-12 w-full items-center justify-center text-lg font-semibold text-white transition disabled:bg-zinc-300 dark:disabled:bg-zinc-600"
+      className="bg-line-400 hover:bg-line-700 active:bg-line-800 flex h-12 w-full items-center justify-center text-lg text-white transition disabled:bg-zinc-300 dark:disabled:bg-zinc-600"
       {...props}
     >
       {loading ? <AnimatedSpinner /> : children}
