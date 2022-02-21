@@ -2,7 +2,7 @@ import React, { FC, useEffect } from "react";
 
 import { useImmer } from "use-immer";
 
-import { IPost } from "../Post/types";
+import { Action, IPost } from "../Post/types";
 import OrderForm from "./OrderForm";
 import OrderList from "./OrderList";
 import { getInitialOrderForm } from "./services";
@@ -10,7 +10,7 @@ import { IOrderForm } from "./types";
 
 interface Props {
   post: IPost;
-  action: "order" | "comment";
+  action: Action;
 }
 
 const Order: FC<Props> = ({ post, action }) => {
@@ -30,7 +30,7 @@ const Order: FC<Props> = ({ post, action }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post]);
 
-  return action === "order" ? (
+  return action === "order" || action === undefined ? (
     <>
       <OrderList postId={post._id} />
       <OrderForm orderForm={orderForm} setOrderForm={setOrderForm} />

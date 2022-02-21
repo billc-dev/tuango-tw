@@ -2,13 +2,15 @@ import React, { FC } from "react";
 
 import { useImmer } from "use-immer";
 
+import { Action } from "domain/Post/types";
+
 import CommentForm from "./CommentForm";
 import CommentList from "./CommentList";
 import { ICommentForm } from "./types";
 
 interface Props {
   postId: string;
-  action: "order" | "comment";
+  action: Action;
 }
 
 const Comment: FC<Props> = ({ postId, action }) => {

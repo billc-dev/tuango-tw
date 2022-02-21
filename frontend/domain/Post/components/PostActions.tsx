@@ -8,7 +8,7 @@ import Order from "domain/Order";
 import LoginCard from "domain/User/LoginCard";
 import { useUser } from "domain/User/hooks";
 
-import { IPost } from "../types";
+import { Action, IPost } from "../types";
 
 interface Props {
   post: IPost;
@@ -17,10 +17,7 @@ interface Props {
 const PostActions: FC<Props> = ({ post }) => {
   const { data } = useUser();
   const router = useRouter();
-  const [action, setAction] = useState<"order" | "comment">(
-    window.location.hash === "#comment" ? "comment" : "order"
-  );
-
+  const action = router.query.action as Action;
   return data?.data.user ? (
     <>
       <div className="flex select-none space-x-1 rounded-lg bg-zinc-100 p-1 dark:bg-zinc-800">
@@ -28,17 +25,27 @@ const PostActions: FC<Props> = ({ post }) => {
         <TabButton
           selected={action === "comment"}
           onClick={() => {
-            setAction("comment");
-            router.push({ hash: "comment" }, undefined, { shallow: true });
+            router.push(
+              { query: { ...router.query, action: "comment" } },
+              undefined,
+              {
+                shallow: true,
+              }
+            );
           }}
         >
           {post.commentCount} 問與答
         </TabButton>
         <TabButton
-          selected={action === "order"}
+          selected={action === "order" || action === undefined}
           onClick={() => {
-            setAction("order");
-            router.push({ hash: "order" }, undefined, { shallow: true });
+            router.push(
+              { query: { ...router.query, action: "order" } },
+              undefined,
+              {
+                shallow: true,
+              }
+            );
           }}
         >
           {post.orderCount} 訂單

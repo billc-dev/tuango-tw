@@ -18,7 +18,7 @@ interface Props {
 
 const CommentForm: FC<Props> = ({ commentForm, setCommentForm }) => {
   const { isLoading } = useGetComments(commentForm.postId);
-  const { ref } = useScrollIntoView("a", isLoading, "#comment");
+  const { ref } = useScrollIntoView(isLoading, "comment");
   const createComment = useCreateComment(setCommentForm);
   const handleCreateComment = () => {
     toast.promise(createComment.mutateAsync({ commentForm }), {

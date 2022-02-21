@@ -21,15 +21,17 @@ interface Props {
 
 const OrderForm: FC<Props> = ({ orderForm, setOrderForm }) => {
   const { isLoading } = useOrder(orderForm.postId);
+  const { ref } = useScrollIntoView(isLoading, "order");
+
   const sum = getOrderSum(orderForm.items);
   const createOrder = useCreateOrder(setOrderForm);
+
   const handleCreateOrder = async () => {
     const validatedOrderForm = await validateOrder(orderForm);
     if (!validatedOrderForm) return;
     toast.loading("訂單製作中...", { id: "orderToast" });
     createOrder.mutate({ orderForm: validatedOrderForm });
   };
-  const { ref } = useScrollIntoView("orderForm", isLoading, "#order");
   return (
     <Card>
       <div className="relative">
