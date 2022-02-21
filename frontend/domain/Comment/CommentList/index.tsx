@@ -1,6 +1,8 @@
 import React, { FC } from "react";
+
 import { useGetComments } from "../hooks";
 import Comment from "./Comment";
+
 interface Props {
   postId: string;
 }

@@ -1,7 +1,10 @@
-import { fetchPostCards } from "domain/Post/api/post";
 import React, { Fragment } from "react";
+
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useInfiniteQuery } from "react-query";
+
+import { fetchPostCards } from "domain/Post/api/post";
+
 import PostCard from "./PostCard";
 import PostCardGrid from "./PostCardGrid";
 import PostCardSkeletons from "./PostCardSkeletons";

@@ -1,6 +1,8 @@
+import React, { useEffect, useState } from "react";
+
 import { MoonIcon, SunIcon } from "@heroicons/react/outline";
 import { useTheme } from "next-themes";
-import React, { useEffect, useState } from "react";
+
 import IconButton from "./IconButton";
 
 const ThemeButton = () => {

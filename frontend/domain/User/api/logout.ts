@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { WINDOW_URL } from "utils/constants";
 
 export const logout = () => {

@@ -1,6 +1,8 @@
-import Header from "components/Card/CardHeader";
 import React, { FC } from "react";
+
+import Header from "components/Card/CardHeader";
 import { date, getFullDateFromNow } from "services/date";
+
 import { IPost } from "../types";
 import PostImageCarousel from "./PostImageCarousel";
 

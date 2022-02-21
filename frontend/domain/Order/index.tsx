@@ -1,10 +1,12 @@
 import React, { FC, useEffect } from "react";
-import { IPost } from "../Post/types";
-import OrderList from "./OrderList";
-import OrderForm from "./OrderForm";
+
 import { useImmer } from "use-immer";
-import { IOrderForm } from "./types";
+
+import { IPost } from "../Post/types";
+import OrderForm from "./OrderForm";
+import OrderList from "./OrderList";
 import { getInitialOrderForm } from "./services";
+import { IOrderForm } from "./types";
 
 interface Props {
   post: IPost;

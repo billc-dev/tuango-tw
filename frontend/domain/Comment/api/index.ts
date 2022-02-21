@@ -1,6 +1,8 @@
 import axios, { AxiosResponse } from "axios";
+
 import { IPost } from "domain/Post/types";
-import { ICommentForm, IComment, IReplyForm } from "../types";
+
+import { IComment, ICommentForm, IReplyForm } from "../types";
 
 export const fetchComments = (
   postId: string

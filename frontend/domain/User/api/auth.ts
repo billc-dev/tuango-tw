@@ -1,10 +1,12 @@
 import axios, { AxiosResponse } from "axios";
 import jwt_decode from "jwt-decode";
+import { WINDOW_URL } from "utils/constants";
+
 import {
   getAccessToken,
   setAccessToken,
 } from "domain/User/services/accessToken";
-import { WINDOW_URL } from "utils/constants";
+
 import { User } from "../types";
 
 type FetchVerifyStatus = () => Promise<

@@ -1,5 +1,6 @@
-import AnimatedSpinner from "components/svg/AnimatedSpinner";
 import React, { ButtonHTMLAttributes, FC } from "react";
+
+import AnimatedSpinner from "components/svg/AnimatedSpinner";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: "sm" | "lg";

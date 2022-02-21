@@ -1,4 +1,5 @@
 import { useQuery } from "react-query";
+
 import { fetchComments } from "../api";
 
 export const useGetComments = (postId: string) => {

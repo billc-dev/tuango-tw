@@ -1,11 +1,13 @@
+import { useEffect } from "react";
+
+import type { NextPage } from "next";
+import { useRouter } from "next/router";
+import toast from "react-hot-toast";
+
 import AnimatedSpinner from "components/svg/AnimatedSpinner";
 import { useMutateLogin, useUser } from "domain/User/hooks";
 import { getCode, getRedirectUrl } from "domain/User/services";
 import { LINE_REDIRECT_URL } from "domain/User/services/urls";
-import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import toast from "react-hot-toast";
 
 const Redirect: NextPage = () => {
   const code = getCode();

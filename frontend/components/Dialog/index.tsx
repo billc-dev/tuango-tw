@@ -1,5 +1,7 @@
-import { XIcon } from "@heroicons/react/outline";
 import React, { FC, useEffect, useState } from "react";
+
+import { XIcon } from "@heroicons/react/outline";
+
 import IconButton from "../Button/IconButton";
 
 interface DialogProps {

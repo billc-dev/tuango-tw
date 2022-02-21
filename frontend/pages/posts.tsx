@@ -1,12 +1,15 @@
-import Container from "components/Container";
-import { fetchPost } from "domain/Post/api/post";
-import PostCards from "domain/Post/PostCards";
-import PostDialog from "domain/Post/PostDialog";
+import { useEffect } from "react";
+
 import type { NextPage, NextPageContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { useQueryClient } from "react-query";
+
+import Container from "components/Container";
+import PostCards from "domain/Post/PostCards";
+import PostDialog from "domain/Post/PostDialog";
+import { fetchPost } from "domain/Post/api/post";
+
 import { IPost } from "../domain/Post/types";
 
 interface Props {
