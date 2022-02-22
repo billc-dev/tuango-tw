@@ -80,7 +80,7 @@ const OrderListItem: FC<Props> = ({ order, user, post }) => {
       </div>
       {order.order.map((item, index) => (
         <ul key={index} className="text-sm">
-          {`${item.id}. ${item.item}+${item.qty} $${item.price}`}
+          {`${item.id}. ${item.item}+${item.qty} $${item.qty * item.price}`}
         </ul>
       ))}
       {order.comment && (
