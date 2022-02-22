@@ -4,10 +4,12 @@ import { useRouter } from "next/router";
 
 import TabButton from "components/Tab/TabButton";
 import Comment from "domain/Comment";
+import LikeButton from "domain/Like/LikeButton";
 import Order from "domain/Order";
 import LoginCard from "domain/User/LoginCard";
 import { useUser } from "domain/User/hooks";
 
+import { setAction } from "../services/route";
 import { Action, IPost } from "../types";
 
 interface Props {
@@ -21,32 +23,16 @@ const PostActions: FC<Props> = ({ post }) => {
   return data?.data.user ? (
     <>
       <div className="flex select-none space-x-1 rounded-lg bg-zinc-100 p-1 dark:bg-zinc-800">
-        <TabButton selected={false}>{post.likeCount} 喜歡</TabButton>
+        <LikeButton tabButton postId={post._id} likeCount={post.likeCount} />
         <TabButton
           selected={action === "comment"}
-          onClick={() => {
-            router.push(
-              { query: { ...router.query, action: "comment" } },
-              undefined,
-              {
-                shallow: true,
-              }
-            );
-          }}
+          onClick={() => setAction("comment", router)}
         >
           {post.commentCount} 問與答
         </TabButton>
         <TabButton
           selected={action === "order" || action === undefined}
-          onClick={() => {
-            router.push(
-              { query: { ...router.query, action: "order" } },
-              undefined,
-              {
-                shallow: true,
-              }
-            );
-          }}
+          onClick={() => setAction("order", router)}
         >
           {post.orderCount} 訂單
         </TabButton>

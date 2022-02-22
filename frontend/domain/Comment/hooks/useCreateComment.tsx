@@ -15,6 +15,7 @@ export const useCreateComment = (setCommentForm: Updater<ICommentForm>) => {
 
       if (data?.data.comments) {
         queryClient.setQueryData<CommentQueryData>(["comments", post._id], {
+          ...data,
           data: { comments: [comment, ...data.data.comments] },
         });
       }
