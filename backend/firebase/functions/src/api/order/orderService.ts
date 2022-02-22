@@ -41,8 +41,6 @@ export const createNewOrder = async (
     else return image;
   };
 
-  const createdAt = getCurrentDate();
-
   const order = new Order({
     orderNum: prevOrder ? prevOrder.orderNum + 1 : 1,
     userId: user.username,
@@ -55,8 +53,7 @@ export const createNewOrder = async (
     imageUrl: imageUrl(),
     order: orderForm.items,
     comment: orderForm.comment,
-    createdAt,
-    orderHistory: [{ status: "ordered", createdAt }],
+    orderHistory: [{ status: "ordered" }],
   });
 
   await order.save();
