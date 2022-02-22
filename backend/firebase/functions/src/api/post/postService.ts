@@ -49,3 +49,11 @@ export const incrementItemQty = async (
 
   return updatedPost;
 };
+
+export const incrementCommentCount = (increment: number, postId: string) => {
+  return Post.findByIdAndUpdate(
+    postId,
+    { $inc: { commentCount: increment } },
+    { new: true }
+  );
+};

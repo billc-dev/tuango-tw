@@ -4,9 +4,10 @@ import * as cors from "cors";
 import * as cookieParser from "cookie-parser";
 import * as express from "express";
 
+import user from "./api/user/userRouter";
 import posts from "./api/post/postRouter";
 import orders from "./api/order/orderRouter";
-import user from "./api/user/userRouter";
+import comments from "./api/comment/commentRouter";
 
 const app = express();
 
@@ -35,9 +36,10 @@ app.use(cors(corsOptions));
 app.use(compression());
 app.use(cookieParser());
 
+app.use("/user", user);
 app.use("/posts", posts);
 app.use("/orders", orders);
-app.use("/user", user);
+app.use("/comments", comments);
 
 app.use((_req, res) => {
   return res.status(404).json({ error: "Route not defined" });

@@ -3,7 +3,7 @@ import asyncWrapper from "../../middleware/asyncWrapper";
 import { isAuthorized } from "../../middleware/auth";
 import { Post } from "../post";
 import * as postService from "../post/postService";
-import { Order } from "./orderDB";
+import Order from "./orderDB";
 import * as orderService from "./orderService";
 
 const router = express.Router();

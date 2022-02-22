@@ -69,4 +69,6 @@ const OrderSchema = new mongoose.Schema<IOrder>({
   },
 });
 
-export const Order = ordersConn.model<IOrder>("Order", OrderSchema);
+const Order = ordersConn.model<IOrder>("Order", OrderSchema);
+
+export default Order;
