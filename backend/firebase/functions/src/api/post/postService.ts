@@ -57,3 +57,11 @@ export const incrementCommentCount = (increment: number, postId: string) => {
     { new: true }
   );
 };
+
+export const incrementLikeCount = (increment: number, postId: string) => {
+  return Post.findByIdAndUpdate(
+    postId,
+    { $inc: { likeCount: increment } },
+    { new: true }
+  );
+};
