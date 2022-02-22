@@ -1,5 +1,6 @@
-import { Dialog, Transition } from "@headlessui/react";
 import React, { Dispatch, FC, Fragment, SetStateAction } from "react";
+
+import { Dialog, Transition } from "@headlessui/react";
 
 interface Props {
   open: boolean;

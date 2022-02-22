@@ -1,5 +1,6 @@
-import { IUser } from "api/auth/userDB";
 import axios, { AxiosResponse } from "axios";
+
+import { IUser } from "api/auth/userDB";
 import { WINDOW_URL } from "utils/constants";
 
 interface LoginProps {

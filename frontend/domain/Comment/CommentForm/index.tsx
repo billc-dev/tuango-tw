@@ -1,11 +1,14 @@
+import React, { FC } from "react";
+
+import toast from "react-hot-toast";
+import { Updater } from "use-immer";
+
 import Card from "components/Card";
 import CardSubmitButton from "components/Card/CardSubmitButton";
 import TextArea from "components/TextField/TextArea";
 import { useScrollIntoView } from "hooks/useScrollIntoView";
-import React, { FC } from "react";
-import toast from "react-hot-toast";
-import { Updater } from "use-immer";
-import { useCreateComment } from "../hooks";
+
+import { useCreateComment, useGetComments } from "../hooks";
 import { ICommentForm } from "../types";
 
 interface Props {
@@ -14,7 +17,8 @@ interface Props {
 }
 
 const CommentForm: FC<Props> = ({ commentForm, setCommentForm }) => {
-  const { ref } = useScrollIntoView("a", false, "#comment");
+  const { isLoading } = useGetComments(commentForm.postId);
+  const { ref } = useScrollIntoView(isLoading, "comment");
   const createComment = useCreateComment(setCommentForm);
   const handleCreateComment = () => {
     toast.promise(createComment.mutateAsync({ commentForm }), {

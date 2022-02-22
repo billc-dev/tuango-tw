@@ -1,15 +1,18 @@
+import { useState } from "react";
+
 import axios from "axios";
-import BottomNavbar from "components/Navigation/BottomNavbar";
-import TopNavbar from "components/Navigation/TopNavbar";
 import { ThemeProvider } from "next-themes";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { useState } from "react";
+import { Toaster } from "react-hot-toast";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+
+import BottomNavbar from "components/Navigation/BottomNavbar";
+import TopNavbar from "components/Navigation/TopNavbar";
 import { IS_DEV } from "utils/constants";
+
 import "../styles/globals.css";
-import { Toaster } from "react-hot-toast";
 
 // ANALYZE=true yarn build
 

@@ -1,5 +1,6 @@
-import LineLoginButton from "components/Button/LineLoginButton";
 import React from "react";
+
+import LineLoginButton from "components/Button/LineLoginButton";
 
 const LoginCard = () => {
   return (

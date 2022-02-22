@@ -1,10 +1,12 @@
+import React from "react";
+
+import { useRouter } from "next/router";
+
 import IconButton from "components/Button/IconButton";
 import LineLoginButton from "components/Button/LineLoginButton";
 import ThemeButton from "components/Button/ThemeButton";
 import CardAvatar from "components/Card/CardAvatar";
 import { useIsVerified, useUser } from "domain/User/hooks";
-import { useRouter } from "next/router";
-import React from "react";
 
 const TopNavbar = () => {
   const { data, isLoading } = useUser();

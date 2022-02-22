@@ -1,9 +1,12 @@
-import { MinusIcon, PlusIcon } from "@heroicons/react/outline";
-import IconButton from "components/Button/IconButton";
 import React, { FC } from "react";
+
+import { MinusIcon, PlusIcon } from "@heroicons/react/outline";
 import { Updater } from "use-immer";
-import { IOrderForm, IOrderItem } from "../types";
+
+import IconButton from "components/Button/IconButton";
+
 import { handleChangeItemQty } from "../services";
+import { IOrderForm, IOrderItem } from "../types";
 
 interface Props {
   index: number;

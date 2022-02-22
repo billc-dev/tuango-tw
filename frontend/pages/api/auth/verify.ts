@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import jwt_decode from "jwt-decode";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export default function auth(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req;

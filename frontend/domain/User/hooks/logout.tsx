@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient } from "react-query";
+
 import { setAccessToken } from "domain/User/services/accessToken";
+
 import { logout } from "../api";
 
 export const useMutateLogout = () => {

@@ -1,11 +1,13 @@
+import React from "react";
+
 import {
   ChatAltIcon,
   ClipboardListIcon,
   DocumentAddIcon,
   HomeIcon,
 } from "@heroicons/react/outline";
+
 import NavigationButton from "components/Button/NavigationButton";
-import React from "react";
 
 const BottomNavbar = () => {
   return (

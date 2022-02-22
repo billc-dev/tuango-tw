@@ -1,8 +1,10 @@
 import React, { FC } from "react";
+
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
+
 import { ImageUrl } from "../types";
 
 interface Props {

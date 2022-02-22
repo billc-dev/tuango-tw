@@ -1,10 +1,14 @@
+import React, { FC } from "react";
+
+import toast from "react-hot-toast";
+import { Updater } from "use-immer";
+
 import Card from "components/Card";
 import CardSubmitButton from "components/Card/CardSubmitButton";
 import TextArea from "components/TextField/TextArea";
-import React, { FC } from "react";
-import toast from "react-hot-toast";
-import { Updater } from "use-immer";
-import { useCreateOrder } from "../hooks";
+import { useScrollIntoView } from "hooks/useScrollIntoView";
+
+import { useCreateOrder, useOrder } from "../hooks";
 import { validateOrder } from "../services";
 import { getOrderSum } from "../services/calc";
 import { IOrderForm } from "../types";
@@ -16,17 +20,23 @@ interface Props {
 }
 
 const OrderForm: FC<Props> = ({ orderForm, setOrderForm }) => {
+  const { isLoading } = useOrder(orderForm.postId);
+  const { ref } = useScrollIntoView(isLoading, "order");
+
   const sum = getOrderSum(orderForm.items);
   const createOrder = useCreateOrder(setOrderForm);
+
   const handleCreateOrder = async () => {
     const validatedOrderForm = await validateOrder(orderForm);
     if (!validatedOrderForm) return;
     toast.loading("訂單製作中...", { id: "orderToast" });
     createOrder.mutate({ orderForm: validatedOrderForm });
   };
-
   return (
     <Card>
+      <div className="relative">
+        <div ref={ref} className="absolute -top-12" />
+      </div>
       <div className="flex flex-col items-center justify-center p-3">
         {orderForm?.items?.map((item, index) => (
           <OrderItem

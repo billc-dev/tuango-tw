@@ -1,6 +1,9 @@
-import Dialog from "components/Dialog";
-import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
+
+import { useRouter } from "next/router";
+
+import Dialog from "components/Dialog";
+
 import PostActions from "./components/PostActions";
 import PostContent from "./components/PostContent";
 import { usePost } from "./hooks";

@@ -1,6 +1,9 @@
-import { LINE_LOGIN_URL_WITH_PARAMS } from "domain/User/services/urls";
 import React, { FC } from "react";
+
 import { WINDOW_URL } from "utils/constants";
+
+import { LINE_LOGIN_URL_WITH_PARAMS } from "domain/User/services/urls";
+
 import Button from ".";
 
 interface Props {

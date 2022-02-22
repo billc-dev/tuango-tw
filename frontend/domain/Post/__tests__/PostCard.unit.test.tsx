@@ -1,7 +1,9 @@
 import { render } from "@testing-library/react";
+
 import { expectedPosts } from "domain/Post/__mock__/post.mock";
-import { IPostCard } from "../types";
+
 import PostCard from "../PostCards/PostCard";
+import { IPostCard } from "../types";
 
 const renderComponent = () =>
   render(<PostCard post={expectedPosts.posts[0]} />);

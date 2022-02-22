@@ -1,13 +1,16 @@
+import React, { FC, useState } from "react";
+
 import { XCircleIcon } from "@heroicons/react/outline";
+import toast from "react-hot-toast";
+
 import Button from "components/Button";
 import IconButton from "components/Button/IconButton";
 import Header from "components/Card/CardHeader";
 import NormalDialog from "components/Dialog/NormalDialog";
 import { IPost } from "domain/Post/types";
 import { User } from "domain/User/types";
-import React, { FC, useState } from "react";
-import toast from "react-hot-toast";
 import { getFullDate } from "services/date";
+
 import { useDeleteOrder } from "../hooks";
 import { IOrder } from "../types";
 

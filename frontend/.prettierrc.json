@@ -1,0 +1,12 @@
+{
+  "printWidth": 80,
+  "tabWidth": 2,
+  "importOrder": [
+    "^react$",
+    "<THIRD_PARTY_MODULES>",
+    "^api|^components|^domain|^hooks|^services|^styles|^utils/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
+}

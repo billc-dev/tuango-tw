@@ -1,4 +1,5 @@
 import { useQuery } from "react-query";
+
 import { fetchPost } from "../api/post";
 
 export const usePost = (id: string) => {

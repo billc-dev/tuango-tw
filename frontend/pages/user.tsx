@@ -1,10 +1,12 @@
+import React, { useEffect } from "react";
+
+import { NextPage } from "next";
+import { useRouter } from "next/router";
+import toast from "react-hot-toast";
+
 import Button from "components/Button";
 import { useUser } from "domain/User/hooks";
 import { useMutateLogout } from "domain/User/hooks/logout";
-import { NextPage } from "next";
-import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import toast from "react-hot-toast";
 
 const User: NextPage = () => {
   const logout = useMutateLogout();

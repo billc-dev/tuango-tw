@@ -1,4 +1,5 @@
 import { nanoid } from "nanoid";
+
 import { WINDOW_URL } from "utils/constants";
 
 export const LINE_REDIRECT_URL = `${WINDOW_URL}/redirect`;

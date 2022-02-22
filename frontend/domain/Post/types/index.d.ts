@@ -40,3 +40,5 @@ export interface Item {
   price: number;
   itemQty: number;
 }
+
+export type Action = undefined | "comment" | "order";
