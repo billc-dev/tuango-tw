@@ -1,10 +1,18 @@
-import React from "react";
+import React, { FC } from "react";
 
-const AnimatedSpinner = () => {
+interface Props {
+  size?: "small";
+}
+
+const AnimatedSpinner: FC<Props> = ({ size }) => {
   return (
-    <div className="flex h-6 w-6 items-center justify-center">
+    <div
+      className={`flex items-center justify-center ${
+        size === "small" ? "h-5 w-5" : "h-6 w-6"
+      }`}
+    >
       <svg
-        className="h-5 w-5 animate-spin text-zinc-600"
+        className="h-5 w-5 animate-spin text-zinc-600 dark:text-zinc-200"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
