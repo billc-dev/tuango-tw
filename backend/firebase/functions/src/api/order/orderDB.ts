@@ -46,7 +46,11 @@ const OrderSchema = new mongoose.Schema<IOrder>({
   sellerComment: String,
   hasName: { type: Boolean, required: true, default: false },
   isExtra: { type: Boolean, required: true, default: false },
-  createdAt: { type: String, required: true },
+  createdAt: {
+    type: String,
+    required: true,
+    default: new Date().toISOString(),
+  },
   deliveredAt: String,
   canceledAt: String,
   orderHistory: {
@@ -57,7 +61,11 @@ const OrderSchema = new mongoose.Schema<IOrder>({
           default: "ordered",
           enum: ["ordered", "delivered", "completed", "missing", "canceled"],
         },
-        createdAt: { type: String, required: true },
+        createdAt: {
+          type: String,
+          required: true,
+          default: new Date().toISOString(),
+        },
       },
     ],
     required: true,

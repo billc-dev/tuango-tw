@@ -8,6 +8,7 @@ import user from "./api/user/userRouter";
 import posts from "./api/post/postRouter";
 import orders from "./api/order/orderRouter";
 import comments from "./api/comment/commentRouter";
+import likes from "./api/like/likeRouter";
 
 const app = express();
 
@@ -40,6 +41,7 @@ app.use("/user", user);
 app.use("/posts", posts);
 app.use("/orders", orders);
 app.use("/comments", comments);
+app.use("/likes", likes);
 
 app.use((_req, res) => {
   return res.status(404).json({ error: "Route not defined" });
