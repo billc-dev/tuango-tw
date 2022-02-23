@@ -18,7 +18,9 @@ const PostDialog: FC<Props> = (props) => {
   const [open, setOpen] = useState(false);
   const { data } = usePost(id);
   const handleClose = () => {
-    router.push({ query: {} }, undefined, { shallow: true });
+    router.push({ query: { ...router.query, id: "" } }, undefined, {
+      shallow: true,
+    });
   };
 
   useEffect(() => {
