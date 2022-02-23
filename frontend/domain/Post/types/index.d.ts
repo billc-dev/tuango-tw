@@ -1,3 +1,5 @@
+import { QueryTypes } from "domain/Search/types";
+
 export interface IPost {
   _id: string;
   postNum: number;
@@ -42,3 +44,8 @@ export interface Item {
 }
 
 export type Action = undefined | "comment" | "order";
+
+export interface PostQuery {
+  type: QueryTypes;
+  value: string | number;
+}
