@@ -5,6 +5,7 @@ import {
   ClipboardListIcon,
   DocumentAddIcon,
   HomeIcon,
+  SearchIcon,
 } from "@heroicons/react/outline";
 
 import NavigationButton from "components/Button/NavigationButton";
@@ -25,6 +26,9 @@ const BottomNavbar = () => {
           </NavigationButton>
           <NavigationButton path="/orders" text="我的訂單">
             <ClipboardListIcon />
+          </NavigationButton>
+          <NavigationButton path="/search" text="搜尋">
+            <SearchIcon />
           </NavigationButton>
         </div>
       </div>
