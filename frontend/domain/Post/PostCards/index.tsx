@@ -13,6 +13,7 @@ interface Props {
     {
       posts: IPostCard[];
       nextId: number;
+      hasMore: boolean;
     },
     unknown
   >;
@@ -31,7 +32,7 @@ const PostCards: FC<Props> = ({ postsQuery }) => {
           )
         }
         next={fetchNextPage}
-        hasMore={true} // add to api => read last page
+        hasMore={data?.pages[data.pages.length - 1].hasMore || false} // add to api => read last page
         dataLength={
           data?.pages.reduce((sum, post) => post.posts.length + sum, 0) || 0
         }
