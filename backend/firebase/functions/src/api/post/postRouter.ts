@@ -9,13 +9,18 @@ router.get(
   "/paginate/:cursor",
   asyncWrapper(async (req, res) => {
     const cursor = req.params.cursor;
+    const limit = Number(req.query.limit);
+    const { query } = req.query;
+
+    if (isNaN(limit)) throw "limit must be a number";
+    if (limit <= 0) throw "limit must be greater than 0";
+
     let filter: { status: string; postNum?: object } = { status: "open" };
-    if (cursor && cursor !== "initial") {
-      filter.postNum = { $lt: cursor };
-    }
-    const query = Post.find(filter).sort("-postNum").limit(16);
+    if (cursor && cursor !== "initial") filter.postNum = { $lt: cursor };
+
+    const postQuery = Post.find(filter).sort("-postNum").limit(limit);
     if (req.headers.type === "postCards") {
-      query.select({
+      postQuery.select({
         postNum: 1,
         title: 1,
         displayName: 1,
@@ -25,8 +30,9 @@ router.get(
       });
     }
 
-    const posts = await query;
-    return res.status(200).json({ posts });
+    const posts = await postQuery;
+    const hasMore = posts.length === limit;
+    return res.status(200).json({ posts, hasMore });
   })
 );
 

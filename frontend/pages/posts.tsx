@@ -9,6 +9,7 @@ import Container from "components/Container";
 import PostCards from "domain/Post/PostCards";
 import PostDialog from "domain/Post/PostDialog";
 import { fetchPost } from "domain/Post/api/post";
+import { useInfinitePostQuery } from "domain/Post/hooks";
 
 import { IPost } from "../domain/Post/types";
 
@@ -21,6 +22,8 @@ const Posts: NextPage<Props> = (props) => {
   const { post } = props;
   const { id } = router.query;
   const queryClient = useQueryClient();
+  const limit = 16;
+  const postsQuery = useInfinitePostQuery(limit);
   useEffect(() => {
     if (post) queryClient.setQueryData(["post", post._id], { post });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,7 +54,7 @@ const Posts: NextPage<Props> = (props) => {
         )}
       </Head>
       <Container>
-        <PostCards />
+        <PostCards postsQuery={postsQuery} />
       </Container>
       {typeof id === "string" && <PostDialog id={id} />}
     </>

@@ -1,21 +1,26 @@
-import React, { Fragment } from "react";
+import React, { FC, Fragment } from "react";
 
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useInfiniteQuery } from "react-query";
+import { UseInfiniteQueryResult } from "react-query";
 
-import { fetchPostCards } from "domain/Post/api/post";
-
+import { IPostCard } from "../types";
 import PostCard from "./PostCard";
 import PostCardGrid from "./PostCardGrid";
 import PostCardSkeletons from "./PostCardSkeletons";
 
-const PostCards = () => {
-  const { data, fetchNextPage, isFetching, isLoading } = useInfiniteQuery(
-    "posts",
-    ({ pageParam = "initial" }) => fetchPostCards(pageParam),
-    { getNextPageParam: (lastPage) => lastPage.nextId }
-  );
-  // return <div className="p-4">{JSON.stringify(data?.pages, null, 2)}</div>;
+interface Props {
+  postsQuery: UseInfiniteQueryResult<
+    {
+      posts: IPostCard[];
+      nextId: number;
+      hasMore: boolean;
+    },
+    unknown
+  >;
+}
+
+const PostCards: FC<Props> = ({ postsQuery }) => {
+  const { data, fetchNextPage, isFetching, isLoading } = postsQuery;
   return (
     <div className="flex w-full flex-col items-center">
       <InfiniteScroll
@@ -27,7 +32,7 @@ const PostCards = () => {
           )
         }
         next={fetchNextPage}
-        hasMore={true} // add to api => read last page
+        hasMore={data?.pages[data.pages.length - 1].hasMore || false} // add to api => read last page
         dataLength={
           data?.pages.reduce((sum, post) => post.posts.length + sum, 0) || 0
         }

@@ -1,41 +1,25 @@
 import axios from "axios";
 
-import { IPost, IPostCard } from "../types";
-
-export const fetchPosts = async (
-  pageParam: string,
-  option?: { cookie: any }
-): Promise<{
-  posts: IPost[];
-  nextId: number;
-}> => {
-  const options = option?.cookie ? { headers: { Cookie: option.cookie } } : {};
-
-  const res = await axios.get(`/posts/paginate/${pageParam}`, options);
-
-  return {
-    posts: res.data.posts,
-    nextId: res.data.posts[res.data.posts.length - 1].postNum,
-  };
-};
+import { IPost, IPostCard, PostQuery } from "../types";
 
 export const fetchPostCards = async (
-  pageParam: string,
-  option?: { cookie: any }
+  cursor: string,
+  limit: number,
+  query?: PostQuery
 ): Promise<{
   posts: IPostCard[];
   nextId: number;
+  hasMore: boolean;
 }> => {
-  const options = option?.cookie ? { headers: { Cookie: option.cookie } } : {};
-
-  const res = await axios.get(`/posts/paginate/${pageParam}`, {
+  const res = await axios.get(`/posts/paginate/${cursor}`, {
     headers: { type: "postCards" },
-    ...options,
+    params: { limit, query },
   });
 
   return {
     posts: res.data.posts,
     nextId: res.data.posts[res.data.posts.length - 1].postNum,
+    hasMore: res.data.hasMore,
   };
 };
 

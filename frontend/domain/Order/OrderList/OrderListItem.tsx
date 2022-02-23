@@ -50,7 +50,7 @@ const OrderListItem: FC<Props> = ({ order, user, post }) => {
                 setOpen={setOpen}
                 title="您確定要取消這筆訂單嗎？"
               >
-                <div className="flex justify-end pt-2">
+                <div className="flex justify-end gap-2 pt-2">
                   <Button
                     size="lg"
                     variant="danger"
@@ -80,7 +80,7 @@ const OrderListItem: FC<Props> = ({ order, user, post }) => {
       </div>
       {order.order.map((item, index) => (
         <ul key={index} className="text-sm">
-          {`${item.id}. ${item.item}+${item.qty} $${item.price}`}
+          {`${item.id}. ${item.item}+${item.qty} $${item.qty * item.price}`}
         </ul>
       ))}
       {order.comment && (
