@@ -30,8 +30,6 @@ const corsOptions: cors.CorsOptions = {
     }
   },
   credentials: true,
-
-  // allowedHeaders: ["type", "content-type"],
 };
 app.use(cors(corsOptions));
 app.use(compression());
