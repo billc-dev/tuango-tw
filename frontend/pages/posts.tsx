@@ -3,12 +3,12 @@ import { useEffect } from "react";
 import type { NextPage, NextPageContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useQueryClient } from "react-query";
+import { useInfiniteQuery, useQueryClient } from "react-query";
 
 import Container from "components/Container";
 import PostCards from "domain/Post/PostCards";
 import PostDialog from "domain/Post/PostDialog";
-import { fetchPost } from "domain/Post/api/post";
+import { fetchPost, fetchPostCards } from "domain/Post/api/post";
 
 import { IPost } from "../domain/Post/types";
 
@@ -21,6 +21,11 @@ const Posts: NextPage<Props> = (props) => {
   const { post } = props;
   const { id } = router.query;
   const queryClient = useQueryClient();
+  const postsQuery = useInfiniteQuery(
+    "posts",
+    ({ pageParam = "initial" }) => fetchPostCards(pageParam),
+    { getNextPageParam: (lastPage) => lastPage.nextId }
+  );
   useEffect(() => {
     if (post) queryClient.setQueryData(["post", post._id], { post });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,7 +56,7 @@ const Posts: NextPage<Props> = (props) => {
         )}
       </Head>
       <Container>
-        <PostCards />
+        <PostCards postsQuery={postsQuery} />
       </Container>
       {typeof id === "string" && <PostDialog id={id} />}
     </>
