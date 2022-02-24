@@ -48,6 +48,8 @@ const PostCards: FC<Props> = ({ postsQuery }) => {
                 </Fragment>
               ))}
             </PostCardGrid>
+            {data?.pages[0].posts.length === 0 &&
+              "找不到貼文，請試試其他的關鍵字。"}
           </div>
         )}
       </InfiniteScroll>
