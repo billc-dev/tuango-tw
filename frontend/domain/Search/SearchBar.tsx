@@ -102,7 +102,13 @@ const SearchBar = () => {
               onChange={(e) => setValue(e.target.value)}
               placeholder={`搜尋${types[type].label}`}
             />
-            <Button variant="primary" fullWidth size="lg" type="submit">
+            <Button
+              disabled={!value}
+              variant="primary"
+              fullWidth
+              size="lg"
+              type="submit"
+            >
               搜尋
             </Button>
           </div>
