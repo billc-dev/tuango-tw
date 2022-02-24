@@ -12,6 +12,10 @@ a {
   outline: none;
 }
 
+input[type="date"] {
+  -webkit-appearance: none;
+}
+
 textarea {
   resize: none;
 }

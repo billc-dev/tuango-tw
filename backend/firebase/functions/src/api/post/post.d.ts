@@ -50,3 +50,10 @@ export type MongoosePost = Document<unknown, any, IPostComplete> &
   IPostComplete & {
     _id: string;
   };
+
+export type QueryTypes = "text" | "postNum" | "deadline" | "deliveryDate";
+
+export interface Query {
+  type?: QueryTypes;
+  value?: string | number;
+}

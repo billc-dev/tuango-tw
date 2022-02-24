@@ -1,7 +1,7 @@
 import { Post } from ".";
 import { MongooseOrder } from "../order/order";
 import { IOrderForm } from "../order/orderSchema";
-import { IPostComplete, MongoosePost } from "./post";
+import { IPostComplete, MongoosePost, Query } from "./post";
 
 interface SetObject {
   orderCount: number;
@@ -64,4 +64,30 @@ export const incrementLikeCount = (increment: number, postId: string) => {
     { $inc: { likeCount: increment } },
     { new: true }
   );
+};
+
+export const getQueryConditions = (query: Query) => {
+  const { type, value } = query;
+
+  if (!type || !value) return {};
+
+  switch (type) {
+    case "text":
+      if (typeof value !== "string") return {};
+      const matcher = new RegExp(value, "i");
+      return {
+        // status: { $ne: "canceled" },
+        $or: [{ title: matcher }, { body: matcher }, { displayName: matcher }],
+      };
+    case "postNum":
+      const postNum = Number(value);
+      if (isNaN(postNum)) return {};
+      return { postNum, status: { $nin: ["completed", "canceled"] } };
+    case "deadline":
+      return { deadline: value };
+    case "deliveryDate":
+      return { deliveryDate: value };
+    default:
+      return {};
+  }
 };

@@ -6,6 +6,7 @@ import Button from "components/Button";
 import TabButton from "components/Tab/TabButton";
 import TabContainer from "components/Tab/TabContainer";
 import TextField from "components/TextField";
+import { getFormattedDate } from "services/date";
 
 import { QueryTypes } from "./types";
 
@@ -28,10 +29,21 @@ const SearchBar = () => {
       return;
     }
     router.push({ query: { type } }, undefined, { shallow: true });
-    setValue("");
+    if (type === "text" || type === "postNum") setValue("");
+    else setValue(getFormattedDate());
+  };
+  const handleQuickDate = (days: number) => {
+    const date = getFormattedDate(days);
+    setValue(date);
+    router.push(
+      { query: { ...router.query, type: "deadline", value: date } },
+      undefined,
+      { shallow: true }
+    );
   };
   useEffect(() => {
     if (!router.isReady) return;
+    if (typeof router.query.value === "string") setValue(router.query.value);
     if (type) return;
     router.push({ query: { type: "text" } }, undefined, { shallow: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,7 +51,7 @@ const SearchBar = () => {
 
   return (
     <div>
-      <div className="mb-2">
+      <div>
         <TabContainer>
           <TabButton
             selected={type === "text"}
@@ -66,6 +78,11 @@ const SearchBar = () => {
             {types.deliveryDate.label}
           </TabButton>
         </TabContainer>
+      </div>
+      <div className="mt-1 mb-2 flex justify-around">
+        <Button onClick={() => handleQuickDate(0)}>今天結單</Button>
+        <Button onClick={() => handleQuickDate(1)}>明天結單</Button>
+        <Button onClick={() => handleQuickDate(2)}>後天結單</Button>
       </div>
       {isQueryType(type) && (
         <form
