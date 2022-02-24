@@ -12,15 +12,15 @@ interface Props {
   postsQuery: UseInfiniteQueryResult<
     {
       posts: IPostCard[];
-      nextId: number;
-      hasMore: boolean;
+      nextId: number | undefined;
     },
     unknown
   >;
 }
 
 const PostCards: FC<Props> = ({ postsQuery }) => {
-  const { data, fetchNextPage, isFetching, isLoading } = postsQuery;
+  const { data, fetchNextPage, isFetching, isLoading, hasNextPage } =
+    postsQuery;
   return (
     <div className="flex w-full flex-col items-center">
       <InfiniteScroll
@@ -31,8 +31,8 @@ const PostCards: FC<Props> = ({ postsQuery }) => {
             </div>
           )
         }
-        next={fetchNextPage}
-        hasMore={data?.pages[data.pages.length - 1].hasMore || false} // add to api => read last page
+        next={() => fetchNextPage()}
+        hasMore={hasNextPage ?? false}
         dataLength={
           data?.pages.reduce((sum, post) => post.posts.length + sum, 0) || 0
         }
@@ -40,8 +40,8 @@ const PostCards: FC<Props> = ({ postsQuery }) => {
         {!isLoading && (
           <div data-testid="post-cards">
             <PostCardGrid>
-              {data?.pages.map((page) => (
-                <Fragment key={page.nextId}>
+              {data?.pages.map((page, index) => (
+                <Fragment key={index}>
                   {page.posts.map((post) => (
                     <PostCard key={post._id} post={post} />
                   ))}
