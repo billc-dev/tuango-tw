@@ -37,7 +37,7 @@ const PostCards: FC<Props> = ({ postsQuery }) => {
           data?.pages.reduce((sum, post) => post.posts.length + sum, 0) || 0
         }
       >
-        {!isLoading && (
+        {!isLoading ? (
           <div data-testid="post-cards">
             <PostCardGrid>
               {data?.pages.map((page, index) => (
@@ -50,6 +50,10 @@ const PostCards: FC<Props> = ({ postsQuery }) => {
             </PostCardGrid>
             {data?.pages[0].posts.length === 0 &&
               "找不到貼文，請試試其他的關鍵字。"}
+          </div>
+        ) : (
+          <div data-testid="post-card-skeletons">
+            <PostCardSkeletons />
           </div>
         )}
       </InfiniteScroll>
