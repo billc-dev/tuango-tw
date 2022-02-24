@@ -8,18 +8,27 @@ export const fetchPostCards = async (
   query?: PostQuery
 ): Promise<{
   posts: IPostCard[];
-  nextId: number;
-  hasMore: boolean;
+  nextId: number | undefined;
 }> => {
-  const res = await axios.get(`/posts/paginate/${cursor}`, {
-    headers: { type: "postCards" },
-    params: { limit, query },
-  });
+  const res = await axios.get<{ posts: IPostCard[] }>(
+    `/posts/paginate/${cursor}`,
+    {
+      headers: { type: "postCards" },
+      params: { limit, query },
+    }
+  );
+
+  const getNextId = () => {
+    const lastIndex = res.data.posts.length - 1;
+    if (res.data.posts[lastIndex]) {
+      return res.data.posts[lastIndex].postNum;
+    }
+    return undefined;
+  };
 
   return {
     posts: res.data.posts,
-    nextId: res.data.posts[res.data.posts.length - 1].postNum,
-    hasMore: res.data.hasMore,
+    nextId: getNextId(),
   };
 };
 
