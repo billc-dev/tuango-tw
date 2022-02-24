@@ -28,6 +28,9 @@ const Redirect: NextPage = () => {
             if (previousUrl) router.push(previousUrl);
             else router.push("/posts");
           },
+          onError: () => {
+            toast.error("登入失敗！請再試一次", { id: "login" });
+          },
         }
       );
     }

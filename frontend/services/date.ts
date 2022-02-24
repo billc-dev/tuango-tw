@@ -25,9 +25,9 @@ export const createdYesterday = (date: string) => {
   return new Date(date) < yesterday;
 };
 
-export const datePlus = (days: number) => {
+export const getFormattedDate = (days?: number) => {
   let date = new Date();
-  date.setDate(date.getDate() + days);
+  if (days) date.setDate(date.getDate() + days);
   return dayjs(new Date(date)).format("YYYY-MM-DD");
 };
 

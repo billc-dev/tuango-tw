@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import { useRouter } from "next/router";
 
 import TabButton from "components/Tab/TabButton";
+import TabContainer from "components/Tab/TabContainer";
 import Comment from "domain/Comment";
 import LikeButton from "domain/Like/LikeButton";
 import Order from "domain/Order";
@@ -22,7 +23,7 @@ const PostActions: FC<Props> = ({ post }) => {
   const action = router.query.action as Action;
   return data?.data.user ? (
     <>
-      <div className="flex select-none space-x-1 rounded-lg bg-zinc-100 p-1 dark:bg-zinc-800">
+      <TabContainer>
         <LikeButton tabButton postId={post._id} likeCount={post.likeCount} />
         <TabButton
           selected={action === "comment"}
@@ -36,7 +37,7 @@ const PostActions: FC<Props> = ({ post }) => {
         >
           {post.orderCount} 訂單
         </TabButton>
-      </div>
+      </TabContainer>
       <Order post={post} action={action} />
       <Comment postId={post._id} action={action} />
     </>

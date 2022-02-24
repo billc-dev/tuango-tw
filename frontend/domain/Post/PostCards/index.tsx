@@ -1,21 +1,26 @@
-import React, { Fragment } from "react";
+import React, { FC, Fragment } from "react";
 
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useInfiniteQuery } from "react-query";
+import { UseInfiniteQueryResult } from "react-query";
 
-import { fetchPostCards } from "domain/Post/api/post";
-
+import { IPostCard } from "../types";
 import PostCard from "./PostCard";
 import PostCardGrid from "./PostCardGrid";
 import PostCardSkeletons from "./PostCardSkeletons";
 
-const PostCards = () => {
-  const { data, fetchNextPage, isFetching, isLoading } = useInfiniteQuery(
-    "posts",
-    ({ pageParam = "initial" }) => fetchPostCards(pageParam),
-    { getNextPageParam: (lastPage) => lastPage.nextId }
-  );
-  // return <div className="p-4">{JSON.stringify(data?.pages, null, 2)}</div>;
+interface Props {
+  postsQuery: UseInfiniteQueryResult<
+    {
+      posts: IPostCard[];
+      nextId: number | undefined;
+    },
+    unknown
+  >;
+}
+
+const PostCards: FC<Props> = ({ postsQuery }) => {
+  const { data, fetchNextPage, isFetching, isLoading, hasNextPage } =
+    postsQuery;
   return (
     <div className="flex w-full flex-col items-center">
       <InfiniteScroll
@@ -26,8 +31,8 @@ const PostCards = () => {
             </div>
           )
         }
-        next={fetchNextPage}
-        hasMore={true} // add to api => read last page
+        next={() => fetchNextPage()}
+        hasMore={hasNextPage ?? false}
         dataLength={
           data?.pages.reduce((sum, post) => post.posts.length + sum, 0) || 0
         }
@@ -35,14 +40,16 @@ const PostCards = () => {
         {!isLoading && (
           <div data-testid="post-cards">
             <PostCardGrid>
-              {data?.pages.map((page) => (
-                <Fragment key={page.nextId}>
+              {data?.pages.map((page, index) => (
+                <Fragment key={index}>
                   {page.posts.map((post) => (
                     <PostCard key={post._id} post={post} />
                   ))}
                 </Fragment>
               ))}
             </PostCardGrid>
+            {data?.pages[0].posts.length === 0 &&
+              "找不到貼文，請試試其他的關鍵字。"}
           </div>
         )}
       </InfiniteScroll>
