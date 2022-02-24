@@ -1,7 +1,9 @@
 import * as express from "express";
 import asyncWrapper from "../../middleware/asyncWrapper";
 import { verifyJWT } from "../../utils/jwt";
+import { Query } from "./post";
 import { Post } from "./postDB";
+import * as postService from "./postService";
 
 const router = express.Router();
 
@@ -10,7 +12,7 @@ router.get(
   asyncWrapper(async (req, res) => {
     const cursor = req.params.cursor;
     const limit = Number(req.query.limit);
-    const { query } = req.query;
+    const query = req.query.query && JSON.parse(req.query.query as string);
 
     if (isNaN(limit)) throw "limit must be a number";
     if (limit <= 0) throw "limit must be greater than 0";
@@ -27,7 +29,13 @@ router.get(
         imageUrls: 1,
         items: 1,
         orderCount: 1,
+        status: 1,
       });
+    }
+
+    if (query) {
+      const conditions = postService.getQueryConditions(query as Query);
+      postQuery.find(conditions);
     }
 
     const posts = await postQuery;
