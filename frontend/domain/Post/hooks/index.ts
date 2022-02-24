@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { useInfiniteQuery } from "react-query";
 
 import { fetchPostCards } from "../api/post";
@@ -17,6 +18,9 @@ export const useInfinitePostQuery = (limit: number, query?: PostQuery) => {
     {
       enabled: enabled(),
       getNextPageParam: (lastPage) => lastPage.nextId,
+      onSuccess: () => {
+        if (query) toast.dismiss("search");
+      },
     }
   );
 };
