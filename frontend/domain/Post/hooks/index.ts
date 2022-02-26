@@ -1,4 +1,3 @@
-import toast from "react-hot-toast";
 import { useInfiniteQuery } from "react-query";
 
 import { useUser } from "domain/User/hooks";
@@ -17,13 +16,7 @@ export const useInfinitePostQuery = (limit: number, query?: PostQuery) => {
   return useInfiniteQuery(
     ["posts", limit, query?.type, query?.value],
     ({ pageParam = "initial" }) => fetchPostCards(pageParam, limit, query),
-    {
-      enabled: enabled(),
-      getNextPageParam: (lastPage) => lastPage.nextId,
-      onSuccess: () => {
-        if (query) toast.dismiss("search");
-      },
-    }
+    { enabled: enabled(), getNextPageParam: (lastPage) => lastPage.nextId }
   );
 };
 
