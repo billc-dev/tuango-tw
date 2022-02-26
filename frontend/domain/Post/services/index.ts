@@ -1,4 +1,7 @@
+import { NextRouter } from "next/router";
+
 import { Item } from "../types";
+import { Action } from "../types";
 
 export function getProductPriceRange(items: Item[]) {
   let price;
@@ -18,3 +21,9 @@ export function getProductPriceRange(items: Item[]) {
 
   return price;
 }
+
+export const setAction = (action: Action, router: NextRouter) => {
+  router.push({ query: { ...router.query, action } }, undefined, {
+    shallow: true,
+  });
+};

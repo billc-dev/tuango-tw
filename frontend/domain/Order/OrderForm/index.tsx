@@ -8,9 +8,8 @@ import CardSubmitButton from "components/Card/CardSubmitButton";
 import TextArea from "components/TextField/TextArea";
 import { useScrollIntoView } from "hooks/useScrollIntoView";
 
-import { useCreateOrder, useOrder } from "../hooks";
-import { validateOrder } from "../services";
-import { getOrderSum } from "../services/calc";
+import { useCreateOrder, useOrders } from "../hooks";
+import { getOrderSum, validateOrder } from "../services";
 import { IOrderForm } from "../types";
 import OrderItem from "./OrderItem";
 
@@ -20,7 +19,7 @@ interface Props {
 }
 
 const OrderForm: FC<Props> = ({ orderForm, setOrderForm }) => {
-  const { isLoading } = useOrder(orderForm.postId);
+  const { isLoading } = useOrders(orderForm.postId);
   const { ref } = useScrollIntoView(isLoading, "order");
 
   const sum = getOrderSum(orderForm.items);

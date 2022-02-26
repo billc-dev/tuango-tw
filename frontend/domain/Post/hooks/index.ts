@@ -1,11 +1,11 @@
 import { useInfiniteQuery } from "react-query";
+import { useQuery } from "react-query";
 
 import { useUser } from "domain/User/hooks";
 
-import { fetchLikedPostCards, fetchPostCards } from "../api/post";
+import { fetchLikedPostCards, fetchPostCards } from "../api";
+import { fetchPost } from "../api";
 import { PostQuery } from "../types";
-
-export * from "./usePost";
 
 export const useInfinitePostQuery = (limit: number, query?: PostQuery) => {
   const enabled = () => {
@@ -31,4 +31,8 @@ export const useInfiniteLikedPostQuery = (limit: number) => {
       refetchOnMount: "always",
     }
   );
+};
+
+export const usePost = (id: string) => {
+  return useQuery(["post", id], () => fetchPost(id), { enabled: !!id });
 };

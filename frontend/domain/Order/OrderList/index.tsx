@@ -6,7 +6,7 @@ import Card from "components/Card";
 import { usePost } from "domain/Post/hooks";
 import { useUser } from "domain/User/hooks";
 
-import { useOrder } from "../hooks";
+import { useOrders } from "../hooks";
 import OrderListItem from "./OrderListItem";
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
 const Order: FC<Props> = ({ postId }) => {
   const userQuery = useUser();
   const postQuery = usePost(postId);
-  const { data } = useOrder(postId);
+  const { data } = useOrders(postId);
   const [open, setOpen] = useState(false);
 
   return data && data?.orders.length > 0 ? (

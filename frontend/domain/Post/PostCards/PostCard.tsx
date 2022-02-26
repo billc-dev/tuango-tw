@@ -5,7 +5,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import LikeButton from "domain/Like/LikeButton";
 
-import { getProductPriceRange } from "../services/price";
+import { getProductPriceRange } from "../services";
 import { IPostCard } from "../types";
 
 interface PostCardProps {
