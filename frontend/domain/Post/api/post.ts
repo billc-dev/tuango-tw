@@ -8,31 +8,46 @@ export const fetchPostCards = async (
   query?: PostQuery
 ): Promise<{
   posts: IPostCard[];
-  nextId: number | undefined;
+  nextId: string | undefined;
 }> => {
-  const res = await axios.get<{ posts: IPostCard[] }>(
-    `/posts/paginate/${cursor}`,
-    {
-      headers: { type: "postCards" },
-      params: { limit, query },
-    }
-  );
-
-  const getNextId = () => {
-    const lastIndex = res.data.posts.length - 1;
-    if (res.data.posts[lastIndex]) {
-      return res.data.posts[lastIndex].postNum;
-    }
-    return undefined;
-  };
+  const res = await axios.get<{
+    posts: IPostCard[];
+    nextId: string | undefined;
+    hasMore: boolean;
+  }>(`/posts/paginate/${cursor}`, {
+    headers: { type: "postCards" },
+    params: { limit, query },
+  });
 
   return {
     posts: res.data.posts,
-    nextId: getNextId(),
+    nextId: res.data.hasMore ? res.data.nextId : undefined,
   };
 };
 
 export const fetchPost = async (id: string): Promise<{ post: IPost }> => {
   const res = await axios.get(`/posts/post/${id}`);
   return { post: res.data.post };
+};
+
+export const fetchLikedPostCards = async (
+  cursor: string,
+  limit: number
+): Promise<{
+  posts: IPostCard[];
+  nextId: string | undefined;
+}> => {
+  const res = await axios.get<{
+    posts: IPostCard[];
+    nextId: string | undefined;
+    hasMore: boolean;
+  }>(`/posts/liked/paginate/${cursor}`, {
+    headers: { type: "postCards" },
+    params: { limit },
+  });
+
+  return {
+    posts: res.data.posts,
+    nextId: res.data.hasMore ? res.data.nextId : undefined,
+  };
 };

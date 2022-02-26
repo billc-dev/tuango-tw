@@ -1,7 +1,9 @@
 import toast from "react-hot-toast";
 import { useInfiniteQuery } from "react-query";
 
-import { fetchPostCards } from "../api/post";
+import { useUser } from "domain/User/hooks";
+
+import { fetchLikedPostCards, fetchPostCards } from "../api/post";
 import { PostQuery } from "../types";
 
 export * from "./usePost";
@@ -21,6 +23,19 @@ export const useInfinitePostQuery = (limit: number, query?: PostQuery) => {
       onSuccess: () => {
         if (query) toast.dismiss("search");
       },
+    }
+  );
+};
+
+export const useInfiniteLikedPostQuery = (limit: number) => {
+  const { data } = useUser();
+  return useInfiniteQuery(
+    ["posts", "liked", limit],
+    ({ pageParam = "initial" }) => fetchLikedPostCards(pageParam, limit),
+    {
+      getNextPageParam: (lastPage) => lastPage.nextId,
+      enabled: !!data?.data.user,
+      refetchOnMount: "always",
     }
   );
 };
