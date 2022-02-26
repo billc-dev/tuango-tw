@@ -1,8 +1,8 @@
+import { Request } from "express";
 import { Post } from ".";
 import { MongooseOrder } from "../order/order";
 import { IOrderForm } from "../order/orderSchema";
 import { IPostComplete, MongoosePost, Query } from "./post";
-
 interface SetObject {
   orderCount: number;
   [key: string]: number;
@@ -90,4 +90,32 @@ export const getQueryConditions = (query: Query) => {
     default:
       return {};
   }
+};
+
+export const getPostsNextId = (array: MongoosePost[]) => {
+  const lastIndex = array.length - 1;
+  if (array[lastIndex]) return array[lastIndex].postNum;
+  return undefined;
+};
+
+export const getParams = (req: Request) => {
+  const cursor = req.params.cursor;
+  const limit = Number(req.query.limit);
+  const query = req.query.query && JSON.parse(req.query.query as string);
+  return { cursor, limit, query };
+};
+
+export const checkLimit = (limit: number) => {
+  if (isNaN(limit)) throw "limit must be a number";
+  if (limit <= 0) throw "limit must be greater than 0";
+};
+
+export const postCards = {
+  postNum: 1,
+  title: 1,
+  displayName: 1,
+  imageUrls: 1,
+  items: 1,
+  orderCount: 1,
+  status: 1,
 };
