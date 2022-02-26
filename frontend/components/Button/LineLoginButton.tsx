@@ -1,8 +1,7 @@
 import React, { FC } from "react";
 
+import { LINE_LOGIN_URL_WITH_PARAMS } from "domain/User/services";
 import { WINDOW_URL } from "utils/constants";
-
-import { LINE_LOGIN_URL_WITH_PARAMS } from "domain/User/services/urls";
 
 import Button from ".";
 

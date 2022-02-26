@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import AnimatedSpinner from "components/svg/AnimatedSpinner";
 import { useMutateLogin, useUser } from "domain/User/hooks";
 import { getCode, getRedirectUrl } from "domain/User/services";
-import { LINE_REDIRECT_URL } from "domain/User/services/urls";
+import { LINE_REDIRECT_URL } from "domain/User/services";
 
 const Redirect: NextPage = () => {
   const code = getCode();

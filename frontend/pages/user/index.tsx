@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 import Button from "components/Button";
 import { useUser } from "domain/User/hooks";
-import { useMutateLogout } from "domain/User/hooks/logout";
+import { useMutateLogout } from "domain/User/hooks";
 
 const User: NextPage = () => {
   const logout = useMutateLogout();
