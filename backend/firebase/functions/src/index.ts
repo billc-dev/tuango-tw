@@ -16,7 +16,7 @@ const whitelist = [
   "http://localhost:3000",
   "https://tuango-tw.vercel.app",
   "http://172.20.10.3:3000",
-  "https://tuango.tw.billcheng.dev",
+  "https://tuango.billcheng.dev",
   "*",
   undefined,
 ];

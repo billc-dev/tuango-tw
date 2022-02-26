@@ -1,5 +1,10 @@
 import { Document } from "mongoose";
 
+export interface Filter {
+  status: string | { $ne: string };
+  postNum?: { $lt: string };
+}
+
 export interface IPost {
   _id: string;
   postNum: number;
