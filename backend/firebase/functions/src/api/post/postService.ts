@@ -100,7 +100,7 @@ export const getPostsNextId = (array: MongoosePost[]) => {
 
 export const getParams = (req: Request) => {
   const cursor = req.params.cursor;
-  const limit = Number(req.query.limit);
+  const limit = Math.min(Number(req.query.limit), 36);
   const query = req.query.query && JSON.parse(req.query.query as string);
   return { cursor, limit, query };
 };
