@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { useRouter } from "next/router";
-import toast from "react-hot-toast";
 
 import PostCards from "domain/Post/PostCards";
 import { useInfinitePostQuery } from "domain/Post/hooks";
@@ -16,9 +15,6 @@ const Search = () => {
     type: router.query.type as QueryTypes,
     value: router.query.value as string,
   });
-  useEffect(() => {
-    if (postsQuery.isLoading) toast.loading("貼文搜尋中...", { id: "search" });
-  }, [postsQuery.isLoading]);
   return (
     <div className="p-2">
       <SearchBar />

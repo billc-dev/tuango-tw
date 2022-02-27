@@ -4,8 +4,8 @@ import { ValidationError } from "yup";
 
 import { IPost } from "domain/Post/types";
 
-import { orderFormSchema } from "../orderSchema";
-import { IOrderForm } from "../types";
+import { orderFormSchema } from "../schema";
+import { IOrderForm, IOrderItem } from "../types";
 
 type HandleChangeItemQty = (
   amount: number,
@@ -57,4 +57,9 @@ export const getInitialOrderForm = (post: IPost) => {
     })),
     comment: "",
   };
+};
+
+export const getOrderSum = (items?: IOrderItem[]) => {
+  if (!items) return 0;
+  return items.reduce((sum, item) => sum + item.qty * item.price, 0);
 };

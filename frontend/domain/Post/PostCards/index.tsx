@@ -12,7 +12,7 @@ interface Props {
   postsQuery: UseInfiniteQueryResult<
     {
       posts: IPostCard[];
-      nextId: number | undefined;
+      nextId: string | undefined;
     },
     unknown
   >;

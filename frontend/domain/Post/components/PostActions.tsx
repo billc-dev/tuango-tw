@@ -10,7 +10,7 @@ import Order from "domain/Order";
 import LoginCard from "domain/User/LoginCard";
 import { useUser } from "domain/User/hooks";
 
-import { setAction } from "../services/route";
+import { setAction } from "../services";
 import { Action, IPost } from "../types";
 
 interface Props {

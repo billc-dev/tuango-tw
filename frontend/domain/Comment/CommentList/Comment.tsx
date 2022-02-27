@@ -9,7 +9,7 @@ import CardHeader from "components/Card/CardHeader";
 import TextArea from "components/TextField/TextArea";
 import { getFullDate } from "services/date";
 
-import { useCreateReply } from "../hooks/useCreateReply";
+import { useCreateReply } from "../hooks";
 import { IComment, IReplyForm } from "../types";
 
 interface Props {
