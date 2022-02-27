@@ -2,6 +2,26 @@ import * as yup from "yup";
 
 import { orderFormSchema, orderItemSchema } from "../schema";
 
+export type OrderStatus =
+  | "ordered"
+  | "delivered"
+  | "completed"
+  | "missing"
+  | "canceled";
+
+interface SingleOrder {
+  id: string;
+  item: string;
+  qty: number;
+  price: number;
+  status: string;
+  location: string;
+  hasName: boolean;
+}
+interface OrderHistory {
+  status: OrderStatus;
+  createdAt: string;
+}
 export interface IOrder {
   _id: string;
   orderNum: number;
@@ -22,21 +42,7 @@ export interface IOrder {
   deliveredAt: string;
   canceledAt: string;
   orderHistory: OrderHistory[];
-  status: "ordered" | "delivered" | "completed" | "missing" | "canceled";
-}
-
-interface OrderHistory {
-  status: "ordered" | "delivered" | "completed" | "missing" | "canceled";
-  createdAt: string;
-}
-interface SingleOrder {
-  id: string;
-  item: string;
-  qty: number;
-  price: number;
-  status: string;
-  location: string;
-  hasName: boolean;
+  status: OrderStatus;
 }
 
 export interface IOrderItem extends yup.InferType<typeof orderItemSchema> {}

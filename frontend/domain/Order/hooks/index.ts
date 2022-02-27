@@ -13,10 +13,11 @@ import {
   createOrder,
   deleteOrder,
   fetchOrders,
+  paginateCompletedOrders,
   paginateNormalOrders,
 } from "../api";
 import { getInitialOrderForm } from "../services";
-import { IOrder, IOrderForm } from "../types";
+import { IOrder, IOrderForm, OrderStatus } from "../types";
 
 interface OrderQueryData {
   orders: IOrder[];
@@ -52,6 +53,9 @@ export const useCreateOrder = (setOrderForm: Updater<IOrderForm>) => {
         draft.comment = comment;
       });
     },
+    onError: () => {
+      toast.error("訂單製作失敗！", { id: "orderToast" });
+    },
   });
 };
 
@@ -81,12 +85,25 @@ export const useOrders = (postId: string) => {
   });
 };
 
-export const useNormalUserOrders = (limit: number, status: string) => {
+export const useNormalUserOrders = (limit: number, status: OrderStatus) => {
   const userQuery = useUser();
   return useInfiniteQuery(
     ["orders", limit, status],
     ({ pageParam = "initial" }) =>
       paginateNormalOrders(pageParam, limit, status),
+    {
+      enabled: !userQuery.isLoading && !!userQuery.data?.data.user,
+      getNextPageParam: (lastPage) => lastPage.data.nextId,
+      refetchOnMount: "always",
+    }
+  );
+};
+
+export const useCompletedUserOrders = (limit: number, status: OrderStatus) => {
+  const userQuery = useUser();
+  return useInfiniteQuery(
+    ["orders", limit, status],
+    ({ pageParam = "initial" }) => paginateCompletedOrders(pageParam, limit),
     {
       enabled: !userQuery.isLoading && !!userQuery.data?.data.user,
       getNextPageParam: (lastPage) => lastPage.data.nextId,

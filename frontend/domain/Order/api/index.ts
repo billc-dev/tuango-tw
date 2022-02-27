@@ -1,8 +1,9 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 import { IPost } from "domain/Post/types";
 
-import { IOrder, IOrderForm } from "../types";
+import { IOrder, IOrderForm, OrderStatus } from "../types";
+import { IComplete } from "../types/complete";
 
 export const fetchOrders = async (
   postId: string
@@ -12,27 +13,35 @@ export const fetchOrders = async (
   return { orders: res.data.orders };
 };
 
-type CreateOrder = (variables: {
+interface CreateOrderProps {
   orderForm: IOrderForm;
-}) => Promise<AxiosResponse<{ order?: IOrder; error?: string; post?: IPost }>>;
+}
 
-export const createOrder: CreateOrder = ({ orderForm }) => {
-  return axios.put("/orders/order", { orderForm });
+export const createOrder = ({ orderForm }: CreateOrderProps) => {
+  return axios.put<{ order?: IOrder; error?: string; post?: IPost }>(
+    "/orders/order",
+    { orderForm }
+  );
 };
 
-type DeleteOrder = (orderId: string) => Promise<AxiosResponse<{ post: IPost }>>;
-
-export const deleteOrder: DeleteOrder = (orderId) => {
-  return axios.delete("/orders/order", { data: { orderId } });
+export const deleteOrder = (orderId: string) => {
+  return axios.delete<{ post: IPost }>("/orders/order", { data: { orderId } });
 };
 
 export const paginateNormalOrders = (
   cursor: string,
   limit: number,
-  status: string
+  status: OrderStatus
 ) => {
   return axios.get<{ orders: IOrder[]; nextId: string | undefined }>(
-    `/orders/user-orders/paginate/${cursor}`,
+    `/orders/user-orders/normal/paginate/${cursor}`,
     { params: { limit, status } }
+  );
+};
+
+export const paginateCompletedOrders = (cursor: string, limit: number) => {
+  return axios.get<{ completes: IComplete[]; nextId: string | undefined }>(
+    `/orders/user-orders/completed/paginate/${cursor}`,
+    { params: { limit } }
   );
 };
