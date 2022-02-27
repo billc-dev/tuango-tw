@@ -1,8 +1,20 @@
 import toast from "react-hot-toast";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "react-query";
 import { Updater } from "use-immer";
 
-import { createOrder, deleteOrder, fetchOrders } from "../api/order";
+import { useUser } from "domain/User/hooks";
+
+import {
+  createOrder,
+  deleteOrder,
+  fetchOrders,
+  paginateNormalOrders,
+} from "../api";
 import { getInitialOrderForm } from "../services";
 import { IOrder, IOrderForm } from "../types";
 
@@ -67,4 +79,18 @@ export const useOrders = (postId: string) => {
   return useQuery(["order", postId], () => fetchOrders(postId), {
     refetchOnMount: "always",
   });
+};
+
+export const useNormalUserOrders = (limit: number, status: string) => {
+  const userQuery = useUser();
+  return useInfiniteQuery(
+    ["orders", limit, status],
+    ({ pageParam = "initial" }) =>
+      paginateNormalOrders(pageParam, limit, status),
+    {
+      enabled: !userQuery.isLoading && !!userQuery.data?.data.user,
+      getNextPageParam: (lastPage) => lastPage.data.nextId,
+      refetchOnMount: "always",
+    }
+  );
 };

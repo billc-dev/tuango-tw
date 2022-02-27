@@ -25,3 +25,14 @@ type DeleteOrder = (orderId: string) => Promise<AxiosResponse<{ post: IPost }>>;
 export const deleteOrder: DeleteOrder = (orderId) => {
   return axios.delete("/orders/order", { data: { orderId } });
 };
+
+export const paginateNormalOrders = (
+  cursor: string,
+  limit: number,
+  status: string
+) => {
+  return axios.get<{ orders: IOrder[]; nextId: string | undefined }>(
+    `/orders/user-orders/paginate/${cursor}`,
+    { params: { limit, status } }
+  );
+};

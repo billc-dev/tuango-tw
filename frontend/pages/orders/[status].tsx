@@ -5,11 +5,15 @@ import { useRouter } from "next/router";
 import Completed from "domain/Order/UserOrders/Completed";
 import Liked from "domain/Order/UserOrders/Liked";
 import NormalOrders from "domain/Order/UserOrders/NormalOrders";
+import PostDialog from "domain/Post/PostDialog";
 
 const Status = () => {
-  const router = useRouter();
+  const {
+    query: { status, postId },
+  } = useRouter();
+
   const renderedComponent = () => {
-    switch (router.query.status) {
+    switch (status) {
       case "liked":
         return <Liked />;
       case "completed":
@@ -18,12 +22,17 @@ const Status = () => {
       case "delivered":
       case "missing":
       case "canceled":
-        return <NormalOrders />;
+        return <NormalOrders status={status} />;
       default:
         return null;
     }
   };
-  return <>{renderedComponent()}</>;
+  return (
+    <>
+      {renderedComponent()}
+      {typeof postId === "string" && <PostDialog id={postId} />}
+    </>
+  );
 };
 
 export default Status;
