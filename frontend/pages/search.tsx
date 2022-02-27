@@ -7,14 +7,14 @@ import SearchComponent from "domain/Search";
 
 const Search: NextPage = () => {
   const router = useRouter();
-  const { id } = router.query;
+  const { postId } = router.query;
 
   return (
     <>
       <Container>
         <SearchComponent />
       </Container>
-      {typeof id === "string" && <PostDialog id={id} />}
+      {typeof postId === "string" && <PostDialog postId={postId} />}
     </>
   );
 };

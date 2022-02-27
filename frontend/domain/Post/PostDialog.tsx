@@ -9,24 +9,24 @@ import PostContent from "./components/PostContent";
 import { usePost } from "./hooks";
 
 interface Props {
-  id: string;
+  postId: string;
 }
 
 const PostDialog: FC<Props> = (props) => {
   const router = useRouter();
-  const { id } = props;
+  const { postId } = props;
   const [open, setOpen] = useState(false);
-  const { data } = usePost(id);
+  const { data } = usePost(postId);
   const handleClose = () => {
-    router.push({ query: { ...router.query, id: "" } }, undefined, {
+    router.push({ query: { ...router.query, postId: "" } }, undefined, {
       shallow: true,
     });
   };
 
   useEffect(() => {
-    if (id) setOpen(true);
+    if (postId) setOpen(true);
     else setOpen(false);
-  }, [id]);
+  }, [postId]);
 
   return data?.post ? (
     <Dialog

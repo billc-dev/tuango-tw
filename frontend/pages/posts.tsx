@@ -20,7 +20,7 @@ interface Props {
 const Posts: NextPage<Props> = (props) => {
   const router = useRouter();
   const { post } = props;
-  const { id } = router.query;
+  const { postId } = router.query;
   const queryClient = useQueryClient();
   const limit = 16;
   const postsQuery = useInfinitePostQuery(limit);
@@ -56,16 +56,16 @@ const Posts: NextPage<Props> = (props) => {
       <Container>
         <PostCards postsQuery={postsQuery} />
       </Container>
-      {typeof id === "string" && <PostDialog id={id} />}
+      {typeof postId === "string" && <PostDialog postId={postId} />}
     </>
   );
 };
 
 Posts.getInitialProps = async (ctx: NextPageContext) => {
-  const id = ctx.query.id as string;
-  if (!id || typeof id !== "string") return { post: undefined };
+  const postId = ctx.query.postId as string;
+  if (!postId || typeof postId !== "string") return { post: undefined };
   try {
-    const data = await fetchPost(id);
+    const data = await fetchPost(postId);
     return { post: data.post };
   } catch (error) {
     return { post: undefined };

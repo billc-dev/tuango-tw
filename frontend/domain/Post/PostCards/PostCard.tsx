@@ -16,7 +16,7 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
   const router = useRouter();
 
   const openDialog = () =>
-    router.push({ query: { ...router.query, id: post._id } }, undefined, {
+    router.push({ query: { ...router.query, postId: post._id } }, undefined, {
       shallow: true,
     });
 

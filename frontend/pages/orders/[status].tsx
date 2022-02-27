@@ -30,7 +30,7 @@ const Status = () => {
   return (
     <>
       {renderedComponent()}
-      {typeof postId === "string" && <PostDialog id={postId} />}
+      {typeof postId === "string" && <PostDialog postId={postId} />}
     </>
   );
 };
