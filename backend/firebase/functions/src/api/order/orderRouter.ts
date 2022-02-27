@@ -66,4 +66,33 @@ router.delete(
   })
 );
 
+router.get(
+  "/user-orders/normal/paginate/:cursor",
+  isAuthorized,
+  asyncWrapper(async (req, res) => {
+    const cursor = req.params.cursor;
+    const limit = Number(req.query.limit);
+    const status = req.query.status;
+
+    const createdAtCursor =
+      cursor === "initial" ? {} : { createdAt: { $lt: cursor } };
+
+    const orders = await Order.find({
+      userId: res.locals.user.username,
+      status,
+      ...createdAtCursor,
+    })
+      .sort("-createdAt")
+      .limit(limit);
+
+    if (orders.length === 0)
+      return res.status(200).json({ orders: [], nextId: undefined });
+
+    const nextId =
+      orders.length === limit ? orders[orders.length - 1].createdAt : undefined;
+
+    return res.status(200).json({ orders, nextId });
+  })
+);
+
 export default router;
