@@ -41,7 +41,7 @@ const PostSchema = new mongoose.Schema<IPostComplete>({
   createdAt: {
     type: String,
     required: true,
-    default: new Date().toISOString(),
+    default: () => new Date().toISOString(),
   },
   pushedAt: { type: String },
   deadline: String,

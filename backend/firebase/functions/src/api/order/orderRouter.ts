@@ -5,7 +5,7 @@ import { Post } from "../post";
 import * as postService from "../post/postService";
 import Order from "./orderDB";
 import * as orderService from "./orderService";
-
+import Complete from "../complete/completeDB";
 const router = express.Router();
 
 router.get(
@@ -30,6 +30,7 @@ router.put(
 
     const post = await Post.findById(orderForm.postId);
     if (!post) throw "post not found";
+    if (post.status !== "open") throw "cannot order, post is not open";
 
     const over = orderService.isOverItemQty(post.items, orderForm);
     if (over) return res.json({ error: "剩餘數量已更新! 請重新下單!", post });
@@ -63,6 +64,64 @@ router.delete(
     const updatedPost = await postService.incrementItemQty(order, post);
 
     return res.status(200).json({ post: updatedPost });
+  })
+);
+
+router.get(
+  "/user-orders/normal/paginate/:cursor",
+  isAuthorized,
+  asyncWrapper(async (req, res) => {
+    const cursor = req.params.cursor;
+    const limit = Number(req.query.limit);
+    const status = req.query.status;
+
+    const createdAtCursor =
+      cursor === "initial" ? {} : { createdAt: { $lt: cursor } };
+
+    const orders = await Order.find({
+      userId: res.locals.user.username,
+      status,
+      ...createdAtCursor,
+    })
+      .sort("-createdAt")
+      .limit(limit);
+
+    if (orders.length === 0)
+      return res.status(200).json({ orders: [], nextId: undefined });
+
+    const nextId =
+      orders.length === limit ? orders[orders.length - 1].createdAt : undefined;
+
+    return res.status(200).json({ orders, nextId });
+  })
+);
+
+router.get(
+  "/user-orders/completed/paginate/:cursor",
+  isAuthorized,
+  asyncWrapper(async (req, res) => {
+    const cursor = req.params.cursor;
+    const limit = Number(req.query.limit);
+
+    const createdAtCursor =
+      cursor === "initial" ? {} : { createdAt: { $lt: cursor } };
+
+    const completes = await Complete.find({
+      userId: res.locals.user.username,
+      ...createdAtCursor,
+    })
+      .sort("-createdAt")
+      .limit(limit);
+
+    if (completes.length === 0)
+      return res.status(200).json({ completes: [], nextId: undefined });
+
+    const nextId =
+      completes.length === limit
+        ? completes[completes.length - 1].createdAt
+        : undefined;
+
+    return res.status(200).json({ completes, nextId });
   })
 );
 

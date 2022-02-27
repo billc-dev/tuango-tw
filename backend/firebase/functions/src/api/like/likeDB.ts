@@ -12,7 +12,7 @@ const LikeSchema = new mongoose.Schema<ILike>({
   createdAt: {
     type: String,
     required: true,
-    default: new Date().toISOString(),
+    default: () => new Date().toISOString(),
   },
 });
 
