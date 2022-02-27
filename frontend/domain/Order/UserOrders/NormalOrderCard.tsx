@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 
+import { useRouter } from "next/router";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import Card from "components/Card";
@@ -13,9 +14,20 @@ interface Props {
 
 const NormalOrderCard: FC<Props> = ({ order }) => {
   const sum = order.order.reduce((sum, ord) => (sum += ord.price * ord.qty), 0);
-
+  const router = useRouter();
   return (
-    <Card className="shadow m-2">
+    <Card
+      className="shadow m-2 cursor-pointer hover:shadow-lg transition-shadow"
+      onClick={() =>
+        router.push(
+          {
+            query: { ...router.query, postId: order.postId, action: "order" },
+          },
+          undefined,
+          { shallow: true }
+        )
+      }
+    >
       <div className="grid grid-cols-4">
         <div className="my-auto item col-span-1">
           <LazyLoadImage
