@@ -49,7 +49,7 @@ const OrderSchema = new mongoose.Schema<IOrder>({
   createdAt: {
     type: String,
     required: true,
-    default: new Date().toISOString(),
+    default: () => new Date().toISOString(),
   },
   deliveredAt: String,
   canceledAt: String,
@@ -64,7 +64,7 @@ const OrderSchema = new mongoose.Schema<IOrder>({
         createdAt: {
           type: String,
           required: true,
-          default: new Date().toISOString(),
+          default: () => new Date().toISOString(),
         },
       },
     ],

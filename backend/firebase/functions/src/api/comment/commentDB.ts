@@ -18,13 +18,21 @@ const CommentSchema = new mongoose.Schema<IComment>({
         reply: { type: String, required: true },
         displayName: { type: String, required: true },
         pictureUrl: { type: String, required: true },
-        createdAt: { type: String, required: true },
+        createdAt: {
+          type: String,
+          required: true,
+          default: () => new Date().toISOString(),
+        },
         userId: { type: String, required: true },
       },
     ],
     required: true,
   },
-  createdAt: { type: String, required: true },
+  createdAt: {
+    type: String,
+    required: true,
+    default: () => new Date().toISOString(),
+  },
 });
 
 export const Comment = commentsConn.model<IComment>("Comment", CommentSchema);
