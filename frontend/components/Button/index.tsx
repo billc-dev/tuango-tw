@@ -4,7 +4,7 @@ import AnimatedSpinner from "components/svg/AnimatedSpinner";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: "sm" | "lg";
-  variant?: "primary" | "secondary" | "danger";
+  variant?: "primary" | "secondary" | "danger" | "inherit";
   fullWidth?: boolean;
   iconButton?: JSX.Element;
   loading?: boolean;
@@ -33,11 +33,13 @@ const Button: FC<Props> = (props) => {
     );
   };
   const variantStyles = () => {
-    if (!variant) return "bg-zinc-300 hover:bg-zinc-400 text-zinc-900";
+    if (!variant) return "bg-zinc-200 hover:bg-zinc-400 text-zinc-900";
     else if (variant === "primary") {
       return "bg-line-400 hover:bg-line-800 text-white";
     } else if (variant === "danger") {
       return "bg-red-500 hover:bg-red-700 text-white";
+    } else if (variant === "inherit") {
+      return "hover:bg-zinc-100 dark:hover:bg-zinc-700 shadow-none";
     }
   };
   return (
