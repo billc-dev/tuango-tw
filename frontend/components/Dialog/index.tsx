@@ -35,7 +35,7 @@ const Dialog: FC<DialogProps> = (props) => {
         </IconButton>
         <h1 className="truncate text-xl">{title}</h1>
       </div>
-      <div className="mx-auto max-w-lg px-6 pb-4">{children}</div>
+      <div className="mx-auto max-w-lg px-4 pb-4">{children}</div>
     </dialog>
   );
 };
