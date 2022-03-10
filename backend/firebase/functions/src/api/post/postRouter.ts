@@ -1,7 +1,6 @@
 import * as express from "express";
 import asyncWrapper from "../../middleware/asyncWrapper";
 import { isAuthorized } from "../../middleware/auth";
-import { verifyJWT } from "../../utils/jwt";
 import { Like } from "../like/likeDB";
 import { Filter, Query } from "./post";
 import { Post } from "./postDB";
@@ -20,7 +19,7 @@ router.get(
 
     const postQuery = Post.find(filter).sort("-postNum").limit(limit);
     if (req.headers.type === "postCards") {
-      postQuery.select(postService.postCards);
+      postQuery.select(postService.postCardsSelect);
     }
 
     if (query) {
@@ -60,7 +59,7 @@ router.get(
     const postQuery = Post.find({ _id: { $in: likesId } });
 
     if (req.headers.type === "postCards") {
-      postQuery.select(postService.postCards);
+      postQuery.select(postService.postCardsSelect);
     }
 
     const posts = await postQuery;
@@ -80,13 +79,11 @@ router.get(
     });
   })
 );
+
 router.get(
   "/post/:id",
   asyncWrapper(async (req, res) => {
-    const aid = req.cookies.aid;
     const id = req.params.id;
-
-    if (aid) verifyJWT(aid);
     if (!id) throw "post id invalid";
 
     const query = Post.findById(id);
@@ -94,5 +91,14 @@ router.get(
     return res.status(200).json({ post });
   })
 );
+
+// router.post(
+//   "/post",
+//   isAuthorized,
+//   asyncWrapper(async (req, res) => {
+//     const post = await postService.validatePost(req.body.post)
+//     return res.status(200).json({ post });
+//   })
+// );
 
 export default router;
