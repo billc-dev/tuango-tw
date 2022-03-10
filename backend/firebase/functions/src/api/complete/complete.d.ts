@@ -1,4 +1,4 @@
-import { IReducedOrder } from "../order/order";
+import { IReducedOrder } from "api/order/order";
 
 interface IOrder {
   id: string;

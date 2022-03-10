@@ -1,7 +1,7 @@
+import { Like } from "api/like/likeDB";
 import * as express from "express";
-import asyncWrapper from "../../middleware/asyncWrapper";
-import { isAuthorized } from "../../middleware/auth";
-import { Like } from "../like/likeDB";
+import asyncWrapper from "middleware/asyncWrapper";
+import { isAuthorized } from "middleware/auth";
 import { Filter, Query } from "./post";
 import { Post } from "./postDB";
 import * as postService from "./postService";
