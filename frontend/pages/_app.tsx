@@ -26,7 +26,9 @@ export function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
-        defaultOptions: { queries: { staleTime: 1000 * 60 * 5 } },
+        defaultOptions: {
+          queries: { staleTime: 1000 * 60, refetchOnMount: "always" },
+        },
       })
   );
 
