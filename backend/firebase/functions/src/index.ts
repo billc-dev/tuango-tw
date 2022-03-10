@@ -4,6 +4,8 @@ import * as functions from "firebase-functions";
 import * as compression from "compression";
 import * as cookieParser from "cookie-parser";
 import * as cors from "cors";
+import "module-alias/register";
+import "source-map-support/register";
 
 import comments from "api/comment/commentRouter";
 import likes from "api/like/likeRouter";
