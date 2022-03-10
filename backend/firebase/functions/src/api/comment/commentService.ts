@@ -1,7 +1,7 @@
-import { FRONTEND_URL } from "../../utils/url";
-import * as notifyService from "../notify/notifyService";
-import { IPost } from "../post/post";
-import { IUser } from "../user/userDB";
+import { FRONTEND_URL } from "utils/url";
+import * as notifyService from "api/notify/notifyService";
+import { IPost } from "api/post/post";
+import { IUser } from "api/user/userDB";
 import { IComment } from "./comment";
 import { Comment } from "./commentDB";
 import {

@@ -4,11 +4,11 @@ import * as cors from "cors";
 import * as cookieParser from "cookie-parser";
 import * as express from "express";
 
-import user from "./api/user/userRouter";
-import posts from "./api/post/postRouter";
-import orders from "./api/order/orderRouter";
-import comments from "./api/comment/commentRouter";
-import likes from "./api/like/likeRouter";
+import user from "api/user/userRouter";
+import posts from "api/post/postRouter";
+import orders from "api/order/orderRouter";
+import comments from "api/comment/commentRouter";
+import likes from "api/like/likeRouter";
 
 const app = express();
 
@@ -31,6 +31,7 @@ const corsOptions: cors.CorsOptions = {
   },
   credentials: true,
 };
+
 app.use(cors(corsOptions));
 app.use(compression());
 app.use(cookieParser());

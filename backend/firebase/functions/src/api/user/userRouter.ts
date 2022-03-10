@@ -1,6 +1,7 @@
 import * as express from "express";
-import asyncWrapper from "../../middleware/asyncWrapper";
-import { isAuthorized } from "../../middleware/auth";
+import asyncWrapper from "middleware/asyncWrapper";
+import { isAuthorized } from "middleware/auth";
+
 const router = express.Router();
 
 router.get(
