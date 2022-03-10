@@ -4,9 +4,9 @@ import AnimatedSpinner from "components/svg/AnimatedSpinner";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: "sm" | "lg";
-  variant?: "primary" | "secondary" | "danger";
+  variant?: "primary" | "secondary" | "danger" | "inherit";
   fullWidth?: boolean;
-  iconButton?: JSX.Element;
+  icon?: JSX.Element;
   loading?: boolean;
   pill?: boolean;
 }
@@ -18,7 +18,7 @@ const Button: FC<Props> = (props) => {
     variant,
     fullWidth,
     className,
-    iconButton,
+    icon,
     loading,
     pill,
     ...rest
@@ -27,22 +27,26 @@ const Button: FC<Props> = (props) => {
     if (loading) return <AnimatedSpinner />;
     return (
       <>
-        {iconButton}
+        {icon && <div className="h-5 w-5 mr-1">{icon}</div>}
         {children}
       </>
     );
   };
   const variantStyles = () => {
-    if (!variant) return "bg-zinc-300 hover:bg-zinc-400 text-zinc-900";
+    if (!variant)
+      return "bg-zinc-200 hover:bg-zinc-400 text-zinc-900 dark:bg-zinc-300 dark:hover:bg-zinc-400";
     else if (variant === "primary") {
       return "bg-line-400 hover:bg-line-800 text-white";
     } else if (variant === "danger") {
       return "bg-red-500 hover:bg-red-700 text-white";
+    } else if (variant === "inherit") {
+      return "hover:bg-zinc-100 dark:hover:bg-zinc-700";
     }
   };
   return (
     <button
-      className={`select-none py-1 px-3 shadow transition disabled:bg-zinc-300  ${
+      type="button"
+      className={`flex items-center justify-center select-none py-1 px-3 shadow transition disabled:bg-zinc-300 disabled:text-zinc-400  ${
         fullWidth ? "w-full" : ""
       } ${variantStyles()} ${size === "lg" ? "px-4 text-lg" : ""} ${
         pill ? "rounded-full" : "rounded-md"

@@ -1,13 +1,40 @@
 import React, { FC, InputHTMLAttributes } from "react";
 
-const TextField: FC<InputHTMLAttributes<HTMLInputElement>> = (props) => {
+interface Props extends InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
+  height?: "tall";
+  error?: string;
+  color?: "grey";
+}
+
+const TextField: FC<Props> = React.forwardRef((props, ref) => {
+  const { height, error, color, label, ...rest } = props;
   return (
-    <input
-      className="focus:border-line-400 focus:ring-line-400 mb-2 w-full h-16 rounded-lg border py-4 px-3 placeholder-gray-400 focus:ring-1"
-      type="text"
-      {...props}
-    />
+    <>
+      {props.placeholder && (
+        <label htmlFor={props.placeholder} className="block pb-2">
+          {label ? label : props.placeholder}
+        </label>
+      )}
+      <input
+        autoComplete="off"
+        ref={ref as any}
+        className={`mb-2 w-full rounded-lg border px-3 border-zinc-200 placeholder-zinc-400 dark:border-zinc-600 ${
+          height === "tall" ? "h-16" : "h-14"
+        } ${
+          !error
+            ? "focus:border-line-400 focus:ring-line-400 focus:ring-1"
+            : "border-red-500 ring-red-500 ring-1"
+        } ${color === "grey" && "bg-zinc-100 dark:bg-zinc-800"}`}
+        {...rest}
+      />
+      {error && (
+        <p className="-mt-1 text-red-600 text-center text-sm">{error}</p>
+      )}
+    </>
   );
-};
+});
+
+TextField.displayName = "TextField";
 
 export default TextField;

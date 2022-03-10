@@ -101,6 +101,7 @@ const SearchBar = () => {
               value={value}
               onChange={(e) => setValue(e.target.value)}
               placeholder={`搜尋${types[type].label}`}
+              height="tall"
             />
             <Button
               disabled={!value}
