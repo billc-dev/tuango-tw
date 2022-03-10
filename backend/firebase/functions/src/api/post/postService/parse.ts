@@ -1,4 +1,5 @@
 import { Request } from "express";
+
 import { MongoosePost, Query } from "../post";
 
 export const getParams = (req: Request) => {

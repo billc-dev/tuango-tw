@@ -1,6 +1,7 @@
-import Notify from "./notifyDB";
 import axios from "axios";
 import * as FormData from "form-data";
+
+import Notify from "./notifyDB";
 
 export const notifyUser = async (
   username: string,

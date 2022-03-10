@@ -1,5 +1,6 @@
-import * as mongoose from "mongoose";
 import * as functions from "firebase-functions";
+import * as mongoose from "mongoose";
+
 import { ILike } from "./like";
 
 const likesConn = mongoose.createConnection(

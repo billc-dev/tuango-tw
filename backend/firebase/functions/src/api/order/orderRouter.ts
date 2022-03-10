@@ -1,11 +1,13 @@
 import * as express from "express";
-import asyncWrapper from "middleware/asyncWrapper";
-import { isAuthorized } from "middleware/auth";
+
+import Complete from "api/complete/completeDB";
 import { Post } from "api/post";
 import * as postService from "api/post/postService";
+import asyncWrapper from "middleware/asyncWrapper";
+import { isAuthorized } from "middleware/auth";
+
 import Order from "./orderDB";
 import * as orderService from "./orderService";
-import Complete from "api/complete/completeDB";
 
 const router = express.Router();
 

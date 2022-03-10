@@ -1,8 +1,10 @@
 import * as express from "express";
+
+import * as postService from "api/post/postService";
 import asyncWrapper from "middleware/asyncWrapper";
 import { isAuthorized } from "middleware/auth";
+
 import { Like } from "./likeDB";
-import * as postService from "api/post/postService";
 
 const router = express.Router();
 

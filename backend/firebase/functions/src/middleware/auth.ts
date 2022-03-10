@@ -1,6 +1,8 @@
 import type { RequestHandler } from "express";
-import { User } from "../api/user/userDB";
-import { verifyJWT } from "../utils/jwt";
+
+import { User } from "api/user/userDB";
+import { verifyJWT } from "utils/jwt";
+
 import asyncWrapper from "./asyncWrapper";
 
 export const isAuthorized: RequestHandler = asyncWrapper(

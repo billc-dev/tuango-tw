@@ -1,5 +1,5 @@
-import * as mongoose from "mongoose";
 import * as functions from "firebase-functions";
+import * as mongoose from "mongoose";
 
 const usersConn = mongoose.createConnection(
   functions.config().mongodb_uri.user_dev

@@ -1,5 +1,6 @@
 import * as functions from "firebase-functions";
 import * as mongoose from "mongoose";
+
 import { INotify } from "./notify";
 
 const notifyConn = mongoose.createConnection(

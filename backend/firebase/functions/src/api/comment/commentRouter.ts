@@ -1,8 +1,10 @@
-import { Post } from "api/post";
 import * as express from "express";
+
+import { Post } from "api/post";
+import * as postService from "api/post/postService";
 import asyncWrapper from "middleware/asyncWrapper";
 import { isAuthorized } from "middleware/auth";
-import * as postService from "api/post/postService";
+
 import { Comment } from "./commentDB";
 import * as commentService from "./commentService";
 

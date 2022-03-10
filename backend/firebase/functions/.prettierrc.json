@@ -1,0 +1,12 @@
+{
+  "printWidth": 80,
+  "tabWidth": 2,
+  "importOrder": [
+    "^express|^firebase-functions|^mongoose$",
+    "<THIRD_PARTY_MODULES>",
+    "^api|^middleware|^utils/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
+}
