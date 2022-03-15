@@ -5,10 +5,11 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   height?: "tall";
   error?: string;
   color?: "grey";
+  selectOnFocus?: boolean;
 }
 
 const TextField: FC<Props> = React.forwardRef((props, ref) => {
-  const { height, error, color, label, ...rest } = props;
+  const { height, error, color, label, selectOnFocus, ...rest } = props;
   return (
     <>
       {props.placeholder && (
@@ -19,6 +20,9 @@ const TextField: FC<Props> = React.forwardRef((props, ref) => {
       <input
         autoComplete="off"
         ref={ref as any}
+        onFocus={(e) => {
+          selectOnFocus && e.target.select();
+        }}
         className={`mb-2 w-full rounded-lg border px-3 border-zinc-200 placeholder-zinc-400 dark:border-zinc-600 ${
           height === "tall" ? "h-16" : "h-14"
         } ${
