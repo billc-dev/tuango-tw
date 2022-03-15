@@ -4,10 +4,10 @@ import { UseFormRegister } from "react-hook-form";
 
 import Select from "components/Select";
 
-import { PostForm } from "../schema";
+import { PostFormSchema } from "../schema";
 
 interface Props {
-  register: UseFormRegister<PostForm>;
+  register: UseFormRegister<PostFormSchema>;
 }
 
 const options = [

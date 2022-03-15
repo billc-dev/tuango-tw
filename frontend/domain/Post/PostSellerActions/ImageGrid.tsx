@@ -5,11 +5,11 @@ import { Control, UseFormGetValues, useFieldArray } from "react-hook-form";
 
 import Button from "components/Button";
 
-import { PostForm } from "../schema";
+import { PostFormSchema } from "../schema";
 
 interface Props {
-  getValues: UseFormGetValues<PostForm>;
-  control: Control<PostForm, any>;
+  getValues: UseFormGetValues<PostFormSchema>;
+  control: Control<PostFormSchema, any>;
 }
 
 const ImageGrid: FC<Props> = (props) => {

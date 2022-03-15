@@ -12,12 +12,12 @@ import Button from "components/Button";
 import TextField from "components/TextField";
 import { indexAlphabet } from "utils/constants";
 
-import { PostForm } from "../schema";
+import { PostFormSchema } from "../schema";
 
 interface Props {
-  control: Control<PostForm, any>;
-  register: UseFormRegister<PostForm>;
-  errors: FormState<PostForm>["errors"];
+  control: Control<PostFormSchema, any>;
+  register: UseFormRegister<PostFormSchema>;
+  errors: FormState<PostFormSchema>["errors"];
 }
 
 const PostItems: FC<Props> = (props) => {

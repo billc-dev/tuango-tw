@@ -8,7 +8,7 @@ import Dialog from "components/Dialog";
 import TextField from "components/TextField";
 
 import { useInfiniteSellerPosts } from "../hooks";
-import { PostForm } from "../schema";
+import { PostFormSchema } from "../schema";
 import { SellerQuery } from "../types";
 import TableRowSkeleton from "./TableRowSkeleton";
 
@@ -18,7 +18,7 @@ interface PostSearchParams {
 }
 
 interface Props {
-  reset: UseFormReset<PostForm>;
+  reset: UseFormReset<PostFormSchema>;
 }
 
 const LoadPreviousPosts: FC<Props> = ({ reset }) => {
@@ -34,12 +34,7 @@ const LoadPreviousPosts: FC<Props> = ({ reset }) => {
 
   return (
     <>
-      <Button
-        type="button"
-        fullWidth
-        className="mb-2"
-        onClick={() => setOpen(true)}
-      >
+      <Button type="button" fullWidth onClick={() => setOpen(true)}>
         載入舊單
       </Button>
       {open && (

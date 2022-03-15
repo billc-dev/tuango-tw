@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { PostForm } from "../schema";
+import { PostFormSchema } from "../schema";
 import { IPost, IPostCard, PostQuery, SellerQuery } from "../types";
 
 interface PostsResponse {
@@ -67,6 +67,6 @@ export const fetchLikedPostCards = async (cursor: string, limit: number) => {
   };
 };
 
-export const createPost = (postForm: PostForm) => {
+export const createPost = (postForm: PostFormSchema) => {
   return axios.post<{ post: IPost }>("/posts/post", { postForm });
 };

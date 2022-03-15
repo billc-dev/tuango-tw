@@ -46,4 +46,4 @@ export const postSchema = yup.object({
   imageUrls: imageUrlsSchema,
 });
 
-export interface PostForm extends yup.InferType<typeof postSchema> {}
+export interface PostFormSchema extends yup.InferType<typeof postSchema> {}

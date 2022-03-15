@@ -6,13 +6,13 @@ import { FormState, UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import Button from "components/Button";
 import { useUser } from "domain/User/hooks";
 
-import { PostForm } from "../schema";
+import { PostFormSchema } from "../schema";
 import { uploadImageS3 } from "../services";
 
 interface Props {
-  getValues: UseFormGetValues<PostForm>;
-  setValue: UseFormSetValue<PostForm>;
-  errors: FormState<PostForm>["errors"];
+  getValues: UseFormGetValues<PostFormSchema>;
+  setValue: UseFormSetValue<PostFormSchema>;
+  errors: FormState<PostFormSchema>["errors"];
 }
 
 const UploadImageButton: FC<Props> = (props) => {
