@@ -1,5 +1,6 @@
 import { QueryTypes } from "domain/Search/types";
 
+type PostStatus = "open" | "closed" | "completed" | "canceled";
 export interface IPost {
   _id: string;
   postNum: number;
@@ -17,7 +18,7 @@ export interface IPost {
   commentCount: number;
   orderCount: number;
   storageType: "roomTemp" | "refrigerated" | "frozen";
-  status: "open" | "closed" | "completed" | "canceled";
+  status: PostStatus;
 }
 
 export interface IPostCard {
@@ -48,4 +49,10 @@ export type Action = undefined | "comment" | "order";
 export interface PostQuery {
   type: QueryTypes;
   value: string | number;
+}
+
+export interface SellerQuery {
+  status?: PostStatus;
+  postNum?: number;
+  title?: string;
 }

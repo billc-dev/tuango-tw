@@ -17,6 +17,7 @@ const itemsSchema = yup
     })
   )
   .min(1)
+  .defined()
   .default([{ item: "", price: undefined, itemQty: 100 }]);
 
 const imageUrlsSchema = yup
@@ -28,18 +29,19 @@ const imageUrlsSchema = yup
     })
   )
   .min(1, "請上傳圖片!")
+  .defined()
   .default([]);
 
 export const postSchema = yup.object({
-  title: yup.string().required("請輸入團購主題!"),
+  title: yup.string().required("請輸入團購主題!").default(""),
   storageType: yup
     .mixed()
     .oneOf(["roomTemp", "refrigerated", "frozen"])
     .required()
     .default("roomTemp"),
-  deadline: yup.string(),
-  deliveryDate: yup.string(),
-  body: yup.string().required("請輸入團購內容!"),
+  deadline: yup.string().default(""),
+  deliveryDate: yup.string().default(""),
+  body: yup.string().required("請輸入團購內容!").default(""),
   items: itemsSchema,
   imageUrls: imageUrlsSchema,
 });

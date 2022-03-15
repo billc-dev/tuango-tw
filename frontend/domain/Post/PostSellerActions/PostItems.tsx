@@ -1,0 +1,73 @@
+import React, { FC } from "react";
+
+import { PlusIcon, TrashIcon } from "@heroicons/react/outline";
+import {
+  Control,
+  FormState,
+  UseFormRegister,
+  useFieldArray,
+} from "react-hook-form";
+
+import Button from "components/Button";
+import TextField from "components/TextField";
+import { indexAlphabet } from "utils/constants";
+
+import { PostForm } from "../schema";
+
+interface Props {
+  control: Control<PostForm, any>;
+  register: UseFormRegister<PostForm>;
+  errors: FormState<PostForm>["errors"];
+}
+
+const PostItems: FC<Props> = (props) => {
+  const { control, errors, register } = props;
+  const { fields, append, remove } = useFieldArray({ control, name: "items" });
+  return (
+    <>
+      {fields.map((item, index) => (
+        <div key={item.id}>
+          <TextField
+            label={`${indexAlphabet[index]}.`}
+            color="grey"
+            placeholder="商品名稱"
+            error={errors.items?.[index]?.item?.message}
+            key={`items.${index}.item`}
+            {...register(`items.${index}.item`)}
+          />
+          <TextField
+            color="grey"
+            selectOnFocus
+            placeholder="價格"
+            key={`items.${index}.price`}
+            error={errors.items?.[index]?.price?.message}
+            {...register(`items.${index}.price`)}
+          />
+          <TextField
+            color="grey"
+            selectOnFocus
+            placeholder="數量"
+            key={`items.${index}.itemQty`}
+            error={errors.items?.[index]?.itemQty?.message}
+            {...register(`items.${index}.itemQty`)}
+          />
+          {index !== 0 && (
+            <Button icon={<TrashIcon />} onClick={() => remove(index)}>
+              刪除
+            </Button>
+          )}
+        </div>
+      ))}
+      <Button
+        className="mt-2"
+        fullWidth
+        icon={<PlusIcon />}
+        onClick={() => append({ item: "", price: undefined, itemQty: 100 })}
+      >
+        新增商品
+      </Button>
+    </>
+  );
+};
+
+export default PostItems;
