@@ -8,10 +8,11 @@ interface DialogProps {
   open: boolean;
   handleClose: Function;
   title: string;
+  id?: string;
 }
 
 const Dialog: FC<DialogProps> = (props) => {
-  const { children, open, handleClose, title } = props;
+  const { children, open, handleClose, title, id } = props;
   const [animate, setAnimate] = useState(false);
   useEffect(() => {
     if (open) {
@@ -24,6 +25,7 @@ const Dialog: FC<DialogProps> = (props) => {
   }, [open]);
   return (
     <dialog
+      id={id}
       open={open}
       className={`fixed top-0 z-10 h-full w-full overflow-x-hidden overscroll-y-auto bg-white p-0 transition-all duration-300 dark:bg-zinc-900 ${
         animate ? "opacity-100" : "opacity-0"
