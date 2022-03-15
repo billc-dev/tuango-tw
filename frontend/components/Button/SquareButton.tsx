@@ -8,6 +8,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 const SquareButton: FC<Props> = ({ Icon, text, ...props }) => {
   return (
     <button
+      type="button"
       className="py-4 flex flex-col items-center justify-center active:bg-zinc-100 dark:active:bg-zinc-800 transition"
       {...props}
     >
