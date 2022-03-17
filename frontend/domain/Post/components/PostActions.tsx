@@ -10,6 +10,7 @@ import Order from "domain/Order";
 import LoginCard from "domain/User/LoginCard";
 import { useUser } from "domain/User/hooks";
 
+import ClosePostButton from "../PostSellerActions/ClosePostButton";
 import { setAction } from "../services";
 import { Action, IPost } from "../types";
 
@@ -32,12 +33,15 @@ const PostActions: FC<Props> = ({ post }) => {
           {post.commentCount} 問與答
         </TabButton>
         <TabButton
-          selected={action === "order" || action === undefined}
+          selected={action === "order" || !action}
           onClick={() => setAction("order", router)}
         >
           {post.orderCount} 訂單
         </TabButton>
       </TabContainer>
+      {data.data.user.username === post.userId && (
+        <ClosePostButton postId={post._id} status={post.status} />
+      )}
       <Order post={post} action={action} />
       <Comment postId={post._id} action={action} />
     </>

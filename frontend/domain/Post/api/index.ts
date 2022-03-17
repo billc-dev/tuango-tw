@@ -79,3 +79,11 @@ interface EditPostParams {
 export const editPost = ({ postId, postForm }: EditPostParams) => {
   return axios.patch<{ post: IPost }>(`/posts/post/${postId}`, { postForm });
 };
+
+export const closePost = (postId: string) => {
+  return axios.patch<{ post: IPost }>(`/posts/post/${postId}/close`);
+};
+
+export const deletePost = (postId: string) => {
+  return axios.delete<{}>(`/posts/post/${postId}`);
+};
