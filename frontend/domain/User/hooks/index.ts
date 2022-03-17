@@ -18,7 +18,9 @@ export const useMutateLogin = () => {
 };
 
 export const useIsVerified = () => {
-  return useQuery("verify", fetchVerifyStatus);
+  return useQuery("verify", fetchVerifyStatus, {
+    refetchOnMount: true,
+  });
 };
 
 export const useUser = () => {
@@ -26,9 +28,9 @@ export const useUser = () => {
 
   return useQuery("user", fetchUser, {
     refetchOnReconnect: "always",
+    refetchOnMount: true,
     enabled: !!data?.data.authenticated,
     retry: !!data?.data.authenticated,
-    staleTime: 1000 * 60,
   });
 };
 
