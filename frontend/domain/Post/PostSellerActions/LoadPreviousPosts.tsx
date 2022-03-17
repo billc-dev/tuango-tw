@@ -29,7 +29,8 @@ const LoadPreviousPosts: FC<Props> = ({ reset }) => {
   const { data, fetchNextPage, isFetching, isLoading, hasNextPage } =
     useInfiniteSellerPosts(limit, open, query);
   const onSubmit: SubmitHandler<PostSearchParams> = (data) => {
-    setQuery({ ...data });
+    const { postNum, title } = data;
+    if (postNum || title) setQuery({ ...data });
   };
   useEffect(() => {
     return () => {
