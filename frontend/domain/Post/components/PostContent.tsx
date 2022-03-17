@@ -1,8 +1,10 @@
 import React, { FC } from "react";
 
 import Header from "components/Card/CardHeader";
+import { useUser } from "domain/User/hooks";
 import { date, getFullDateFromNow } from "services/date";
 
+import EditPostButton from "../EditPost.tsx/EditPostButton";
 import { IPost } from "../types";
 import PostImageCarousel from "./PostImageCarousel";
 
@@ -12,12 +14,20 @@ interface Props {
 
 const PostContent: FC<Props> = (props) => {
   const { post } = props;
+  const userQuery = useUser();
   return (
     <>
       <Header
         img={post.pictureUrl}
         title={post.displayName}
         subtitle={getFullDateFromNow(post.createdAt)}
+        action={
+          <>
+            {userQuery.data?.data.user.username === post.userId && (
+              <EditPostButton {...{ post }} />
+            )}
+          </>
+        }
       />
       <PostImageCarousel imageUrls={post.imageUrls} />
       <div className="py-4">

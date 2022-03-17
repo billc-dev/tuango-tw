@@ -70,3 +70,12 @@ export const fetchLikedPostCards = async (cursor: string, limit: number) => {
 export const createPost = (postForm: PostFormSchema) => {
   return axios.post<{ post: IPost }>("/posts/post", { postForm });
 };
+
+interface EditPostParams {
+  postId: string;
+  postForm: PostFormSchema;
+}
+
+export const editPost = ({ postId, postForm }: EditPostParams) => {
+  return axios.patch<{ post: IPost }>(`/posts/post/${postId}`, { postForm });
+};
