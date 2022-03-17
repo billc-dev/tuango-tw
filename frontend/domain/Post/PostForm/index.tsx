@@ -18,9 +18,11 @@ interface Props {
   postForm: UseFormReturn<PostFormSchema, any>;
   onSubmit: SubmitHandler<PostFormSchema>;
   action: "create" | "edit";
+  submitting: boolean;
 }
 
-const PostForm: FC<Props> = ({ postForm, onSubmit, action }) => {
+const PostForm: FC<Props> = (props) => {
+  const { postForm, onSubmit, action, submitting } = props;
   const [agree, setAgree] = useState(action === "edit");
   const {
     handleSubmit,
@@ -79,6 +81,7 @@ const PostForm: FC<Props> = ({ postForm, onSubmit, action }) => {
       <UploadImageButton {...{ getValues, setValue, errors }} />
       {action === "create" && <Agree {...{ agree, setAgree }} />}
       <Button
+        loading={submitting}
         icon={<DocumentAddIcon />}
         disabled={!agree}
         type="submit"
@@ -87,7 +90,7 @@ const PostForm: FC<Props> = ({ postForm, onSubmit, action }) => {
         className="mt-4"
         size="lg"
       >
-        新增貼文
+        {action === "create" ? "新增貼文" : "編輯貼文"}
       </Button>
     </form>
   );
