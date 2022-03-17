@@ -21,6 +21,7 @@ const Button: FC<Props> = (props) => {
     icon,
     loading,
     pill,
+    disabled,
     ...rest
   } = props;
   const renderedChildren = () => {
@@ -46,6 +47,7 @@ const Button: FC<Props> = (props) => {
   return (
     <button
       type="button"
+      disabled={disabled || loading}
       className={`flex items-center justify-center select-none py-1 px-3 shadow transition disabled:bg-zinc-300 disabled:text-zinc-400  ${
         fullWidth ? "w-full" : ""
       } ${variantStyles()} ${size === "lg" ? "px-4 text-lg" : ""} ${
