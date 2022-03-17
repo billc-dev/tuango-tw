@@ -1,21 +1,16 @@
-import toast from "react-hot-toast";
-import {
-  useInfiniteQuery,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "react-query";
+import { useInfiniteQuery, useQuery } from "react-query";
 
 import { useUser } from "domain/User/hooks";
 
 import {
-  createPost,
   fetchLikedPostCards,
   fetchPost,
   fetchPostCards,
   fetchSellerPosts,
 } from "../api";
 import { PostQuery, SellerQuery } from "../types";
+
+export * from "./mutation";
 
 export const useInfinitePostCardQuery = (limit: number, query?: PostQuery) => {
   const enabled = () => {
@@ -69,17 +64,4 @@ export const useInfiniteLikedPostQuery = (limit: number) => {
 
 export const usePost = (id: string) => {
   return useQuery(["post", id], () => fetchPost(id), { enabled: !!id });
-};
-
-export const useCreatePost = () => {
-  const queryClient = useQueryClient();
-  return useMutation(createPost, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-      toast.success("已成功新增貼文!", { id: "createPost" });
-    },
-    onError: () => {
-      toast.error("新增貼文失敗!", { id: "createPost" });
-    },
-  });
 };
