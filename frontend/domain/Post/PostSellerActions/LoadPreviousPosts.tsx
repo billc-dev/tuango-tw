@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 
 import { SubmitHandler, UseFormReset, useForm } from "react-hook-form";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -31,6 +31,11 @@ const LoadPreviousPosts: FC<Props> = ({ reset }) => {
   const onSubmit: SubmitHandler<PostSearchParams> = (data) => {
     setQuery({ ...data });
   };
+  useEffect(() => {
+    return () => {
+      setQuery({});
+    };
+  }, []);
 
   return (
     <>
