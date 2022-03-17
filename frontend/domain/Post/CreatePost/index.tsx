@@ -15,6 +15,7 @@ import { PostFormSchema, postSchema } from "../schema";
 
 const CreatePost = () => {
   const router = useRouter();
+  const [submitting, setSubmitting] = useState(false);
   const postForm = useForm<PostFormSchema>({
     defaultValues: postSchema.getDefault(),
     resolver: yupResolver(postSchema),
@@ -28,6 +29,7 @@ const CreatePost = () => {
   const createPost = useCreatePost();
 
   const onSubmit: SubmitHandler<PostFormSchema> = (data) => {
+    setSubmitting(true);
     toast.loading("貼文製作中...", { id: "createPost" });
     createPost.mutate(data, {
       onSuccess: () => {
@@ -36,6 +38,9 @@ const CreatePost = () => {
           items: [{ item: "", price: 0, itemQty: 100 }],
         });
         handleClose();
+      },
+      onSettled: () => {
+        setSubmitting(false);
       },
     });
   };
@@ -47,10 +52,8 @@ const CreatePost = () => {
 
   return open ? (
     <Dialog open={open} handleClose={() => handleClose()} title="新增貼文">
-      <div className="pt-4">
-        <LoadPreviousPosts reset={postForm.reset} />
-        <PostForm action="create" {...{ postForm, onSubmit }} />
-      </div>
+      <LoadPreviousPosts reset={postForm.reset} />
+      <PostForm action="create" {...{ postForm, onSubmit, submitting }} />
     </Dialog>
   ) : null;
 };
