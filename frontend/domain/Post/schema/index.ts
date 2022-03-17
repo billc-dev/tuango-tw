@@ -3,22 +3,25 @@ import * as yup from "yup";
 const itemsSchema = yup
   .array(
     yup.object({
-      item: yup.string().required("請輸入商品名稱!"),
+      _id: yup.string(),
+      item: yup.string().required("請輸入商品名稱!").default(""),
       price: yup
         .number()
         .required("請輸入商品價格!")
         .integer("請輸入商品價格!")
-        .typeError("請輸入商品價格!"),
+        .typeError("請輸入商品價格!")
+        .default(undefined),
       itemQty: yup
         .number()
         .required("請輸入商品數量!")
         .integer("請輸入商品數量!")
-        .typeError("請輸入商品數量!"),
+        .typeError("請輸入商品數量!")
+        .default(100),
     })
   )
   .min(1)
   .defined()
-  .default([{ item: "", price: undefined, itemQty: 100 }]);
+  .default([]);
 
 const imageUrlsSchema = yup
   .array(
@@ -33,7 +36,7 @@ const imageUrlsSchema = yup
   .default([]);
 
 export const postSchema = yup.object({
-  title: yup.string().required("請輸入團購主題!").default(""),
+  title: yup.string().required("請輸入團購主題!").default("").trim(),
   storageType: yup
     .mixed()
     .oneOf(["roomTemp", "refrigerated", "frozen"])
@@ -41,7 +44,7 @@ export const postSchema = yup.object({
     .default("roomTemp"),
   deadline: yup.string().default(""),
   deliveryDate: yup.string().default(""),
-  body: yup.string().required("請輸入團購內容!").default(""),
+  body: yup.string().required("請輸入團購內容!").default("").trim(),
   items: itemsSchema,
   imageUrls: imageUrlsSchema,
 });

@@ -51,11 +51,11 @@ const PostItems: FC<Props> = (props) => {
             error={errors.items?.[index]?.itemQty?.message}
             {...register(`items.${index}.itemQty`)}
           />
-          {index !== 0 && (
+          {!item._id && fields.length > 1 ? (
             <Button icon={<TrashIcon />} onClick={() => remove(index)}>
               刪除
             </Button>
-          )}
+          ) : null}
         </div>
       ))}
       <Button

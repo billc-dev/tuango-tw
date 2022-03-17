@@ -34,7 +34,12 @@ const LoadPreviousPosts: FC<Props> = ({ reset }) => {
 
   return (
     <>
-      <Button type="button" fullWidth onClick={() => setOpen(true)}>
+      <Button
+        className="mt-4"
+        type="button"
+        fullWidth
+        onClick={() => setOpen(true)}
+      >
         載入舊單
       </Button>
       {open && (
@@ -99,7 +104,8 @@ const LoadPreviousPosts: FC<Props> = ({ reset }) => {
                                     body,
                                     imageUrls,
                                     items: items.map((item) => ({
-                                      ...item,
+                                      item: item.item,
+                                      price: item.price,
                                       itemQty: 100,
                                     })),
                                   });
