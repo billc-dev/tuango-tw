@@ -48,6 +48,7 @@ const OrderForm: FC<Props> = ({ orderForm, setOrderForm }) => {
       </div>
       <div className="px-2">
         <TextArea
+          hiddenLabel
           placeholder="備註"
           value={orderForm.comment}
           onChange={(e) =>

@@ -33,6 +33,7 @@ const CommentForm: FC<Props> = ({ commentForm, setCommentForm }) => {
         <div ref={ref} className="absolute -top-12" />
         <TextArea
           autoFocus
+          hiddenLabel
           placeholder="問題"
           value={commentForm.comment}
           onChange={(e) =>

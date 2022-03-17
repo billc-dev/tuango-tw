@@ -9,17 +9,20 @@ interface Props
   color?: "grey";
   label?: string;
   error?: string;
+  hiddenLabel?: boolean;
 }
 
 const TextArea: FC<Props> = React.forwardRef((props, ref) => {
-  const { color, error, ...rest } = props;
+  const { color, hiddenLabel, error, ...rest } = props;
   return (
     <>
-      {props.placeholder && (
-        <label htmlFor={props.placeholder} className="block pb-2">
-          {props.placeholder}
-        </label>
-      )}
+      {!hiddenLabel
+        ? props.placeholder && (
+            <label htmlFor={props.placeholder} className="block pb-2">
+              {props.placeholder}
+            </label>
+          )
+        : null}
       <TextareaAutosize
         className={`mb-2 w-full rounded-lg border py-4 px-3 placeholder-zinc-400 border-zinc-200 dark:border-zinc-600 dark:bg-zinc-800 ${
           color === "grey" && "bg-zinc-100"
