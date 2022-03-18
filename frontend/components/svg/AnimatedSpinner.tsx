@@ -1,18 +1,20 @@
 import React, { FC } from "react";
 
 interface Props {
-  size?: "small";
+  size?: "small" | "large";
 }
 
-const AnimatedSpinner: FC<Props> = ({ size }) => {
+const AnimatedSpinner: FC<Props> = (props) => {
+  const getSize = () => {
+    const { size } = props;
+    if (!size) return "h-6 w-6";
+    if (size === "small") return "h-5 w-5";
+  };
+  const size = getSize();
   return (
-    <div
-      className={`flex items-center justify-center ${
-        size === "small" ? "h-5 w-5" : "h-6 w-6"
-      }`}
-    >
+    <div className={`flex items-center justify-center ${size}`}>
       <svg
-        className="h-5 w-5 animate-spin text-zinc-600 dark:text-zinc-200"
+        className={`animate-spin text-zinc-600 dark:text-zinc-200 ${size}`}
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
