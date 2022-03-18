@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import {
-  ChatAltIcon,
+  ChatIcon,
   ClipboardListIcon,
   DocumentAddIcon,
   HomeIcon,
@@ -44,7 +44,7 @@ const BottomNavbar = () => {
               </>
             )}
             <NavigationButton path="/chat" text="聊天室">
-              <ChatAltIcon />
+              <ChatIcon />
             </NavigationButton>
             <NavigationButton path="/orders" text="我的訂單">
               <ClipboardListIcon />
