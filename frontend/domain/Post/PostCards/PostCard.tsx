@@ -22,7 +22,7 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
 
   return (
     <div
-      className="flex max-w-[180px] transform flex-col overflow-hidden rounded-3xl bg-white
+      className="hover:scale-[1.01] antialiased flex max-w-[180px] transform flex-col overflow-hidden rounded-3xl bg-white
               shadow-md transition hover:shadow-2xl dark:bg-zinc-800 dark:hover:shadow-gray-900"
     >
       <div className="h-[180px] w-[180px] cursor-pointer">
