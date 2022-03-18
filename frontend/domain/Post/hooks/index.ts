@@ -63,5 +63,8 @@ export const useInfiniteLikedPostQuery = (limit: number) => {
 };
 
 export const usePost = (id: string) => {
-  return useQuery(["post", id], () => fetchPost(id), { enabled: !!id });
+  return useQuery(["post", id], () => fetchPost(id), {
+    enabled: !!id,
+    refetchOnMount: true,
+  });
 };
