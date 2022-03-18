@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useRouter } from "next/router";
 
@@ -15,6 +15,11 @@ const Search = () => {
     type: router.query.type as QueryTypes,
     value: router.query.value as string,
   });
+  useEffect(() => {
+    return () => {
+      postsQuery.remove();
+    };
+  }, []);
   return (
     <div className="p-2">
       <SearchBar />

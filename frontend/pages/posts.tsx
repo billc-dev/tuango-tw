@@ -26,6 +26,9 @@ const Posts: NextPage<Props> = (props) => {
   const postsQuery = useInfinitePostCardQuery(limit);
   useEffect(() => {
     if (post) queryClient.setQueryData(["post", post._id], { post });
+    return () => {
+      postsQuery.remove();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post]);
   return (
