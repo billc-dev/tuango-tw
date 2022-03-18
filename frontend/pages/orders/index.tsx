@@ -1,3 +1,6 @@
+import type { NextPage } from "next";
+import { useRouter } from "next/router";
+
 import {
   CheckIcon,
   SearchIcon,
@@ -5,8 +8,6 @@ import {
   XIcon,
 } from "@heroicons/react/outline";
 import { HeartIcon } from "@heroicons/react/solid";
-import type { NextPage } from "next";
-import { useRouter } from "next/router";
 
 import SquareButton from "components/Button/SquareButton";
 import PlusIcon from "components/svg/PlusIcon";

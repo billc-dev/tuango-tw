@@ -1,6 +1,5 @@
-import React, { FC, useEffect, useState } from "react";
-
 import { useRouter } from "next/router";
+import React, { FC, useEffect, useState } from "react";
 
 import Dialog from "components/Dialog";
 import AnimatedSpinner from "components/svg/AnimatedSpinner";

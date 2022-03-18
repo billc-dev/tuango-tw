@@ -1,8 +1,8 @@
-import { useEffect } from "react";
-
 import type { NextPage, NextPageContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+
 import { useQueryClient } from "react-query";
 
 import Container from "components/Container";

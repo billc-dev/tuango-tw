@@ -1,6 +1,5 @@
-import React, { FC } from "react";
-
 import { useRouter } from "next/router";
+import React, { FC } from "react";
 
 import TabButton from "components/Tab/TabButton";
 import TabContainer from "components/Tab/TabContainer";

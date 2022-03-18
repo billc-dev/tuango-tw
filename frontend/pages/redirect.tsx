@@ -1,7 +1,7 @@
-import { useEffect } from "react";
-
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+
 import toast from "react-hot-toast";
 
 import AnimatedSpinner from "components/svg/AnimatedSpinner";

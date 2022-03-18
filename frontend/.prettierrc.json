@@ -2,7 +2,7 @@
   "printWidth": 80,
   "tabWidth": 2,
   "importOrder": [
-    "^react$",
+    "^react$|^next$|^next/",
     "<THIRD_PARTY_MODULES>",
     "^api|^components|^domain|^hooks|^services|^styles|^utils/(.*)$",
     "^[./]"

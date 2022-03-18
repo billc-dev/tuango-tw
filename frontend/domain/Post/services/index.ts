@@ -1,8 +1,8 @@
+import { NextRouter } from "next/router";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 
 import axios from "axios";
 import { nanoid } from "nanoid";
-import { NextRouter } from "next/router";
 import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import Resizer from "react-image-file-resizer";
 

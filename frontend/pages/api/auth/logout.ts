@@ -1,5 +1,6 @@
-import * as cookie from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
+
+import * as cookie from "cookie";
 
 export default async function logout(
   req: NextApiRequest,

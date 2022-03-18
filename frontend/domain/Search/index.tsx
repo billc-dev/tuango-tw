@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
-
 import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 
 import PostCards from "domain/Post/PostCards";
 import { useInfinitePostCardQuery } from "domain/Post/hooks";

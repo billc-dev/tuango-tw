@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useRouter } from "next/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 

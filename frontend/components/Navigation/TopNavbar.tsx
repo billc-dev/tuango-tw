@@ -1,6 +1,5 @@
-import React from "react";
-
 import { useRouter } from "next/router";
+import React from "react";
 
 import IconButton from "components/Button/IconButton";
 import LineLoginButton from "components/Button/LineLoginButton";

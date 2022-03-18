@@ -1,6 +1,5 @@
-import React, { FC } from "react";
-
 import { useRouter } from "next/router";
+import React, { FC } from "react";
 
 import Card from "components/Card";
 import { getFullDateFromNow } from "services/date";

@@ -1,6 +1,7 @@
+import { NextApiResponse } from "next";
+
 import * as cookie from "cookie";
 import * as jwt from "jsonwebtoken";
-import { NextApiResponse } from "next";
 
 export const signJWT = (payload: any) => {
   return jwt.sign(payload, process.env.JWT_SECRET as string);

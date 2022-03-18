@@ -1,6 +1,6 @@
+import { useRouter } from "next/router";
 import React, { FC } from "react";
 
-import { useRouter } from "next/router";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import LikeButton from "domain/Like/LikeButton";
