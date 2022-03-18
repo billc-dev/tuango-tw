@@ -12,7 +12,7 @@ const SquareButton: FC<Props> = ({ Icon, text, ...props }) => {
       className="py-4 flex flex-col items-center justify-center active:bg-zinc-100 dark:active:bg-zinc-800 transition"
       {...props}
     >
-      <div className="rounded-full bg-zinc-300 p-4 dark:bg-zinc-700 transition">
+      <div className="rounded-lg bg-zinc-300 p-4 dark:bg-zinc-700 transition">
         <div className="h-12 w-12 text-white dark:text-zinc-200">{Icon}</div>
       </div>
       <p className="pt-2">{text}</p>
