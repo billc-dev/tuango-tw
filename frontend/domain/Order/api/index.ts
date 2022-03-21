@@ -6,9 +6,12 @@ import { IOrder, IOrderForm, OrderStatus } from "../types";
 import { IComplete } from "../types/complete";
 
 export const fetchOrders = async (
-  postId: string
+  postId: string,
+  query?: { status: OrderStatus }
 ): Promise<{ orders: IOrder[] }> => {
-  const res = await axios.get(`/orders/post/${postId}`);
+  const res = await axios.get(`/orders/post/${postId}`, {
+    params: { status: query?.status },
+  });
 
   return { orders: res.data.orders };
 };

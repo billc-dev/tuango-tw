@@ -47,3 +47,10 @@ export interface IOrder {
 
 export interface IOrderItem extends yup.InferType<typeof orderItemSchema> {}
 export interface IOrderForm extends yup.InferType<typeof orderFormSchema> {}
+
+export interface SumOrder {
+  id: string;
+  item: string;
+  qty: number;
+  amount: number;
+}
