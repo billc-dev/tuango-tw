@@ -22,7 +22,7 @@ const PostCards: FC<Props> = ({ postsQuery }) => {
   const { data, fetchNextPage, isFetching, isLoading, hasNextPage } =
     postsQuery;
   return (
-    <div className="flex w-full flex-col items-center">
+    <div className="flex w-full flex-col items-center select-none">
       <InfiniteScroll
         loader={
           isFetching && (

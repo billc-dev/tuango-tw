@@ -26,17 +26,17 @@ const Orders: NextPage = () => {
   const router = useRouter();
   return (
     <>
-      <div className="grid justify-center">
+      <div className="grid justify-center select-none">
         <button
           type="button"
           className="flex shadow items-center rounded-lg bg-zinc-300 dark:bg-zinc-700 w-56 p-4 my-4 active:bg-zinc-500 dark:active:bg-zinc-800 transition"
           onClick={() => router.push("/seller")}
         >
           <BriefcaseIcon className="h-12 w-12 text-white" />
-          <p className="pl-4 text-white text-3xl">賣家管理</p>
+          <p className="pl-4 text-3xl">賣家管理</p>
         </button>
       </div>
-      <div className="grid grid-cols-2 px-4 max-w-xs mx-auto">
+      <div className="grid grid-cols-2 px-4 max-w-xs mx-auto select-none">
         {list.map((item, index) => (
           <SquareButton
             key={index}

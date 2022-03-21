@@ -15,7 +15,7 @@ const SquareButton: FC<Props> = ({ Icon, text, ...props }) => {
       <div className="rounded-lg bg-zinc-300 p-4 dark:bg-zinc-700 transition">
         <div className="h-12 w-12 text-white dark:text-zinc-200">{Icon}</div>
       </div>
-      <p className="pt-2">{text}</p>
+      <p className="pt-2 font-medium">{text}</p>
     </button>
   );
 };
