@@ -6,6 +6,7 @@ import TabButton from "components/Tab/TabButton";
 import TabContainer from "components/Tab/TabContainer";
 import TextField from "components/TextField";
 import { getFormattedDate } from "services/date";
+import { shallowPush } from "utils/routing";
 
 import { QueryTypes } from "./types";
 
@@ -24,27 +25,23 @@ const SearchBar = () => {
     ["text", "postNum", "deadline", "deliveryDate"].includes(type);
   const handleChange = (type: string) => {
     if (!isQueryType(type)) {
-      router.push({ query: { type: "text" } }, undefined, { shallow: true });
+      shallowPush(router, { type: "text" });
       return;
     }
-    router.push({ query: { type } }, undefined, { shallow: true });
+    shallowPush(router, { type });
     if (type === "text" || type === "postNum") setValue("");
     else setValue(getFormattedDate());
   };
   const handleQuickDate = (days: number) => {
     const date = getFormattedDate(days);
     setValue(date);
-    router.push(
-      { query: { ...router.query, type: "deadline", value: date } },
-      undefined,
-      { shallow: true }
-    );
+    shallowPush(router, { ...router.query, type: "deadline", value: date });
   };
   useEffect(() => {
     if (!router.isReady) return;
     if (typeof router.query.value === "string") setValue(router.query.value);
     if (type) return;
-    router.push({ query: { type: "text" } }, undefined, { shallow: true });
+    shallowPush(router, { type: "text" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
@@ -87,11 +84,7 @@ const SearchBar = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            router.push(
-              { query: { ...router.query, type, value } },
-              undefined,
-              { shallow: true }
-            );
+            shallowPush(router, { ...router.query, type, value });
           }}
         >
           <div className="px-1.5">

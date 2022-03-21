@@ -3,6 +3,7 @@ import React, { FC, useEffect, useState } from "react";
 
 import Dialog from "components/Dialog";
 import AnimatedSpinner from "components/svg/AnimatedSpinner";
+import { shallowPush } from "utils/routing";
 
 import PostActions from "./components/PostActions";
 import PostContent from "./components/PostContent";
@@ -18,11 +19,8 @@ const PostDialog: FC<Props> = ({ postId }) => {
   const { data, isLoading } = usePost(postId);
 
   const handleClose = () => {
-    router.push(
-      { query: { ...router.query, postId: "", action: "" } },
-      undefined,
-      { shallow: true }
-    );
+    const { postId, action, ...query } = router.query;
+    shallowPush(router, query);
   };
 
   useEffect(() => {

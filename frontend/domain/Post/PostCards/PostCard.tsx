@@ -4,6 +4,7 @@ import React, { FC } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import LikeButton from "domain/Like/LikeButton";
+import { shallowPush } from "utils/routing";
 
 import { getProductPriceRange } from "../services";
 import { IPostCard } from "../types";
@@ -16,9 +17,7 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
   const router = useRouter();
 
   const openDialog = () =>
-    router.push({ query: { ...router.query, postId: post._id } }, undefined, {
-      shallow: true,
-    });
+    shallowPush(router, { ...router.query, postId: post._id });
 
   return (
     <div
@@ -41,7 +40,7 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
               {post.displayName}
             </div>
             <div className="truncate w-auto">
-              ${getProductPriceRange(post.items)}
+              {`$${getProductPriceRange(post.items)}`}
             </div>
           </div>
         </div>

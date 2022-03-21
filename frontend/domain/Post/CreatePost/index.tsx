@@ -7,6 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 import Dialog from "components/Dialog";
+import { shallowPush } from "utils/routing";
 
 import PostForm from "../PostForm";
 import LoadPreviousPosts from "../PostSellerActions/LoadPreviousPosts";
@@ -22,9 +23,8 @@ const CreatePost = () => {
   });
   const [open, setOpen] = useState(false);
   const handleClose = () => {
-    router.push({ query: { ...router.query, createPost: "" } }, undefined, {
-      shallow: true,
-    });
+    const { createPost, ...query } = router.query;
+    shallowPush(router, query);
   };
   const createPost = useCreatePost();
 

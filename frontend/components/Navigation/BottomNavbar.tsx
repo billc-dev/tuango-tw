@@ -12,6 +12,7 @@ import {
 
 import NavigationButton from "components/Button/NavigationButton";
 import { useUser } from "domain/User/hooks";
+import { shallowPush } from "utils/routing";
 
 const CreatePost = dynamic(() => import("domain/Post/CreatePost"));
 
@@ -32,11 +33,7 @@ const BottomNavbar = () => {
                 <NavigationButton
                   text="新增貼文"
                   onClick={() =>
-                    router.push(
-                      { query: { ...router.query, createPost: "open" } },
-                      undefined,
-                      { shallow: true }
-                    )
+                    shallowPush(router, { ...router.query, createPost: "open" })
                   }
                 >
                   <DocumentAddIcon />

@@ -3,6 +3,7 @@ import React, { FC } from "react";
 
 import Card from "components/Card";
 import { getFullDateFromNow } from "services/date";
+import { shallowPush } from "utils/routing";
 
 import { IComplete } from "../types/complete";
 
@@ -22,17 +23,7 @@ const CompletedCard: FC<Props> = ({ complete }) => {
           key={order.orderId}
           className="text-sm pt-1 cursor-pointer"
           onClick={() =>
-            router.push(
-              {
-                query: {
-                  ...router.query,
-                  postId: order.postId,
-                  action: "order",
-                },
-              },
-              undefined,
-              { shallow: true }
-            )
+            shallowPush(router, { ...router.query, postId: order.postId })
           }
         >
           🛒 #{order.postNum} {order.title} #{order.sellerDisplayName}
