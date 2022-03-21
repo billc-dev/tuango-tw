@@ -27,12 +27,15 @@ export const useInfinitePostCardQuery = (limit: number, query?: PostQuery) => {
 
 export const useInfiniteSellerPosts = (
   limit: number,
-  enabled: boolean,
-  query?: SellerQuery
+  options: {
+    enabled?: boolean;
+    query?: SellerQuery;
+  }
 ) => {
+  const { enabled, query } = options;
   const user = useUser();
   const isEnabled = () => {
-    if (!enabled) return false;
+    if (enabled !== undefined && !enabled) return false;
     if (!user.data?.data.user._id) return false;
     if (query === undefined) return true;
     if ((query && query.status) || query.postNum || query.title) return true;

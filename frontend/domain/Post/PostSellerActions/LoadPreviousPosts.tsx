@@ -27,7 +27,7 @@ const LoadPreviousPosts: FC<Props> = ({ reset }) => {
   const { register, handleSubmit } = useForm<PostSearchParams>();
   const limit = 16;
   const { data, fetchNextPage, isFetching, isLoading, hasNextPage } =
-    useInfiniteSellerPosts(limit, open, query);
+    useInfiniteSellerPosts(limit, { enabled: open, query });
   const onSubmit: SubmitHandler<PostSearchParams> = (data) => {
     const { postNum, title } = data;
     if (postNum || title) setQuery({ ...data });
