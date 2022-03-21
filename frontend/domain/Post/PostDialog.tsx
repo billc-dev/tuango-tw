@@ -33,11 +33,11 @@ const PostDialog: FC<Props> = ({ postId }) => {
   return (
     <>
       <div
-        className={`rounded shadow transition-opacity bg-zinc-200 p-1.5 fixed bottom-16 right-3 z-50 ${
+        className={`rounded shadow transition-opacity bg-zinc-200 p-1.5 fixed top-16 left-3 z-50 ${
           isLoading ? "opacity-95" : "opacity-0"
         }`}
       >
-        {isLoading && <AnimatedSpinner />}
+        <AnimatedSpinner />
       </div>
       {data?.post && (
         <Dialog open={open} handleClose={handleClose} title={data.post.title}>
