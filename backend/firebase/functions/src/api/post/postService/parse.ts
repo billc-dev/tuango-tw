@@ -5,7 +5,7 @@ import { Filter, MongoosePost, PostStatus, Query, SellerQuery } from "../post";
 export const getParams = (req: Request) => {
   const cursor = req.params.cursor;
   const limit = Math.min(Number(req.query.limit), 36);
-  const query: SellerQuery =
+  const query: SellerQuery | undefined =
     req.query.query && JSON.parse(req.query.query as string);
   return { cursor, limit, query };
 };
