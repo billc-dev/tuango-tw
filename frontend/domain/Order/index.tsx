@@ -30,7 +30,7 @@ const Order: FC<Props> = ({ post, action }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post]);
 
-  return action === "order" || action === undefined ? (
+  return action === "order" || !action ? (
     <>
       {post.status !== "completed" && <OrderList postId={post._id} />}
       {post.status === "open" && (

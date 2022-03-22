@@ -5,7 +5,7 @@ import { ValidationError } from "yup";
 import { IPost } from "domain/Post/types";
 
 import { orderFormSchema } from "../schema";
-import { IOrderForm, IOrderItem } from "../types";
+import { IOrder, IOrderForm, IOrderItem } from "../types";
 
 type HandleChangeItemQty = (
   amount: number,
@@ -62,4 +62,21 @@ export const getInitialOrderForm = (post: IPost) => {
 export const getOrderSum = (items?: IOrderItem[]) => {
   if (!items) return 0;
   return items.reduce((sum, item) => sum + item.qty * item.price, 0);
+};
+
+export const calcSumOrders = (post: IPost, orders: IOrder[]) => {
+  const orderArray = post.items.map((item) => ({
+    id: item.id,
+    item: item.item,
+    qty: 0,
+    amount: 0,
+  }));
+  orders.forEach((order) => {
+    order.order.forEach((i) => {
+      const index = orderArray.findIndex((item) => item.id === i.id);
+      orderArray[index].qty += i.qty * 1;
+      orderArray[index].amount += i.qty * 1 * i.price * 1;
+    });
+  });
+  return orderArray.filter((item) => item.qty !== 0);
 };

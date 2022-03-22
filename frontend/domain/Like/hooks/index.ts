@@ -17,6 +17,7 @@ export function useLikes() {
   const userQuery = useUser();
   return useQuery("likes", fetchLikes, {
     enabled: !!userQuery.data?.data.user,
+    refetchOnMount: true,
   });
 }
 

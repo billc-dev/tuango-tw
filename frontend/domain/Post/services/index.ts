@@ -1,12 +1,12 @@
+import { NextRouter } from "next/router";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 
 import axios from "axios";
 import { nanoid } from "nanoid";
-import { NextRouter } from "next/router";
 import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import Resizer from "react-image-file-resizer";
 
-import { PostForm } from "../schema";
+import { PostFormSchema } from "../schema";
 import { Action, ImageUrl, Item } from "../types";
 
 export function getProductPriceRange(items: Item[]) {
@@ -95,8 +95,8 @@ const resizeImage = (file: File) =>
 export const uploadImageS3 = async (
   e: ChangeEvent<HTMLInputElement>,
   setUploading: Dispatch<SetStateAction<boolean>>,
-  getValues: UseFormGetValues<PostForm>,
-  setValue: UseFormSetValue<PostForm>,
+  getValues: UseFormGetValues<PostFormSchema>,
+  setValue: UseFormSetValue<PostFormSchema>,
   userId: string
 ) => {
   if (!e.target.files) return;

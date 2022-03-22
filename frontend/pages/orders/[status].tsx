@@ -1,6 +1,5 @@
-import React from "react";
-
 import { useRouter } from "next/router";
+import React from "react";
 
 import Completed from "domain/Order/UserOrders/Completed";
 import Liked from "domain/Order/UserOrders/Liked";

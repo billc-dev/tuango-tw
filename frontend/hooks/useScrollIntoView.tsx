@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-
 import { useRouter } from "next/router";
+import { useEffect, useRef, useState } from "react";
 
 export const useScrollIntoView = (isLoading: boolean, action: string) => {
   const ref = useRef<HTMLDivElement>(null);

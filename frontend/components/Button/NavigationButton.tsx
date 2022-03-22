@@ -1,6 +1,5 @@
-import React, { FC, HTMLAttributes } from "react";
-
 import { useRouter } from "next/router";
+import React, { FC, HTMLAttributes } from "react";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   path?: string;

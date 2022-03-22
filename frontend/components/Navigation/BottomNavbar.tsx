@@ -1,24 +1,27 @@
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import React from "react";
 
 import {
-  ChatAltIcon,
+  ChatIcon,
   ClipboardListIcon,
   DocumentAddIcon,
   HomeIcon,
   SearchIcon,
 } from "@heroicons/react/outline";
-import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
 
 import NavigationButton from "components/Button/NavigationButton";
 import { useUser } from "domain/User/hooks";
+import { shallowPush } from "utils/routing";
 
 const CreatePost = dynamic(() => import("domain/Post/CreatePost"));
 
 const BottomNavbar = () => {
   const router = useRouter();
   const userQuery = useUser();
-  const isSeller = userQuery.data?.data.user.role !== "basic";
+  const isSeller =
+    userQuery.data &&
+    ["seller", "admin"].includes(userQuery.data.data.user.role);
   return (
     <>
       <div className="select-none pt-14">
@@ -32,11 +35,7 @@ const BottomNavbar = () => {
                 <NavigationButton
                   text="新增貼文"
                   onClick={() =>
-                    router.push(
-                      { query: { ...router.query, createPost: "open" } },
-                      undefined,
-                      { shallow: true }
-                    )
+                    shallowPush(router, { ...router.query, createPost: "open" })
                   }
                 >
                   <DocumentAddIcon />
@@ -44,7 +43,7 @@ const BottomNavbar = () => {
               </>
             )}
             <NavigationButton path="/chat" text="聊天室">
-              <ChatAltIcon />
+              <ChatIcon />
             </NavigationButton>
             <NavigationButton path="/orders" text="我的訂單">
               <ClipboardListIcon />

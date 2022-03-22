@@ -1,9 +1,10 @@
+import { useRouter } from "next/router";
 import React, { FC } from "react";
 
-import { useRouter } from "next/router";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import LikeButton from "domain/Like/LikeButton";
+import { shallowPush } from "utils/routing";
 
 import { getProductPriceRange } from "../services";
 import { IPostCard } from "../types";
@@ -16,13 +17,11 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
   const router = useRouter();
 
   const openDialog = () =>
-    router.push({ query: { ...router.query, postId: post._id } }, undefined, {
-      shallow: true,
-    });
+    shallowPush(router, { ...router.query, postId: post._id });
 
   return (
     <div
-      className="flex max-w-[180px] transform flex-col overflow-hidden rounded-3xl bg-white
+      className="hover:scale-[1.01] antialiased flex max-w-[180px] transform flex-col overflow-hidden rounded-3xl bg-white
               shadow-md transition hover:shadow-2xl dark:bg-zinc-800 dark:hover:shadow-gray-900"
     >
       <div className="h-[180px] w-[180px] cursor-pointer">
@@ -41,7 +40,7 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
               {post.displayName}
             </div>
             <div className="truncate w-auto">
-              ${getProductPriceRange(post.items)}
+              {`$${getProductPriceRange(post.items)}`}
             </div>
           </div>
         </div>

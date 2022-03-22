@@ -79,8 +79,11 @@ export const useDeleteOrder = () => {
   });
 };
 
-export const useOrders = (postId: string) => {
-  return useQuery(["order", postId], () => fetchOrders(postId), {
+export const useOrders = (postId: string, query?: { status: OrderStatus }) => {
+  const queryKey = query?.status
+    ? ["order", postId, query.status]
+    : ["order", postId];
+  return useQuery(queryKey, () => fetchOrders(postId, query), {
     refetchOnMount: "always",
   });
 };

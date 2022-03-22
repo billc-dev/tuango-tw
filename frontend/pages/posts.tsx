@@ -1,15 +1,15 @@
-import { useEffect } from "react";
-
 import type { NextPage, NextPageContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+
 import { useQueryClient } from "react-query";
 
 import Container from "components/Container";
 import PostCards from "domain/Post/PostCards";
 import PostDialog from "domain/Post/PostDialog";
 import { fetchPost } from "domain/Post/api";
-import { useInfinitePostQuery } from "domain/Post/hooks";
+import { useInfinitePostCardQuery } from "domain/Post/hooks";
 
 import { IPost } from "../domain/Post/types";
 
@@ -23,9 +23,12 @@ const Posts: NextPage<Props> = (props) => {
   const { postId } = router.query;
   const queryClient = useQueryClient();
   const limit = 16;
-  const postsQuery = useInfinitePostQuery(limit);
+  const postsQuery = useInfinitePostCardQuery(limit);
   useEffect(() => {
     if (post) queryClient.setQueryData(["post", post._id], { post });
+    return () => {
+      postsQuery.remove();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post]);
   return (

@@ -1,13 +1,18 @@
-import { useInfiniteQuery } from "react-query";
-import { useQuery } from "react-query";
+import { useInfiniteQuery, useQuery } from "react-query";
 
 import { useUser } from "domain/User/hooks";
 
-import { fetchLikedPostCards, fetchPostCards } from "../api";
-import { fetchPost } from "../api";
-import { PostQuery } from "../types";
+import {
+  fetchLikedPostCards,
+  fetchPost,
+  fetchPostCards,
+  fetchSellerPosts,
+} from "../api";
+import { PostQuery, SellerQuery } from "../types";
 
-export const useInfinitePostQuery = (limit: number, query?: PostQuery) => {
+export * from "./mutation";
+
+export const useInfinitePostCardQuery = (limit: number, query?: PostQuery) => {
   const enabled = () => {
     if (query === undefined) return true;
     if (query && query.type && query.value) return true;
@@ -17,6 +22,33 @@ export const useInfinitePostQuery = (limit: number, query?: PostQuery) => {
     ["posts", limit, query?.type, query?.value],
     ({ pageParam = "initial" }) => fetchPostCards(pageParam, limit, query),
     { enabled: enabled(), getNextPageParam: (lastPage) => lastPage.nextId }
+  );
+};
+
+export const useInfiniteSellerPosts = (
+  limit: number,
+  options: {
+    enabled?: boolean;
+    query?: SellerQuery;
+  }
+) => {
+  const { enabled, query } = options;
+  const user = useUser();
+  const isEnabled = () => {
+    if (enabled !== undefined && !enabled) return false;
+    if (!user.data?.data.user._id) return false;
+    if (query === undefined) return true;
+    if ((query && query.status) || query.postNum || query.title) return true;
+    return false;
+  };
+
+  return useInfiniteQuery(
+    ["sellerPosts", limit, query?.status, query?.postNum, query?.title],
+    ({ pageParam = "initial" }) => fetchSellerPosts(pageParam, limit, query),
+    {
+      enabled: isEnabled(),
+      getNextPageParam: (lastPage) => lastPage.nextId,
+    }
   );
 };
 
@@ -34,5 +66,8 @@ export const useInfiniteLikedPostQuery = (limit: number) => {
 };
 
 export const usePost = (id: string) => {
-  return useQuery(["post", id], () => fetchPost(id), { enabled: !!id });
+  return useQuery(["post", id], () => fetchPost(id), {
+    enabled: !!id,
+    refetchOnMount: true,
+  });
 };

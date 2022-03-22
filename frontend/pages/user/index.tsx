@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-
 import { NextPage } from "next";
 import { useRouter } from "next/router";
+import React, { useEffect } from "react";
+
 import toast from "react-hot-toast";
 
 import Button from "components/Button";
