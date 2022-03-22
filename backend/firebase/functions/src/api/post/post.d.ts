@@ -1,8 +1,16 @@
 import { Document } from "mongoose";
 
+import * as yup from "yup";
+
+import { postSchema } from "./postSchema";
+
+type PostStatus = "open" | "closed" | "completed" | "canceled";
+
 export interface Filter {
-  status: string | { $ne: string };
-  postNum?: { $lt: string };
+  status: PostStatus | { $ne: PostStatus };
+  postNum?: number | { $lt: string };
+  userId?: string;
+  title?: RegExp;
 }
 
 export interface IPost {
@@ -22,7 +30,7 @@ export interface IPost {
   commentCount: number;
   orderCount: number;
   storageType: "roomTemp" | "refrigerated" | "frozen";
-  status: "open" | "closed" | "completed" | "canceled";
+  status: PostStatus;
 }
 
 export interface IPostComplete extends IPost {
@@ -61,4 +69,12 @@ export type QueryTypes = "text" | "postNum" | "deadline" | "deliveryDate";
 export interface Query {
   type?: QueryTypes;
   value?: string | number;
+}
+
+interface ValidatedPost extends yup.InferType<typeof postSchema> {}
+
+export interface SellerQuery {
+  status?: PostStatus;
+  postNum?: number;
+  title?: string;
 }

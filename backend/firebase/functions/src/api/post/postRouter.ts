@@ -1,10 +1,11 @@
 import * as express from "express";
 
 import { Like } from "api/like/likeDB";
+import Order from "api/order/orderDB";
 import asyncWrapper from "middleware/asyncWrapper";
 import { isAuthorized } from "middleware/auth";
 
-import { Filter, Query } from "./post";
+import { Filter, Query, ValidatedPost } from "./post";
 import { Post } from "./postDB";
 import * as postService from "./postService";
 
@@ -83,24 +84,127 @@ router.get(
 );
 
 router.get(
+  "/seller/paginate/:cursor",
+  isAuthorized,
+  asyncWrapper(async (req, res) => {
+    const { cursor, limit, query } = postService.getParams(req);
+    postService.checkLimit(limit);
+
+    let filter: Filter = postService.getQueryStatus(query?.status);
+    filter.userId = res.locals.user.username;
+    if (cursor && cursor !== "initial") filter.postNum = { $lt: cursor };
+    if (query?.title) filter.title = new RegExp(query.title, "i");
+    if (query?.postNum) filter.postNum = query.postNum;
+
+    const posts = await Post.find(filter)
+      .sort("-postNum")
+      .select("-normalTotal -extraTotal -normalFee -extraFee -deliverImages")
+      .limit(limit);
+
+    if (query.status === "closed") {
+      const postIds = posts.map((post) => post._id);
+      const orders = await Order.find({
+        status: "ordered",
+        postId: { $in: postIds },
+        orderNum: { $ne: 0 },
+      }).select("_id postId orderNum status order");
+      const ordersPostId = orders.map((order) => order.postId);
+      const filteredPosts = posts.filter((post) =>
+        ordersPostId.includes(String(post._id))
+      );
+      return res.status(200).json({
+        posts: filteredPosts,
+        hasMore: filteredPosts.length > 0,
+        nextId: postService.getPostsNextId(filteredPosts),
+      });
+    }
+
+    const hasMore = posts.length === limit;
+
+    return res
+      .status(200)
+      .json({ posts, hasMore, nextId: postService.getPostsNextId(posts) });
+  })
+);
+
+router.get(
   "/post/:id",
   asyncWrapper(async (req, res) => {
     const id = req.params.id;
     if (!id) throw "post id invalid";
 
-    const query = Post.findById(id);
-    const post = await query;
+    const post = await Post.findOne({ _id: id, status: { $ne: "canceled" } });
     return res.status(200).json({ post });
   })
 );
 
-// router.post(
-//   "/post",
-//   isAuthorized,
-//   asyncWrapper(async (req, res) => {
-//     const post = await postService.validatePost(req.body.post)
-//     return res.status(200).json({ post });
-//   })
-// );
+router.post(
+  "/post",
+  isAuthorized,
+  asyncWrapper(async (req, res) => {
+    const postForm = await postService.validatePost(req.body.postForm);
+    const prevPost = await postService.findPrevPost();
+    if (!prevPost) throw "previous post not found";
+
+    const post = await postService.createPost(
+      postForm,
+      res.locals.user,
+      prevPost.postNum
+    );
+
+    await postService.sendGroupMessage(post);
+
+    return res.status(200).json({ post });
+  })
+);
+
+router.patch(
+  "/post/:postId",
+  isAuthorized,
+  asyncWrapper(async (req, res) => {
+    const postId = req.params.postId;
+    const postForm: ValidatedPost = await postService.validatePost(
+      req.body.postForm
+    );
+
+    const post = await postService.updatePost(
+      postId,
+      res.locals.user.username,
+      postForm
+    );
+
+    if (!post) throw "post not found";
+
+    return res.status(200).json({ post });
+  })
+);
+
+router.patch(
+  "/post/:postId/close",
+  isAuthorized,
+  asyncWrapper(async (req, res) => {
+    const postId = req.params.postId;
+
+    const post = await postService.closePost(postId, res.locals.user.username);
+
+    if (!post) throw "post not found";
+
+    return res.status(200).json({ post });
+  })
+);
+
+router.delete(
+  "/post/:postId",
+  isAuthorized,
+  asyncWrapper(async (req, res) => {
+    const postId = req.params.postId;
+
+    const post = await postService.deletePost(postId, res.locals.user.username);
+
+    if (!post) throw "post not found";
+
+    return res.status(200).json({});
+  })
+);
 
 export default router;
