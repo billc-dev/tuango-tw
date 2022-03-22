@@ -14,7 +14,7 @@ interface Props {
 const CompletedCard: FC<Props> = ({ complete }) => {
   const router = useRouter();
   return (
-    <Card className="shadow m-2 px-4 py-2">
+    <Card className="shadow mx-2 my-3 px-4 py-2 bg-white ring-1 ring-zinc-200 dark:ring-0">
       <p className="pb-2 border-b-[1px] border-zinc-400">
         {getFullDateFromNow(complete.createdAt)}
       </p>

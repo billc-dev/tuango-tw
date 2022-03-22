@@ -17,7 +17,7 @@ const NormalOrderCard: FC<Props> = ({ order }) => {
   const router = useRouter();
   return (
     <Card
-      className="shadow m-2 cursor-pointer hover:shadow-lg transition-shadow"
+      className="shadow mx-2 my-3 cursor-pointer hover:shadow-lg transition-shadow bg-white ring-1 ring-zinc-200 dark:ring-0"
       onClick={() =>
         router.push(
           {
