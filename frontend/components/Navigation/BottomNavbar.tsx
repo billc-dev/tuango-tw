@@ -19,7 +19,9 @@ const CreatePost = dynamic(() => import("domain/Post/CreatePost"));
 const BottomNavbar = () => {
   const router = useRouter();
   const userQuery = useUser();
-  const isSeller = userQuery.data?.data.user.role !== "basic";
+  const isSeller =
+    userQuery.data &&
+    ["seller", "admin"].includes(userQuery.data.data.user.role);
   return (
     <>
       <div className="select-none pt-14">
