@@ -1,16 +1,20 @@
 import React from "react";
 
-import { useUser } from "./hooks";
+import { useIsVerified, useUser } from "./hooks";
 import { LINE_LOGIN_URL_WITH_PARAMS } from "./services";
 
 const LoginOverlay = () => {
+  const verifiedQuery = useIsVerified();
   const userQuery = useUser();
+
   const handleClick = () => {
-    if (userQuery.isLoading) return;
-    window.open(
-      LINE_LOGIN_URL_WITH_PARAMS(`?redirect=${window.location.href}`),
-      "_self"
-    );
+    if (verifiedQuery.isLoading || userQuery.isLoading) return;
+    if (!userQuery.data?.data.user) {
+      window.open(
+        LINE_LOGIN_URL_WITH_PARAMS(`?redirect=${window.location.href}`),
+        "_self"
+      );
+    }
   };
   return !userQuery.data?.data.user ? (
     <div
