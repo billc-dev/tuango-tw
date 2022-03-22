@@ -65,7 +65,7 @@ const PostSchema = new mongoose.Schema<IPostComplete>({
     enum: ["open", "closed", "completed", "canceled"],
   },
   comment: String,
-  deliverImages: { type: Array, required: true, default: [] },
+  deliverImages: { type: Array, default: [] },
   delivered: { type: Boolean, default: false },
 });
 export const Post = postsConn.model<IPostComplete>("Post", PostSchema);
