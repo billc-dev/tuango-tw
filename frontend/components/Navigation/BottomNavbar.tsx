@@ -11,17 +11,14 @@ import {
 } from "@heroicons/react/outline";
 
 import NavigationButton from "components/Button/NavigationButton";
-import { useUser } from "domain/User/hooks";
+import { useIsSeller } from "domain/User/hooks";
 import { shallowPush } from "utils/routing";
 
 const CreatePost = dynamic(() => import("domain/Post/CreatePost"));
 
 const BottomNavbar = () => {
   const router = useRouter();
-  const userQuery = useUser();
-  const isSeller =
-    userQuery.data &&
-    ["seller", "admin"].includes(userQuery.data.data.user.role);
+  const isSeller = useIsSeller();
   return (
     <>
       <div className="select-none pt-14">

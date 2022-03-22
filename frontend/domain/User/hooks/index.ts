@@ -45,3 +45,8 @@ export const useMutateLogout = () => {
     },
   });
 };
+
+export const useIsSeller = () => {
+  const { data } = useUser();
+  return data && ["seller", "admin"].includes(data.data.user.role);
+};
