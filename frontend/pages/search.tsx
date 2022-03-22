@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import Container from "components/Container";
 import PostDialog from "domain/Post/PostDialog";
 import SearchComponent from "domain/Search";
+import LoginOverlay from "domain/User/LoginOverlay";
 
 const Search: NextPage = () => {
   const router = useRouter();
@@ -11,6 +12,7 @@ const Search: NextPage = () => {
 
   return (
     <>
+      <LoginOverlay />
       <Container>
         <SearchComponent />
       </Container>

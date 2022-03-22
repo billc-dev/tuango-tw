@@ -12,6 +12,7 @@ import { HeartIcon } from "@heroicons/react/solid";
 
 import SquareButton from "components/Button/SquareButton";
 import PlusIcon from "components/svg/PlusIcon";
+import LoginOverlay from "domain/User/LoginOverlay";
 
 const list = [
   { text: "已喜歡", icon: <HeartIcon />, route: "liked" },
@@ -26,6 +27,7 @@ const Orders: NextPage = () => {
   const router = useRouter();
   return (
     <>
+      <LoginOverlay />
       <div className="grid justify-center select-none">
         <button
           type="button"
