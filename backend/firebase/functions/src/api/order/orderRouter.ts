@@ -20,6 +20,7 @@ router.get(
       postId,
       status: { $ne: "canceled" },
       orderNum: { $ne: 0 },
+      ...(req.query?.status && { status: req.query.status }),
     }).sort({ orderNum: 1 });
     return res.status(200).json({ orders });
   })
