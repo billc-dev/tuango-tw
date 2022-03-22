@@ -1,13 +1,14 @@
 import { useRouter } from "next/router";
 import React from "react";
 
-import { ChatAltIcon, ViewListIcon } from "@heroicons/react/outline";
+import { InformationCircleIcon, ViewListIcon } from "@heroicons/react/outline";
 
 import SquareButton from "components/Button/SquareButton";
 
 const list = [
   { text: "總覽", icon: <ViewListIcon />, route: "overview" },
-  { text: "問與答", icon: <ChatAltIcon />, route: "comment" },
+  { text: "送貨步驟", icon: <InformationCircleIcon />, route: "deliver" },
+  //   { text: "問與答", icon: <ChatAltIcon />, route: "comment" },
 ];
 
 const Seller = () => {
