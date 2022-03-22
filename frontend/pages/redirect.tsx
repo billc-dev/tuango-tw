@@ -37,11 +37,6 @@ const Redirect: NextPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);
 
-  useEffect(() => {
-    if (user) router.push("/posts");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
-
   return (
     <div className="flex items-center justify-center pt-14 text-2xl">
       {login.isLoading && (
