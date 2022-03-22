@@ -28,3 +28,10 @@ export const notifyUser = async (
     console.log(err);
   }
 };
+
+export const notifyGroups = async (message: string, imageUrl?: string) => {
+  // for (let i = 1; i < 5; i++) {
+  //   await notifyUser("test", message, imageUrl);
+  // }
+  await notifyUser("test", message, imageUrl);
+};
