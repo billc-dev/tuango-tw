@@ -101,7 +101,7 @@ router.get(
       .select("-normalTotal -extraTotal -normalFee -extraFee -deliverImages")
       .limit(limit);
 
-    if (query.status === "closed") {
+    if (query?.status === "closed") {
       const postIds = posts.map((post) => post._id);
       const orders = await Order.find({
         status: "ordered",
