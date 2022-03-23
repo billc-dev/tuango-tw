@@ -9,6 +9,7 @@ import "source-map-support/register";
 
 import comments from "api/comment/commentRouter";
 import likes from "api/like/likeRouter";
+import notify from "api/notify/notifyRouter";
 import orders from "api/order/orderRouter";
 import posts from "api/post/postRouter";
 import user from "api/user/userRouter";
@@ -44,6 +45,7 @@ app.use("/posts", posts);
 app.use("/orders", orders);
 app.use("/comments", comments);
 app.use("/likes", likes);
+app.use("/notify", notify);
 
 app.use((_req, res) => {
   return res.status(404).json({ error: "Route not defined" });
