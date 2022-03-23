@@ -1,6 +1,10 @@
 import { useRouter } from "next/router";
 import React, { FC } from "react";
 
+import { LinkIcon } from "@heroicons/react/outline";
+import toast from "react-hot-toast";
+
+import Button from "components/Button";
 import TabButton from "components/Tab/TabButton";
 import TabContainer from "components/Tab/TabContainer";
 import Comment from "domain/Comment";
@@ -10,8 +14,9 @@ import LoginCard from "domain/User/LoginCard";
 import { useUser } from "domain/User/hooks";
 
 import ClosePostButton from "../PostSellerActions/ClosePostButton";
-import { setAction } from "../services";
+import { getPostUrl, setAction } from "../services";
 import { Action, IPost } from "../types";
+import PostShareButton from "./PostShareButton";
 
 interface Props {
   post: IPost;
@@ -20,9 +25,27 @@ interface Props {
 const PostActions: FC<Props> = ({ post }) => {
   const { data } = useUser();
   const router = useRouter();
+  const { postNum, title, displayName } = post;
   const action = router.query.action as Action;
   return data?.data.user ? (
     <>
+      <Button
+        icon={<LinkIcon />}
+        fullWidth
+        variant="primary"
+        className="mb-2"
+        onClick={() => {
+          navigator.clipboard.writeText(
+            `🤗#${postNum} ${title} ~${displayName}\n貼文連結: ${getPostUrl(
+              post._id
+            )}`
+          );
+          toast.success("已複製貼文連結！");
+        }}
+      >
+        複製分享連結
+      </Button>
+      <PostShareButton post={post} />
       <TabContainer>
         <LikeButton tabButton postId={post._id} likeCount={post.likeCount} />
         <TabButton

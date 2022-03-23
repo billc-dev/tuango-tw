@@ -6,6 +6,8 @@ import { nanoid } from "nanoid";
 import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import Resizer from "react-image-file-resizer";
 
+import { WINDOW_URL } from "utils/constants";
+
 import { PostFormSchema } from "../schema";
 import { Action, ImageUrl, Item } from "../types";
 
@@ -131,4 +133,8 @@ export const uploadImageS3 = async (
     setUploading(false);
     e.target.value = "";
   }
+};
+
+export const getPostUrl = (postId: string) => {
+  return `${WINDOW_URL}/posts?postId=${postId}`;
 };
