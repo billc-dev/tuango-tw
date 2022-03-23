@@ -11,7 +11,7 @@ import Comment from "domain/Comment";
 import LikeButton from "domain/Like/LikeButton";
 import Order from "domain/Order";
 import LoginCard from "domain/User/LoginCard";
-import { useUser } from "domain/User/hooks";
+import { useIsSeller, useUser } from "domain/User/hooks";
 
 import ClosePostButton from "../PostSellerActions/ClosePostButton";
 import { getPostUrl, setAction } from "../services";
@@ -27,25 +27,29 @@ const PostActions: FC<Props> = ({ post }) => {
   const router = useRouter();
   const { postNum, title, displayName } = post;
   const action = router.query.action as Action;
+  const isSeller = useIsSeller();
+  const isPostCreator = post.userId === data?.data.user.username;
   return data?.data.user ? (
     <>
-      <Button
-        icon={<LinkIcon />}
-        fullWidth
-        variant="primary"
-        className="mb-2"
-        onClick={() => {
-          navigator.clipboard.writeText(
-            `🤗#${postNum} ${title} ~${displayName}\n貼文連結: ${getPostUrl(
-              post._id
-            )}`
-          );
-          toast.success("已複製貼文連結！");
-        }}
-      >
-        複製分享連結
-      </Button>
-      <PostShareButton post={post} />
+      {isSeller && (
+        <Button
+          icon={<LinkIcon />}
+          fullWidth
+          variant="primary"
+          className="mb-2"
+          onClick={() => {
+            navigator.clipboard.writeText(
+              `🤗#${postNum} ${title} ~${displayName}\n貼文連結: ${getPostUrl(
+                post._id
+              )}`
+            );
+            toast.success("已複製貼文連結！");
+          }}
+        >
+          複製分享連結
+        </Button>
+      )}
+      {isPostCreator && <PostShareButton post={post} />}
       <TabContainer>
         <LikeButton tabButton postId={post._id} likeCount={post.likeCount} />
         <TabButton
