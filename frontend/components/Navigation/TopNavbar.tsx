@@ -13,7 +13,7 @@ const TopNavbar = () => {
   const router = useRouter();
   return (
     <div className="sticky top-0 h-14 z-10 select-none bg-white py-1 px-1 shadow-md dark:bg-zinc-800">
-      <div className="max-w-md m-auto flex items-center justify-between py-1">
+      <div className="max-w-4xl m-auto flex items-center justify-between py-1">
         <div className="pl-2">
           {!isVerified.isLoading && !isLoading && (
             <>
