@@ -3,8 +3,14 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
+import {
+  PlayIcon,
+  ShoppingBagIcon,
+  ViewGridIcon,
+} from "@heroicons/react/outline";
 import { useQueryClient } from "react-query";
 
+import NavigationButton from "components/Button/NavigationButton";
 import Container from "components/Container";
 import PostCards from "domain/Post/PostCards";
 import PostDialog from "domain/Post/PostDialog";
@@ -57,6 +63,29 @@ const Posts: NextPage<Props> = (props) => {
         )}
       </Head>
       <Container>
+        <div className="flex -mb-2">
+          <NavigationButton
+            text="切換檢視模式"
+            className="pt-2"
+            onClick={() => {}}
+          >
+            <ViewGridIcon />
+          </NavigationButton>
+          <NavigationButton text="待認購" path="/extra" className="pt-2">
+            <ShoppingBagIcon />
+          </NavigationButton>
+          <NavigationButton
+            text="使用教學"
+            className="pt-2"
+            onClick={() =>
+              window.open(
+                "https://www.youtube.com/watch?v=KbK42kgCpSo&list=PLgI1o1ZOlTxuii4gt0GXjM5m-K1j6eJSy&index=2&ab_channel=BillCheng"
+              )
+            }
+          >
+            <PlayIcon />
+          </NavigationButton>
+        </div>
         <PostCards postsQuery={postsQuery} />
       </Container>
       {typeof postId === "string" && <PostDialog postId={postId} />}
@@ -65,7 +94,7 @@ const Posts: NextPage<Props> = (props) => {
 };
 
 Posts.getInitialProps = async (ctx: NextPageContext) => {
-  const postId = ctx.query.postId as string;
+  const postId = ctx.query.postId;
   if (!postId || typeof postId !== "string") return { post: undefined };
   try {
     const data = await fetchPost(postId);
