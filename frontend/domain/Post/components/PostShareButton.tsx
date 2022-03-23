@@ -1,11 +1,13 @@
 import React, { FC, useState } from "react";
 
 import { ShareIcon } from "@heroicons/react/outline";
+import toast from "react-hot-toast";
 
 import Button from "components/Button";
 import NormalDialog from "components/Dialog/NormalDialog";
 import TextArea from "components/TextField/TextArea";
 
+import { useNotifyGroups } from "../hooks";
 import { getPostUrl } from "../services";
 import { IPost } from "../types";
 
@@ -14,11 +16,27 @@ interface Props {
 }
 
 const PostShareButton: FC<Props> = ({ post }) => {
+  const notifyGroups = useNotifyGroups();
   const [open, setOpen] = useState(false);
-  const { postNum, title, displayName } = post;
+  const { _id, postNum, title, displayName } = post;
   const [message, setMessage] = useState(
     `🤗#${postNum} ${title} ~${displayName}\n貼文連結: ${getPostUrl(post._id)}`
   );
+  const handleClick = () => {
+    toast.loading("推播中...", { id: "notifyGroups" });
+    notifyGroups.mutate(
+      { postId: _id, message },
+      {
+        onSuccess: () => {
+          toast.success("推播成功！", { id: "notifyGroups" });
+          setOpen(false);
+        },
+        onError: () => {
+          toast.error("推播失敗！", { id: "notifyGroups" });
+        },
+      }
+    );
+  };
   return (
     <>
       <Button
@@ -41,9 +59,8 @@ const PostShareButton: FC<Props> = ({ post }) => {
           <Button
             size="lg"
             variant="primary"
-            // onClick={() =>
-
-            // }
+            onClick={() => handleClick()}
+            loading={notifyGroups.isLoading}
           >
             確定
           </Button>
