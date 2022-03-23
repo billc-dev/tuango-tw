@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import React, { FC } from "react";
-import { useState } from "react";
 
 import { DocumentDuplicateIcon } from "@heroicons/react/outline";
 import toast from "react-hot-toast";
