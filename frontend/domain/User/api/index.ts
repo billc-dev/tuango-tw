@@ -19,10 +19,7 @@ export const fetchVerifyStatus: FetchVerifyStatus = () => {
 };
 
 const fetchNewAccessToken = async () => {
-  const res = await axios({
-    method: "post",
-    url: `${WINDOW_URL}/api/auth/refresh`,
-  });
+  const res = await axios.post(`${WINDOW_URL}/api/auth/refresh`);
 
   if (res.data.tokenError) return;
 
