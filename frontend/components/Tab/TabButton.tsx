@@ -2,9 +2,10 @@ import React, { ButtonHTMLAttributes, FC } from "react";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   selected: boolean;
+  icon?: JSX.Element;
 }
 
-const TabButton: FC<Props> = ({ selected, children, ...props }) => {
+const TabButton: FC<Props> = ({ selected, children, icon, ...props }) => {
   return (
     <button
       className={`w-full flex justify-center items-center rounded-lg py-2.5 text-sm font-medium leading-5 transition-all ${
@@ -14,6 +15,7 @@ const TabButton: FC<Props> = ({ selected, children, ...props }) => {
       }`}
       {...props}
     >
+      {icon && <div className="h-5 w-5 mr-1">{icon}</div>}
       {children}
     </button>
   );
