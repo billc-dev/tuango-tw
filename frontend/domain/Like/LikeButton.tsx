@@ -41,7 +41,7 @@ const LikeButton: FC<Props> = ({ postId, tabButton, likeCount }) => {
       {likeCount} 喜歡
     </TabButton>
   ) : (
-    <button onClick={() => handleLike()} disabled={isLoading}>
+    <button type="button" onClick={() => handleLike()} disabled={isLoading}>
       {!isLoading ? (
         <HeartIcon
           className={`h-6 w-6 stroke-red-600 ${liked && "fill-red-600"}`}

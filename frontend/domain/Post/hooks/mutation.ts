@@ -1,7 +1,13 @@
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "react-query";
 
-import { closePost, createPost, deletePost, editPost } from "../api";
+import {
+  closePost,
+  createPost,
+  deletePost,
+  editPost,
+  notifyGroups,
+} from "../api";
 import { IPost } from "../types";
 
 export const useCreatePost = () => {
@@ -58,5 +64,11 @@ export const useDeletePost = () => {
     onError: () => {
       toast.error("刪除貼文失敗!", { id: "deletePost" });
     },
+  });
+};
+
+export const useNotifyGroups = () => {
+  return useMutation(notifyGroups, {
+    onSuccess: () => {},
   });
 };

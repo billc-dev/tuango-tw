@@ -87,3 +87,12 @@ export const closePost = (postId: string) => {
 export const deletePost = (postId: string) => {
   return axios.delete<{}>(`/posts/post/${postId}`);
 };
+
+interface NotifyGroupsParams {
+  postId: string;
+  message: string;
+}
+
+export const notifyGroups = ({ postId, message }: NotifyGroupsParams) => {
+  return axios.post("/notify/groups", { postId, message });
+};
