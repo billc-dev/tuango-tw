@@ -10,7 +10,9 @@ import { ReactQueryDevtools } from "react-query/devtools";
 
 import BottomNavbar from "components/Navigation/BottomNavbar";
 import TopNavbar from "components/Navigation/TopNavbar";
-import { IS_DEV } from "utils/constants";
+import { isAuthenticated } from "domain/User/api";
+import { setAccessToken } from "domain/User/services/accessToken";
+import { IS_DEV, WINDOW_URL } from "utils/constants";
 
 import "../styles/globals.css";
 
@@ -22,12 +24,38 @@ axios.defaults.baseURL = IS_DEV
 
 axios.defaults.withCredentials = true;
 
+const instance = axios.create({});
+
+function refreshToken() {
+  return instance.post(`${WINDOW_URL}/api/auth/refresh`).then((res) => {
+    setAccessToken(res.data.accessToken);
+    return res.data.accessToken;
+  });
+}
+axios.interceptors.request.use(
+  async (config) => {
+    // @ts-ignore axios incomplete typings for AxiosRequestHeaders
+    const token = config.headers?.common.Authorization;
+    if (token) {
+      if (!isAuthenticated()) {
+        const newToken = await refreshToken()
+        // @ts-ignore axios incomplete typings for AxiosRequestHeaders
+        config.headers?.common.Authorization = newToken;
+      };
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 export function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
         defaultOptions: {
-          queries: { staleTime: 1000 * 60 * 3, refetchOnMount: "always" },
+          queries: { staleTime: 1000 * 60 * 5, refetchOnMount: "always" },
         },
       })
   );
