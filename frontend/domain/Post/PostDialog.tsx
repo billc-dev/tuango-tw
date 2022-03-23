@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
 
 import Dialog from "components/Dialog";
-import AnimatedSpinner from "components/svg/AnimatedSpinner";
+import LoadingIndicator from "components/Indicator/LoadingIndicator";
 import { shallowPush } from "utils/routing";
 
 import PostActions from "./components/PostActions";
@@ -30,13 +30,7 @@ const PostDialog: FC<Props> = ({ postId }) => {
 
   return (
     <>
-      <div
-        className={`rounded shadow transition-opacity bg-zinc-200 p-1.5 fixed top-16 left-3 z-50 ${
-          isLoading ? "opacity-95" : "opacity-0"
-        }`}
-      >
-        <AnimatedSpinner />
-      </div>
+      <LoadingIndicator loading={isLoading} />
       {data?.post && (
         <Dialog open={open} handleClose={handleClose} title={data.post.title}>
           <PostContent post={data.post} />
