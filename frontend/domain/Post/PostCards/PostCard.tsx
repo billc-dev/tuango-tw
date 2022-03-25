@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import React, { FC } from "react";
 
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 import LikeButton from "domain/Like/LikeButton";
 import { shallowPush } from "utils/routing";
@@ -26,6 +27,7 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
     >
       <div className="h-[180px] w-[180px] cursor-pointer">
         <LazyLoadImage
+          effect="blur"
           src={post.imageUrls && post.imageUrls[0].sm}
           alt="product"
           className="h-[180px] w-[180px] object-cover"
