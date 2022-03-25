@@ -7,22 +7,25 @@ import { useInfinitePostCardQuery } from "domain/Post/hooks";
 import SearchBar from "./SearchBar";
 import { QueryTypes } from "./types";
 
+const limit = 16;
+
 const Search = () => {
   const router = useRouter();
-  const limit = 16;
-  const postsQuery = useInfinitePostCardQuery(limit, {
-    type: router.query.type as QueryTypes,
-    value: router.query.value as string,
+  const postCardsQuery = useInfinitePostCardQuery(limit, {
+    query: {
+      type: router.query.type as QueryTypes,
+      value: router.query.value as string,
+    },
   });
   useEffect(() => {
     return () => {
-      postsQuery.remove();
+      postCardsQuery.remove();
     };
   }, []);
   return (
     <div className="p-2 max-w-md m-auto">
       <SearchBar />
-      <PostCards postsQuery={postsQuery} />
+      <PostCards postCardsQuery={postCardsQuery} />
     </div>
   );
 };
