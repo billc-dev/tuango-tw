@@ -18,7 +18,7 @@ const PostImageCarousel: FC<Props> = ({ imageUrls }) => {
   const [index, setIndex] = useState(0);
   const images = imageUrls.filter((image) => image.md);
   return (
-    <>
+    <div className="overflow-hidden">
       <Carousel
         centerMode
         showStatus={false}
@@ -51,7 +51,7 @@ const PostImageCarousel: FC<Props> = ({ imageUrls }) => {
           onMoveNextRequest={() => setIndex((index + 1) % images.length)}
         />
       )}
-    </>
+    </div>
   );
 };
 
