@@ -129,4 +129,31 @@ router.get(
   })
 );
 
+router.get(
+  "/extra/paginate/:cursor",
+  asyncWrapper(async (req, res) => {
+    const cursor = req.params.cursor;
+    const limit = Number(req.query.limit);
+
+    const createdAtCursor =
+      cursor === "initial" ? {} : { createdAt: { $lt: cursor } };
+
+    const orders = await Order.find({
+      userId: "extra",
+      status: "delivered",
+      ...createdAtCursor,
+    })
+      .sort("-postNum")
+      .limit(limit);
+
+    if (orders.length === 0)
+      return res.status(200).json({ orders: [], nextId: undefined });
+
+    const nextId =
+      orders.length === limit ? orders[orders.length - 1].createdAt : undefined;
+
+    return res.status(200).json({ orders, nextId });
+  })
+);
+
 export default router;
