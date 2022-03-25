@@ -15,6 +15,7 @@ export const useCreatePost = () => {
   return useMutation(createPost, {
     onSuccess: () => {
       queryClient.invalidateQueries("posts");
+      queryClient.invalidateQueries("postCards");
       toast.success("已成功新增貼文!", { id: "createPost" });
     },
     onError: () => {
@@ -28,6 +29,7 @@ export const useEditPost = () => {
   return useMutation(editPost, {
     onSuccess: (data) => {
       queryClient.invalidateQueries("posts");
+      queryClient.invalidateQueries("postCards");
       const { post } = data.data;
       queryClient.setQueryData<{ post: IPost }>(["post", post._id], { post });
       toast.success("已成功編輯貼文!", { id: "editPost" });
@@ -43,6 +45,7 @@ export const useClosePost = () => {
   return useMutation(closePost, {
     onSuccess: (data) => {
       queryClient.invalidateQueries("posts");
+      queryClient.invalidateQueries("postCards");
       const { post } = data.data;
       queryClient.setQueryData<{ post: IPost }>(["post", post._id], { post });
       toast.success("已結單!", { id: "closePost" });
@@ -58,6 +61,7 @@ export const useDeletePost = () => {
   return useMutation(deletePost, {
     onSuccess: (_, postId) => {
       queryClient.invalidateQueries("posts");
+      queryClient.invalidateQueries("postCards");
       queryClient.resetQueries(["post", postId]);
       toast.success("已成功刪除貼文!", { id: "deletePost" });
     },
