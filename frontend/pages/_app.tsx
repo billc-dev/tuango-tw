@@ -77,7 +77,7 @@ export function App({ Component, pageProps }: AppProps) {
           <Toaster toastOptions={{ duration: 5000 }} />
         </ThemeProvider>
       </Hydrate>
-      <ReactQueryDevtools initialIsOpen={false} />
+      <ReactQueryDevtools initialIsOpen={false} position="top-right" />
     </QueryClientProvider>
   );
 }
