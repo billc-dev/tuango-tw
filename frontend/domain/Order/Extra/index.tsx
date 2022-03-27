@@ -4,10 +4,12 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import { useExtraOrders } from "../hooks";
 import ExtraCard from "./ExtraCard";
+import ExtraCardSkeleton from "./ExtraCardSkeleton";
 
 const index = () => {
   const limit = 16;
-  const { data, fetchNextPage, hasNextPage } = useExtraOrders(limit);
+  const { data, fetchNextPage, hasNextPage, isLoading, isFetching } =
+    useExtraOrders(limit);
   const ordersLength = data?.pages.reduce(
     (sum, page) => page.data.orders.length + sum,
     0
@@ -25,6 +27,8 @@ const index = () => {
           <ExtraCard key={order._id} order={order} />
         ))
       )}
+      {(!isLoading || isFetching) &&
+        [...Array(limit)].map((_, index) => <ExtraCardSkeleton key={index} />)}
     </InfiniteScroll>
   );
 };
