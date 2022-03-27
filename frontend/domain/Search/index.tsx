@@ -23,7 +23,7 @@ const Search = () => {
     };
   }, []);
   return (
-    <div className="p-2 max-w-md m-auto">
+    <div className="p-2 m-auto">
       <SearchBar />
       <PostCards postCardsQuery={postCardsQuery} />
     </div>
