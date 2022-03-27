@@ -5,6 +5,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import Card from "components/Card";
 import { getFullDateFromNow } from "services/date";
+import { shallowPush } from "utils/routing";
 
 import { IOrder } from "../types";
 
@@ -19,13 +20,11 @@ const NormalOrderCard: FC<Props> = ({ order }) => {
     <Card
       className="shadow mx-2 my-3 cursor-pointer hover:shadow-lg transition-shadow bg-white ring-1 ring-zinc-200 dark:ring-0"
       onClick={() =>
-        router.push(
-          {
-            query: { ...router.query, postId: order.postId, action: "order" },
-          },
-          undefined,
-          { shallow: true }
-        )
+        shallowPush(router, {
+          ...router.query,
+          postId: order.postId,
+          action: "order",
+        })
       }
     >
       <div className="grid grid-cols-4">
@@ -36,7 +35,7 @@ const NormalOrderCard: FC<Props> = ({ order }) => {
           />
         </div>
         <div className="p-2 col-span-3">
-          <p>
+          <p className="text-sm">
             #{order.postNum} {order.title} #{order.sellerDisplayName}
           </p>
           <p className="text-sm text-zinc-600 dark:text-zinc-400">
