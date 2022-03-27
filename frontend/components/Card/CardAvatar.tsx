@@ -15,7 +15,7 @@ const CardAvatar: FC<Props> = ({ img, alt }) => {
       {!error ? (
         <LazyLoadImage
           alt={alt}
-          className={`h-10 w-10 rounded-full overflow-hidden transition-all ${
+          className={`h-10 w-10 rounded-full overflow-hidden transition-all duration-300 ${
             loaded ? "opacity-100 blur-0" : "opacity-0 blur-sm"
           }`}
           src={img}

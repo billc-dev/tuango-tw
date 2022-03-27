@@ -3,7 +3,6 @@ import React, { FC, useState } from "react";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import "react-lazy-load-image-component/src/effects/blur.css";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
@@ -28,16 +27,21 @@ const PostImageCarousel: FC<Props> = ({ imageUrls }) => {
         onChange={(index) => setIndex(index)}
         onClickItem={() => setOpen(true)}
       >
-        {images.map((image, index) => (
-          <div key={index}>
-            <LazyLoadImage
-              effect="blur"
-              placeholder={<div className="h-72 w-full bg-zinc-500" />}
-              className="max-h-72 object-contain"
-              src={image.md}
-            />
-          </div>
-        ))}
+        {images.map((image, index) => {
+          const [loaded, setLoaded] = useState(false);
+          return (
+            <div key={index}>
+              <LazyLoadImage
+                src={image.md}
+                placeholder={<div className="h-72 w-full bg-zinc-500" />}
+                className={`max-h-72 object-contain transition-all duration-300 ${
+                  loaded ? "opacity-100 blur-0" : "opacity-0 blur-sm"
+                }`}
+                onLoad={() => setLoaded(true)}
+              />
+            </div>
+          );
+        })}
       </Carousel>
       {open && (
         <Lightbox
