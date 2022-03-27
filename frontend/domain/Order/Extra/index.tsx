@@ -27,7 +27,7 @@ const index = () => {
           <ExtraCard key={order._id} order={order} />
         ))
       )}
-      {(!isLoading || isFetching) &&
+      {(isLoading || isFetching) &&
         [...Array(limit)].map((_, index) => <ExtraCardSkeleton key={index} />)}
     </InfiniteScroll>
   );
