@@ -4,6 +4,8 @@ import { HeartIcon } from "@heroicons/react/outline";
 
 import TabButton from "components/Tab/TabButton";
 import AnimatedSpinner from "components/svg/AnimatedSpinner";
+import { useUser } from "domain/User/hooks";
+import { LINE_LOGIN_URL_WITH_PARAMS } from "domain/User/services";
 
 import { useLikePost, useLiked, useUnlikePost } from "./hooks";
 
@@ -18,8 +20,16 @@ const LikeButton: FC<Props> = ({ postId, tabButton, likeCount }) => {
   const likePost = useLikePost();
   const unlikePost = useUnlikePost();
   const isLoading = likePost.isLoading || unlikePost.isLoading;
+  const userQuery = useUser();
 
   function handleLike() {
+    if (userQuery.isLoading) return;
+    if (!userQuery.data?.data.user) {
+      return window.open(
+        LINE_LOGIN_URL_WITH_PARAMS(`?redirect=${window.location.href}`),
+        "_self"
+      );
+    }
     if (!liked) return likePost.mutate(postId);
     return unlikePost.mutate(postId);
   }
