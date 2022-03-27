@@ -16,7 +16,7 @@ const Completed = () => {
     <div className="max-w-md mx-auto">
       <InfiniteScroll
         dataLength={ordersLength || 0}
-        next={ordersQuery.fetchNextPage}
+        next={() => ordersQuery.fetchNextPage()}
         hasMore={!!ordersQuery.hasNextPage}
         loader={<></>}
       >
