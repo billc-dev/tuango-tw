@@ -26,7 +26,7 @@ const OverviewRow: FC<Props> = ({ post }) => {
       </td>
       <td className="py-2 text-center">{orderCount}</td>
       <td className="py-2">
-        <div className="w-14">
+        <div className="w-16">
           <Button className="m-auto" onClick={openOrderDialog}>
             訂單
           </Button>
