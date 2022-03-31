@@ -24,7 +24,6 @@ const Completed = () => {
         hasMore={!!hasNextPage}
         loader={<></>}
       >
-        {/* <CompletedSkeleton /> */}
         {data?.pages.map((page) =>
           page.data.completes.map((complete) => (
             <CompletedCard key={complete._id} complete={complete} />
