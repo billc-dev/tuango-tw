@@ -33,23 +33,21 @@ const ExtraCard: FC<Props> = ({ order }) => {
       >
         <img src={imageUrl} />
       </div>
-      <div className="col-span-2 my-auto">
+      <div className="col-span-2 my-auto pt-2">
         <p className="text-sm cursor-pointer" onClick={handleOpenDialog}>
           😍🛒#{postNum} {title} #{sellerDisplayName}
         </p>
-        <p
+        <div
           className="text-sm cursor-pointer text-zinc-500 dark:text-zinc-400"
           onClick={handleOpenDialog}
         >
-          {order.order.map((order, index) => {
-            return (
-              <div key={order.id + index}>
-                {order.id}.{order.item}+{order.qty} 單價{"$"}
-                {order.price}
-              </div>
-            );
-          })}
-        </p>
+          {order.order.map((order, index) => (
+            <p key={order.id + index}>
+              {order.id}.{order.item}+{order.qty} 單價{"$"}
+              {order.price}
+            </p>
+          ))}
+        </div>
         <Button
           fullWidth
           className="my-2"
