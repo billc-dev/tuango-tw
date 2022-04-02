@@ -44,7 +44,7 @@ const ExtraCard: FC<Props> = ({ order }) => {
           {order.order.map((order, index) => (
             <p key={order.id + index}>
               {order.id}.{order.item}+{order.qty} 單價{"$"}
-              {order.price}
+              {order.price} ${order.location && `📍${order.location}`}
             </p>
           ))}
         </div>
