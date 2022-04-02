@@ -6,7 +6,7 @@ import PostCardSkeleton from "./PostCardSkeleton";
 const PostCardSkeletons = () => {
   return (
     <PostCardGrid>
-      {[...Array(8)].map((_, i) => (
+      {[...Array(20)].map((_, i) => (
         <PostCardSkeleton key={i} />
       ))}
     </PostCardGrid>

@@ -28,7 +28,7 @@ interface Props {
   post: IPost | undefined;
 }
 
-const limit = 16;
+const limit = 20;
 
 const Posts: NextPage<Props> = (props) => {
   const router = useRouter();
