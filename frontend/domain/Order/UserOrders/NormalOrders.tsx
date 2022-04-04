@@ -8,9 +8,10 @@ import NormalOrderCard from "./NormalOrderCard";
 
 interface Props {
   status: "ordered" | "delivered" | "missing" | "canceled";
+  type?: "sendMessage";
 }
 
-const NormalOrders: FC<Props> = ({ status }) => {
+const NormalOrders: FC<Props> = ({ status, type }) => {
   const limit = 16;
   const ordersQuery = useNormalUserOrders(limit, status);
   const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } =
@@ -29,7 +30,7 @@ const NormalOrders: FC<Props> = ({ status }) => {
       >
         {data?.pages.map((page) =>
           page.data.orders.map((order) => (
-            <NormalOrderCard key={order._id} order={order} />
+            <NormalOrderCard key={order._id} order={order} type={type} />
           ))
         )}
       </InfiniteScroll>

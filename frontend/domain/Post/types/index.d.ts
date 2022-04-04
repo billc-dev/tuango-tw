@@ -29,6 +29,7 @@ export interface IPostCard {
   imageUrls?: ImageUrl[];
   items: Item[];
   orderCount?: number;
+  createdAt: string;
 }
 
 export interface ImageUrl {
@@ -47,7 +48,7 @@ export interface Item {
 export type Action = undefined | "comment" | "order";
 
 export interface PostQuery {
-  type: QueryTypes;
+  type: QueryTypes | "userId";
   value: string | number;
 }
 
