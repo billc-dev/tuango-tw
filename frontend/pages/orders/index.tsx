@@ -14,6 +14,7 @@ import SquareButton from "components/Button/SquareButton";
 import PlusIcon from "components/svg/PlusIcon";
 import LoginOverlay from "domain/User/LoginOverlay";
 import { useIsSeller } from "domain/User/hooks";
+import { isClient } from "utils/constants";
 
 const list = [
   { text: "已喜歡", icon: <HeartIcon />, route: "liked" },
@@ -30,7 +31,7 @@ const Orders: NextPage = () => {
   return (
     <>
       <LoginOverlay />
-      {isSeller && (
+      {isClient && isSeller && (
         <div className="grid justify-center select-none">
           <button
             type="button"
