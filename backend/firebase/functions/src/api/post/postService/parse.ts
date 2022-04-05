@@ -20,7 +20,7 @@ export const getQueryConditions = (query: Query) => {
       if (typeof value !== "string") return {};
       const matcher = new RegExp(value, "i");
       return {
-        // status: { $ne: "canceled" },
+        status: { $ne: "canceled" },
         $or: [{ title: matcher }, { body: matcher }, { displayName: matcher }],
       };
     case "postNum":
@@ -28,9 +28,11 @@ export const getQueryConditions = (query: Query) => {
       if (isNaN(postNum)) return {};
       return { postNum, status: { $nin: ["completed", "canceled"] } };
     case "deadline":
-      return { deadline: value };
+      return { deadline: value, status: { $ne: "canceled" } };
     case "deliveryDate":
-      return { deliveryDate: value };
+      return { deliveryDate: value, status: { $ne: "canceled" } };
+    case "userId":
+      return { userId: value, status: { $ne: "canceled" } };
     default:
       return {};
   }

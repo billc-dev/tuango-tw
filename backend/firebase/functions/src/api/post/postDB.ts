@@ -3,11 +3,11 @@ import * as mongoose from "mongoose";
 
 import { IPostComplete } from "./post";
 
-const postsConn = mongoose.createConnection(
+export const postsConn = mongoose.createConnection(
   functions.config().mongodb_uri.post_dev
 );
 
-const PostSchema = new mongoose.Schema<IPostComplete>({
+export const PostSchema = new mongoose.Schema<IPostComplete>({
   userId: { type: String, required: true },
   displayName: { type: String, required: true },
   pictureUrl: String,
@@ -68,4 +68,5 @@ const PostSchema = new mongoose.Schema<IPostComplete>({
   deliverImages: { type: Array, default: [] },
   delivered: { type: Boolean, default: false },
 });
+
 export const Post = postsConn.model<IPostComplete>("Post", PostSchema);

@@ -6,4 +6,5 @@ export const postCardsSelect = {
   items: 1,
   orderCount: 1,
   status: 1,
+  createdAt: 1,
 };

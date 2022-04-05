@@ -11,6 +11,9 @@ export const isAuthorized: RequestHandler = asyncWrapper(
     if (!authToken) return res.status(403).json({ error: "No auth token" });
     const token = verifyJWT(authToken);
     const user = await User.findOne({ username: token.username });
+    if (!user) return res.status(403).json({ error: "User not found" });
+    if (user.status !== "approved")
+      return res.status(403).json({ error: "User not approved" });
     res.locals.user = user;
     return next();
   }
