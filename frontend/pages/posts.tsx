@@ -1,4 +1,5 @@
 import type { NextPage, NextPageContext } from "next";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -12,9 +13,7 @@ import { useQueryClient } from "react-query";
 
 import NavigationButton from "components/Button/NavigationButton";
 import Container from "components/Container";
-import PostCards from "domain/Post/PostCards";
 import PostDialog from "domain/Post/PostDialog";
-import PostFeed from "domain/Post/PostFeed";
 import { fetchPost } from "domain/Post/api";
 import {
   useInfinitePostCardQuery,
@@ -25,6 +24,10 @@ import { getViewMode, setStorageViewMode } from "services/setting";
 
 import { IPost } from "../domain/Post/types";
 
+const PostCards = dynamic(() => import("domain/Post/PostCards"), {
+  ssr: false,
+});
+const PostFeed = dynamic(() => import("domain/Post/PostFeed"), { ssr: false });
 interface Props {
   post: IPost | undefined;
 }
@@ -47,6 +50,7 @@ const Posts: NextPage<Props> = (props) => {
     if (post) queryClient.setQueryData(["post", post._id], { post });
     return () => {
       postCardsQuery.remove();
+      postsQuery.remove();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post]);
