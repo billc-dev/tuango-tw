@@ -9,9 +9,11 @@ import "source-map-support/register";
 
 import comments from "api/comment/commentRouter";
 import likes from "api/like/likeRouter";
+import messages from "api/message/messageRouter";
 import notify from "api/notify/notifyRouter";
 import orders from "api/order/orderRouter";
 import posts from "api/post/postRouter";
+import rooms from "api/room/roomRouter";
 import user from "api/user/userRouter";
 
 const app = express();
@@ -46,6 +48,8 @@ app.use("/orders", orders);
 app.use("/comments", comments);
 app.use("/likes", likes);
 app.use("/notify", notify);
+app.use("/rooms", rooms);
+app.use("/messages", messages);
 
 app.use((_req, res) => {
   return res.status(404).json({ error: "Route not defined" });

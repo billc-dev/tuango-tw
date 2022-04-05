@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 import * as mongoose from "mongoose";
 
-const usersConn = mongoose.createConnection(
+export const usersConn = mongoose.createConnection(
   functions.config().mongodb_uri.user_dev
 );
 
@@ -25,7 +25,7 @@ export interface IUser {
   fb: boolean;
 }
 
-const UserSchema = new mongoose.Schema<IUser>({
+export const UserSchema = new mongoose.Schema<IUser>({
   username: { type: String, required: true },
   displayName: { type: String, required: true },
   pictureUrl: String,

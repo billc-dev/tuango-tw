@@ -3,11 +3,11 @@ import * as mongoose from "mongoose";
 
 import { IOrder } from "./order";
 
-const ordersConn = mongoose.createConnection(
+export const ordersConn = mongoose.createConnection(
   functions.config().mongodb_uri.order_dev
 );
 
-const OrderSchema = new mongoose.Schema<IOrder>({
+export const OrderSchema = new mongoose.Schema<IOrder>({
   orderNum: { type: Number, required: true },
   userId: { type: String, required: true },
   displayName: { type: String, required: true },

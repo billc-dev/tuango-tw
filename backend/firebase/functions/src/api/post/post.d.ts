@@ -64,7 +64,12 @@ export type MongoosePost = Document<unknown, any, IPostComplete> &
     _id: string;
   };
 
-export type QueryTypes = "text" | "postNum" | "deadline" | "deliveryDate";
+export type QueryTypes =
+  | "text"
+  | "postNum"
+  | "deadline"
+  | "deliveryDate"
+  | "userId";
 
 export interface Query {
   type?: QueryTypes;
