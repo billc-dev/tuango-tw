@@ -22,22 +22,20 @@ const BottomNavbar = () => {
   return (
     <>
       <div className="select-none pt-14">
-        <div className="fixed inset-x-0 bottom-0 block rounded-t-2xl bg-white py-2 px-0 dark:bg-zinc-800">
-          <div className="m-auto flex max-w-[384px] justify-around">
+        <div className="fixed inset-x-0 bottom-0 rounded-t-2xl bg-white dark:bg-zinc-800 overflow-hidden">
+          <div className="m-auto flex max-w-sm justify-around">
             <NavigationButton path="/posts" text="首頁">
               <HomeIcon />
             </NavigationButton>
             {isSeller && (
-              <>
-                <NavigationButton
-                  text="新增貼文"
-                  onClick={() =>
-                    shallowPush(router, { ...router.query, createPost: "open" })
-                  }
-                >
-                  <DocumentAddIcon />
-                </NavigationButton>
-              </>
+              <NavigationButton
+                text="新增貼文"
+                onClick={() =>
+                  shallowPush(router, { ...router.query, createPost: "open" })
+                }
+              >
+                <DocumentAddIcon />
+              </NavigationButton>
             )}
             <NavigationButton path="/chat" text="聊天室">
               <ChatIcon />

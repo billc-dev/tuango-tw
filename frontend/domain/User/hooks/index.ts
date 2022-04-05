@@ -40,8 +40,7 @@ export const useMutateLogout = () => {
   return useMutation(logout, {
     onSuccess: () => {
       setAccessToken("");
-      queryClient.removeQueries("verify");
-      queryClient.removeQueries("user");
+      queryClient.clear();
     },
   });
 };

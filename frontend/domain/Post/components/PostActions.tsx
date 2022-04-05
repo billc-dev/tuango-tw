@@ -1,7 +1,11 @@
 import { useRouter } from "next/router";
 import React, { FC } from "react";
 
-import { LinkIcon } from "@heroicons/react/outline";
+import {
+  ChatAltIcon,
+  ClipboardListIcon,
+  LinkIcon,
+} from "@heroicons/react/outline";
 import toast from "react-hot-toast";
 
 import Button from "components/Button";
@@ -53,12 +57,14 @@ const PostActions: FC<Props> = ({ post }) => {
       <TabContainer>
         <LikeButton tabButton postId={post._id} likeCount={post.likeCount} />
         <TabButton
+          icon={<ChatAltIcon />}
           selected={action === "comment"}
           onClick={() => setAction("comment", router)}
         >
           {post.commentCount} 問與答
         </TabButton>
         <TabButton
+          icon={<ClipboardListIcon />}
           selected={action === "order" || !action}
           onClick={() => setAction("order", router)}
         >

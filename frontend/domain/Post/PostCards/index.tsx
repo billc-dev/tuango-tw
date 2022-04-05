@@ -9,7 +9,7 @@ import PostCardGrid from "./PostCardGrid";
 import PostCardSkeletons from "./PostCardSkeletons";
 
 interface Props {
-  postsQuery: UseInfiniteQueryResult<
+  postCardsQuery: UseInfiniteQueryResult<
     {
       posts: IPostCard[];
       nextId: string | undefined;
@@ -18,9 +18,9 @@ interface Props {
   >;
 }
 
-const PostCards: FC<Props> = ({ postsQuery }) => {
+const PostCards: FC<Props> = ({ postCardsQuery }) => {
   const { data, fetchNextPage, isFetching, isLoading, hasNextPage } =
-    postsQuery;
+    postCardsQuery;
   return (
     <div className="flex w-full flex-col items-center select-none">
       <InfiniteScroll

@@ -48,3 +48,10 @@ export const paginateCompletedOrders = (cursor: string, limit: number) => {
     { params: { limit } }
   );
 };
+
+export const paginateExtraOrders = (cursor: string, limit: number) => {
+  return axios.get<{ orders: IOrder[]; nextId: string | undefined }>(
+    `/orders/extra/paginate/${cursor}`,
+    { params: { limit } }
+  );
+};

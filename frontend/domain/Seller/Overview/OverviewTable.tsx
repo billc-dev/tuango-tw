@@ -13,8 +13,9 @@ interface Props {
   query: SellerQuery;
 }
 
+const limit = 16;
+
 const OverviewTable: FC<Props> = ({ query }) => {
-  const limit = 16;
   const { data, fetchNextPage, isFetching, isLoading, hasNextPage } =
     useInfiniteSellerPosts(limit, { query });
   return (
@@ -30,10 +31,10 @@ const OverviewTable: FC<Props> = ({ query }) => {
       <table className="table-auto w-full">
         <thead>
           <tr className="whitespace-nowrap text-left border-b-2">
-            <th className="font-normal">流水編號</th>
-            <th className="font-normal p-2">團購主題</th>
-            <th className="font-normal text-center">人數</th>
-            <th className="font-normal text-center">查看</th>
+            <th className="font-normal w-[66px]">流水編號</th>
+            <th className="font-normal p-2 w-max">團購主題</th>
+            <th className="font-normal text-center w-[34px]">人數</th>
+            <th className="font-normal text-center w-[60px]">查看</th>
           </tr>
         </thead>
         <tbody>
@@ -43,9 +44,9 @@ const OverviewTable: FC<Props> = ({ query }) => {
                   <OverviewRow key={post._id} post={post} />
                 ))
               )
-            : [...Array(16)].map((_, i) => <TableRowSkeleton key={i} />)}
+            : [...Array(limit)].map((_, i) => <TableRowSkeleton key={i} />)}
           {isFetching &&
-            [...Array(8)].map((_, i) => <TableRowSkeleton key={i} />)}
+            [...Array(limit)].map((_, i) => <TableRowSkeleton key={i} />)}
         </tbody>
       </table>
       {data?.pages[data.pages.length - 1].nextId && (

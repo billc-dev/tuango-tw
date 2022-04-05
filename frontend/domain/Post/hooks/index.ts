@@ -6,21 +6,55 @@ import {
   fetchLikedPostCards,
   fetchPost,
   fetchPostCards,
+  fetchPosts,
   fetchSellerPosts,
 } from "../api";
 import { PostQuery, SellerQuery } from "../types";
 
 export * from "./mutation";
 
-export const useInfinitePostCardQuery = (limit: number, query?: PostQuery) => {
+interface Options {
+  query?: PostQuery;
+  enabled?: boolean;
+}
+
+export const useInfinitePostsQuery = (limit: number, options?: Options) => {
   const enabled = () => {
-    if (query === undefined) return true;
-    if (query && query.type && query.value) return true;
+    if (options?.enabled === false) return false;
+    if (options?.query === undefined) return true;
+    if (options?.query && options.query.type && options.query.value)
+      return true;
     return false;
   };
+  const queryKeys = [
+    "posts",
+    limit,
+    ...(options?.query ? [options?.query.type, options?.query.value] : []),
+  ];
   return useInfiniteQuery(
-    ["posts", limit, query?.type, query?.value],
-    ({ pageParam = "initial" }) => fetchPostCards(pageParam, limit, query),
+    queryKeys,
+    ({ pageParam = "initial" }) => fetchPosts(pageParam, limit, options?.query),
+    { enabled: enabled(), getNextPageParam: (lastPage) => lastPage.nextId }
+  );
+};
+
+export const useInfinitePostCardQuery = (limit: number, options?: Options) => {
+  const enabled = () => {
+    if (options?.enabled === false) return false;
+    if (options?.query === undefined) return true;
+    if (options?.query && options.query.type && options.query.value)
+      return true;
+    return false;
+  };
+  const queryKeys = [
+    "postCards",
+    limit,
+    ...(options?.query ? [options?.query.type, options?.query.value] : []),
+  ];
+  return useInfiniteQuery(
+    queryKeys,
+    ({ pageParam = "initial" }) =>
+      fetchPostCards(pageParam, limit, options?.query),
     { enabled: enabled(), getNextPageParam: (lastPage) => lastPage.nextId }
   );
 };

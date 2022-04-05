@@ -35,9 +35,11 @@ const Dialog: FC<DialogProps> = (props) => {
         <IconButton onClick={() => handleClose()}>
           <XIcon />
         </IconButton>
-        <h1 className="truncate text-xl">{title}</h1>
+        <h1 className="truncate text-xl dark:text-white">{title}</h1>
       </div>
-      <div className="mx-auto max-w-lg px-4 pb-4">{children}</div>
+      <div className="mx-auto max-w-lg px-4 pb-4 dark:text-white">
+        {children}
+      </div>
     </dialog>
   );
 };

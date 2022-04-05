@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
@@ -15,6 +15,7 @@ interface PostCardProps {
 
 const PostCard: FC<PostCardProps> = ({ post }) => {
   const router = useRouter();
+  const [loaded, setLoaded] = useState(false);
 
   const openDialog = () =>
     shallowPush(router, { ...router.query, postId: post._id });
@@ -26,9 +27,12 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
     >
       <div className="h-[180px] w-[180px] cursor-pointer">
         <LazyLoadImage
-          src={post.imageUrls && post.imageUrls[0].sm}
           alt="product"
-          className="h-[180px] w-[180px] object-cover"
+          src={post.imageUrls && post.imageUrls[0].sm}
+          onLoad={() => setLoaded(true)}
+          className={`h-[180px] w-[180px] object-cover transition-all duration-300 ${
+            loaded ? "opacity-100 blur-0" : "opacity-0 blur-sm"
+          }`}
           onClick={openDialog}
         />
       </div>

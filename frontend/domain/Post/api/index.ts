@@ -25,6 +25,21 @@ export const fetchSellerPosts = async (
   };
 };
 
+export const fetchPosts = async (
+  cursor: string,
+  limit: number,
+  query?: PostQuery
+) => {
+  const res = await axios.get<PostsResponse>(`/posts/paginate/${cursor}`, {
+    params: { limit, query },
+  });
+
+  return {
+    posts: res.data.posts,
+    nextId: res.data.hasMore ? res.data.nextId : undefined,
+  };
+};
+
 interface PostCardsResponse {
   posts: IPostCard[];
   nextId: string | undefined;

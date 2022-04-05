@@ -34,3 +34,10 @@ export const getFormattedDate = (days?: number) => {
 export const getTime = (date: string) => {
   return dayjs(date).format("LLLL").slice(-5);
 };
+
+export const getMessageDate = (date: string) => {
+  if (dayjs().diff(date, "d") > 1) {
+    return dayjs(date).format("M/D HH:MM");
+  }
+  return dayjs(date).format("HH:MM");
+};

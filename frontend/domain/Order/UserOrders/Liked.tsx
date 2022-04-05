@@ -6,15 +6,15 @@ import { useInfiniteLikedPostQuery } from "domain/Post/hooks";
 
 const Liked = () => {
   const limit = 16;
-  const postsQuery = useInfiniteLikedPostQuery(limit);
+  const postCardsQuery = useInfiniteLikedPostQuery(limit);
   useEffect(() => {
     return () => {
-      postsQuery.remove();
+      postCardsQuery.remove();
     };
   }, []);
   return (
     <Container>
-      <PostCards postsQuery={postsQuery} />
+      <PostCards postCardsQuery={postCardsQuery} />
     </Container>
   );
 };

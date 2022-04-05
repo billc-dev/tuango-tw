@@ -14,6 +14,7 @@ import {
   deleteOrder,
   fetchOrders,
   paginateCompletedOrders,
+  paginateExtraOrders,
   paginateNormalOrders,
 } from "../api";
 import { getInitialOrderForm } from "../services";
@@ -112,5 +113,13 @@ export const useCompletedUserOrders = (limit: number, status: OrderStatus) => {
       getNextPageParam: (lastPage) => lastPage.data.nextId,
       refetchOnMount: "always",
     }
+  );
+};
+
+export const useExtraOrders = (limit: number) => {
+  return useInfiniteQuery(
+    ["extraOrders", limit],
+    ({ pageParam = "initial" }) => paginateExtraOrders(pageParam, limit),
+    { getNextPageParam: (lastPage) => lastPage.data.nextId }
   );
 };

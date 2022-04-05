@@ -21,11 +21,12 @@ interface Props {
   reset: UseFormReset<PostFormSchema>;
 }
 
+const limit = 16;
+
 const LoadPreviousPosts: FC<Props> = ({ reset }) => {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState<SellerQuery>();
   const { register, handleSubmit } = useForm<PostSearchParams>();
-  const limit = 16;
   const { data, fetchNextPage, isFetching, isLoading, hasNextPage } =
     useInfiniteSellerPosts(limit, { enabled: open, query });
   const onSubmit: SubmitHandler<PostSearchParams> = (data) => {
@@ -75,7 +76,7 @@ const LoadPreviousPosts: FC<Props> = ({ reset }) => {
           </div>
           <InfiniteScroll
             scrollableTarget="postsTable"
-            loader={isFetching && <div></div>}
+            loader={<></>}
             next={() => fetchNextPage()}
             hasMore={hasNextPage ?? false}
             dataLength={
@@ -85,9 +86,9 @@ const LoadPreviousPosts: FC<Props> = ({ reset }) => {
             <table className="table-auto w-full mt-2 border-collapse">
               <thead className="bg-zinc-200">
                 <tr className="whitespace-nowrap text-left border-b">
-                  <th className="font-normal p-2">流水編號</th>
+                  <th className="font-normal p-2 w-20">流水編號</th>
                   <th className="font-normal">團購主題</th>
-                  <th className="font-normal p-2">載入貼文</th>
+                  <th className="font-normal p-2 w-20">載入貼文</th>
                 </tr>
               </thead>
               <tbody>
@@ -125,7 +126,11 @@ const LoadPreviousPosts: FC<Props> = ({ reset }) => {
                         );
                       })
                     )
-                  : [...Array(8)].map((_, i) => <TableRowSkeleton key={i} />)}
+                  : [...Array(limit)].map((_, i) => (
+                      <TableRowSkeleton key={i} />
+                    ))}
+                {isFetching &&
+                  [...Array(limit)].map((_, i) => <TableRowSkeleton key={i} />)}
               </tbody>
             </table>
           </InfiniteScroll>

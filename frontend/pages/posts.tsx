@@ -1,15 +1,26 @@
 import type { NextPage, NextPageContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
+import {
+  PlayIcon,
+  ShoppingBagIcon,
+  ViewGridIcon,
+} from "@heroicons/react/outline";
 import { useQueryClient } from "react-query";
 
+import NavigationButton from "components/Button/NavigationButton";
 import Container from "components/Container";
 import PostCards from "domain/Post/PostCards";
 import PostDialog from "domain/Post/PostDialog";
+import PostFeed from "domain/Post/PostFeed";
 import { fetchPost } from "domain/Post/api";
-import { useInfinitePostCardQuery } from "domain/Post/hooks";
+import {
+  useInfinitePostCardQuery,
+  useInfinitePostsQuery,
+} from "domain/Post/hooks";
+import { getViewMode, setStorageViewMode } from "services/setting";
 
 import { IPost } from "../domain/Post/types";
 
@@ -17,24 +28,32 @@ interface Props {
   post: IPost | undefined;
 }
 
+const limit = 20;
+
 const Posts: NextPage<Props> = (props) => {
   const router = useRouter();
+  const [viewMode, setViewMode] = useState(getViewMode());
   const { post } = props;
   const { postId } = router.query;
   const queryClient = useQueryClient();
-  const limit = 16;
-  const postsQuery = useInfinitePostCardQuery(limit);
+  const postCardsQuery = useInfinitePostCardQuery(limit, {
+    enabled: viewMode === "cards",
+  });
+  const postsQuery = useInfinitePostsQuery(limit, {
+    enabled: viewMode === "feed",
+  });
   useEffect(() => {
     if (post) queryClient.setQueryData(["post", post._id], { post });
     return () => {
-      postsQuery.remove();
+      postCardsQuery.remove();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post]);
+
   return (
     <>
       <Head>
-        {post ? (
+        {post && (
           <>
             <title>
               #{post?.postNum} {post?.title} #{post?.displayName} - 開心團購
@@ -46,18 +65,38 @@ const Posts: NextPage<Props> = (props) => {
             <meta name="description" content={post?.body} />
             <meta property="og:image" content={post?.imageUrls[0].md} />
           </>
-        ) : (
-          <>
-            <title>開心團購</title>
-            <meta
-              name="description"
-              content="開心鮮拼鮮難瘦團，就是買買買，不買難受，買了難瘦，歡迎加入買買買。"
-            />
-          </>
         )}
       </Head>
       <Container>
-        <PostCards postsQuery={postsQuery} />
+        <div className="flex -mb-2">
+          <NavigationButton
+            text="切換檢視模式"
+            className="pt-2"
+            onClick={() => {
+              const newMode = viewMode === "cards" ? "feed" : "cards";
+              setViewMode(newMode);
+              setStorageViewMode(newMode);
+            }}
+          >
+            <ViewGridIcon />
+          </NavigationButton>
+          <NavigationButton text="待認購" path="/extra" className="pt-2">
+            <ShoppingBagIcon />
+          </NavigationButton>
+          <NavigationButton
+            text="使用教學"
+            className="pt-2"
+            onClick={() =>
+              window.open(
+                "https://www.youtube.com/watch?v=KbK42kgCpSo&list=PLgI1o1ZOlTxuii4gt0GXjM5m-K1j6eJSy&index=2&ab_channel=BillCheng"
+              )
+            }
+          >
+            <PlayIcon />
+          </NavigationButton>
+        </div>
+        {viewMode === "cards" && <PostCards postCardsQuery={postCardsQuery} />}
+        {viewMode === "feed" && <PostFeed postsQuery={postsQuery} />}
       </Container>
       {typeof postId === "string" && <PostDialog postId={postId} />}
     </>
@@ -65,7 +104,7 @@ const Posts: NextPage<Props> = (props) => {
 };
 
 Posts.getInitialProps = async (ctx: NextPageContext) => {
-  const postId = ctx.query.postId as string;
+  const postId = ctx.query.postId;
   if (!postId || typeof postId !== "string") return { post: undefined };
   try {
     const data = await fetchPost(postId);

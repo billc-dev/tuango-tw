@@ -25,10 +25,12 @@ const OverviewRow: FC<Props> = ({ post }) => {
         {title}
       </td>
       <td className="py-2 text-center">{orderCount}</td>
-      <td className="py-2 w-[60px]">
-        <Button className="m-auto" onClick={openOrderDialog}>
-          訂單
-        </Button>
+      <td className="py-2">
+        <div className="w-16">
+          <Button className="m-auto" onClick={openOrderDialog}>
+            訂單
+          </Button>
+        </div>
       </td>
     </tr>
   );

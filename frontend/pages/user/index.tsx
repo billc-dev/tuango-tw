@@ -10,27 +10,29 @@ import { useMutateLogout } from "domain/User/hooks";
 
 const User: NextPage = () => {
   const logout = useMutateLogout();
-  const { data } = useUser();
+  const { data, isLoading } = useUser();
   const router = useRouter();
   useEffect(() => {
-    if (!data?.data.user) {
+    if (!isLoading && !data?.data.user) {
       router.push("/posts");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data?.data.user]);
+  }, [data?.data.user, isLoading]);
   return (
     <div className="px-2">
       <div className="pt-4">
         <Button
           fullWidth
           size="lg"
-          onClick={() =>
-            toast.promise(logout.mutateAsync(), {
-              loading: "登出中...",
-              success: "登出成功！",
-              error: "登出失敗！",
-            })
-          }
+          onClick={() => {
+            try {
+              toast.promise(logout.mutateAsync(), {
+                loading: "登出中...",
+                success: "登出成功！",
+                error: "登出失敗！",
+              });
+            } catch (error) {}
+          }}
         >
           登出
         </Button>
