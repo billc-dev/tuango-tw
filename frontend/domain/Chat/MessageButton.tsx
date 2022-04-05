@@ -42,6 +42,23 @@ const MessageButton: FC<Props> = ({ post, order, username }) => {
         },
         onSettled: () => setLoading(false),
       });
+    } else if (order) {
+      userId.mutate(username, {
+        onSuccess: ({ data: { userId } }) => {
+          shallowPush(router, { ...router.query, chatId: userId });
+          if (!userQuery.data?.data.user._id) return;
+          queryClient.setQueryData("unsentMessage", [
+            {
+              _id: new Date().toISOString(),
+              userId: userQuery.data.data.user._id,
+              type: "order",
+              order,
+              read: [],
+            },
+          ]);
+        },
+        onSettled: () => setLoading(false),
+      });
     }
   };
   return (
