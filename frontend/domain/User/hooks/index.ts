@@ -1,7 +1,12 @@
+import { AxiosResponse } from "axios";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
-import { getUserId, login } from "domain/User/api";
-import { setAccessToken } from "domain/User/services/accessToken";
+import { IUser } from "api/auth/userDB";
+import { getUserId, login, setupNotify } from "domain/User/api";
+import {
+  getAccessToken,
+  setAccessToken,
+} from "domain/User/services/accessToken";
 
 import { fetchUser, fetchVerifyStatus, logout } from "../api";
 
@@ -31,6 +36,9 @@ export const useUser = () => {
     refetchOnMount: true,
     enabled: !!data?.data.authenticated,
     retry: !!data?.data.authenticated,
+    onSuccess: (userResponse) => {
+      localStorage.setItem("user", JSON.stringify(userResponse));
+    },
   });
 };
 
@@ -40,6 +48,7 @@ export const useMutateLogout = () => {
   return useMutation(logout, {
     onSuccess: () => {
       setAccessToken("");
+      localStorage.removeItem("user");
       queryClient.clear();
     },
   });
@@ -52,4 +61,17 @@ export const useIsSeller = () => {
 
 export const useUserId = () => {
   return useMutation(getUserId);
+};
+
+export const useSetupNotify = () => {
+  const queryClient = useQueryClient();
+  return useMutation(setupNotify, {
+    onSuccess: (data) => {
+      queryClient.setQueryData<AxiosResponse<{ user: IUser }>>("user", data);
+    },
+  });
+};
+
+export const useIsAuthenticated = () => {
+  return !!getAccessToken();
 };

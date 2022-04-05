@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
 import { createLike, deleteLike, fetchLikes } from "domain/Like/api";
-import { useUser } from "domain/User/hooks";
+import { useIsAuthenticated } from "domain/User/hooks";
 
 import { LikesQueryData } from "../types";
 
@@ -14,9 +14,9 @@ export function useLiked(postId: string) {
 }
 
 export function useLikes() {
-  const userQuery = useUser();
+  const isAuthenticated = useIsAuthenticated();
   return useQuery("likes", fetchLikes, {
-    enabled: !!userQuery.data?.data.user,
+    enabled: isAuthenticated,
     refetchOnMount: true,
   });
 }

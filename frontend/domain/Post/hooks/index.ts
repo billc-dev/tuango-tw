@@ -1,6 +1,6 @@
 import { useInfiniteQuery, useQuery } from "react-query";
 
-import { useUser } from "domain/User/hooks";
+import { useIsAuthenticated } from "domain/User/hooks";
 
 import {
   fetchLikedPostCards,
@@ -67,10 +67,11 @@ export const useInfiniteSellerPosts = (
   }
 ) => {
   const { enabled, query } = options;
-  const user = useUser();
+  const isAuthenticated = useIsAuthenticated();
+
   const isEnabled = () => {
     if (enabled !== undefined && !enabled) return false;
-    if (!user.data?.data.user._id) return false;
+    if (!isAuthenticated) return false;
     if (query === undefined) return true;
     if ((query && query.status) || query.postNum || query.title) return true;
     return false;
@@ -87,13 +88,13 @@ export const useInfiniteSellerPosts = (
 };
 
 export const useInfiniteLikedPostQuery = (limit: number) => {
-  const { data } = useUser();
+  const isAuthenticated = useIsAuthenticated();
   return useInfiniteQuery(
     ["posts", "liked", limit],
     ({ pageParam = "initial" }) => fetchLikedPostCards(pageParam, limit),
     {
       getNextPageParam: (lastPage) => lastPage.nextId,
-      enabled: !!data?.data.user,
+      enabled: isAuthenticated,
       refetchOnMount: "always",
     }
   );

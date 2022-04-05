@@ -20,6 +20,7 @@ import {
   useInfinitePostCardQuery,
   useInfinitePostsQuery,
 } from "domain/Post/hooks";
+import NotifySetup from "domain/User/NotifySetup";
 import { getViewMode, setStorageViewMode } from "services/setting";
 
 import { IPost } from "../domain/Post/types";
@@ -52,6 +53,7 @@ const Posts: NextPage<Props> = (props) => {
 
   return (
     <>
+      <NotifySetup />
       <Head>
         {post && (
           <>
