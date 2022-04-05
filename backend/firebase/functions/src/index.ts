@@ -61,3 +61,4 @@ export const api_tw_firebase = functions
   .https.onRequest(app);
 
 // firebase functions:config:get > .runtimeconfig.json
+// firebase functions:config:set mongodb_uri.post_dev="<url>"
