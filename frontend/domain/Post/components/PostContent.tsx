@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import React, { FC } from "react";
 
-import Header from "components/Card/CardHeader";
+import CardHeader from "components/Card/CardHeader";
+import MessageButton from "domain/Chat/MessageButton";
 import { useUser } from "domain/User/hooks";
 import { date, getFullDateFromNow } from "services/date";
 import { shallowPush } from "utils/routing";
@@ -23,7 +24,7 @@ const PostContent: FC<Props> = (props) => {
   const isPostCreator = userQuery.data?.data.user.username === post.userId;
   return (
     <>
-      <Header
+      <CardHeader
         img={post.pictureUrl}
         title={post.displayName}
         subtitle={getFullDateFromNow(post.createdAt)}
@@ -32,6 +33,9 @@ const PostContent: FC<Props> = (props) => {
             {isPostCreator && <EditPostButton {...{ post }} />}
             {isPostCreator && post.status === "open" && (
               <DeletePostButton postId={post._id} />
+            )}
+            {!isPostCreator && (
+              <MessageButton post={post} username={post.userId} />
             )}
           </div>
         }

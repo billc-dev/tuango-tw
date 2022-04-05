@@ -4,7 +4,7 @@ import React, { FC } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import Card from "components/Card";
-import { getTime } from "services/date";
+import { getFullDate } from "services/date";
 import { shallowPush } from "utils/routing";
 
 import { IMessage } from "../types";
@@ -38,7 +38,7 @@ const PostMessage: FC<Props> = ({ message, isUserMessage }) => {
               #{post.postNum} {post.title} #{post.displayName}
             </p>
             <p className="text-sm text-zinc-600 dark:text-zinc-400">
-              {getTime(post.createdAt)}
+              {getFullDate(post.createdAt)}
             </p>
           </div>
         </div>

@@ -30,9 +30,15 @@ const Button: FC<Props> = (props) => {
         return (
           <div className="my-0.5">
             <AnimatedSpinner />
+            <div className="ml-1">{children}</div>
           </div>
         );
-      return <AnimatedSpinner />;
+      return (
+        <>
+          <AnimatedSpinner />
+          <div className="ml-1">{children}</div>
+        </>
+      );
     }
     return (
       <>
@@ -58,7 +64,7 @@ const Button: FC<Props> = (props) => {
     <button
       type="button"
       disabled={disabled || loading}
-      className={`flex items-center justify-center select-none py-1 px-3 shadow transition disabled:bg-zinc-300 disabled:text-zinc-400  ${
+      className={`flex items-center justify-center select-none py-1 px-3 shadow transition disabled:bg-zinc-300 disabled:text-zinc-400 ${
         fullWidth ? "w-full" : ""
       } ${variantStyles()} ${size === "lg" ? "px-4 text-lg" : ""} ${
         pill ? "rounded-full" : "rounded-md"

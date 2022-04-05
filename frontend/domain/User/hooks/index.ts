@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
-import { login } from "domain/User/api";
+import { getUserId, login } from "domain/User/api";
 import { setAccessToken } from "domain/User/services/accessToken";
 
 import { fetchUser, fetchVerifyStatus, logout } from "../api";
@@ -48,4 +48,8 @@ export const useMutateLogout = () => {
 export const useIsSeller = () => {
   const { data } = useUser();
   return data && ["seller", "admin"].includes(data.data.user.role);
+};
+
+export const useUserId = () => {
+  return useMutation(getUserId);
 };

@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
 
@@ -9,12 +10,15 @@ import PostActions from "./components/PostActions";
 import PostContent from "./components/PostContent";
 import { usePost } from "./hooks";
 
+const ChatDialog = dynamic(() => import("domain/Chat/ChatDialog"));
+
 interface Props {
   postId: string;
 }
 
 const PostDialog: FC<Props> = ({ postId }) => {
   const router = useRouter();
+  const { chatId } = router.query;
   const [open, setOpen] = useState(false);
   const { data, isLoading } = usePost(postId);
 
@@ -37,6 +41,7 @@ const PostDialog: FC<Props> = ({ postId }) => {
           <PostActions post={data.post} />
         </Dialog>
       )}
+      {typeof chatId === "string" && <ChatDialog chatId={chatId} />}
     </>
   );
 };

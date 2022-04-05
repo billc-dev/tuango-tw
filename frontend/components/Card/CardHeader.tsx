@@ -17,8 +17,8 @@ const CardHeader: FC<Props> = (props) => {
       <div className="flex">
         <CardAvatar img={img} alt={title} notifications={notifications} />
         <div className="ml-1 flex flex-col pl-2">
-          <div className="truncate text-sm">{title}</div>
-          <div className="text-xs line-clamp-1 text-zinc-400">{subtitle}</div>
+          <div className="line-clamp-1 text-sm">{title}</div>
+          <div className="line-clamp-1 text-xs text-zinc-400">{subtitle}</div>
         </div>
       </div>
       <div>{action}</div>

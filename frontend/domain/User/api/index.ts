@@ -62,3 +62,7 @@ export const login: Login = ({ code, url }) => {
 export const logout = () => {
   return axios.post(`${WINDOW_URL}/api/auth/logout`);
 };
+
+export const getUserId = (username: string) => {
+  return axios.get<{ userId: string }>(`/user/userId/${username}`);
+};

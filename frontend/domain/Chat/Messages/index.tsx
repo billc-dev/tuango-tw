@@ -1,6 +1,12 @@
 import React, { FC, useEffect } from "react";
 
-import { useInfiniteMessages, useNewMessages } from "../hooks";
+import LoadingIndicator from "components/Indicator/LoadingIndicator";
+
+import {
+  useInfiniteMessages,
+  useNewMessages,
+  useUnsentMessage,
+} from "../hooks";
 import { IRoomUser } from "../types";
 import LoadMoreMessage from "./LoadMoreMessage";
 import Message from "./Message";
@@ -12,16 +18,19 @@ interface Props {
 }
 
 const Messages: FC<Props> = ({ roomId, otherUser }) => {
-  const { data, remove } = useInfiniteMessages(roomId);
+  const { data, remove, isLoading } = useInfiniteMessages(roomId);
   const newMessageQuery = useNewMessages(roomId);
+  const unsentMessage = useUnsentMessage();
   useEffect(() => {
     return () => {
       remove();
       newMessageQuery.remove();
+      unsentMessage.remove();
     };
   }, []);
   return (
     <div>
+      <LoadingIndicator loading={isLoading} />
       <LoadMoreMessage roomId={roomId} />
       {data?.pages.map((page, pageIndex) =>
         page.data.messages.map((message, msgIndex) => {
@@ -59,6 +68,9 @@ const Messages: FC<Props> = ({ roomId, otherUser }) => {
           />
         );
       })}
+      {unsentMessage.data?.map((message) => (
+        <Message key={message._id} message={message} otherUser={otherUser} />
+      ))}
       <ScrollToBottom roomId={roomId} />
     </div>
   );

@@ -17,7 +17,7 @@ const PostImageCarousel: FC<Props> = ({ imageUrls }) => {
   const [index, setIndex] = useState(0);
   const images = imageUrls.filter((image) => image.md);
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden -mx-4">
       <Carousel
         centerMode
         showStatus={false}

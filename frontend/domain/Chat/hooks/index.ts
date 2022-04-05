@@ -78,15 +78,14 @@ export const useSendMessage = () => {
         roomId,
       ]);
 
-      if (messageQuery) {
-        queryClient.setQueryData(["newMessages", roomId], {
-          ...messageQuery,
-          data: {
-            ...messageQuery.data,
-            messages: [...messageQuery.data.messages, message],
-          },
-        });
-      }
+      if (!messageQuery) return;
+      queryClient.setQueryData(["newMessages", roomId], {
+        ...messageQuery,
+        data: {
+          ...messageQuery.data,
+          messages: [...messageQuery.data.messages, message],
+        },
+      });
 
       queryClient.invalidateQueries(["newMessages", roomId]);
     },
@@ -126,4 +125,18 @@ export const useResetRoomNotifications = () => {
       queryClient.invalidateQueries(["rooms"]);
     },
   });
+};
+
+export const useUnsentMessage = () => {
+  const queryClient = useQueryClient();
+  return useQuery(
+    "unsentMessage",
+    (): IMessage[] => {
+      const unsentMessage =
+        queryClient.getQueryData<IMessage[]>("unsentMessage");
+      if (unsentMessage) return unsentMessage;
+      return [];
+    },
+    { staleTime: Infinity }
+  );
 };
