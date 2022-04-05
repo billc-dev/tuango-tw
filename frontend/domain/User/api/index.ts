@@ -8,8 +8,6 @@ import {
 } from "domain/User/services/accessToken";
 import { WINDOW_URL } from "utils/constants";
 
-import { User } from "../types";
-
 type FetchVerifyStatus = () => Promise<
   AxiosResponse<{ authenticated: boolean }>
 >;
@@ -36,11 +34,9 @@ export const isAuthenticated = () => {
   }
 };
 
-type FetchUser = () => Promise<AxiosResponse<{ user: User }>>;
-
-export const fetchUser: FetchUser = async () => {
+export const fetchUser = async () => {
   if (!isAuthenticated()) await fetchNewAccessToken();
-  return axios.get("/user");
+  return axios.get<{ user: IUser }>("/user");
 };
 
 interface LoginProps {
@@ -61,4 +57,17 @@ export const login: Login = ({ code, url }) => {
 
 export const logout = () => {
   return axios.post(`${WINDOW_URL}/api/auth/logout`);
+};
+
+export const getUserId = (username: string) => {
+  return axios.get<{ userId: string }>(`/user/userId/${username}`);
+};
+
+interface SetupNotifyParams {
+  code: string;
+  redirectUrl: string;
+}
+
+export const setupNotify = ({ code, redirectUrl }: SetupNotifyParams) => {
+  return axios.post<{ user: IUser }>(`/notify/setup`, { code, redirectUrl });
 };

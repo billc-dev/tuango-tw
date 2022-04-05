@@ -59,7 +59,5 @@ const ChatDialog: FC<Props> = ({ chatId }) => {
     </>
   );
 };
-// send message
-// send post/order/image message
-// fetch new messages
+
 export default ChatDialog;

@@ -54,6 +54,7 @@ const Comment: FC<Props> = ({ comment }) => {
           {open ? (
             <>
               <TextArea
+                hiddenLabel
                 value={replyForm.reply}
                 placeholder="回覆"
                 onChange={(e) =>

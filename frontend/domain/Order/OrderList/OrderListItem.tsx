@@ -1,18 +1,13 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 
-import { XCircleIcon } from "@heroicons/react/outline";
-import toast from "react-hot-toast";
-
-import Button from "components/Button";
-import IconButton from "components/Button/IconButton";
 import Header from "components/Card/CardHeader";
-import NormalDialog from "components/Dialog/NormalDialog";
+import MessageButton from "domain/Chat/MessageButton";
 import { IPost } from "domain/Post/types";
 import { User } from "domain/User/types";
 import { getFullDate } from "services/date";
 
-import { useDeleteOrder } from "../hooks";
 import { IOrder } from "../types";
+import DeleteOrder from "./DeleteOrder";
 
 interface Props {
   order: IOrder;
@@ -21,16 +16,13 @@ interface Props {
 }
 
 const OrderListItem: FC<Props> = ({ order, user, post }) => {
-  const [open, setOpen] = useState(false);
-  const deleteOrder = useDeleteOrder();
-
-  const isDeletable = () => {
-    if (order.userId !== user?.username) return false;
-    if (order.status !== "ordered") return false;
-    if (post?.status !== "open") return false;
-    return true;
+  const showMessageButton = () => {
+    return (
+      user?.role !== "basic" &&
+      user?.username !== order.userId &&
+      user?.username === post?.userId
+    );
   };
-
   return (
     <>
       <Header
@@ -38,39 +30,12 @@ const OrderListItem: FC<Props> = ({ order, user, post }) => {
         title={order.displayName}
         subtitle={getFullDate(order.createdAt)}
         action={
-          isDeletable() ? (
-            <IconButton
-              loading={deleteOrder.isLoading}
-              disabled={deleteOrder.isLoading}
-              onClick={() => setOpen(true)}
-            >
-              <XCircleIcon className="text-zinc-500" />
-              <NormalDialog
-                open={open}
-                setOpen={setOpen}
-                title="您確定要取消這筆訂單嗎？"
-              >
-                <div className="flex justify-end gap-2 pt-2">
-                  <Button
-                    size="lg"
-                    variant="danger"
-                    onClick={() =>
-                      toast.promise(deleteOrder.mutateAsync(order._id), {
-                        loading: "刪除中...",
-                        success: "您的訂單已刪除！",
-                        error: "刪除失敗！",
-                      })
-                    }
-                  >
-                    刪除
-                  </Button>
-                  <Button size="lg" onClick={() => setOpen(false)}>
-                    取消
-                  </Button>
-                </div>
-              </NormalDialog>
-            </IconButton>
-          ) : null
+          <>
+            <DeleteOrder {...{ order, user, post }} />
+            {showMessageButton() && (
+              <MessageButton {...{ order, username: order.userId }} />
+            )}
+          </>
         }
       />
       <div className="-mt-2">

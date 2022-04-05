@@ -6,7 +6,7 @@ import {
   useQueryClient,
 } from "react-query";
 
-import { useUser } from "domain/User/hooks";
+import { useIsAuthenticated } from "domain/User/hooks";
 
 import {
   fetchMessages,
@@ -21,17 +21,17 @@ import {
 import { IMessage } from "../types";
 
 export const useRooms = () => {
-  const userQuery = useUser();
+  const isAuthenticated = useIsAuthenticated();
   return useQuery(["rooms"], fetchRooms, {
-    enabled: userQuery.isFetched && !!userQuery.data?.data.user,
+    enabled: isAuthenticated,
     refetchInterval: 10000,
   });
 };
 
 export const useRoom = (userId: string) => {
-  const userQuery = useUser();
+  const isAuthenticated = useIsAuthenticated();
   return useQuery(["room", userId], () => fetchRoom(userId), {
-    enabled: userQuery.isFetched && !!userQuery.data?.data.user,
+    enabled: isAuthenticated,
   });
 };
 
@@ -78,15 +78,14 @@ export const useSendMessage = () => {
         roomId,
       ]);
 
-      if (messageQuery) {
-        queryClient.setQueryData(["newMessages", roomId], {
-          ...messageQuery,
-          data: {
-            ...messageQuery.data,
-            messages: [...messageQuery.data.messages, message],
-          },
-        });
-      }
+      if (!messageQuery) return;
+      queryClient.setQueryData(["newMessages", roomId], {
+        ...messageQuery,
+        data: {
+          ...messageQuery.data,
+          messages: [...messageQuery.data.messages, message],
+        },
+      });
 
       queryClient.invalidateQueries(["newMessages", roomId]);
     },
@@ -126,4 +125,18 @@ export const useResetRoomNotifications = () => {
       queryClient.invalidateQueries(["rooms"]);
     },
   });
+};
+
+export const useUnsentMessage = () => {
+  const queryClient = useQueryClient();
+  return useQuery(
+    "unsentMessage",
+    (): IMessage[] => {
+      const unsentMessage =
+        queryClient.getQueryData<IMessage[]>("unsentMessage");
+      if (unsentMessage) return unsentMessage;
+      return [];
+    },
+    { staleTime: Infinity }
+  );
 };

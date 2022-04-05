@@ -7,7 +7,7 @@ import {
 } from "react-query";
 import { Updater } from "use-immer";
 
-import { useUser } from "domain/User/hooks";
+import { useIsAuthenticated } from "domain/User/hooks";
 
 import {
   createOrder,
@@ -90,13 +90,13 @@ export const useOrders = (postId: string, query?: { status: OrderStatus }) => {
 };
 
 export const useNormalUserOrders = (limit: number, status: OrderStatus) => {
-  const userQuery = useUser();
+  const isAuthenticated = useIsAuthenticated();
   return useInfiniteQuery(
     ["orders", limit, status],
     ({ pageParam = "initial" }) =>
       paginateNormalOrders(pageParam, limit, status),
     {
-      enabled: !userQuery.isLoading && !!userQuery.data?.data.user,
+      enabled: isAuthenticated,
       getNextPageParam: (lastPage) => lastPage.data.nextId,
       refetchOnMount: "always",
     }
@@ -104,12 +104,12 @@ export const useNormalUserOrders = (limit: number, status: OrderStatus) => {
 };
 
 export const useCompletedUserOrders = (limit: number, status: OrderStatus) => {
-  const userQuery = useUser();
+  const isAuthenticated = useIsAuthenticated();
   return useInfiniteQuery(
     ["orders", limit, status],
     ({ pageParam = "initial" }) => paginateCompletedOrders(pageParam, limit),
     {
-      enabled: !userQuery.isLoading && !!userQuery.data?.data.user,
+      enabled: isAuthenticated,
       getNextPageParam: (lastPage) => lastPage.data.nextId,
       refetchOnMount: "always",
     }

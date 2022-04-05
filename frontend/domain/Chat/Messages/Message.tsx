@@ -63,7 +63,6 @@ const Message: FC<Props> = ({ message, prevMsg, otherUser }) => {
               ""
             }
           />
-          // <img src={profileImg} className="h-10 w-10 rounded-full" />
         )}
         <div className="flex items-end">
           {getComponent()}
@@ -72,7 +71,7 @@ const Message: FC<Props> = ({ message, prevMsg, otherUser }) => {
               {isUserMessage && getIsRead() && "已讀"}
             </p>
             <p className="mb-0.5 text-sm dark:text-zinc-200">
-              {getMessageDate(message.createdAt)}
+              {message.createdAt && getMessageDate(message.createdAt)}
             </p>
           </div>
         </div>

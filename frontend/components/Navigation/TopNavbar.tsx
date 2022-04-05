@@ -1,6 +1,10 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 
+import { AxiosResponse } from "axios";
+import { useQueryClient } from "react-query";
+
+import { IUser } from "api/auth/userDB";
 import IconButton from "components/Button/IconButton";
 import LineLoginButton from "components/Button/LineLoginButton";
 import ThemeButton from "components/Button/ThemeButton";
@@ -8,9 +12,21 @@ import CardAvatar from "components/Card/CardAvatar";
 import { useIsVerified, useUser } from "domain/User/hooks";
 
 const TopNavbar = () => {
-  const { data, isLoading } = useUser();
+  const queryClient = useQueryClient();
+  const { data, isLoading, refetch } = useUser();
   const isVerified = useIsVerified();
   const router = useRouter();
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const user = localStorage.getItem("user");
+      if (user) {
+        const parsedUser: AxiosResponse<IUser> = JSON.parse(user);
+        if (parsedUser.data) queryClient.setQueryData("user", JSON.parse(user));
+      }
+    }
+    refetch();
+  }, []);
+
   return (
     <div className="sticky top-0 h-14 z-10 select-none bg-white py-1 px-1 shadow-md dark:bg-zinc-800">
       <div className="max-w-4xl m-auto flex items-center justify-between py-1">
