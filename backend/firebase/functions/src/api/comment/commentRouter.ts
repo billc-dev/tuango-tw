@@ -45,7 +45,7 @@ router.post(
         res.locals.user.displayName,
         comment.comment,
         post._id,
-        res.locals.user.username
+        post.userId
       );
     }
 
