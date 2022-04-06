@@ -1,12 +1,11 @@
-import { AxiosResponse } from "axios";
+import { useEffect, useState } from "react";
+
+import axios, { AxiosResponse } from "axios";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
 import { IUser } from "api/auth/userDB";
 import { getUserId, login, setupNotify } from "domain/User/api";
-import {
-  getAccessToken,
-  setAccessToken,
-} from "domain/User/services/accessToken";
+import { setAccessToken } from "domain/User/services/accessToken";
 
 import { fetchUser, fetchVerifyStatus, logout } from "../api";
 
@@ -73,5 +72,10 @@ export const useSetupNotify = () => {
 };
 
 export const useIsAuthenticated = () => {
-  return !!getAccessToken();
+  const [isAuth, setIsAuth] = useState(false);
+  const userQuery = useUser();
+  useEffect(() => {
+    setIsAuth(!!axios.defaults.headers.common.Authorization);
+  }, [axios.defaults.headers.common.Authorization, userQuery.isFetching]);
+  return isAuth;
 };
