@@ -38,6 +38,7 @@ export const useRoom = (userId: string) => {
 export const useMessagesCreatedAt = () => {
   return useQuery("messagesCreatedAt", () => new Date().toISOString(), {
     staleTime: Infinity,
+    initialData: () => new Date().toISOString(),
   });
 };
 
