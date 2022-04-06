@@ -16,7 +16,7 @@ const index = () => {
   );
   return (
     <InfiniteScroll
-      className="-mx-2 px-2 pb-2"
+      className="-mx-2 px-2 pb-4"
       dataLength={ordersLength || 0}
       next={() => fetchNextPage()}
       hasMore={!!hasNextPage}

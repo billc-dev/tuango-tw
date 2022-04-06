@@ -24,6 +24,7 @@ const PostCards: FC<Props> = ({ postCardsQuery }) => {
   return (
     <div className="flex w-full flex-col items-center select-none">
       <InfiniteScroll
+        className="pb-4"
         loader={
           isFetching && (
             <div data-testid="post-card-skeletons">

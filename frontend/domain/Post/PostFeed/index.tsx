@@ -22,7 +22,7 @@ const PostFeed: FC<Props> = ({ postsQuery }) => {
     postsQuery;
   return (
     <InfiniteScroll
-      className="max-w-lg mx-auto"
+      className="max-w-lg mx-auto pb-4"
       loader={<></>}
       next={() => fetchNextPage()}
       hasMore={hasNextPage ?? false}
