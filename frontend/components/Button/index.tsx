@@ -28,23 +28,27 @@ const Button: FC<Props> = (props) => {
     if (loading) {
       if (size === "lg")
         return (
-          <div className="my-0.5">
+          <div className="flex justify-center items-center my-0.5">
             <AnimatedSpinner />
             <div className="ml-1">{children}</div>
           </div>
         );
       return (
-        <>
+        <div className="flex justify-center items-center">
           <AnimatedSpinner />
           <div className="ml-1">{children}</div>
-        </>
+        </div>
       );
     }
     return (
-      <>
-        {icon && <div className="h-5 w-5 mr-1">{icon}</div>}
+      <div className="flex justify-center items-center">
+        {icon && (
+          <div className={`mr-1 ${size === "lg" ? "h-6 w-6" : "h-5 w-5"}`}>
+            {icon}
+          </div>
+        )}
         {children}
-      </>
+      </div>
     );
   };
   const variantStyles = () => {
