@@ -21,4 +21,6 @@ const Select: FC<Props> = React.forwardRef((props, ref) => {
   );
 });
 
+Select.displayName = "Select";
+
 export default Select;
