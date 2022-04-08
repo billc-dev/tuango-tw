@@ -66,7 +66,7 @@ const OrderDialog: FC<Props> = ({ postId }) => {
                 <thead>
                   <tr className="whitespace-nowrap text-left border-b-2">
                     <th className="font-normal">序號</th>
-                    <th className="font-normal">名稱</th>
+                    <th className="font-normal">稱呼</th>
                     <th className="font-normal">訂單</th>
                     <th className="font-normal">備註</th>
                   </tr>
