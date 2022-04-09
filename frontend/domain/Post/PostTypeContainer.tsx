@@ -5,12 +5,16 @@ import Container from "components/Container";
 import ActionArea from "domain/Settings/ActionArea";
 import { getViewMode } from "services/setting";
 
+import { PostCardsProps } from "./PostCards";
+import { PostFeedProps } from "./PostFeed";
 import { useInfinitePostCardQuery, useInfinitePostsQuery } from "./hooks";
 
 const PostCards = dynamic(() => import("./PostCards"), {
   ssr: false,
-});
-const PostFeed = dynamic(() => import("./PostFeed"), { ssr: false });
+}) as (props: PostCardsProps) => JSX.Element;
+const PostFeed = dynamic(() => import("./PostFeed"), {
+  ssr: false,
+}) as (props: PostFeedProps) => JSX.Element;
 
 const limit = 20;
 
@@ -28,6 +32,7 @@ const PostTypeContainer = () => {
       postCardsQuery.remove();
       postsQuery.remove();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Container>

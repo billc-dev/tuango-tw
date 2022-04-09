@@ -11,10 +11,13 @@ import {
 } from "@heroicons/react/outline";
 
 import NavigationButton from "components/Button/NavigationButton";
+// import CreatePost from "domain/Post/CreatePost";
 import { useIsSeller } from "domain/User/hooks";
 import { shallowPush } from "utils/routing";
 
-const CreatePost = dynamic(() => import("domain/Post/CreatePost"));
+const CreatePost = dynamic(
+  () => import("domain/Post/CreatePost")
+) as () => JSX.Element;
 
 const BottomNavbar = () => {
   const router = useRouter();

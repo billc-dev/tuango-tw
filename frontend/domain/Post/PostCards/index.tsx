@@ -8,7 +8,7 @@ import PostCard from "./PostCard";
 import PostCardGrid from "./PostCardGrid";
 import PostCardSkeletons from "./PostCardSkeletons";
 
-interface Props {
+export interface PostCardsProps {
   postCardsQuery: UseInfiniteQueryResult<
     {
       posts: IPostCard[];
@@ -18,7 +18,7 @@ interface Props {
   >;
 }
 
-const PostCards: FC<Props> = ({ postCardsQuery }) => {
+const PostCards: FC<PostCardsProps> = ({ postCardsQuery }) => {
   const { data, fetchNextPage, isFetching, isLoading, hasNextPage } =
     postCardsQuery;
   return (

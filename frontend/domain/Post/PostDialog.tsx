@@ -10,7 +10,11 @@ import PostActions from "./components/PostActions";
 import PostContent from "./components/PostContent";
 import { usePost } from "./hooks";
 
-const ChatDialog = dynamic(() => import("domain/Chat/ChatDialog"));
+const ChatDialog = dynamic(() => import("domain/Chat/ChatDialog")) as ({
+  chatId,
+}: {
+  chatId: string;
+}) => JSX.Element;
 
 interface Props {
   postId: string;
