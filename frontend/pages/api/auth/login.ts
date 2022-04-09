@@ -6,7 +6,7 @@ import {
   createRefreshToken,
   sendRefreshToken,
 } from "api/auth/token";
-import { findOrCreateUser } from "api/auth/user";
+import { findOrCreateUser, updateSellerPosts } from "api/auth/user";
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req;
@@ -19,6 +19,9 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
 
         const lineProfile = await lineLogin({ code, url });
         const user = await findOrCreateUser(lineProfile);
+        if (user?.role === "seller" || user?.role === "admin") {
+          await updateSellerPosts(user._id);
+        }
         if (typeof user?.username !== "string") throw "username malformed";
 
         sendRefreshToken(res, createRefreshToken(user.username));
