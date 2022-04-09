@@ -7,6 +7,7 @@ import {
   deletePost,
   editPost,
   notifyGroups,
+  sendMessage,
 } from "../api";
 import { IPost } from "../types";
 
@@ -72,7 +73,9 @@ export const useDeletePost = () => {
 };
 
 export const useNotifyGroups = () => {
-  return useMutation(notifyGroups, {
-    onSuccess: () => {},
-  });
+  return useMutation(notifyGroups);
+};
+
+export const useSendMessage = () => {
+  return useMutation(sendMessage);
 };

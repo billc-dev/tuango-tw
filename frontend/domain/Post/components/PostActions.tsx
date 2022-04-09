@@ -15,6 +15,7 @@ import ClosePostButton from "../PostSellerActions/ClosePostButton";
 import { setAction } from "../services";
 import { Action, IPost } from "../types";
 import CopyPostLinkButton from "./CopyPostLinkButton";
+import MessageBuyerButton from "./MessageBuyerButton";
 import PostShareButton from "./PostShareButton";
 
 interface Props {
@@ -30,11 +31,7 @@ const PostActions: FC<Props> = ({ post }) => {
   return data?.data.user ? (
     <>
       {isSeller && <CopyPostLinkButton {...{ post }} />}
-      {isPostCreator && (
-        <>
-          <PostShareButton post={post} />
-        </>
-      )}
+      {isPostCreator && <PostShareButton post={post} />}
       <TabContainer>
         <LikeButton tabButton postId={post._id} likeCount={post.likeCount} />
         <TabButton
@@ -52,8 +49,11 @@ const PostActions: FC<Props> = ({ post }) => {
           {post.orderCount} 訂單
         </TabButton>
       </TabContainer>
-      {data.data.user.username === post.userId && (
-        <ClosePostButton postId={post._id} status={post.status} />
+      {isPostCreator && (
+        <>
+          <ClosePostButton postId={post._id} status={post.status} />
+          <MessageBuyerButton {...{ post }} />
+        </>
       )}
       <Order post={post} action={action} />
       <Comment postId={post._id} action={action} />
