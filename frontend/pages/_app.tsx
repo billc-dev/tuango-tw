@@ -69,6 +69,7 @@ export function App({ Component, pageProps }: AppProps) {
             />
           </Head>
           <TopNavbar />
+          {/* @ts-ignore */}
           <Component {...pageProps} />
           <BottomNavbar />
           <Toaster toastOptions={{ duration: 5000 }} />
