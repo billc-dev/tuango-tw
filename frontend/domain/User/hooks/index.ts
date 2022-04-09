@@ -76,6 +76,7 @@ export const useIsAuthenticated = () => {
   const userQuery = useUser();
   useEffect(() => {
     setIsAuth(!!axios.defaults.headers.common.Authorization);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [axios.defaults.headers.common.Authorization, userQuery.isFetching]);
   return isAuth;
 };
