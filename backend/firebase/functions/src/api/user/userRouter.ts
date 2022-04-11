@@ -1,5 +1,6 @@
 import * as express from "express";
 
+import { Post } from "api/post";
 import asyncWrapper from "middleware/asyncWrapper";
 import { isAuthorized } from "middleware/auth";
 
@@ -27,6 +28,25 @@ router.get(
     if (!user) throw "user not found";
 
     return res.status(200).json({ userId: user._id });
+  })
+);
+
+router.post(
+  "/login/update",
+  isAuthorized,
+  asyncWrapper(async (req, res) => {
+    const { userId } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) throw "user not found";
+    const { displayName, pictureUrl } = user;
+    if (user.role !== "basic")
+      await Post.updateMany(
+        { userId: user.username },
+        { displayName, pictureUrl }
+      );
+
+    return res.status(200).json({ ok: true });
   })
 );
 
