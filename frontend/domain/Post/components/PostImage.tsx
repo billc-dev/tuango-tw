@@ -12,7 +12,9 @@ const PostImage: FC<Props> = ({ image }) => {
     <div>
       <LazyLoadImage
         src={image}
-        placeholder={<div className="h-72 w-full bg-zinc-500" />}
+        placeholder={
+          <div className="h-72 w-full bg-zinc-300 dark:bg-zinc-700" />
+        }
         className={`max-h-72 object-contain transition-all duration-300 ${
           loaded ? "opacity-100 blur-0" : "opacity-0 blur-sm"
         }`}
