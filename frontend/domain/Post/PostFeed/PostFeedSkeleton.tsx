@@ -10,7 +10,7 @@ const PostFeedSkeleton = () => {
           <div className="w-40 h-3 mt-1.5 rounded bg-zinc-300 dark:bg-zinc-700" />
         </div>
       </div>
-      <div className="h-72 w-11/12 mx-auto bg-zinc-300 dark:bg-zinc-700" />
+      <div className="h-72 w-full mx-auto bg-zinc-300 dark:bg-zinc-700" />
       <div className="h-4 mt-5 w-80 rounded bg-zinc-300 dark:bg-zinc-700" />
       <div className="h-4 mt-2 w-[152px] rounded bg-zinc-300 dark:bg-zinc-700" />
       <div className="h-4 mt-2 w-[152px] rounded bg-zinc-300 dark:bg-zinc-700" />
