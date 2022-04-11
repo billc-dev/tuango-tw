@@ -55,7 +55,7 @@ const PostActions: FC<Props> = ({ post }) => {
           <MessageBuyerButton {...{ post }} />
         </>
       )}
-      <Order post={post} action={action} />
+      {post.status !== "completed" && <Order post={post} action={action} />}
       <Comment postId={post._id} action={action} />
     </>
   ) : (
