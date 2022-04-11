@@ -8,7 +8,7 @@ import PostCard from "./PostCard";
 import PostCardGrid from "./PostCardGrid";
 import PostCardSkeletons from "./PostCardSkeletons";
 
-interface Props {
+export interface PostCardsProps {
   postCardsQuery: UseInfiniteQueryResult<
     {
       posts: IPostCard[];
@@ -18,12 +18,13 @@ interface Props {
   >;
 }
 
-const PostCards: FC<Props> = ({ postCardsQuery }) => {
+const PostCards: FC<PostCardsProps> = ({ postCardsQuery }) => {
   const { data, fetchNextPage, isFetching, isLoading, hasNextPage } =
     postCardsQuery;
   return (
     <div className="flex w-full flex-col items-center select-none">
       <InfiniteScroll
+        className="pb-4"
         loader={
           isFetching && (
             <div data-testid="post-card-skeletons">

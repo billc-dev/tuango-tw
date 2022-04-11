@@ -12,19 +12,16 @@ import BottomNavbar from "components/Navigation/BottomNavbar";
 import TopNavbar from "components/Navigation/TopNavbar";
 import { isAuthenticated } from "domain/User/api";
 import { setAccessToken } from "domain/User/services/accessToken";
-import { IS_DEV, WINDOW_URL } from "utils/constants";
+import { API_URL, WINDOW_URL } from "utils/constants";
 
 import "../styles/globals.css";
 
 // ANALYZE=true yarn build
 
-axios.defaults.baseURL = IS_DEV
-  ? "http://localhost:5000/tuango-tw-firebase/asia-east1/api_tw_firebase"
-  : "https://asia-east1-tuango-tw-firebase.cloudfunctions.net/api_tw_firebase";
-
+axios.defaults.baseURL = API_URL
 axios.defaults.withCredentials = true;
 
-const instance = axios.create({});
+const instance = axios.create();
 
 function refreshToken() {
   return instance.post(`${WINDOW_URL}/api/auth/refresh`).then((res) => {
@@ -72,6 +69,7 @@ export function App({ Component, pageProps }: AppProps) {
             />
           </Head>
           <TopNavbar />
+          {/* @ts-ignore */}
           <Component {...pageProps} />
           <BottomNavbar />
           <Toaster toastOptions={{ duration: 5000 }} />

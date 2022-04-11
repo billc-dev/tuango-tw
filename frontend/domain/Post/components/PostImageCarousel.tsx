@@ -2,11 +2,11 @@ import React, { FC, useState } from "react";
 
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 import { ImageUrl } from "../types";
+import PostImage from "./PostImage";
 
 interface Props {
   imageUrls: ImageUrl[];
@@ -27,23 +27,12 @@ const PostImageCarousel: FC<Props> = ({ imageUrls }) => {
         onChange={(index) => setIndex(index)}
         onClickItem={() => setOpen(true)}
       >
-        {images.map((image, index) => {
-          const [loaded, setLoaded] = useState(false);
-          return (
-            <div key={index}>
-              <LazyLoadImage
-                src={image.md}
-                placeholder={<div className="h-72 w-full bg-zinc-500" />}
-                className={`max-h-72 object-contain transition-all duration-300 ${
-                  loaded ? "opacity-100 blur-0" : "opacity-0 blur-sm"
-                }`}
-                onLoad={() => setLoaded(true)}
-              />
-            </div>
-          );
-        })}
+        {images.map((image, index) => (
+          <PostImage key={index} image={image.md} />
+        ))}
       </Carousel>
       {open && (
+        // @ts-ignore
         <Lightbox
           mainSrc={images[index].md}
           nextSrc={images[(index + 1) % images.length].md}

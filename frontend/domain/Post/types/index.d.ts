@@ -57,3 +57,8 @@ export interface SellerQuery {
   postNum?: number;
   title?: string;
 }
+
+export interface InfinitePostsQueryData {
+  pages: { posts: IPost[]; nextId: number }[];
+  pageParams: [undefined | string];
+}

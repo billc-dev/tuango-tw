@@ -22,7 +22,7 @@ const deliver = () => {
           <tr className="border-b">
             <td className="py-2">A項</td>
             <td className="py-2">
-              將每一樣商品貼上流水編號，序號和名稱
+              將每一樣商品貼上流水編號，序號和稱呼
               <br />
               <Button className="mb-1">#13955 1.Andy</Button>
               <Button className="mb-1">#13955 2.May</Button>
@@ -35,7 +35,7 @@ const deliver = () => {
           <tr className="border-b">
             <td className="py-2">B項以上並能容易分辨</td>
             <td className="py-2">
-              把訂購人的商品打包並將每一樣商品貼上流水編號，序號和名稱
+              把訂購人的商品打包並將每一樣商品貼上流水編號，序號和稱呼
               <br />
               <Button className="mb-1">#13955 1.Andy</Button>
               <Button className="mb-1">#13955 2.May</Button>
@@ -51,7 +51,7 @@ const deliver = () => {
           <tr className="border-b">
             <td className="py-2">複雜的商品例:多種顏色尺寸</td>
             <td className="py-2" colSpan={2}>
-              把訂購人的商品打包並將每一樣商品貼上流水編號，序號和名稱
+              把訂購人的商品打包並將每一樣商品貼上流水編號，序號和稱呼
               <br />
               <Button className="mb-1">#13955 1.Andy</Button>
               <Button className="mb-1">#13955 2.May</Button>

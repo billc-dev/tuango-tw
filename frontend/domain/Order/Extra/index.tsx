@@ -6,8 +6,9 @@ import { useExtraOrders } from "../hooks";
 import ExtraCard from "./ExtraCard";
 import ExtraCardSkeleton from "./ExtraCardSkeleton";
 
-const index = () => {
-  const limit = 16;
+const limit = 20;
+
+const Extra = () => {
   const { data, fetchNextPage, hasNextPage, isLoading, isFetching } =
     useExtraOrders(limit);
   const ordersLength = data?.pages.reduce(
@@ -16,7 +17,7 @@ const index = () => {
   );
   return (
     <InfiniteScroll
-      className="-mx-2 px-2 pb-2"
+      className="-mx-2 px-2 pb-4"
       dataLength={ordersLength || 0}
       next={() => fetchNextPage()}
       hasMore={!!hasNextPage}
@@ -33,4 +34,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Extra;

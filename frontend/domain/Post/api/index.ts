@@ -111,3 +111,13 @@ interface NotifyGroupsParams {
 export const notifyGroups = ({ postId, message }: NotifyGroupsParams) => {
   return axios.post("/notify/groups", { postId, message });
 };
+
+interface SendMessageParams {
+  message: string;
+  userIds: string[];
+  postId: string;
+}
+
+export const sendMessage = (params: SendMessageParams) => {
+  return axios.post("/notify/sendMessage", params);
+};

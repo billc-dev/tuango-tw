@@ -71,3 +71,17 @@ interface SetupNotifyParams {
 export const setupNotify = ({ code, redirectUrl }: SetupNotifyParams) => {
   return axios.post<{ user: IUser }>(`/notify/setup`, { code, redirectUrl });
 };
+
+export const getDeliveredOrderCount = async () => {
+  const res = await axios.get<{ orderCount: number }>(
+    "/user/deliveredOrderCount"
+  );
+  return res.data;
+};
+
+export const getNotificationCount = async () => {
+  const res = await axios.get<{ notificationCount: number }>(
+    "/user/notificationCount"
+  );
+  return res.data;
+};

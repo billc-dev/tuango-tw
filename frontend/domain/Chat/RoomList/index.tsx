@@ -5,16 +5,17 @@ import CardHeader from "components/Card/CardHeader";
 import { useUser } from "domain/User/hooks";
 import { shallowPush } from "utils/routing";
 
-import { useRooms } from "./hooks";
+import { useRooms } from "../hooks";
+import RoomListSkeleton from "./RoomListSkeleton";
 
 const RoomList = () => {
   const router = useRouter();
   const userQuery = useUser();
-  const { data } = useRooms();
+  const roomQuery = useRooms();
 
   return (
     <div className="px-2 max-w-sm mx-auto">
-      {data?.data.rooms.map((room) => {
+      {roomQuery.data?.data.rooms.map((room) => {
         const otherUser = room.users.find((u) => {
           if (typeof u.user === "string") return false;
           return u.user._id !== userQuery.data?.data.user._id;
@@ -46,6 +47,13 @@ const RoomList = () => {
           </div>
         );
       })}
+      {roomQuery.isLoading && (
+        <div className="px-4">
+          {[...Array(10)].map((_, index) => (
+            <RoomListSkeleton key={index} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

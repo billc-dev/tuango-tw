@@ -2,6 +2,9 @@ import produce from "immer";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Updater } from "use-immer";
 
+import { updateInfinitePostsQueryData } from "domain/Post/services";
+import { IPost } from "domain/Post/types";
+
 import { createComment, createReply, fetchComments } from "../api";
 import { CommentQueryData, ICommentForm, IReplyForm } from "../types";
 
@@ -11,15 +14,17 @@ export const useGetComments = (postId: string) => {
   });
 };
 
-export const useCreateComment = (setCommentForm: Updater<ICommentForm>) => {
+export const useCreateComment = (setCommentForm?: Updater<ICommentForm>) => {
   const queryClient = useQueryClient();
   return useMutation(createComment, {
     onSuccess: ({ data: { comment, post } }) => {
+      queryClient.setQueryData<{ post: IPost }>(["post", post._id], { post });
+      updateInfinitePostsQueryData(queryClient, post);
+
       const data = queryClient.getQueryData<CommentQueryData>([
         "comments",
         post._id,
       ]);
-
       if (data?.data.comments) {
         queryClient.setQueryData<CommentQueryData>(["comments", post._id], {
           ...data,
@@ -27,6 +32,7 @@ export const useCreateComment = (setCommentForm: Updater<ICommentForm>) => {
         });
       }
 
+      if (!setCommentForm) return;
       setCommentForm((draft) => {
         draft.comment = "";
       });

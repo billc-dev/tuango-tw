@@ -6,6 +6,7 @@ import { useQueryClient } from "react-query";
 import { IUser } from "api/auth/userDB";
 import Dialog from "components/Dialog";
 import LoadingIndicator from "components/Indicator/LoadingIndicator";
+import PostDialog from "domain/Post/PostDialog";
 import { useUser } from "domain/User/hooks";
 import { shallowPush } from "utils/routing";
 
@@ -19,6 +20,7 @@ interface Props {
 
 const ChatDialog: FC<Props> = ({ chatId }) => {
   const router = useRouter();
+  const { chatPostId } = router.query;
   const [open, setOpen] = useState(false);
   const { data, isLoading } = useRoom(chatId);
   const queryClient = useQueryClient();
@@ -30,7 +32,8 @@ const ChatDialog: FC<Props> = ({ chatId }) => {
 
   const handleClose = () => {
     queryClient.invalidateQueries(["rooms"]);
-    const { chatId, roomId, firstMessageId, ...query } = router.query;
+    const { chatId, roomId, firstMessageId, chatPostId, ...query } =
+      router.query;
     shallowPush(router, query);
   };
 
@@ -38,8 +41,15 @@ const ChatDialog: FC<Props> = ({ chatId }) => {
   useEffect(() => {
     if (!data?.data.room._id) return;
     shallowPush(router, { ...router.query, roomId: data.data.room._id });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data?.data.room._id]);
-
+  useEffect(() => {
+    return () => {
+      queryClient.invalidateQueries("notificationCount");
+      queryClient.invalidateQueries("rooms");
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
       <LoadingIndicator loading={isLoading} />
@@ -54,6 +64,9 @@ const ChatDialog: FC<Props> = ({ chatId }) => {
             <Messages roomId={data.data.room._id} otherUser={otherUser} />
           </div>
           <MessageBar roomId={data.data.room._id} />
+          {typeof chatPostId === "string" && (
+            <PostDialog postId={chatPostId} chat />
+          )}
         </Dialog>
       )}
     </>

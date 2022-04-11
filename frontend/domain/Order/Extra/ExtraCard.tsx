@@ -26,12 +26,13 @@ const ExtraCard: FC<Props> = ({ order }) => {
   const handleOpenDialog = () => shallowPush(router, { postId: order.postId });
 
   return (
-    <Card className="pr-2 grid grid-cols-3 gap-2 shadow-lg bg-white ring-1 ring-zinc-200 dark:ring-0">
+    <Card className="pr-2 grid grid-cols-3 gap-2 shadow hover:shadow-lg transition-shadow bg-white ring-1 ring-zinc-200 dark:ring-0">
       <div
         className="col-span-1 m-auto cursor-pointer"
         onClick={handleOpenDialog}
       >
-        <img src={imageUrl} />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img alt="product" src={imageUrl} />
       </div>
       <div className="col-span-2 my-auto pt-2">
         <p className="text-sm cursor-pointer" onClick={handleOpenDialog}>
@@ -44,7 +45,8 @@ const ExtraCard: FC<Props> = ({ order }) => {
           {order.order.map((order, index) => (
             <p key={order.id + index}>
               {order.id}.{order.item}+{order.qty} 單價{"$"}
-              {order.price} ${order.location && `📍${order.location}`}
+              {order.price}
+              {order.location && `📍${order.location}`}
             </p>
           ))}
         </div>

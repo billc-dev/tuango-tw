@@ -4,8 +4,9 @@ import Container from "components/Container";
 import PostCards from "domain/Post/PostCards";
 import { useInfiniteLikedPostQuery } from "domain/Post/hooks";
 
+const limit = 20;
+
 const Liked = () => {
-  const limit = 16;
   const postCardsQuery = useInfiniteLikedPostQuery(limit);
   useEffect(() => {
     return () => {

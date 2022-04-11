@@ -7,7 +7,7 @@ import { IPost } from "../types";
 import PostFeedCard from "./PostFeedCard";
 import PostFeedSkeleton from "./PostFeedSkeleton";
 
-interface Props {
+export interface PostFeedProps {
   postsQuery: UseInfiniteQueryResult<
     {
       posts: IPost[];
@@ -17,12 +17,12 @@ interface Props {
   >;
 }
 
-const PostFeed: FC<Props> = ({ postsQuery }) => {
+const PostFeed: FC<PostFeedProps> = ({ postsQuery }) => {
   const { data, fetchNextPage, isFetching, isLoading, hasNextPage } =
     postsQuery;
   return (
     <InfiniteScroll
-      className="max-w-lg mx-auto"
+      className="max-w-lg mx-auto pb-4"
       loader={<></>}
       next={() => fetchNextPage()}
       hasMore={hasNextPage ?? false}

@@ -1,14 +1,8 @@
 import { useRouter } from "next/router";
 import React, { FC } from "react";
 
-import {
-  ChatAltIcon,
-  ClipboardListIcon,
-  LinkIcon,
-} from "@heroicons/react/outline";
-import toast from "react-hot-toast";
+import { ChatAltIcon, ClipboardListIcon } from "@heroicons/react/outline";
 
-import Button from "components/Button";
 import TabButton from "components/Tab/TabButton";
 import TabContainer from "components/Tab/TabContainer";
 import Comment from "domain/Comment";
@@ -18,8 +12,10 @@ import LoginCard from "domain/User/LoginCard";
 import { useIsSeller, useUser } from "domain/User/hooks";
 
 import ClosePostButton from "../PostSellerActions/ClosePostButton";
-import { getPostUrl, setAction } from "../services";
+import { setAction } from "../services";
 import { Action, IPost } from "../types";
+import CopyPostLinkButton from "./CopyPostLinkButton";
+import MessageBuyerButton from "./MessageBuyerButton";
 import PostShareButton from "./PostShareButton";
 
 interface Props {
@@ -29,30 +25,12 @@ interface Props {
 const PostActions: FC<Props> = ({ post }) => {
   const { data } = useUser();
   const router = useRouter();
-  const { postNum, title, displayName } = post;
   const action = router.query.action as Action;
   const isSeller = useIsSeller();
   const isPostCreator = post.userId === data?.data.user.username;
   return data?.data.user ? (
     <>
-      {isSeller && (
-        <Button
-          icon={<LinkIcon />}
-          fullWidth
-          variant="primary"
-          className="mb-2"
-          onClick={() => {
-            navigator.clipboard.writeText(
-              `🤗#${postNum} ${title} ~${displayName}\n貼文連結: ${getPostUrl(
-                post._id
-              )}`
-            );
-            toast.success("已複製貼文連結！");
-          }}
-        >
-          複製分享連結
-        </Button>
-      )}
+      {isSeller && <CopyPostLinkButton {...{ post }} />}
       {isPostCreator && <PostShareButton post={post} />}
       <TabContainer>
         <LikeButton tabButton postId={post._id} likeCount={post.likeCount} />
@@ -71,10 +49,13 @@ const PostActions: FC<Props> = ({ post }) => {
           {post.orderCount} 訂單
         </TabButton>
       </TabContainer>
-      {data.data.user.username === post.userId && (
-        <ClosePostButton postId={post._id} status={post.status} />
+      {isPostCreator && (
+        <>
+          <ClosePostButton postId={post._id} status={post.status} />
+          <MessageBuyerButton {...{ post }} />
+        </>
       )}
-      <Order post={post} action={action} />
+      {post.status !== "completed" && <Order post={post} action={action} />}
       <Comment postId={post._id} action={action} />
     </>
   ) : (

@@ -19,6 +19,7 @@ const Completed = () => {
   return (
     <div className="max-w-md mx-auto">
       <InfiniteScroll
+        className="pb-4"
         dataLength={ordersLength || 0}
         next={() => fetchNextPage()}
         hasMore={!!hasNextPage}

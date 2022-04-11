@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 import {
   BriefcaseIcon,
@@ -9,11 +10,12 @@ import {
   XIcon,
 } from "@heroicons/react/outline";
 import { HeartIcon } from "@heroicons/react/solid";
+import { useQueryClient } from "react-query";
 
 import SquareButton from "components/Button/SquareButton";
 import PlusIcon from "components/svg/PlusIcon";
 import LoginOverlay from "domain/User/LoginOverlay";
-import { useIsSeller } from "domain/User/hooks";
+import { useDeliveredOrderCount, useIsSeller } from "domain/User/hooks";
 import { isClient } from "utils/constants";
 
 const list = [
@@ -26,8 +28,15 @@ const list = [
 ];
 
 const Orders: NextPage = () => {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const isSeller = useIsSeller();
+  const orderCountQuery = useDeliveredOrderCount();
+  useEffect(() => {
+    queryClient.invalidateQueries("deliveredOrderCount");
+    queryClient.invalidateQueries("notificationCount");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
       <LoginOverlay />
@@ -50,7 +59,15 @@ const Orders: NextPage = () => {
             Icon={item.icon}
             text={item.text}
             onClick={() => router.push(`/orders/${item.route}`)}
-          />
+          >
+            {item.route === "delivered" && !!orderCountQuery.data?.orderCount && (
+              <div className="absolute top-1 right-3 rounded-full bg-red-600 text-xl text-white">
+                <div className="mx-4 my-2">
+                  {orderCountQuery.data.orderCount}
+                </div>
+              </div>
+            )}
+          </SquareButton>
         ))}
       </div>
     </>

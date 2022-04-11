@@ -29,15 +29,17 @@ const PostContent: FC<Props> = (props) => {
         title={post.displayName}
         subtitle={getFullDateFromNow(post.createdAt)}
         action={
-          <div className="flex">
-            {isPostCreator && <EditPostButton {...{ post }} />}
-            {isPostCreator && post.status === "open" && (
-              <DeletePostButton postId={post._id} />
-            )}
-            {!isPostCreator && (
-              <MessageButton post={post} username={post.userId} />
-            )}
-          </div>
+          !feed ? (
+            <div className="flex">
+              {isPostCreator && <EditPostButton {...{ post }} />}
+              {isPostCreator && post.status === "open" && (
+                <DeletePostButton postId={post._id} />
+              )}
+              {!isPostCreator && (
+                <MessageButton post={post} username={post.userId} />
+              )}
+            </div>
+          ) : null
         }
       />
       <PostImageCarousel imageUrls={post.imageUrls} />

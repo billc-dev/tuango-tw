@@ -55,6 +55,7 @@ const SendPost = () => {
         )}
       </TabContainer>
       <InfiniteScroll
+        className="pb-4"
         loader={<></>}
         next={() => fetchNextPage()}
         hasMore={hasNextPage ?? false}

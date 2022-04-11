@@ -5,11 +5,18 @@ import axios from "axios";
 import { nanoid } from "nanoid";
 import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import Resizer from "react-image-file-resizer";
+import { QueryClient } from "react-query";
 
 import { WINDOW_URL } from "utils/constants";
 
 import { PostFormSchema } from "../schema";
-import { Action, ImageUrl, Item } from "../types";
+import {
+  Action,
+  IPost,
+  ImageUrl,
+  InfinitePostsQueryData,
+  Item,
+} from "../types";
 
 export function getProductPriceRange(items: Item[]) {
   let price;
@@ -109,7 +116,7 @@ export const uploadImageS3 = async (
     const thumbnail = await createThumbnail(image);
     const resizedImage = await resizeImage(image);
     const id = nanoid();
-    const filename = "1test" + `${userId}/${id}`;
+    const filename = `post/${userId}/${id}`;
     postImageAWS(promises, thumbnail, i, "sm", filename);
     postImageAWS(promises, resizedImage, i, "md", filename);
   }
@@ -137,4 +144,29 @@ export const uploadImageS3 = async (
 
 export const getPostUrl = (postId: string) => {
   return `${WINDOW_URL}/posts?postId=${postId}`;
+};
+
+export const updateInfinitePostsQueryData = (
+  queryClient: QueryClient,
+  post: IPost
+) => {
+  const postsQuery = queryClient.getQueryData<InfinitePostsQueryData>([
+    "posts",
+    20,
+  ]);
+  if (!postsQuery) return;
+
+  const updatedPosts: InfinitePostsQueryData = {
+    ...postsQuery,
+    pages: postsQuery.pages.map((page) => ({
+      ...page,
+      posts: page.posts.map((p) => {
+        if (p._id !== post._id) return p;
+        return post;
+      }),
+    })),
+  };
+
+  if (!updatedPosts) return;
+  queryClient.setQueryData<InfinitePostsQueryData>(["posts", 20], updatedPosts);
 };

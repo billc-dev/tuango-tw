@@ -31,15 +31,16 @@ const Order: FC<Props> = ({ postId }) => {
         </button>
       )}
       <div className="p-3 pt-0">
-        {data?.orders.slice(open ? 0 : -3).map((order) => (
-          <Fragment key={order._id}>
-            <OrderListItem
-              post={postQuery.data?.post}
-              order={order}
-              user={userQuery.data?.data.user}
-            />
-          </Fragment>
-        ))}
+        {postQuery.data &&
+          data?.orders.slice(open ? 0 : -3).map((order) => (
+            <Fragment key={order._id}>
+              <OrderListItem
+                post={postQuery.data.post}
+                order={order}
+                user={userQuery.data?.data.user}
+              />
+            </Fragment>
+          ))}
       </div>
     </Card>
   ) : null;

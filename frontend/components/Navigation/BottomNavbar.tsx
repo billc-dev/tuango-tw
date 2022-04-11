@@ -11,19 +11,28 @@ import {
 } from "@heroicons/react/outline";
 
 import NavigationButton from "components/Button/NavigationButton";
-import { useIsSeller } from "domain/User/hooks";
+// import CreatePost from "domain/Post/CreatePost";
+import {
+  useDeliveredOrderCount,
+  useIsSeller,
+  useNotificationCount,
+} from "domain/User/hooks";
 import { shallowPush } from "utils/routing";
 
-const CreatePost = dynamic(() => import("domain/Post/CreatePost"));
+const CreatePost = dynamic(
+  () => import("domain/Post/CreatePost")
+) as () => JSX.Element;
 
 const BottomNavbar = () => {
   const router = useRouter();
   const isSeller = useIsSeller();
+  const orderCountQuery = useDeliveredOrderCount();
+  const notificationCountQuery = useNotificationCount();
   return (
     <>
-      <div className="select-none pt-14">
-        <div className="fixed inset-x-0 bottom-0 rounded-t-2xl bg-white dark:bg-zinc-800 overflow-hidden">
-          <div className="m-auto flex max-w-sm justify-around">
+      <div className="select-none pt-14 relative">
+        <div className="fixed inset-x-0 -bottom-0.5 rounded-t-2xl bg-white ring-1 ring-zinc-400 dark:ring-0 dark:bg-zinc-800">
+          <div className="mx-auto flex max-w-sm justify-around">
             <NavigationButton path="/posts" text="首頁">
               <HomeIcon />
             </NavigationButton>
@@ -38,10 +47,28 @@ const BottomNavbar = () => {
               </NavigationButton>
             )}
             <NavigationButton path="/chat" text="聊天室">
-              <ChatIcon />
+              <div className="relative">
+                <ChatIcon />
+                {!!notificationCountQuery.data?.notificationCount && (
+                  <div className="absolute -top-3.5 -right-3 rounded-full bg-red-600 text-sm text-white">
+                    <div className="mx-2 my-0.5">
+                      {notificationCountQuery.data.notificationCount}
+                    </div>
+                  </div>
+                )}
+              </div>
             </NavigationButton>
             <NavigationButton path="/orders" text="我的訂單">
-              <ClipboardListIcon />
+              <div className="relative">
+                <ClipboardListIcon />
+                {!!orderCountQuery.data?.orderCount && (
+                  <div className="absolute -top-3.5 -right-3 rounded-full bg-red-600 text-sm text-white">
+                    <div className="mx-2 my-0.5">
+                      {orderCountQuery.data.orderCount}
+                    </div>
+                  </div>
+                )}
+              </div>
             </NavigationButton>
             <NavigationButton path="/search" text="搜尋">
               <SearchIcon />

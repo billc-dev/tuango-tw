@@ -20,8 +20,25 @@ const NormalOrders: FC<Props> = ({ status, type }) => {
     (sum, page) => page.data.orders.length + sum,
     0
   );
+  const getSum = () => {
+    if (!ordersQuery.data) return;
+    return ordersQuery.data.pages.reduce(
+      (sum, page) =>
+        sum +
+        page.data.orders.reduce(
+          (orderSum, order) =>
+            orderSum +
+            order.order.reduce(
+              (itemSum, item) => itemSum + item.price * item.qty,
+              0
+            ),
+          0
+        ),
+      0
+    );
+  };
   return (
-    <div className="max-w-md mx-auto">
+    <div className="max-w-md mx-auto mb-4">
       <InfiniteScroll
         dataLength={ordersLength || 0}
         next={() => fetchNextPage()}
@@ -37,7 +54,7 @@ const NormalOrders: FC<Props> = ({ status, type }) => {
       {(isLoading || isFetchingNextPage) &&
         [...Array(limit)].map((_, index) => <NormalCardSkeleton key={index} />)}
       {!isLoading && data?.pages[0].data.orders.length === 0 && (
-        <p className="text-center pt-2">
+        <p className="text-center text-xl py-2">
           您目前沒有
           {status === "ordered" && "已下訂"}
           {status === "delivered" && "已到貨"}
@@ -45,6 +62,11 @@ const NormalOrders: FC<Props> = ({ status, type }) => {
           {status === "canceled" && "已取消"}
           的訂單
         </p>
+      )}
+      {status === "delivered" && !!ordersLength && (
+        <div className="text-center text-white text-xl bg-line-400 rounded-lg py-1 mx-2">
+          合計{`$${getSum()}`}
+        </div>
       )}
     </div>
   );

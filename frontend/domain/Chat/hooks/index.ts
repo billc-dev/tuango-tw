@@ -22,7 +22,7 @@ import { IMessage } from "../types";
 
 export const useRooms = () => {
   const isAuthenticated = useIsAuthenticated();
-  return useQuery(["rooms"], fetchRooms, {
+  return useQuery("rooms", fetchRooms, {
     enabled: isAuthenticated,
     refetchInterval: 10000,
   });
@@ -38,6 +38,7 @@ export const useRoom = (userId: string) => {
 export const useMessagesCreatedAt = () => {
   return useQuery("messagesCreatedAt", () => new Date().toISOString(), {
     staleTime: Infinity,
+    initialData: () => new Date().toISOString(),
   });
 };
 

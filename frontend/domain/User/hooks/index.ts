@@ -1,12 +1,17 @@
-import { AxiosResponse } from "axios";
+import { useEffect } from "react";
+
+import axios, { AxiosResponse } from "axios";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
 import { IUser } from "api/auth/userDB";
-import { getUserId, login, setupNotify } from "domain/User/api";
 import {
-  getAccessToken,
-  setAccessToken,
-} from "domain/User/services/accessToken";
+  getDeliveredOrderCount,
+  getNotificationCount,
+  getUserId,
+  login,
+  setupNotify,
+} from "domain/User/api";
+import { setAccessToken } from "domain/User/services/accessToken";
 
 import { fetchUser, fetchVerifyStatus, logout } from "../api";
 
@@ -73,5 +78,23 @@ export const useSetupNotify = () => {
 };
 
 export const useIsAuthenticated = () => {
-  return !!getAccessToken();
+  const userQuery = useUser();
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [axios.defaults.headers.common.Authorization, userQuery.isFetching]);
+  return typeof axios.defaults.headers.common.Authorization === "string";
+};
+
+export const useDeliveredOrderCount = () => {
+  const isAuthenticated = useIsAuthenticated();
+  return useQuery("deliveredOrderCount", getDeliveredOrderCount, {
+    enabled: isAuthenticated,
+  });
+};
+
+export const useNotificationCount = () => {
+  const isAuthenticated = useIsAuthenticated();
+  return useQuery("notificationCount", getNotificationCount, {
+    enabled: isAuthenticated,
+  });
 };
