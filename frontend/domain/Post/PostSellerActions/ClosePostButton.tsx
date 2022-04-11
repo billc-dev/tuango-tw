@@ -4,6 +4,7 @@ import { CheckCircleIcon } from "@heroicons/react/solid";
 import toast from "react-hot-toast";
 
 import Button from "components/Button";
+import NormalDialog from "components/Dialog/NormalDialog";
 
 import { useClosePost } from "../hooks";
 import { PostStatus } from "../types";
@@ -15,29 +16,43 @@ interface Props {
 
 const ClosePostButton: FC<Props> = ({ postId, status }) => {
   const closePost = useClosePost();
-  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const handleClick = () => {
-    setLoading(true);
-    toast.loading("結單中...", { id: "closePost" });
     closePost.mutate(postId, {
-      onSettled: () => {
-        setLoading(false);
+      onSuccess: () => {
+        setOpen(false);
+      },
+      onError: () => {
+        toast.error("結單失敗！");
       },
     });
   };
+
   return (
-    <Button
-      icon={<CheckCircleIcon />}
-      loading={loading}
-      disabled={status !== "open"}
-      size="lg"
-      variant="orange"
-      className="mt-2"
-      fullWidth
-      onClick={handleClick}
-    >
-      {status === "open" ? "結單" : "已結單"}
-    </Button>
+    <>
+      <Button
+        icon={<CheckCircleIcon />}
+        loading={closePost.isLoading}
+        disabled={status !== "open"}
+        size="lg"
+        variant="orange"
+        className="mt-2"
+        fullWidth
+        onClick={() => setOpen(true)}
+      >
+        {status === "open" ? "結單" : "已結單"}
+      </Button>
+      <NormalDialog {...{ open, setOpen }} title="您確定要取消這筆訂單嗎？">
+        <div className="flex justify-end gap-2 pt-2">
+          <Button size="lg" variant="orange" onClick={handleClick}>
+            結單
+          </Button>
+          <Button size="lg" onClick={() => setOpen(false)}>
+            取消
+          </Button>
+        </div>
+      </NormalDialog>
+    </>
   );
 };
 
