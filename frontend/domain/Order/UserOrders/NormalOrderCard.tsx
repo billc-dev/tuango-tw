@@ -28,7 +28,7 @@ const NormalOrderCard: FC<Props> = ({ order, type }) => {
       onClick={() =>
         shallowPush(router, {
           ...router.query,
-          postId: order.postId,
+          chatPostId: order.postId,
           action: "order",
         })
       }

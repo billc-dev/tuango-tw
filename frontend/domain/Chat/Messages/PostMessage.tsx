@@ -23,7 +23,7 @@ const PostMessage: FC<Props> = ({ message, isUserMessage }) => {
       <Card
         className="shadow mx-2 my-3 cursor-pointer hover:shadow-lg transition-shadow bg-white ring-1 ring-zinc-200 dark:ring-0"
         onClick={() =>
-          shallowPush(router, { ...router.query, postId: post._id })
+          shallowPush(router, { ...router.query, chatPostId: post._id })
         }
       >
         <div className="grid grid-cols-4">
