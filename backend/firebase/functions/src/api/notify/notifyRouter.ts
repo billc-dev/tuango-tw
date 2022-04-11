@@ -6,9 +6,10 @@ import axios from "axios";
 import { User } from "api/user/userDB";
 import asyncWrapper from "middleware/asyncWrapper";
 import { isAuthorized } from "middleware/auth";
+import { FRONTEND_URL } from "utils/url";
 
 import Notify from "./notifyDB";
-import { notifyGroups } from "./notifyService";
+import { notifyGroups, notifyUser } from "./notifyService";
 
 const router = express.Router();
 
@@ -50,7 +51,6 @@ router.post(
       form
     );
     const token = tokenResponse.data.access_token;
-    console.log("token", token);
 
     const statusResponse = await axios.get(
       "https://notify-api.line.me/api/status",
@@ -59,7 +59,6 @@ router.post(
       }
     );
     const targetType = statusResponse.data.targetType;
-    console.log("targetType", targetType);
 
     if (targetType !== "USER") {
       await User.findOneAndUpdate(
@@ -89,6 +88,35 @@ router.post(
     );
 
     return res.json({ user });
+  })
+);
+
+interface SendMessageBody {
+  userIds: [string];
+  message: string;
+  postId: string;
+}
+
+router.post(
+  "/sendMessage",
+  isAuthorized,
+  asyncWrapper(async (req, res) => {
+    if (res.locals.user.role === "basic") throw "unauthorized";
+
+    const { userIds, postId }: SendMessageBody = req.body;
+    if (!userIds.length) throw "userIds is empty";
+    if (!postId) throw "postId is empty";
+    if (!req.body.message) throw "message is empty";
+
+    const message = `
+✉️ ${res.locals.user.displayName} 傳送了這則訊息：${req.body.message}
+如果有需要，請到貼文的問與答回覆團主！
+貼文連結: ${FRONTEND_URL}/posts?postId=${postId}&action=comment`;
+    for (let userId of userIds) {
+      await notifyUser(userId, message);
+    }
+
+    return res.json({ ok: true });
   })
 );
 
