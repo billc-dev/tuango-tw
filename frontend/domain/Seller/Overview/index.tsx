@@ -22,6 +22,7 @@ const Overview = () => {
       setQuery({ status: "open" });
       shallowPush(router, { ...router.query, status: "open" });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   return (
