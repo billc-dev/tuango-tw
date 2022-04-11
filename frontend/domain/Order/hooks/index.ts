@@ -7,6 +7,7 @@ import {
 } from "react-query";
 import { Updater } from "use-immer";
 
+import { updateInfinitePostsQueryData } from "domain/Post/services";
 import { useIsAuthenticated } from "domain/User/hooks";
 
 import {
@@ -31,8 +32,6 @@ export const useCreateOrder = (setOrderForm: Updater<IOrderForm>) => {
       { data: { post, order, error } },
       { orderForm: { postId } }
     ) => {
-      if (!post) return;
-      queryClient.setQueryData(["post", postId], { post });
       const data = queryClient.getQueryData<OrderQueryData>(["order", postId]);
       if (data?.orders && order) {
         queryClient.setQueryData<OrderQueryData>(["order", postId], {
@@ -46,6 +45,10 @@ export const useCreateOrder = (setOrderForm: Updater<IOrderForm>) => {
       }
 
       toast.success("您的訂單已成立！", { id: "orderToast" });
+
+      if (!post) return;
+      queryClient.setQueryData(["post", postId], { post });
+      updateInfinitePostsQueryData(queryClient, post);
 
       setOrderForm((draft) => {
         const { postId, items, comment } = getInitialOrderForm(post);
@@ -66,8 +69,6 @@ export const useDeleteOrder = () => {
   return useMutation(deleteOrder, {
     onSuccess: ({ data: { post } }, orderId) => {
       const { _id: postId } = post;
-      if (!post) return;
-      queryClient.setQueryData(["post", postId], { post });
       const data = queryClient.getQueryData<{ orders: IOrder[] }>([
         "order",
         postId,
@@ -76,6 +77,10 @@ export const useDeleteOrder = () => {
         (order) => order._id !== orderId
       );
       queryClient.setQueryData(["order", postId], { orders: filteredOrders });
+
+      if (!post) return;
+      queryClient.setQueryData(["post", postId], { post });
+      updateInfinitePostsQueryData(queryClient, post);
     },
   });
 };

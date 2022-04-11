@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
 import { createLike, deleteLike, fetchLikes } from "domain/Like/api";
+import { updateInfinitePostsQueryData } from "domain/Post/services";
 import { useIsAuthenticated } from "domain/User/hooks";
 
 import { LikesQueryData } from "../types";
@@ -32,7 +33,9 @@ export function useLikePost() {
           data: { likes: [...data.data.likes, like] },
         });
       }
-      if (post) queryClient.setQueryData(["post", post._id], { post });
+      if (!post) return;
+      queryClient.setQueryData(["post", post._id], { post });
+      updateInfinitePostsQueryData(queryClient, post);
     },
   });
 }
@@ -51,7 +54,9 @@ export function useUnlikePost() {
         });
       }
 
-      if (post) queryClient.setQueryData(["post", post._id], { post });
+      if (!post) return;
+      queryClient.setQueryData(["post", post._id], { post });
+      updateInfinitePostsQueryData(queryClient, post);
     },
   });
 }
