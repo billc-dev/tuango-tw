@@ -6,8 +6,9 @@ import { useExtraOrders } from "../hooks";
 import ExtraCard from "./ExtraCard";
 import ExtraCardSkeleton from "./ExtraCardSkeleton";
 
-const index = () => {
-  const limit = 16;
+const limit = 20;
+
+const Extra = () => {
   const { data, fetchNextPage, hasNextPage, isLoading, isFetching } =
     useExtraOrders(limit);
   const ordersLength = data?.pages.reduce(
@@ -33,4 +34,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Extra;
