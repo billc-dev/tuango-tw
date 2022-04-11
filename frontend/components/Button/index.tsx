@@ -4,7 +4,7 @@ import AnimatedSpinner from "components/svg/AnimatedSpinner";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: "sm" | "lg";
-  variant?: "primary" | "secondary" | "danger" | "inherit" | "orange";
+  variant?: "primary" | "secondary" | "danger" | "inherit" | "orange" | "info";
   fullWidth?: boolean;
   icon?: JSX.Element;
   loading?: boolean;
@@ -26,17 +26,14 @@ const Button: FC<Props> = (props) => {
   } = props;
   const renderedChildren = () => {
     if (loading) {
-      if (size === "lg")
-        return (
-          <div className="flex justify-center items-center my-0.5">
-            <AnimatedSpinner />
-            <div className="ml-1">{children}</div>
-          </div>
-        );
-      return (
+      return icon ? (
         <div className="flex justify-center items-center">
           <AnimatedSpinner />
           <div className="ml-1">{children}</div>
+        </div>
+      ) : (
+        <div className="py-0.5">
+          <AnimatedSpinner />
         </div>
       );
     }
@@ -62,13 +59,15 @@ const Button: FC<Props> = (props) => {
       return "hover:bg-zinc-100 dark:hover:bg-zinc-700";
     } else if (variant === "orange") {
       return "bg-orange-500 hover:bg-orange-700 text-white";
+    } else if (variant === "info") {
+      return "bg-sky-500 text-white";
     }
   };
   return (
     <button
       type="button"
       disabled={disabled || loading}
-      className={`flex items-center justify-center select-none py-1 px-3 shadow transition disabled:bg-zinc-300 disabled:text-zinc-400 ${
+      className={`flex w- items-center justify-center select-none py-1 px-3 shadow transition disabled:bg-zinc-300 disabled:text-zinc-400 ${
         fullWidth ? "w-full" : ""
       } ${variantStyles()} ${size === "lg" ? "px-4 text-lg" : ""} ${
         pill ? "rounded-full" : "rounded-md"
