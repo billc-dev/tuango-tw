@@ -38,8 +38,15 @@ const ChatDialog: FC<Props> = ({ chatId }) => {
   useEffect(() => {
     if (!data?.data.room._id) return;
     shallowPush(router, { ...router.query, roomId: data.data.room._id });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data?.data.room._id]);
-
+  useEffect(() => {
+    return () => {
+      queryClient.invalidateQueries("notificationCount");
+      queryClient.invalidateQueries("rooms");
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
       <LoadingIndicator loading={isLoading} />

@@ -22,7 +22,7 @@ import { IMessage } from "../types";
 
 export const useRooms = () => {
   const isAuthenticated = useIsAuthenticated();
-  return useQuery(["rooms"], fetchRooms, {
+  return useQuery("rooms", fetchRooms, {
     enabled: isAuthenticated,
     refetchInterval: 10000,
   });

@@ -25,7 +25,11 @@ const Posts: NextPage<Props> = (props) => {
     if (post) queryClient.setQueryData(["post", post._id], { post });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post]);
-
+  useEffect(() => {
+    queryClient.invalidateQueries("deliveredOrderCount");
+    queryClient.invalidateQueries("notificationCount");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
       <NotifySetup />
