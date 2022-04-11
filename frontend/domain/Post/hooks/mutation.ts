@@ -46,13 +46,8 @@ export const useClosePost = () => {
   return useMutation(closePost, {
     onSuccess: (data) => {
       queryClient.invalidateQueries("posts");
-      queryClient.invalidateQueries("postCards");
       const { post } = data.data;
       queryClient.setQueryData<{ post: IPost }>(["post", post._id], { post });
-      toast.success("已結單!", { id: "closePost" });
-    },
-    onError: () => {
-      toast.error("結單失敗!", { id: "closePost" });
     },
   });
 };
@@ -62,7 +57,6 @@ export const useDeletePost = () => {
   return useMutation(deletePost, {
     onSuccess: (_, postId) => {
       queryClient.invalidateQueries("posts");
-      queryClient.invalidateQueries("postCards");
       queryClient.resetQueries(["post", postId]);
       toast.success("已成功刪除貼文!", { id: "deletePost" });
     },
