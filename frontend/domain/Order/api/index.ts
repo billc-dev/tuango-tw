@@ -55,3 +55,12 @@ export const paginateExtraOrders = (cursor: string, limit: number) => {
     { params: { limit } }
   );
 };
+
+interface SetHasNameParams {
+  orderId: string;
+  hasName: boolean;
+}
+
+export const setHasName = (params: SetHasNameParams) => {
+  return axios.patch<{ order: IOrder }>("/orders/order/setHasName", params);
+};

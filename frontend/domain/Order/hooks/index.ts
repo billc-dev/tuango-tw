@@ -17,6 +17,7 @@ import {
   paginateCompletedOrders,
   paginateExtraOrders,
   paginateNormalOrders,
+  setHasName,
 } from "../api";
 import { getInitialOrderForm } from "../services";
 import { IOrder, IOrderForm, OrderStatus } from "../types";
@@ -127,4 +128,25 @@ export const useExtraOrders = (limit: number) => {
     ({ pageParam = "initial" }) => paginateExtraOrders(pageParam, limit),
     { getNextPageParam: (lastPage) => lastPage.data.nextId }
   );
+};
+
+export const useSetHasName = (postId: string) => {
+  const queryClient = useQueryClient();
+  return useMutation(setHasName, {
+    onSuccess: ({ data: { order } }) => {
+      const orders = queryClient.getQueryData<OrderQueryData>([
+        "order",
+        postId,
+      ]);
+      if (!orders) return;
+      const updatedOrders = {
+        ...orders,
+        orders: orders.orders.map((ord) => {
+          if (ord._id === order._id) return order;
+          return ord;
+        }),
+      };
+      queryClient.setQueryData(["order", postId], updatedOrders);
+    },
+  });
 };

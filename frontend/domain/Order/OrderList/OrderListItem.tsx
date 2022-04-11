@@ -8,11 +8,12 @@ import { getFullDate } from "services/date";
 
 import { IOrder } from "../types";
 import DeleteOrder from "./DeleteOrder";
+import HasNameButton from "./HasNameButton";
 
 interface Props {
   order: IOrder;
   user?: User;
-  post?: IPost;
+  post: IPost;
 }
 
 const OrderListItem: FC<Props> = ({ order, user, post }) => {
@@ -50,6 +51,9 @@ const OrderListItem: FC<Props> = ({ order, user, post }) => {
       ))}
       {order.comment && (
         <p className="whitespace-pre pt-1 text-sm">備註: {order.comment}</p>
+      )}
+      {post?.status !== "open" && (
+        <HasNameButton {...{ postId: post._id, order }} />
       )}
     </>
   );
