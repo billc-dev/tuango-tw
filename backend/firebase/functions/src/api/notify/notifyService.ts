@@ -11,6 +11,7 @@ export const notifyUser = async (
   try {
     const notify = await Notify.findOne({ username });
     if (!notify) return;
+
     const data = new FormData();
     const image = imageUrl ? imageUrl : "";
     data.append("message", message);
@@ -31,7 +32,7 @@ export const notifyUser = async (
 
 export const notifyGroups = async (message: string, imageUrl?: string) => {
   // for (let i = 1; i < 5; i++) {
-  //   await notifyUser("test", message, imageUrl);
+  //   await notifyUser(i, message, imageUrl);
   // }
   await notifyUser("test", message, imageUrl);
 };
