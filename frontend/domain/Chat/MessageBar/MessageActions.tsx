@@ -63,7 +63,7 @@ const MessageActions: FC<Props> = ({ roomId }) => {
       for (let i = 0; i < e.target.files.length; i++) {
         const { smImage, mdImage } = await resizeImages(e.target.files[i]);
         const id = nanoid();
-        const filename = `1chat/${userId}/${id}`;
+        const filename = `chat/${userId}/${id}`;
         const { sm, md } = await uploadImages({
           uploadImage,
           smImage,

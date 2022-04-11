@@ -116,7 +116,7 @@ export const uploadImageS3 = async (
     const thumbnail = await createThumbnail(image);
     const resizedImage = await resizeImage(image);
     const id = nanoid();
-    const filename = "1test" + `${userId}/${id}`;
+    const filename = `post/${userId}/${id}`;
     postImageAWS(promises, thumbnail, i, "sm", filename);
     postImageAWS(promises, resizedImage, i, "md", filename);
   }
