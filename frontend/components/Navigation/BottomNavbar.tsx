@@ -25,7 +25,7 @@ const BottomNavbar = () => {
   return (
     <>
       <div className="select-none pt-14">
-        <div className="fixed inset-x-0 bottom-0 rounded-t-2xl bg-white dark:bg-zinc-800 overflow-hidden">
+        <div className="fixed inset-x-0 -bottom-0.5 rounded-t-2xl bg-white dark:bg-zinc-800 overflow-hidden">
           <div className="m-auto flex max-w-sm justify-around">
             <NavigationButton path="/posts" text="首頁">
               <HomeIcon />
