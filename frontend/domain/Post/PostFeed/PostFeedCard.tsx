@@ -23,7 +23,7 @@ const PostFeedCard: FC<Props> = ({ post }) => {
   return (
     <div className="px-4">
       <PostContent feed {...{ post }} />
-      <TabContainer className="bg-white">
+      <TabContainer>
         <LikeButton tabButton postId={post._id} likeCount={post.likeCount} />
         <TabButton
           icon={<ChatAltIcon />}
