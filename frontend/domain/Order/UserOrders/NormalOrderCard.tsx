@@ -16,22 +16,32 @@ import { IOrder } from "../types";
 interface Props {
   order: IOrder;
   type?: "sendMessage";
+  chat?: boolean;
 }
 
-const NormalOrderCard: FC<Props> = ({ order, type }) => {
+const NormalOrderCard: FC<Props> = ({ order, type, chat }) => {
   const sendMessage = useSendMessage();
   const sum = order.order.reduce((sum, ord) => (sum += ord.price * ord.qty), 0);
   const router = useRouter();
+  const handleClick = () => {
+    if (chat) {
+      shallowPush(router, {
+        ...router.query,
+        chatPostId: order.postId,
+        action: "order",
+      });
+    } else {
+      shallowPush(router, {
+        ...router.query,
+        postId: order.postId,
+        action: "order",
+      });
+    }
+  };
   return (
     <Card
       className="shadow mx-2 my-3 cursor-pointer hover:shadow-lg transition-shadow bg-white ring-1 ring-zinc-200 dark:ring-0"
-      onClick={() =>
-        shallowPush(router, {
-          ...router.query,
-          chatPostId: order.postId,
-          action: "order",
-        })
-      }
+      onClick={() => handleClick()}
     >
       <div className="grid grid-cols-4">
         <div className="my-auto item col-span-1">
