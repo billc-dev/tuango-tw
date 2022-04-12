@@ -2,9 +2,12 @@ import * as functions from "firebase-functions";
 import * as mongoose from "mongoose";
 
 import { IUser, UserSchema, usersConn } from "api/user/userDB";
+import { IS_DEV } from "utils/constant";
 
 export const roomsConn = mongoose.createConnection(
-  functions.config().mongodb_uri.room_dev
+  IS_DEV
+    ? functions.config().mongodb_uri.room_dev
+    : functions.config().mongodb_uri.room_prod
 );
 
 export interface IRoomUser {

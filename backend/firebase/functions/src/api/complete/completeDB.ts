@@ -1,10 +1,14 @@
 import * as functions from "firebase-functions";
 import * as mongoose from "mongoose";
 
+import { IS_DEV } from "utils/constant";
+
 import { IComplete } from "./complete";
 
 const completeConn = mongoose.createConnection(
-  functions.config().mongodb_uri.complete_dev
+  IS_DEV
+    ? functions.config().mongodb_uri.complete_dev
+    : functions.config().mongodb_uri.complete_prod
 );
 
 const CompleteSchema = new mongoose.Schema<IComplete>({
