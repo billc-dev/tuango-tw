@@ -17,12 +17,14 @@ const PostImageCarousel: FC<Props> = ({ imageUrls }) => {
   const [index, setIndex] = useState(0);
   const images = imageUrls.filter((image) => image.md);
   return (
-    <div className="overflow-hidden -mx-4">
+    <div className="overflow-hidden -mx-4 select-none">
       <Carousel
         centerMode
         showStatus={false}
         showArrows={false}
         centerSlidePercentage={100}
+        preventMovementUntilSwipeScrollTolerance
+        swipeScrollTolerance={30}
         className="-mb-10"
         onChange={(index) => setIndex(index)}
         onClickItem={() => setOpen(true)}
