@@ -42,7 +42,7 @@ const ClosePostButton: FC<Props> = ({ postId, status }) => {
       >
         {status === "open" ? "結單" : "已結單"}
       </Button>
-      <NormalDialog {...{ open, setOpen }} title="您確定要取消這筆訂單嗎？">
+      <NormalDialog {...{ open, setOpen }} title="您確定要結單嗎？">
         <div className="flex justify-end gap-2 pt-2">
           <Button size="lg" variant="orange" onClick={handleClick}>
             結單

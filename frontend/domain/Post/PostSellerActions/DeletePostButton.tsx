@@ -35,7 +35,7 @@ const DeletePostButton: FC<Props> = ({ postId }) => {
       <NormalDialog
         open={open}
         setOpen={setOpen}
-        title="您確定要取消這筆訂單嗎？"
+        title="您確定要刪除這篇貼文嗎？"
       >
         <div className="flex justify-end gap-2 pt-2">
           <Button size="lg" variant="danger" onClick={() => handleDelete()}>
