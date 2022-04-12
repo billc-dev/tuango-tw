@@ -73,7 +73,7 @@ export const notifyCommentOrReply = (
 ) => {
   const message = `
 ✉️ ${displayName} ${type === "comment" ? "留言" : "回覆"}：${comment}
-貼文連結: ${FRONTEND_URL}/posts?id=${postId}#comment`;
+貼文連結: ${FRONTEND_URL}/posts?postId=${postId}&action=comment`;
   notifyService.notifyUser(userId, message);
 };
 

@@ -46,7 +46,7 @@ router.put(
     );
     const updatedPost = await postService.decrementItemQty(orderForm, post);
 
-    return res.json({ post: updatedPost, order });
+    return res.status(200).json({ post: updatedPost, order });
   })
 );
 
@@ -153,6 +153,23 @@ router.get(
       orders.length === limit ? orders[orders.length - 1].createdAt : undefined;
 
     return res.status(200).json({ orders, nextId });
+  })
+);
+
+router.patch(
+  "/order/setHasName",
+  isAuthorized,
+  asyncWrapper(async (req, res) => {
+    const { orderId, hasName } = req.body;
+    if (!orderId) throw "orderId is required";
+    if (typeof hasName === "undefined") throw "hasName is required";
+
+    const order = await Order.findByIdAndUpdate(
+      orderId,
+      { hasName },
+      { new: true }
+    );
+    return res.status(200).json({ order });
   })
 );
 
