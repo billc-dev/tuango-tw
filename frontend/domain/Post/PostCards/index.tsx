@@ -22,43 +22,41 @@ const PostCards: FC<PostCardsProps> = ({ postCardsQuery }) => {
   const { data, fetchNextPage, isFetching, isLoading, hasNextPage } =
     postCardsQuery;
   return (
-    <div className="flex w-full flex-col items-center select-none">
-      <InfiniteScroll
-        className="pb-4"
-        loader={
-          isFetching && (
-            <div data-testid="post-card-skeletons">
-              <PostCardSkeletons />
-            </div>
-          )
-        }
-        next={() => fetchNextPage()}
-        hasMore={hasNextPage ?? false}
-        dataLength={
-          data?.pages.reduce((sum, post) => post.posts.length + sum, 0) || 0
-        }
-      >
-        {!isLoading ? (
-          <div data-testid="post-cards">
-            <PostCardGrid>
-              {data?.pages.map((page, index) => (
-                <Fragment key={index}>
-                  {page.posts.map((post) => (
-                    <PostCard key={post._id} post={post} />
-                  ))}
-                </Fragment>
-              ))}
-            </PostCardGrid>
-            {data?.pages[0].posts.length === 0 &&
-              "找不到貼文，請試試其他的關鍵字。"}
-          </div>
-        ) : (
+    <InfiniteScroll
+      className="pb-16 flex w-full flex-col items-center select-none"
+      loader={
+        isFetching && (
           <div data-testid="post-card-skeletons">
             <PostCardSkeletons />
           </div>
-        )}
-      </InfiniteScroll>
-    </div>
+        )
+      }
+      next={() => fetchNextPage()}
+      hasMore={hasNextPage ?? false}
+      dataLength={
+        data?.pages.reduce((sum, post) => post.posts.length + sum, 0) || 0
+      }
+    >
+      {!isLoading ? (
+        <div data-testid="post-cards">
+          <PostCardGrid>
+            {data?.pages.map((page, index) => (
+              <Fragment key={index}>
+                {page.posts.map((post) => (
+                  <PostCard key={post._id} post={post} />
+                ))}
+              </Fragment>
+            ))}
+          </PostCardGrid>
+          {data?.pages[0].posts.length === 0 &&
+            "找不到貼文，請試試其他的關鍵字。"}
+        </div>
+      ) : (
+        <div data-testid="post-card-skeletons">
+          <PostCardSkeletons />
+        </div>
+      )}
+    </InfiniteScroll>
   );
 };
 
