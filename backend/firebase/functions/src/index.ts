@@ -61,8 +61,9 @@ export const api_tw_firebase = functions
   .runWith({ timeoutSeconds: 10 })
   .https.onRequest(app);
 
-export const pingVercel = functions.pubsub
-  .schedule("every 2 minutes")
+export const pingVercel = functions
+  .region("asia-east1")
+  .pubsub.schedule("every 2 minutes")
   .onRun(async () => {
     try {
       await axios.get(
@@ -74,8 +75,9 @@ export const pingVercel = functions.pubsub
     return null;
   });
 
-export const pingFirebase = functions.pubsub
-  .schedule("every 2 minutes")
+export const pingFirebase = functions
+  .region("asia-east1")
+  .pubsub.schedule("every 2 minutes")
   .onRun(async () => {
     try {
       await axios.get(
