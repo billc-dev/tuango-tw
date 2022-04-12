@@ -1,10 +1,14 @@
 import * as functions from "firebase-functions";
 import * as mongoose from "mongoose";
 
+import { IS_DEV } from "utils/constant";
+
 import { ILike } from "./like";
 
 const likesConn = mongoose.createConnection(
-  functions.config().mongodb_uri.like_dev
+  IS_DEV
+    ? functions.config().mongodb_uri.like_dev
+    : functions.config().mongodb_uri.like_prod
 );
 
 const LikeSchema = new mongoose.Schema<ILike>({

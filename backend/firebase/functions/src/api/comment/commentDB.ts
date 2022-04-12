@@ -1,10 +1,14 @@
 import * as functions from "firebase-functions";
 import * as mongoose from "mongoose";
 
+import { IS_DEV } from "utils/constant";
+
 import { IComment } from "./comment";
 
 const commentsConn = mongoose.createConnection(
-  functions.config().mongodb_uri.comment_dev
+  IS_DEV
+    ? functions.config().mongodb_uri.comment_dev
+    : functions.config().mongodb_uri.comment_prod
 );
 
 const CommentSchema = new mongoose.Schema<IComment>({

@@ -1,8 +1,12 @@
 import * as functions from "firebase-functions";
 import * as mongoose from "mongoose";
 
+import { IS_DEV } from "utils/constant";
+
 export const usersConn = mongoose.createConnection(
-  functions.config().mongodb_uri.user_dev
+  IS_DEV
+    ? functions.config().mongodb_uri.user_dev
+    : functions.config().mongodb_uri.user_prod
 );
 
 export interface IUser {
