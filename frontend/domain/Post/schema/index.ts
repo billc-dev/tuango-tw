@@ -21,7 +21,7 @@ const itemsSchema = yup
   )
   .min(1)
   .defined()
-  .default([]);
+  .default([{ _id: undefined, item: "", price: undefined, itemQty: 100 }]);
 
 const imageUrlsSchema = yup
   .array(

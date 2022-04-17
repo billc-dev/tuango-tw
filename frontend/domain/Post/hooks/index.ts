@@ -3,6 +3,7 @@ import { useInfiniteQuery, useQuery } from "react-query";
 import { useIsAuthenticated } from "domain/User/hooks";
 
 import {
+  fetchIfCreatedPostToday,
   fetchLikedPostCards,
   fetchPost,
   fetchPostCards,
@@ -105,4 +106,8 @@ export const usePost = (id: string) => {
     enabled: !!id,
     refetchOnMount: true,
   });
+};
+
+export const useIfCreatedPostToday = () => {
+  return useQuery("check", fetchIfCreatedPostToday);
 };
