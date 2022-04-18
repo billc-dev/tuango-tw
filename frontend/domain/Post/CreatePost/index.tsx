@@ -40,7 +40,7 @@ const CreatePost = () => {
       onSuccess: () => {
         postForm.reset({
           ...postSchema.getDefault(),
-          items: [{ item: "", price: 0, itemQty: 100 }],
+          items: [{ item: "", price: undefined, itemQty: 100 }],
         });
         handleClose();
       },
