@@ -51,7 +51,7 @@ export const UserSchema = new mongoose.Schema<IUser>({
   comment: String,
   message: {
     notified: { type: Boolean, default: false },
-    notifiedAt: { type: String, default: new Date().toISOString() },
+    notifiedAt: { type: String, default: () => new Date().toISOString() },
   },
   fb: { type: Boolean, default: false },
 });
