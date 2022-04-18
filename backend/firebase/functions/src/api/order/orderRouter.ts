@@ -1,6 +1,7 @@
 import * as express from "express";
 
 import Complete from "api/complete/completeDB";
+import { notifyUser } from "api/notify/notifyService";
 import { Post } from "api/post";
 import * as postService from "api/post/postService";
 import asyncWrapper from "middleware/asyncWrapper";
@@ -45,6 +46,13 @@ router.put(
       res.locals.user
     );
     const updatedPost = await postService.decrementItemQty(orderForm, post);
+
+    if (order.comment) {
+      const message = `
+🦓 ${order.displayName} 在#${order.postNum} ${order.title} 下單並備註 ⚠️ : ${order.comment}
+貼文連結: www.開心團購.com/posts?postId=${order.postId}`;
+      notifyUser(post.userId, message);
+    }
 
     return res.status(200).json({ post: updatedPost, order });
   })
@@ -170,6 +178,24 @@ router.patch(
       { new: true }
     );
     return res.status(200).json({ order });
+  })
+);
+
+router.get(
+  "/complete/:id",
+  isAuthorized,
+  asyncWrapper(async (req, res) => {
+    const completeId = req.params.id;
+    if (!completeId) throw "complete id invalid";
+
+    const complete = await Complete.findById(completeId);
+    if (!complete) throw "complete not found";
+
+    const isCompleteUser = complete.userId === res.locals.user.username;
+    const isAdmin = res.locals.user.role === "admin";
+    if (!isCompleteUser && !isAdmin) throw "unauthorized";
+
+    return res.status(200).json({ complete });
   })
 );
 
