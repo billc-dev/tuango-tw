@@ -64,3 +64,10 @@ interface SetHasNameParams {
 export const setHasName = (params: SetHasNameParams) => {
   return axios.patch<{ order: IOrder }>("/orders/order/setHasName", params);
 };
+
+export const getComplete = async (id: string) => {
+  const res = await axios.get<{ complete: IComplete }>(
+    `/orders/complete/${id}`
+  );
+  return res.data.complete;
+};

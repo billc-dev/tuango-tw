@@ -121,3 +121,8 @@ interface SendMessageParams {
 export const sendMessage = (params: SendMessageParams) => {
   return axios.post("/notify/sendMessage", params);
 };
+
+export const fetchIfCreatedPostToday = async () => {
+  const res = await axios.get<{ created: boolean }>("/posts/check");
+  return res.data.created;
+};

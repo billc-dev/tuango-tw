@@ -14,7 +14,7 @@ const OrderMessage: FC<Props> = ({ message, isUserMessage }) => {
   const { order } = message;
   return (
     <div className={`-my-1 ${isUserMessage && "order-last"}`}>
-      <NormalOrderCard order={order} />
+      <NormalOrderCard order={order} chat />
     </div>
   );
 };

@@ -17,13 +17,14 @@ interface Props {
 }
 
 const OrderListItem: FC<Props> = ({ order, user, post }) => {
+  const isBuyer = user?.username !== order.userId;
+  const isSeller = user?.username === post.userId;
+  const isAdmin = user?.role === "admin";
+
   const showMessageButton = () => {
-    return (
-      user?.role !== "basic" &&
-      user?.username !== order.userId &&
-      user?.username === post?.userId
-    );
+    return user?.role !== "basic" && isBuyer && isSeller;
   };
+
   return (
     <>
       <Header
@@ -45,14 +46,15 @@ const OrderListItem: FC<Props> = ({ order, user, post }) => {
         {order.status === "missing" && "尋貨中 🔍"}
       </div>
       {order.order.map((item, index) => (
-        <ul key={index} className="text-sm">
-          {`${item.id}. ${item.item}+${item.qty} $${item.qty * item.price}`}
+        <ul key={index}>
+          {item.id}. {item.item}+{item.qty}{" "}
+          {(isSeller || isAdmin) && "$" + item.qty * item.price}
         </ul>
       ))}
       {order.comment && (
         <p className="whitespace-pre pt-1 text-sm">備註: {order.comment}</p>
       )}
-      {post?.status !== "open" && (
+      {post?.status !== "open" && isSeller && (
         <HasNameButton {...{ postId: post._id, order }} />
       )}
     </>

@@ -48,8 +48,7 @@ const PostCards: FC<PostCardsProps> = ({ postCardsQuery }) => {
               </Fragment>
             ))}
           </PostCardGrid>
-          {data?.pages[0].posts.length === 0 &&
-            "找不到貼文，請試試其他的關鍵字。"}
+          {data?.pages[0].posts.length === 0 && "未找到任何貼文。"}
         </div>
       ) : (
         <div data-testid="post-card-skeletons">

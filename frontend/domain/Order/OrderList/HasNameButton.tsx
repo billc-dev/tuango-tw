@@ -15,7 +15,7 @@ const HasNameButton: FC<Props> = ({ order, postId }) => {
   return (
     <Button
       loading={setHasName.isLoading}
-      className="mt-1 w-24"
+      className="mt-1 w-28"
       size="lg"
       variant={order.hasName ? "info" : undefined}
       onClick={() =>

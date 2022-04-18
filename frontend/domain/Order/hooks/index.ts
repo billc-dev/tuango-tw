@@ -14,6 +14,7 @@ import {
   createOrder,
   deleteOrder,
   fetchOrders,
+  getComplete,
   paginateCompletedOrders,
   paginateExtraOrders,
   paginateNormalOrders,
@@ -148,5 +149,12 @@ export const useSetHasName = (postId: string) => {
       };
       queryClient.setQueryData(["order", postId], updatedOrders);
     },
+  });
+};
+
+export const useComplete = (id: string) => {
+  const isAuthenticated = useIsAuthenticated();
+  return useQuery(["complete", id], () => getComplete(id), {
+    enabled: isAuthenticated,
   });
 };

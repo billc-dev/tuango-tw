@@ -37,7 +37,7 @@ const DeleteOrder: FC<Props> = ({ order, user, post }) => {
       <NormalDialog
         open={open}
         setOpen={setOpen}
-        title="您確定要取消這筆訂單嗎？"
+        title="您確定要刪除這筆訂單嗎？"
       >
         <div className="flex justify-end gap-2 pt-2">
           <Button

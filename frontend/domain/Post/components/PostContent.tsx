@@ -9,6 +9,7 @@ import { shallowPush } from "utils/routing";
 
 import EditPostButton from "../EditPost.tsx/EditPostButton";
 import DeletePostButton from "../PostSellerActions/DeletePostButton";
+import { getStorageTypeLabel } from "../services";
 import { IPost } from "../types";
 import PostImageCarousel from "./PostImageCarousel";
 
@@ -56,6 +57,7 @@ const PostContent: FC<Props> = (props) => {
         <p>
           💚 #到貨日: {post.deliveryDate ? date(post.deliveryDate) : "貨到通知"}
         </p>
+        <p>儲存方式: {getStorageTypeLabel(post.storageType)}</p>
         <p className={`whitespace-pre-line pt-4 ${feed && "line-clamp-4"}`}>
           {post.body.trim()}
         </p>
