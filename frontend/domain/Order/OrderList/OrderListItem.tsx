@@ -46,7 +46,7 @@ const OrderListItem: FC<Props> = ({ order, user, post }) => {
         {order.status === "missing" && "尋貨中 🔍"}
       </div>
       {order.order.map((item, index) => (
-        <ul key={index} className="text-sm">
+        <ul key={index}>
           {item.id}. {item.item}+{item.qty}{" "}
           {(isSeller || isAdmin) && "$" + item.qty * item.price}
         </ul>
@@ -54,7 +54,7 @@ const OrderListItem: FC<Props> = ({ order, user, post }) => {
       {order.comment && (
         <p className="whitespace-pre pt-1 text-sm">備註: {order.comment}</p>
       )}
-      {post?.status !== "open" && (
+      {post?.status !== "open" && isSeller && (
         <HasNameButton {...{ postId: post._id, order }} />
       )}
     </>
