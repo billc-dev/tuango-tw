@@ -4,7 +4,7 @@ import Order from "api/order/orderDB";
 import { Post } from "api/post";
 import { Room } from "api/room/roomDB";
 import asyncWrapper from "middleware/asyncWrapper";
-import { isAuthorized } from "middleware/auth";
+import { isAuthorized, isRegistered } from "middleware/auth";
 
 import { User } from "./userDB";
 
@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get(
   "/",
-  isAuthorized,
+  isRegistered,
   asyncWrapper(async (_req, res) => {
     const user = res.locals.user;
     return res.status(200).json({ user });
@@ -21,7 +21,7 @@ router.get(
 
 router.get(
   "/deliveredOrderCount",
-  isAuthorized,
+  isRegistered,
   asyncWrapper(async (req, res) => {
     const orderCount = await Order.countDocuments({
       userId: res.locals.user.username,
@@ -33,7 +33,7 @@ router.get(
 
 router.get(
   "/notificationCount",
-  isAuthorized,
+  isRegistered,
   asyncWrapper(async (_req, res) => {
     const rooms = await Room.find({
       "users.user": res.locals.user._id,
@@ -67,10 +67,8 @@ router.get(
 
 router.post(
   "/login/update",
-  isAuthorized,
   asyncWrapper(async (req, res) => {
     const { userId } = req.body;
-
     const user = await User.findById(userId);
     if (!user) throw "user not found";
     const { displayName, pictureUrl } = user;

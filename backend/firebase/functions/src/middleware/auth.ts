@@ -17,3 +17,16 @@ export const isAuthorized = asyncWrapper(async (req, res, next) => {
   res.locals.user = user;
   return next();
 });
+
+export const isRegistered = asyncWrapper(async (req, res, next) => {
+  const authToken = req.headers.authorization;
+  if (!authToken) return res.status(403).json({ error: "No auth token" });
+
+  const token = verifyJWT(authToken);
+  const user = await User.findOne({ username: token.username });
+
+  if (!user) return res.status(403).json({ error: "User not found" });
+
+  res.locals.user = user;
+  return next();
+});

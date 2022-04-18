@@ -2,7 +2,7 @@ import * as express from "express";
 
 import * as postService from "api/post/postService";
 import asyncWrapper from "middleware/asyncWrapper";
-import { isAuthorized } from "middleware/auth";
+import { isAuthorized, isRegistered } from "middleware/auth";
 
 import { Like } from "./likeDB";
 
@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get(
   "/",
-  isAuthorized,
+  isRegistered,
   asyncWrapper(async (req, res) => {
     const likes = await Like.find({ userId: res.locals.user.username }).sort({
       createdAt: -1,

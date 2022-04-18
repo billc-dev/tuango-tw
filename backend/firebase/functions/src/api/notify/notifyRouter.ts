@@ -5,7 +5,7 @@ import axios from "axios";
 
 import { User } from "api/user/userDB";
 import asyncWrapper from "middleware/asyncWrapper";
-import { isAuthorized } from "middleware/auth";
+import { isAuthorized, isRegistered } from "middleware/auth";
 import { FRONTEND_URL } from "utils/url";
 
 import Notify from "./notifyDB";
@@ -26,7 +26,7 @@ router.post(
 
 router.post(
   "/setup",
-  isAuthorized,
+  isRegistered,
   asyncWrapper(async (req, res) => {
     const notify = await Notify.findOne({ username: res.locals.user.username });
     const { code, redirectUrl } = req.body;
