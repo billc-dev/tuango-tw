@@ -16,6 +16,7 @@ import {
   ImageUrl,
   InfinitePostsQueryData,
   Item,
+  PostStorageType,
 } from "../types";
 
 export function getProductPriceRange(items: Item[]) {
@@ -169,4 +170,17 @@ export const updateInfinitePostsQueryData = (
 
   if (!updatedPosts) return;
   queryClient.setQueryData<InfinitePostsQueryData>(["posts", 20], updatedPosts);
+};
+
+export const getStorageTypeLabel = (storageType: PostStorageType) => {
+  switch (storageType) {
+    case "roomTemp":
+      return "常溫";
+    case "refrigerated":
+      return "冷藏";
+    case "frozen":
+      return "冷凍";
+    default:
+      return "";
+  }
 };
