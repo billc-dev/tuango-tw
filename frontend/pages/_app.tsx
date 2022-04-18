@@ -67,6 +67,7 @@ export function App({ Component, pageProps }: AppProps) {
               name="description"
               content="開心鮮拼鮮難瘦團，就是買買買，不買難受，買了難瘦，歡迎加入買買買。"
             />
+            <link rel="manifest" href="/manifest.json" />
           </Head>
           <TopNavbar />
           {/* @ts-ignore */}
