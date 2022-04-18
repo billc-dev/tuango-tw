@@ -34,11 +34,7 @@ const ActionArea: FC<Props> = ({ viewMode, setViewMode }) => {
       <NavigationButton
         text="使用教學"
         className="pt-2"
-        onClick={() =>
-          window.open(
-            "https://www.youtube.com/watch?v=KbK42kgCpSo&list=PLgI1o1ZOlTxuii4gt0GXjM5m-K1j6eJSy&index=2&ab_channel=BillCheng"
-          )
-        }
+        onClick={() => window.open("https://youtu.be/EejAputRJqQ")}
       >
         <PlayIcon />
       </NavigationButton>
