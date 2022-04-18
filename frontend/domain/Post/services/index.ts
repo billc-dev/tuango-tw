@@ -144,7 +144,7 @@ export const uploadImageS3 = async (
 };
 
 export const getPostUrl = (postId: string) => {
-  return `${WINDOW_URL}/posts?postId=${postId}`;
+  return `www.開心團購.com/posts?postId=${postId}`;
 };
 
 export const updateInfinitePostsQueryData = (
