@@ -6,6 +6,7 @@ import Dialog from "components/Dialog";
 import LoadingIndicator from "components/Indicator/LoadingIndicator";
 import { shallowPush } from "utils/routing";
 
+import PostHead from "./PostHead";
 import PostActions from "./components/PostActions";
 import PostContent from "./components/PostContent";
 import { usePost } from "./hooks";
@@ -25,7 +26,6 @@ const PostDialog: FC<Props> = ({ postId, chat }) => {
   const { chatId } = router.query;
   const [open, setOpen] = useState(false);
   const { data, isLoading } = usePost(postId);
-
   const handleClose = () => {
     if (!chat) {
       const { postId, action, ...query } = router.query;
@@ -46,6 +46,7 @@ const PostDialog: FC<Props> = ({ postId, chat }) => {
       <LoadingIndicator loading={isLoading} />
       {data?.post && (
         <Dialog open={open} handleClose={handleClose} title={data.post.title}>
+          <PostHead post={data.post} />
           <PostContent post={data.post} />
           <PostActions post={data.post} />
           {!chat && typeof chatId === "string" && (
