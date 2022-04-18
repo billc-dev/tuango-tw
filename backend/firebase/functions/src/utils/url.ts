@@ -2,4 +2,4 @@ import { IS_DEV } from "./constant";
 
 export const FRONTEND_URL = IS_DEV
   ? "http://localhost:3000"
-  : "tuango.billcheng.dev";
+  : "www.開心團購.com";
