@@ -138,6 +138,30 @@ router.get(
   })
 );
 
+router.get(
+  "/check",
+  isAuthorized,
+  asyncWrapper(async (req, res) => {
+    let date: string | Date = new Date().toISOString();
+    if (Number(date.slice(11, 13)) < 16) {
+      date = new Date();
+      date.setDate(date.getDate() - 1);
+      date = date.toISOString().slice(0, 11) + "16:00:00.000Z";
+    } else date = date.slice(0, 11) + "16:00:00.000Z";
+
+    const post = await Post.findOne({
+      status: "open",
+      createdAt: { $gte: date },
+      userId: res.locals.user.username,
+    });
+
+    let created = false;
+    if (post) created = true;
+
+    return res.status(200).json({ created });
+  })
+);
+
 router.post(
   "/post",
   isAuthorized,
