@@ -19,10 +19,11 @@ interface Props {
   onSubmit: SubmitHandler<PostFormSchema>;
   action: "create" | "edit";
   submitting: boolean;
+  noOrders?: boolean;
 }
 
 const PostForm: FC<Props> = (props) => {
-  const { postForm, onSubmit, action, submitting } = props;
+  const { postForm, onSubmit, action, submitting, noOrders } = props;
   const [agree, setAgree] = useState(action === "edit");
   const {
     handleSubmit,
@@ -76,7 +77,7 @@ const PostForm: FC<Props> = (props) => {
         error={errors.body?.message}
         {...register("body")}
       />
-      <PostItems {...{ control, errors, register }} />
+      <PostItems {...{ control, errors, register, noOrders }} />
       <ImageGrid {...{ getValues, control }} />
       <UploadImageButton {...{ getValues, setValue, errors }} />
       {action === "create" && <Agree {...{ agree, setAgree }} />}
