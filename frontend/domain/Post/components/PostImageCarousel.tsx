@@ -24,7 +24,7 @@ const PostImageCarousel: FC<Props> = ({ imageUrls }) => {
         showArrows={false}
         centerSlidePercentage={100}
         preventMovementUntilSwipeScrollTolerance
-        swipeScrollTolerance={30}
+        swipeScrollTolerance={40}
         className="-mb-10"
         onChange={(index) => setIndex(index)}
         onClickItem={() => setOpen(true)}
