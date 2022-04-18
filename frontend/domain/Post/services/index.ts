@@ -7,8 +7,6 @@ import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import Resizer from "react-image-file-resizer";
 import { QueryClient } from "react-query";
 
-import { WINDOW_URL } from "utils/constants";
-
 import { PostFormSchema } from "../schema";
 import {
   Action,
