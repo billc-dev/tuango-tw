@@ -15,17 +15,3 @@ export const pingVercel = functions
     }
     return null;
   });
-
-export const pingFirebase = functions
-  .region("asia-east1")
-  .pubsub.schedule("every 2 minutes")
-  .onRun(async () => {
-    try {
-      await axios.get(
-        "https://asia-east1-tuango-tw-firebase.cloudfunctions.net/api_tw_firebase/posts/paginate/initial?limit=20"
-      );
-    } catch (error) {
-      console.log(error);
-    }
-    return null;
-  });
