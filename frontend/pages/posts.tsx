@@ -1,11 +1,11 @@
 import type { NextPage, NextPageContext } from "next";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 import { useQueryClient } from "react-query";
 
 import PostDialog from "domain/Post/PostDialog";
+import PostHead from "domain/Post/PostHead";
 import PostTypeContainer from "domain/Post/PostTypeContainer";
 import { fetchPost } from "domain/Post/api";
 import NotifySetup from "domain/User/NotifySetup";
@@ -33,21 +33,7 @@ const Posts: NextPage<Props> = (props) => {
   return (
     <>
       <NotifySetup />
-      <Head>
-        {post && (
-          <>
-            <title>
-              #{post?.postNum} {post?.title} #{post?.displayName} - 開心團購
-            </title>
-            <meta
-              itemProp="name"
-              content={`#${post?.postNum} ${post?.title} #${post?.displayName} - 開心團購`}
-            />
-            <meta name="description" content={post?.body} />
-            <meta property="og:image" content={post?.imageUrls[0].md} />
-          </>
-        )}
-      </Head>
+      <PostHead post={post} />
       <PostTypeContainer />
       {typeof postId === "string" && <PostDialog postId={postId} />}
     </>
