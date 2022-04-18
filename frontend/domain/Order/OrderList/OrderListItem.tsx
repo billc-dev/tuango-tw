@@ -17,13 +17,14 @@ interface Props {
 }
 
 const OrderListItem: FC<Props> = ({ order, user, post }) => {
+  const isBuyer = user?.username !== order.userId;
+  const isSeller = user?.username === post.userId;
+  const isAdmin = user?.role === "admin";
+
   const showMessageButton = () => {
-    return (
-      user?.role !== "basic" &&
-      user?.username !== order.userId &&
-      user?.username === post?.userId
-    );
+    return user?.role !== "basic" && isBuyer && isSeller;
   };
+
   return (
     <>
       <Header
@@ -46,7 +47,8 @@ const OrderListItem: FC<Props> = ({ order, user, post }) => {
       </div>
       {order.order.map((item, index) => (
         <ul key={index} className="text-sm">
-          {`${item.id}. ${item.item}+${item.qty} $${item.qty * item.price}`}
+          {item.id}. {item.item}+{item.qty}{" "}
+          {(isSeller || isAdmin) && "$" + item.qty * item.price}
         </ul>
       ))}
       {order.comment && (
