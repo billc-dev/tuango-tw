@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 import Dialog from "components/Dialog";
+import { useOrders } from "domain/Order/hooks";
 
 import PostForm from "../PostForm";
 import { useEditPost } from "../hooks";
@@ -21,6 +22,7 @@ const EditPost: FC<Props> = ({ open, setOpen, post }) => {
   const [submitting, setSubmitting] = useState(false);
   const { title, storageType, deadline, deliveryDate } = post;
   const { body, items, imageUrls } = post;
+  const orderQuery = useOrders(post._id);
   const editPost = useEditPost();
   const postForm = useForm<PostFormSchema>({
     defaultValues: {
@@ -56,7 +58,15 @@ const EditPost: FC<Props> = ({ open, setOpen, post }) => {
 
   return (
     <Dialog {...{ open, handleClose, title: "編輯貼文" }}>
-      <PostForm action="edit" {...{ postForm, onSubmit, submitting }} />
+      <PostForm
+        action="edit"
+        {...{
+          postForm,
+          onSubmit,
+          submitting,
+          noOrders: orderQuery.data?.orders.length === 0,
+        }}
+      />
     </Dialog>
   );
 };

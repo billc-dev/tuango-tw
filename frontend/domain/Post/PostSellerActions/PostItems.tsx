@@ -18,10 +18,11 @@ interface Props {
   control: Control<PostFormSchema, any>;
   register: UseFormRegister<PostFormSchema>;
   errors: FormState<PostFormSchema>["errors"];
+  noOrders?: boolean;
 }
 
 const PostItems: FC<Props> = (props) => {
-  const { control, errors, register } = props;
+  const { control, errors, register, noOrders } = props;
   const { fields, append, remove } = useFieldArray({ control, name: "items" });
   return (
     <>
@@ -30,9 +31,11 @@ const PostItems: FC<Props> = (props) => {
           <TextField
             label={`${indexAlphabet[index]}.`}
             color="grey"
+            selectOnFocus
             placeholder="商品名稱"
             error={errors.items?.[index]?.item?.message}
             key={`items.${index}.item`}
+            disabled={!!item._id && !noOrders}
             {...register(`items.${index}.item`)}
           />
           <TextField
@@ -41,6 +44,7 @@ const PostItems: FC<Props> = (props) => {
             placeholder="價格"
             key={`items.${index}.price`}
             error={errors.items?.[index]?.price?.message}
+            disabled={!!item._id && !noOrders}
             {...register(`items.${index}.price`)}
           />
           <TextField

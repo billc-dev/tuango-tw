@@ -35,15 +35,18 @@ const TopNavbar = () => {
           {!isVerified.isLoading && !isLoading && (
             <>
               {data?.data.user ? (
-                <IconButton
-                  avatar={
-                    <CardAvatar
-                      alt={data.data.user.displayName}
-                      img={data.data.user.pictureUrl}
-                    />
-                  }
-                  onClick={() => router.push("/user")}
-                />
+                <div className="flex justify-center items-center">
+                  <IconButton
+                    avatar={
+                      <CardAvatar
+                        alt={data.data.user.displayName}
+                        img={data.data.user.pictureUrl}
+                      />
+                    }
+                    onClick={() => router.push("/user")}
+                  />
+                  <p className="ml-2">會員編號: {data.data.user.pickupNum}</p>
+                </div>
               ) : (
                 <LineLoginButton size="lg" />
               )}

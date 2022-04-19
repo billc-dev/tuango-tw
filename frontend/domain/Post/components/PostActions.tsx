@@ -3,6 +3,7 @@ import React, { FC } from "react";
 
 import { ChatAltIcon, ClipboardListIcon } from "@heroicons/react/outline";
 
+import Button from "components/Button";
 import TabButton from "components/Tab/TabButton";
 import TabContainer from "components/Tab/TabContainer";
 import Comment from "domain/Comment";
@@ -28,10 +29,16 @@ const PostActions: FC<Props> = ({ post }) => {
   const action = router.query.action as Action;
   const isSeller = useIsSeller();
   const isPostCreator = post.userId === data?.data.user.username;
+  const isOpen = post.status === "open";
   return data?.data.user ? (
     <>
       {isSeller && <CopyPostLinkButton {...{ post }} />}
       {isPostCreator && <PostShareButton post={post} />}
+      {!isOpen && (
+        <Button fullWidth variant="info" className="mb-2">
+          貼文狀態：已結單
+        </Button>
+      )}
       <TabContainer>
         <LikeButton tabButton postId={post._id} likeCount={post.likeCount} />
         <TabButton

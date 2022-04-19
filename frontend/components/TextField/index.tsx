@@ -23,7 +23,7 @@ const TextField: FC<Props> = React.forwardRef((props, ref) => {
         onFocus={(e) => {
           selectOnFocus && e.target.select();
         }}
-        className={`mb-2 w-full rounded-lg border px-3 border-zinc-200 dark:bg-zinc-800 placeholder-zinc-400 dark:border-zinc-600 ${
+        className={`mb-2 w-full rounded-lg border px-3 border-zinc-200 dark:bg-zinc-800 placeholder-zinc-400 dark:border-zinc-600 disabled:opacity-60 ${
           height === "tall" ? "h-16" : "h-14"
         } ${
           !error

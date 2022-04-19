@@ -15,7 +15,7 @@ export const verifyJWT = (aid: string) => {
 
 export const createAccessToken = (username: string) => {
   return jwt.sign({ username }, process.env.JWT_SECRET!, {
-    expiresIn: "15m",
+    expiresIn: "60m",
   });
 };
 
