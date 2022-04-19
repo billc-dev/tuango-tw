@@ -227,6 +227,10 @@ router.delete(
 
     if (!post) throw "post not found";
 
+    if (post.userId === res.locals.user.username) {
+      await postService.cancelOrders(postId);
+    }
+
     return res.status(200).json({});
   })
 );
