@@ -15,6 +15,7 @@ import { setAccessToken } from "domain/User/services/accessToken";
 import { API_URL, WINDOW_URL } from "utils/constants";
 
 import "../styles/globals.css";
+import GoogleAnalytics from "domain/GoogleAnalytics";
 
 // ANALYZE=true yarn build
 
@@ -69,6 +70,7 @@ export function App({ Component, pageProps }: AppProps) {
             />
             <link rel="manifest" href="/manifest.json" />
           </Head>
+          <GoogleAnalytics />
           <TopNavbar />
           {/* @ts-ignore */}
           <Component {...pageProps} />
