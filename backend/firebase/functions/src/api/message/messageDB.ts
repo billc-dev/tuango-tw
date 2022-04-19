@@ -5,12 +5,13 @@ import { IOrder } from "api/order/order";
 import { OrderSchema, ordersConn } from "api/order/orderDB";
 import { PostSchema, postsConn } from "api/post";
 import { IPost, ImageUrl } from "api/post/post";
-import { IS_DEV } from "utils/constant";
+import { DB_OPTIONS, IS_DEV } from "utils/constant";
 
 export const messageConn = mongoose.createConnection(
   IS_DEV
     ? functions.config().mongodb_uri.chat_dev
-    : functions.config().mongodb_uri.chat_prod
+    : functions.config().mongodb_uri.chat_prod,
+  DB_OPTIONS
 );
 
 interface Read {
