@@ -23,6 +23,8 @@ const whitelist = [
   "https://tuango-tw.vercel.app",
   "http://172.20.10.3:3000",
   "https://tuango.billcheng.dev",
+  "https://xn--ndsp5rmr3blfh.com",
+  "https://www.xn--ndsp5rmr3blfh.com",
   "*",
   undefined,
 ];
