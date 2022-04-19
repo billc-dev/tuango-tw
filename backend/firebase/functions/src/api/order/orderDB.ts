@@ -38,7 +38,11 @@ export const OrderSchema = new mongoose.Schema<IOrder>({
           set: (v: any) => Number(v),
           required: true,
         },
-        status: String,
+        status: {
+          type: String,
+          default: "ordered",
+          required: true,
+        },
         location: { type: String, default: "" },
         hasName: { type: Boolean, default: false },
       },
