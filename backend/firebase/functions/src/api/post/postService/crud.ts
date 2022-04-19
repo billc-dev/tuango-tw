@@ -1,6 +1,8 @@
 import * as notifyService from "api/notify/notifyService";
+import Order from "api/order/orderDB";
 import { IUser } from "api/user/userDB";
 import { indexAlphabet } from "utils/constant";
+import { FRONTEND_URL } from "utils/url";
 
 import { MongoosePost, ValidatedPost } from "../post";
 import { Post } from "../postDB";
@@ -27,7 +29,7 @@ export const createPost = (
 };
 
 export const sendGroupMessage = (post: MongoosePost) => {
-  const message = `😊#${post.postNum} ${post.title}~${post.displayName}\n貼文連結: https://tuango.billcheng.dev/posts?postId=${post._id}`;
+  const message = `😊#${post.postNum} ${post.title}~${post.displayName}\n貼文連結: ${FRONTEND_URL}/posts?postId=${post._id}`;
   return notifyService.notifyGroups(message);
 };
 
@@ -60,5 +62,20 @@ export const deletePost = (postId: string, userId: string) => {
     { _id: postId, userId },
     { status: "canceled" },
     { new: true }
+  );
+};
+
+export const cancelOrders = (postId: string) => {
+  return Order.updateMany(
+    { postId, status: "ordered" },
+    {
+      status: "canceled",
+      $push: {
+        orderHistory: {
+          status: "canceled",
+          createdAt: new Date().toISOString(),
+        },
+      },
+    }
   );
 };
