@@ -1,6 +1,8 @@
 import axios from "axios";
 import * as FormData from "form-data";
 
+import { IS_DEV } from "utils/constant";
+
 import Notify from "./notifyDB";
 
 export const notifyUser = async (
@@ -31,7 +33,11 @@ export const notifyUser = async (
 };
 
 export const notifyGroups = async (message: string, imageUrl?: string) => {
-  for (let i = 1; i < 5; i++) {
-    await notifyUser(String(i), message, imageUrl);
+  if (!IS_DEV) {
+    for (let i = 1; i < 5; i++) {
+      await notifyUser(String(i), message, imageUrl);
+      return;
+    }
   }
+  await notifyUser("test", message, imageUrl);
 };
