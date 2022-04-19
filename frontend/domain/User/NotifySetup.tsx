@@ -55,6 +55,7 @@ const NotifySetup = () => {
       handleClose={() => {
         userQuery.refetch();
       }}
+      className="z-50"
     >
       {!notified ? (
         <>
