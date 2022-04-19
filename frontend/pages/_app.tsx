@@ -1,5 +1,4 @@
 import type { AppProps } from "next/app";
-import Head from "next/head";
 import { useState } from "react";
 
 import axios from "axios";
@@ -16,6 +15,7 @@ import { API_URL, WINDOW_URL } from "utils/constants";
 
 import "../styles/globals.css";
 import GoogleAnalytics from "domain/GoogleAnalytics";
+import NextHead from "domain/NextHead";
 
 // ANALYZE=true yarn build
 
@@ -62,14 +62,7 @@ export function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
         <ThemeProvider attribute="class">
-          <Head>
-            <title>開心團購</title>
-            <meta
-              name="description"
-              content="開心鮮拼鮮難瘦團，就是買買買，不買難受，買了難瘦，歡迎加入買買買。"
-            />
-            <link rel="manifest" href="/manifest.json" />
-          </Head>
+          <NextHead />
           <GoogleAnalytics />
           <TopNavbar />
           {/* @ts-ignore */}
