@@ -18,7 +18,10 @@ const Seller = () => {
   const router = useRouter();
   return (
     <>
-      <Link href="https://youtu.be/2mUnxNQbQiM" passHref>
+      <Link
+        href="https://www.youtube.com/watch?v=2mUnxNQbQiM&list=PLgI1o1ZOlTxvUAwn6UvDHgJ3cF4k2ZhCb"
+        passHref
+      >
         <Button
           icon={<PlayIcon />}
           fullWidth
