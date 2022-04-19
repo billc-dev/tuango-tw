@@ -36,8 +36,8 @@ export const notifyGroups = async (message: string, imageUrl?: string) => {
   if (!IS_DEV) {
     for (let i = 1; i < 5; i++) {
       await notifyUser(String(i), message, imageUrl);
-      return;
     }
+    return;
   }
   await notifyUser("test", message, imageUrl);
 };
