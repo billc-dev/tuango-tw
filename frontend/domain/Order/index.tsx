@@ -34,7 +34,11 @@ const Order: FC<Props> = ({ post, action }) => {
     <>
       {post.status !== "completed" && <OrderList postId={post._id} />}
       {post.status === "open" && (
-        <OrderForm orderForm={orderForm} setOrderForm={setOrderForm} />
+        <OrderForm
+          post={post}
+          orderForm={orderForm}
+          setOrderForm={setOrderForm}
+        />
       )}
     </>
   ) : null;
