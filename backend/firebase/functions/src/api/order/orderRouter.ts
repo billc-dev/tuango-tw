@@ -143,13 +143,13 @@ router.get(
     const cursor = req.params.cursor;
     const limit = Number(req.query.limit);
 
-    const createdAtCursor =
-      cursor === "initial" ? {} : { createdAt: { $lt: cursor } };
+    const postNumCursor =
+      cursor === "initial" ? {} : { postNum: { $lt: cursor } };
 
     const orders = await Order.find({
       userId: "extra",
       status: "delivered",
-      ...createdAtCursor,
+      ...postNumCursor,
     })
       .sort("-postNum")
       .limit(limit);
@@ -158,7 +158,7 @@ router.get(
       return res.status(200).json({ orders: [], nextId: undefined });
 
     const nextId =
-      orders.length === limit ? orders[orders.length - 1].createdAt : undefined;
+      orders.length === limit ? orders[orders.length - 1].postNum : undefined;
 
     return res.status(200).json({ orders, nextId });
   })
