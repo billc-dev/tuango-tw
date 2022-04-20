@@ -1,15 +1,14 @@
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 
-import { AxiosResponse } from "axios";
 import { useQueryClient } from "react-query";
 
-import { IUser } from "api/auth/userDB";
 import IconButton from "components/Button/IconButton";
 import LineLoginButton from "components/Button/LineLoginButton";
 import ThemeButton from "components/Button/ThemeButton";
 import CardAvatar from "components/Card/CardAvatar";
 import { useIsVerified, useUser } from "domain/User/hooks";
+import { getLocalStorageUser } from "domain/User/services";
 
 const TopNavbar = () => {
   const queryClient = useQueryClient();
@@ -17,13 +16,9 @@ const TopNavbar = () => {
   const isVerified = useIsVerified();
   const router = useRouter();
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const user = localStorage.getItem("user");
-      if (user) {
-        const parsedUser: AxiosResponse<IUser> = JSON.parse(user);
-        if (parsedUser.data) queryClient.setQueryData("user", JSON.parse(user));
-      }
-    }
+    const user = getLocalStorageUser();
+    if (!user) return;
+    queryClient.setQueryData("user", user);
     refetch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

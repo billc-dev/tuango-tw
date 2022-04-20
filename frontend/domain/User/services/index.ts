@@ -1,6 +1,8 @@
+import { AxiosResponse } from "axios";
 import { nanoid } from "nanoid";
 
-import { WINDOW_URL } from "utils/constants";
+import { IUser } from "api/auth/userDB";
+import { WINDOW_URL, isClient } from "utils/constants";
 
 export const getRedirectUrl = () => {
   let url;
@@ -28,4 +30,16 @@ export const LINE_LOGIN_URL = `https://access.line.me/oauth2/v2.1/authorize?resp
 
 export const LINE_LOGIN_URL_WITH_PARAMS = (params: string) => {
   return `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1654947889&redirect_uri=${LINE_REDIRECT_URL}${params}&state=${nanoid()}&scope=profile%20openid`;
+};
+
+export const getLocalStorageUser = () => {
+  if (!isClient) return false;
+
+  const user = localStorage.getItem("user");
+  if (!user) return false;
+
+  const parsedUser: AxiosResponse<IUser> = JSON.parse(user);
+  if (!parsedUser.data) return false;
+
+  return parsedUser;
 };
