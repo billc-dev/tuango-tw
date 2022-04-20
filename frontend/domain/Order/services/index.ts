@@ -2,6 +2,7 @@ import produce from "immer";
 import { Updater } from "use-immer";
 import { ValidationError } from "yup";
 
+import * as gtag from "domain/GoogleAnalytics/gtag";
 import { IPost } from "domain/Post/types";
 
 import { orderFormSchema } from "../schema";
@@ -24,6 +25,16 @@ export const handleChangeItemQty: HandleChangeItemQty = (
     if (!draft.items) return;
     if (draft.items[index].id !== id) return;
     draft.items[index].qty += amount;
+    const items: Gtag.Item[] = [
+      {
+        id: `${draft.postId}-${id}`,
+        name: draft.items[index].item,
+        quantity: 1,
+        price: draft.items[index].price,
+      },
+    ];
+    if (amount === 1) gtag.event("add_to_cart", { items });
+    else if (amount === -1) gtag.event("remove_from_cart", { items });
   });
 };
 

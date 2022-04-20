@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 
 import AnimatedSpinner from "components/svg/AnimatedSpinner";
+import * as gtag from "domain/GoogleAnalytics/gtag";
 import { useMutateLogin, useUser } from "domain/User/hooks";
 import { getCode, getRedirectUrl } from "domain/User/services";
 import { LINE_REDIRECT_URL } from "domain/User/services";
@@ -27,6 +28,7 @@ const Redirect: NextPage = () => {
             const previousUrl = getRedirectUrl();
             if (previousUrl) router.push(previousUrl);
             else router.push("/posts");
+            gtag.event("login", { method: "line" });
           },
           onError: () => {
             toast.error("登入失敗！請再試一次", { id: "login" });

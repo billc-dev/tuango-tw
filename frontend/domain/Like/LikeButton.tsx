@@ -4,6 +4,7 @@ import { HeartIcon } from "@heroicons/react/outline";
 
 import TabButton from "components/Tab/TabButton";
 import AnimatedSpinner from "components/svg/AnimatedSpinner";
+import * as gtag from "domain/GoogleAnalytics/gtag";
 import { useUser } from "domain/User/hooks";
 import { LINE_LOGIN_URL_WITH_PARAMS } from "domain/User/services";
 
@@ -30,7 +31,10 @@ const LikeButton: FC<Props> = ({ postId, tabButton, likeCount }) => {
         "_self"
       );
     }
-    if (!liked) return likePost.mutate(postId);
+    if (!liked) {
+      gtag.event("add_to_wishlist", { event_label: postId });
+      return likePost.mutate(postId);
+    }
     return unlikePost.mutate(postId);
   }
   return tabButton ? (

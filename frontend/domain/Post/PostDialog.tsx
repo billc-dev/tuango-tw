@@ -4,7 +4,6 @@ import React, { FC, useEffect, useState } from "react";
 
 import Dialog from "components/Dialog";
 import LoadingIndicator from "components/Indicator/LoadingIndicator";
-import * as gtag from "domain/GoogleAnalytics/gtag";
 import { shallowPush } from "utils/routing";
 
 import PostHead from "./PostHead";
@@ -41,16 +40,6 @@ const PostDialog: FC<Props> = ({ postId, chat }) => {
     if (postId) setOpen(true);
     else setOpen(false);
   }, [postId]);
-
-  useEffect(() => {
-    if (!open) return;
-    if (!data) return;
-    gtag.event("view_item", {
-      event_category: "view_post",
-      event_label: data.post.postNum + data.post.title,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, data?.post]);
 
   return (
     <>

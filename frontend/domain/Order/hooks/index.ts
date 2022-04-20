@@ -7,6 +7,7 @@ import {
 } from "react-query";
 import { Updater } from "use-immer";
 
+import * as gtag from "domain/GoogleAnalytics/gtag";
 import { updateInfinitePostsQueryData } from "domain/Post/services";
 import { useIsAuthenticated } from "domain/User/hooks";
 
@@ -58,6 +59,9 @@ export const useCreateOrder = (setOrderForm: Updater<IOrderForm>) => {
         draft.items = items;
         draft.comment = comment;
       });
+
+      if (!order) return;
+      gtag.purchaseEvent(order);
     },
     onError: () => {
       toast.error("訂單製作失敗！", { id: "orderToast" });
@@ -75,14 +79,19 @@ export const useDeleteOrder = () => {
         "order",
         postId,
       ]);
-      const filteredOrders = data?.orders.filter(
-        (order) => order._id !== orderId
-      );
+      let deletedOrder: IOrder | undefined = undefined;
+      const filteredOrders = data?.orders.filter((order) => {
+        if (order._id === orderId) deletedOrder = order;
+        return order._id !== orderId;
+      });
       queryClient.setQueryData(["order", postId], { orders: filteredOrders });
 
       if (!post) return;
       queryClient.setQueryData(["post", postId], { post });
       updateInfinitePostsQueryData(queryClient, post);
+
+      if (!deletedOrder) return;
+      gtag.refundEvent(deletedOrder);
     },
   });
 };

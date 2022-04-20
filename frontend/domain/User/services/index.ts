@@ -38,7 +38,7 @@ export const getLocalStorageUser = () => {
   const user = localStorage.getItem("user");
   if (!user) return false;
 
-  const parsedUser: AxiosResponse<IUser> = JSON.parse(user);
+  const parsedUser: AxiosResponse<{ user: IUser }> = JSON.parse(user);
   if (!parsedUser.data) return false;
 
   return parsedUser;
