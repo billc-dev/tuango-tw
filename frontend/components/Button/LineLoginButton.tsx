@@ -8,9 +8,10 @@ import Button from ".";
 interface Props {
   text?: string;
   size?: "sm" | "lg";
+  className?: string;
 }
 
-const LineLoginButton: FC<Props> = ({ text, size }) => {
+const LineLoginButton: FC<Props> = ({ text, size, className }) => {
   return (
     <Button
       variant="primary"
@@ -23,6 +24,7 @@ const LineLoginButton: FC<Props> = ({ text, size }) => {
           "_self"
         )
       }
+      className={className}
     >
       {text ? text : "登入"}
     </Button>
