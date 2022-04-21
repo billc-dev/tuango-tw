@@ -4,6 +4,7 @@ import React, { FC, useEffect, useState } from "react";
 
 import Dialog from "components/Dialog";
 import LoadingIndicator from "components/Indicator/LoadingIndicator";
+import LoginDialog from "domain/User/LoginDialog";
 import { shallowPush } from "utils/routing";
 
 import PostHead from "./PostHead";
@@ -44,6 +45,7 @@ const PostDialog: FC<Props> = ({ postId, chat }) => {
   return (
     <>
       <LoadingIndicator loading={isLoading} />
+      <LoginDialog />
       {data?.post && (
         <Dialog open={open} handleClose={handleClose} title={data.post.title}>
           <PostHead post={data.post} />
