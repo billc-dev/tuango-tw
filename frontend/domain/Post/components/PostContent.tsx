@@ -7,7 +7,7 @@ import { useUser } from "domain/User/hooks";
 import { date, getFullDateFromNow } from "services/date";
 import { shallowPush } from "utils/routing";
 
-import EditPostButton from "../EditPost.tsx/EditPostButton";
+import EditPostButton from "../EditPost/EditPostButton";
 import DeletePostButton from "../PostSellerActions/DeletePostButton";
 import { getStorageTypeLabel } from "../services";
 import { IPost } from "../types";
