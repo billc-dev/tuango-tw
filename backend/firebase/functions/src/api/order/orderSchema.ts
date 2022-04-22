@@ -1,7 +1,6 @@
 import * as yup from "yup";
 
 export const orderItemSchema = yup.object({
-  _id: yup.string(),
   id: yup.string().required(),
   item: yup.string().required(),
   price: yup.number().required().positive().integer(),
