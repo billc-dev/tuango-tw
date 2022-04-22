@@ -75,7 +75,7 @@ const OrderDialog: FC<Props> = ({ postId }) => {
                   {data?.orders.map((order) => {
                     const { orderNum, displayName, comment } = order;
                     return (
-                      <tr className="border-b">
+                      <tr key={order._id} className="border-b">
                         <td className="py-2">{orderNum}</td>
                         <td className="py-2">{displayName}</td>
                         <td className="py-2">
@@ -111,7 +111,7 @@ const OrderDialog: FC<Props> = ({ postId }) => {
                   {sumOrders.map((item) => {
                     const { id, qty, amount } = item;
                     return (
-                      <tr className="border-b">
+                      <tr key={item.id} className="border-b">
                         <td className="py-2">{id}</td>
                         <td className="py-2">{item.item}</td>
                         <td className="py-2">{qty}</td>
