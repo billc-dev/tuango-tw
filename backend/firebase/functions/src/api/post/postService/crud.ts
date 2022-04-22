@@ -46,7 +46,15 @@ export const updatePost = (
   userId: string,
   post: ValidatedPost
 ) => {
-  return Post.findOneAndUpdate({ _id: postId, userId }, post, { new: true });
+  const items = post.items.map((item, index) => ({
+    ...item,
+    id: item.id ? item.id : indexAlphabet[index],
+  }));
+  return Post.findOneAndUpdate(
+    { _id: postId, userId },
+    { ...post, items },
+    { new: true }
+  );
 };
 
 export const closePost = (postId: string, userId: string) => {
