@@ -59,7 +59,6 @@ export const getInitialOrderForm = (post: IPost) => {
   return {
     postId: post._id,
     items: post.items.map((item) => ({
-      _id: item._id,
       id: item.id,
       item: item.item,
       price: item.price,
