@@ -114,8 +114,8 @@ router.get(
       );
       return res.status(200).json({
         posts: filteredPosts,
-        hasMore: filteredPosts.length > 0,
-        nextId: postService.getPostsNextId(filteredPosts),
+        hasMore: posts.length > 0,
+        nextId: postService.getPostsNextId(posts),
       });
     }
 
