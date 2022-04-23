@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 
 import { XIcon } from "@heroicons/react/outline";
 
@@ -15,15 +15,18 @@ interface DialogProps {
 const Dialog: FC<DialogProps> = (props) => {
   const { children, open, handleClose, title, id, className } = props;
   const [animate, setAnimate] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
       setAnimate(true);
+      ref.current?.focus();
     }
     return () => {
-      document.body.style.overflow = "initial";
+      document.body.style.removeProperty("overflow");
     };
   }, [open]);
+
   return (
     <dialog
       id={id}
@@ -38,7 +41,7 @@ const Dialog: FC<DialogProps> = (props) => {
         </IconButton>
         <h1 className="truncate text-xl dark:text-white">{title}</h1>
       </div>
-      <div className="mx-auto max-w-lg px-4 pb-4 dark:text-white">
+      <div ref={ref} className="mx-auto max-w-lg px-4 pb-4 dark:text-white">
         {children}
       </div>
     </dialog>
