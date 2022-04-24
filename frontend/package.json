@@ -7,7 +7,8 @@
     "start": "next start",
     "watch": "tsc --watch",
     "lint": "next lint",
-    "test": "jest --watchAll --verbose",
+    "test": "jest",
+    "testing": "jest --watchAll --verbose",
     "analyze": "ANALYZE=true yarn build"
   },
   "dependencies": {
