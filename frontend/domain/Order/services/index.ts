@@ -90,3 +90,9 @@ export const calcSumOrders = (post: IPost, orders: IOrder[]) => {
   });
   return orderArray.filter((item) => item.qty !== 0);
 };
+
+export const getUserOrderedOrdersCount = (orders: IOrder[], userId: string) => {
+  return orders.filter(
+    (order) => order.userId === userId && order.status === "ordered"
+  ).length;
+};

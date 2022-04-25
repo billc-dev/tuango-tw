@@ -7,6 +7,7 @@ import { usePost } from "domain/Post/hooks";
 import { useUser } from "domain/User/hooks";
 
 import { useOrders } from "../hooks";
+import { getUserOrderedOrdersCount } from "../services";
 import OrderListItem from "./OrderListItem";
 
 interface Props {
@@ -18,6 +19,10 @@ const Order: FC<Props> = ({ postId }) => {
   const postQuery = usePost(postId);
   const { data } = useOrders(postId);
   const [open, setOpen] = useState(false);
+  const userOrderedOrdersCount = getUserOrderedOrdersCount(
+    data?.orders ?? [],
+    userQuery.data?.data.user.username ?? ""
+  );
 
   return data && data?.orders.length > 0 ? (
     <Card>
@@ -41,6 +46,13 @@ const Order: FC<Props> = ({ postId }) => {
               />
             </Fragment>
           ))}
+        {userOrderedOrdersCount >= 2 && (
+          <div className="-mx-3 -mb-3 mt-3 py-2 text-center text-lg text-white bg-orange-600">
+            提醒：您目前總共下單
+            {userOrderedOrdersCount}
+            次了！
+          </div>
+        )}
       </div>
     </Card>
   ) : null;
