@@ -32,8 +32,12 @@ const PostActions: FC<Props> = ({ post }) => {
   const isOpen = post.status === "open";
   return data?.data.user ? (
     <>
-      {isSeller && <CopyPostLinkButton {...{ post }} />}
-      {isPostCreator && <PostShareButton post={post} />}
+      {isSeller && (
+        <>
+          <CopyPostLinkButton {...{ post }} />
+          <PostShareButton post={post} />
+        </>
+      )}
       {!isOpen && (
         <Button fullWidth variant="info" className="mb-2">
           貼文狀態：已結單

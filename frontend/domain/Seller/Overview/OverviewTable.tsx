@@ -13,9 +13,9 @@ interface Props {
   query: SellerQuery;
 }
 
-const limit = 16;
-
 const OverviewTable: FC<Props> = ({ query }) => {
+  const limit = query.status === "closed" ? 200 : 20;
+
   const { data, fetchNextPage, isFetching, isLoading, hasNextPage } =
     useInfiniteSellerPosts(limit, { query });
   return (

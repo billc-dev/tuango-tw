@@ -35,12 +35,12 @@ export interface IOrder {
   imageUrl: string;
   order: SingleOrder[];
   comment: string;
-  sellerComment: string;
+  sellerComment?: string;
   hasName: boolean;
   isExtra: boolean;
   createdAt: string;
-  deliveredAt: string;
-  canceledAt: string;
+  deliveredAt?: string;
+  canceledAt?: string;
   orderHistory: OrderHistory[];
   status: OrderStatus;
 }

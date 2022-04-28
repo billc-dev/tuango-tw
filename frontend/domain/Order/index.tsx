@@ -21,20 +21,24 @@ const Order: FC<Props> = ({ post, action }) => {
   useEffect(() => {
     setOrderForm((draft) => {
       draft.items?.forEach((item) => {
-        const index = post.items.findIndex((i) => i._id === item._id);
+        const index = post.items.findIndex((i) => i.id === item.id);
         if (index < 0) return;
         item.itemQty = post.items[index].itemQty;
         item.qty = Math.min(post.items[index].itemQty, item.qty);
       });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [post]);
+  }, [post.items]);
 
   return action === "order" || !action ? (
     <>
       {post.status !== "completed" && <OrderList postId={post._id} />}
       {post.status === "open" && (
-        <OrderForm orderForm={orderForm} setOrderForm={setOrderForm} />
+        <OrderForm
+          post={post}
+          orderForm={orderForm}
+          setOrderForm={setOrderForm}
+        />
       )}
     </>
   ) : null;

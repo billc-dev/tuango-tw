@@ -2,6 +2,7 @@ import produce from "immer";
 import { Updater } from "use-immer";
 import { ValidationError } from "yup";
 
+import * as gtag from "domain/GoogleAnalytics/gtag";
 import { IPost } from "domain/Post/types";
 
 import { orderFormSchema } from "../schema";
@@ -24,6 +25,16 @@ export const handleChangeItemQty: HandleChangeItemQty = (
     if (!draft.items) return;
     if (draft.items[index].id !== id) return;
     draft.items[index].qty += amount;
+    const items: Gtag.Item[] = [
+      {
+        id: `${draft.postId}-${id}`,
+        name: draft.items[index].item,
+        quantity: 1,
+        price: draft.items[index].price,
+      },
+    ];
+    if (amount === 1) gtag.event("add_to_cart", { items });
+    else if (amount === -1) gtag.event("remove_from_cart", { items });
   });
 };
 
@@ -48,7 +59,6 @@ export const getInitialOrderForm = (post: IPost) => {
   return {
     postId: post._id,
     items: post.items.map((item) => ({
-      _id: item._id,
       id: item.id,
       item: item.item,
       price: item.price,
@@ -79,4 +89,10 @@ export const calcSumOrders = (post: IPost, orders: IOrder[]) => {
     });
   });
   return orderArray.filter((item) => item.qty !== 0);
+};
+
+export const getUserOrderedOrdersCount = (orders: IOrder[], userId: string) => {
+  return orders.filter(
+    (order) => order.userId === userId && order.status === "ordered"
+  ).length;
 };

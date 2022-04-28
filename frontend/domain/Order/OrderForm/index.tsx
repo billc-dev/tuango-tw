@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 
 import toast from "react-hot-toast";
 import { Updater } from "use-immer";
@@ -6,22 +6,25 @@ import { Updater } from "use-immer";
 import Card from "components/Card";
 import CardSubmitButton from "components/Card/CardSubmitButton";
 import TextArea from "components/TextField/TextArea";
+import { IPost } from "domain/Post/types";
 import { useScrollIntoView } from "hooks/useScrollIntoView";
 
 import { useCreateOrder, useOrders } from "../hooks";
-import { getOrderSum, validateOrder } from "../services";
-import { IOrderForm } from "../types";
+import { calcSumOrders, getOrderSum, validateOrder } from "../services";
+import { IOrderForm, SumOrder } from "../types";
 import OrderItem from "./OrderItem";
 
 interface Props {
   orderForm: IOrderForm;
   setOrderForm: Updater<IOrderForm>;
+  post: IPost;
 }
 
-const OrderForm: FC<Props> = ({ orderForm, setOrderForm }) => {
-  const { isLoading } = useOrders(orderForm.postId);
+const OrderForm: FC<Props> = ({ orderForm, setOrderForm, post }) => {
+  const { isLoading, data } = useOrders(orderForm.postId);
   const { ref } = useScrollIntoView(isLoading, "order");
 
+  const [sumOrders, setSumOrders] = useState<SumOrder[]>();
   const sum = getOrderSum(orderForm.items);
   const createOrder = useCreateOrder(setOrderForm);
 
@@ -31,6 +34,13 @@ const OrderForm: FC<Props> = ({ orderForm, setOrderForm }) => {
     toast.loading("訂單製作中...", { id: "orderToast" });
     createOrder.mutate({ orderForm: validatedOrderForm });
   };
+
+  useEffect(() => {
+    if (!data) return;
+    setSumOrders(calcSumOrders(post, data.orders));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data?.orders]);
+
   return (
     <Card>
       <div className="relative">
@@ -40,9 +50,7 @@ const OrderForm: FC<Props> = ({ orderForm, setOrderForm }) => {
         {orderForm?.items?.map((item, index) => (
           <OrderItem
             key={index}
-            index={index}
-            item={item}
-            setOrderForm={setOrderForm}
+            {...{ index, item, setOrderForm, sumOrders }}
           />
         ))}
       </div>

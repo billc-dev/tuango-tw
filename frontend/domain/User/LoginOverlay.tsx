@@ -18,7 +18,7 @@ const LoginOverlay = () => {
   };
   return !userQuery.data?.data.user ? (
     <div
-      className="fixed top-0 left-0 w-screen h-screen"
+      className="fixed z-[5] top-0 left-0 w-screen h-screen"
       onClick={handleClick}
     />
   ) : null;
