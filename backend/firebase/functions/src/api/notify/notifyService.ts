@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as FormData from "form-data";
 
+import { Post } from "api/post/postDB";
 import { IS_DEV } from "utils/constant";
 
 import Notify from "./notifyDB";
@@ -40,4 +41,13 @@ export const notifyGroups = async (message: string, imageUrl?: string) => {
     return;
   }
   await notifyUser("test", message, imageUrl);
+};
+
+export const notifyDeliveredPostCount = async (deliveryDate: string) => {
+  const postCount = await Post.countDocuments({
+    deliveryDate: deliveryDate,
+    status: { $ne: "canceled" },
+  });
+  if (postCount >= 20 && postCount % 5 === 0)
+    notifyUser("MBA_TUANGO", `${deliveryDate}目前有${postCount}張單`);
 };

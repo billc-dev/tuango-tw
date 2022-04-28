@@ -1,6 +1,7 @@
 import * as express from "express";
 
 import { Like } from "api/like/likeDB";
+import { notifyDeliveredPostCount } from "api/notify/notifyService";
 import Order from "api/order/orderDB";
 import asyncWrapper from "middleware/asyncWrapper";
 import { isAuthorized } from "middleware/auth";
@@ -198,6 +199,9 @@ router.patch(
       res.locals.user.username,
       postForm
     );
+    if (post) {
+      await notifyDeliveredPostCount(post.deliveryDate);
+    }
 
     if (!post) throw "post not found";
 
