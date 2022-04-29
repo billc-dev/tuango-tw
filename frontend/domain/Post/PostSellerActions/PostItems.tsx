@@ -35,7 +35,6 @@ const PostItems: FC<Props> = (props) => {
             placeholder="商品名稱"
             error={errors.items?.[index]?.item?.message}
             key={`items.${index}.item`}
-            disabled={!!item._id}
             {...register(`items.${index}.item`)}
           />
           <TextField
@@ -44,7 +43,6 @@ const PostItems: FC<Props> = (props) => {
             placeholder="價格"
             key={`items.${index}.price`}
             error={errors.items?.[index]?.price?.message}
-            disabled={!!item._id}
             {...register(`items.${index}.price`)}
           />
           <TextField
