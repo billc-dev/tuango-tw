@@ -5,6 +5,7 @@ import Dialog from "components/Dialog";
 import AnimatedSpinner from "components/svg/AnimatedSpinner";
 import ClosePostButton from "domain/Post/PostSellerActions/ClosePostButton";
 import { usePost } from "domain/Post/hooks";
+import { getFullTitle } from "domain/Post/services";
 import { shallowPush } from "utils/routing";
 
 import { useOrders } from "../hooks";
@@ -52,7 +53,7 @@ const OrderDialog: FC<Props> = ({ postId }) => {
         <Dialog
           open={open}
           handleClose={handleClose}
-          title={postQuery.data?.post.title || ""}
+          title={getFullTitle(postQuery.data?.post)}
         >
           {postQuery.data ? (
             <ClosePostButton
