@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 
-import { XIcon } from "@heroicons/react/outline";
+import { ArrowLeftIcon } from "@heroicons/react/outline";
 
 import IconButton from "../Button/IconButton";
 
@@ -37,9 +37,9 @@ const Dialog: FC<DialogProps> = (props) => {
     >
       <div className="sticky top-0 z-10 flex w-full items-center bg-white p-1 shadow dark:bg-zinc-800">
         <IconButton onClick={() => handleClose()}>
-          <XIcon />
+          <ArrowLeftIcon />
         </IconButton>
-        <h1 className="truncate text-xl dark:text-white">{title}</h1>
+        <h1 className="line-clamp-1 text-xl dark:text-white pr-2">{title}</h1>
       </div>
       <div ref={ref} className="mx-auto max-w-lg px-4 pb-4 dark:text-white">
         {children}
