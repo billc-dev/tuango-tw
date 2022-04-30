@@ -11,6 +11,7 @@ import PostHead from "./PostHead";
 import PostActions from "./components/PostActions";
 import PostContent from "./components/PostContent";
 import { usePost } from "./hooks";
+import { getFullTitle } from "./services";
 
 const ChatDialog = dynamic(() => import("domain/Chat/ChatDialog")) as ({
   chatId,
@@ -47,7 +48,11 @@ const PostDialog: FC<Props> = ({ postId, chat }) => {
       <LoadingIndicator loading={isLoading} />
       <LoginDialog />
       {data?.post && (
-        <Dialog open={open} handleClose={handleClose} title={data.post.title}>
+        <Dialog
+          open={open}
+          handleClose={handleClose}
+          title={getFullTitle(data.post)}
+        >
           <PostHead post={data.post} />
           <PostContent post={data.post} />
           <PostActions post={data.post} />
