@@ -1,2 +1,3 @@
 frontend/.env.development
 frontend/.env
+frontend_admin/.env
