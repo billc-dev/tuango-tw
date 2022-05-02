@@ -37,7 +37,7 @@ const Dialog: FC<DialogProps> = (props) => {
       <dialog
         id={id}
         open={open}
-        className={`fixed z-20 overflow-x-hidden overscroll-y-autobg-white p-0 transition-opacity duration-300 dark:bg-zinc-900 top-0 left-0 inset-0 w-full h-full md:max-w-md md:w-fit md:min-w-[512px] md:max-h-[95%] md:bottom-0 md:rounded md:shadow-lg md:outline md:outline-1 md:outline-zinc-700 ${
+        className={`fixed z-20 overflow-x-hidden overscroll-y-autobg-white p-0 transition-opacity duration-300 dark:bg-zinc-900 top-0 left-0 inset-0 w-full h-full md:max-w-md md:w-fit md:min-w-[512px] md:max-h-[95%] md:bottom-0 md:rounded md:shadow-lg md:ring md:ring-1 md:ring-zinc-700 ${
           animate ? "opacity-100" : "opacity-0"
         } ${className}`}
       >
@@ -61,7 +61,7 @@ const Dialog: FC<DialogProps> = (props) => {
         </div>
       </dialog>
       <div
-        className={`hidden md:block z-10 fixed top-0 left-0 h-screen w-screen transition-opacity duration-300  bg-zinc-900/50 dark:bg-zinc-900/60 ${
+        className={`hidden md:block z-10 fixed top-0 left-0 h-screen w-screen transition-opacity duration-300 bg-zinc-900/50 dark:bg-zinc-900/60 ${
           animate ? "opacity-100" : "opacity-0"
         }`}
         onClick={() => handleClose()}
