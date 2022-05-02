@@ -19,7 +19,7 @@ const User: NextPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data?.data.user, isLoading]);
   return (
-    <div className="px-2">
+    <div className="px-2 max-w-xs mx-auto">
       <div className="pt-4">
         <Button
           fullWidth
