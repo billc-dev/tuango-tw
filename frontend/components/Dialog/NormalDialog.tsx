@@ -17,7 +17,7 @@ const NormalDialog: FC<Props> = ({ open, setOpen, title, children }) => {
     <Transition appear show={open} as={Fragment}>
       <Dialog
         as="div"
-        className="fixed inset-0 z-10 overflow-y-auto"
+        className="fixed inset-0 z-20 overflow-y-auto"
         onClose={handleClose}
       >
         {/* <div className="fixed h-screen w-screen bg-zinc-800 opacity-25" /> */}
