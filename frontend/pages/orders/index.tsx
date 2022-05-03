@@ -52,7 +52,7 @@ const Orders: NextPage = () => {
           </button>
         </div>
       )}
-      <div className="grid grid-cols-2 px-4 max-w-xs md:max-w-md mx-auto select-none">
+      <div className="grid grid-cols-2 px-4 max-w-xs mx-auto select-none">
         {list.map((item, index) => (
           <SquareButton
             key={index}

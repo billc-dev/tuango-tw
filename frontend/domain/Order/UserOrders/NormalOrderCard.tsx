@@ -55,7 +55,9 @@ const NormalOrderCard: FC<Props> = ({ order, type, chat }) => {
             #{order.postNum} {order.title} #{order.sellerDisplayName}
           </p>
           <p className="text-sm text-zinc-600 dark:text-zinc-400">
-            {getFullDateFromNow(order.createdAt)}
+            {getFullDateFromNow(
+              order.deliveredAt ? order.deliveredAt : order.createdAt
+            )}
           </p>
           <div className="text-sm border-zinc-400 border-b-[1px] pb-1">
             {order.order.map((order, index) => (
