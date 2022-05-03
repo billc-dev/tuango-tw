@@ -6,14 +6,18 @@ export interface MenuItem {
   onClick?: () => void;
 }
 
-interface Props {
+interface Props
+  extends React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+  > {
   open: boolean;
   handleClose: () => void;
   className?: string;
   items: MenuItem[];
 }
 
-const Menu: FC<Props> = ({ className, open, handleClose, items }) => {
+const Menu: FC<Props> = ({ className, open, handleClose, items, children }) => {
   return open ? (
     <>
       <div
@@ -29,6 +33,7 @@ const Menu: FC<Props> = ({ className, open, handleClose, items }) => {
             <span>{item.text}</span>
           </button>
         ))}
+        {children}
       </div>
       <div
         onClick={() => handleClose()}

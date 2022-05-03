@@ -40,7 +40,7 @@ const TextField: FC<Props> = React.forwardRef((props, ref) => {
         ${
           !variant
             ? "rounded-lg border px-3 w-full mb-2 border-zinc-200 dark:border-zinc-600 dark:bg-zinc-800"
-            : "border-b border-zinc-400"
+            : "border-0 border-b border-zinc-400 pl-0"
         }
         ${!variant ? (height === "tall" ? "h-16" : "h-14") : "h-8"} ${
           !error

@@ -1,13 +1,13 @@
 import toast from "react-hot-toast";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
-import { editPost, fetchPost, fetchPosts } from "../api";
-import { IPost, PostQuery } from "../types";
+import { editPost, editPostStatus, fetchPost, fetchPosts } from "../api";
+import { PostQuery } from "../types";
 
 export const usePost = (postId: string) => {
   return useQuery(["post", postId], () => fetchPost(postId), {
     enabled: !!postId,
-    refetchOnMount: true,
+    refetchOnMount: "always",
   });
 };
 
@@ -20,15 +20,27 @@ export const usePosts = (limit: number, query: PostQuery) => {
 export const useEditPost = () => {
   const queryClient = useQueryClient();
   return useMutation(editPost, {
-    onSuccess: (data) => {
+    onMutate() {
+      toast.loading("貼文編輯中...", { id: "editPost" });
+    },
+    onSuccess() {
       queryClient.invalidateQueries("posts");
-      queryClient.invalidateQueries("postCards");
-      const { post } = data.data;
-      queryClient.setQueryData<{ post: IPost }>(["post", post._id], { post });
       toast.success("已成功編輯貼文!", { id: "editPost" });
     },
-    onError: () => {
+    onError() {
       toast.error("編輯貼文失敗!", { id: "editPost" });
+    },
+  });
+};
+
+export const useEditPostStatus = () => {
+  const queryClient = useQueryClient();
+  return useMutation(editPostStatus, {
+    onSuccess() {
+      queryClient.invalidateQueries("posts");
+    },
+    onError() {
+      toast.error("編輯貼文狀態失敗!", { id: "editPost" });
     },
   });
 };

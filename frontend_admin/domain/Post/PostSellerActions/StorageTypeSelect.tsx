@@ -20,7 +20,12 @@ const StorageTypeSelect: FC<Props> = ({ register }) => {
   return (
     <>
       <p className="pb-2">儲存方式</p>
-      <Select {...{ options }} {...register("storageType")} />
+      <Select
+        height="tall"
+        variant="contained"
+        {...{ options }}
+        {...register("storageType")}
+      />
     </>
   );
 };

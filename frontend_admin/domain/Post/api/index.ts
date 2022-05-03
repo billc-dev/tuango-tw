@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { PostFormSchema } from "../schema";
-import { IPost, PostQuery } from "../types";
+import { IPost, PostQuery, PostStatus } from "../types";
 
 export const fetchPost = async (postId: string) => {
   const res = await axios.get<{ post: IPost }>(`/posts/${postId}`);
@@ -31,5 +31,14 @@ interface EditPostParams {
 }
 
 export const editPost = ({ postId, postForm }: EditPostParams) => {
-  return axios.patch<{ post: IPost }>(`/posts/post/${postId}`, { postForm });
+  return axios.patch(`/posts/${postId}`, { postForm });
+};
+
+interface EditPostStatusParams {
+  postId: string;
+  status: PostStatus;
+}
+
+export const editPostStatus = ({ postId, status }: EditPostStatusParams) => {
+  return axios.patch(`/posts/${postId}/status`, { status });
 };

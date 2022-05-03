@@ -53,16 +53,20 @@ const PostTable: FC<Props> = ({ data, query, setQuery, limit, loading }) => {
           <ChevronRightIcon />
         </IconButton>
       </div>
-      <Table>
-        <TableHead>
-          <PostHead />
-          <PostQueryRow {...{ setQuery }} />
-        </TableHead>
-        <TableBody>
-          {data?.posts &&
-            data?.posts.map((post) => <PostRow key={post._id} {...{ post }} />)}
-        </TableBody>
-      </Table>
+      <div className="overflow-y-auto">
+        <Table>
+          <TableHead>
+            <PostHead />
+            <PostQueryRow {...{ setQuery }} />
+          </TableHead>
+          <TableBody>
+            {data?.posts &&
+              data?.posts.map((post) => (
+                <PostRow key={post._id} {...{ post }} />
+              ))}
+          </TableBody>
+        </Table>
+      </div>
     </>
   );
 };

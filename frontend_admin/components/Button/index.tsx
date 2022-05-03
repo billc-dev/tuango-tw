@@ -3,12 +3,11 @@ import React, { ButtonHTMLAttributes, FC } from "react";
 import AnimatedSpinner from "components/svg/AnimatedSpinner";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  size?: "sm" | "lg";
+  size?: "lg" | "xl" | "square";
   variant?: "primary" | "secondary" | "danger" | "inherit" | "orange" | "info";
   fullWidth?: boolean;
   icon?: JSX.Element;
   loading?: boolean;
-  pill?: boolean;
 }
 
 const Button: FC<Props> = (props) => {
@@ -20,7 +19,6 @@ const Button: FC<Props> = (props) => {
     className,
     icon,
     loading,
-    pill,
     disabled,
     ...rest
   } = props;
@@ -32,9 +30,7 @@ const Button: FC<Props> = (props) => {
           <div className="ml-1">{children}</div>
         </div>
       ) : (
-        <div className="py-0.5">
-          <AnimatedSpinner />
-        </div>
+        <AnimatedSpinner />
       );
     }
     return (
@@ -63,15 +59,26 @@ const Button: FC<Props> = (props) => {
       return "bg-sky-500 text-white";
     }
   };
+  const getSize = () => {
+    switch (size) {
+      case "lg":
+        return "px-2 py-1 text-lg";
+      case "xl":
+        return "px-12 py-8 text-4xl";
+      case "square":
+        return "px-1 py-1";
+      default:
+        return "py-1 px-3";
+    }
+  };
+
   return (
     <button
       type="button"
       disabled={disabled || loading}
-      className={`flex w- items-center justify-center select-none py-1 px-3 shadow transition disabled:bg-zinc-300 disabled:text-zinc-400 ${
+      className={`flex items-center rounded-md justify-center select-none shadow transition disabled:bg-zinc-300 disabled:text-zinc-400 ${
         fullWidth ? "w-full" : ""
-      } ${variantStyles()} ${size === "lg" ? "px-4 text-lg" : ""} ${
-        pill ? "rounded-full" : "rounded-md"
-      } ${className}`}
+      } ${variantStyles()} ${getSize()} ${className}`}
       {...rest}
     >
       {renderedChildren()}

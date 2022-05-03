@@ -10,12 +10,19 @@ interface Props
   noPadding?: boolean;
 }
 
-const TableCell: FC<Props> = ({ children, className, noPadding, center }) => {
+const TableCell: FC<Props> = ({
+  children,
+  className,
+  noPadding,
+  center,
+  ...props
+}) => {
   return (
     <td
       className={`${!noPadding && "py-1 lg:py-2 pr-1 lg:pr-2"} ${
         center && "text-center"
       } ${className}`}
+      {...props}
     >
       {children}
     </td>

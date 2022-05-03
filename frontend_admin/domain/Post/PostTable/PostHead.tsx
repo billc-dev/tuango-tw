@@ -11,10 +11,10 @@ const PostHead = () => {
       <TableCell>團購主題</TableCell>
       <TableCell>開單者</TableCell>
       <TableCell>已到貨</TableCell>
-      <TableCell>儲存方式</TableCell>
+      <TableCell className="min-w-[96px]">儲存方式</TableCell>
       <TableCell>結單日</TableCell>
       <TableCell>到貨日</TableCell>
-      <TableCell className="min-w-[60px]">狀態</TableCell>
+      <TableCell className="min-w-[96px]">狀態</TableCell>
       <TableCell>金額</TableCell>
       <TableCell>服務費</TableCell>
       <TableCell className="min-w-[48px] xl:w-[74px] whitespace-pre-wrap">

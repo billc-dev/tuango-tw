@@ -83,6 +83,9 @@ const PostQueryRow: FC<Props> = ({ setQuery }) => {
       <TableCell></TableCell>
       <TableCell>
         <Select
+          className="mb-0"
+          variant="contained"
+          height="normal"
           name="storageType"
           onChange={handleChange}
           options={[
@@ -113,6 +116,9 @@ const PostQueryRow: FC<Props> = ({ setQuery }) => {
       </TableCell>
       <TableCell>
         <Select
+          className="mb-0"
+          variant="contained"
+          height="normal"
           name="status"
           onChange={handleChange}
           options={[
