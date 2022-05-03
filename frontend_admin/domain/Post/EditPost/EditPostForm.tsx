@@ -23,8 +23,7 @@ const EditPostForm: FC<Props> = ({ post }) => {
     editPost.mutate(
       { postId: post._id, postForm: data },
       {
-        onSuccess: (data) => {
-          // postForm.reset({ ...data.data.post });
+        onSuccess: () => {
           const { edit_post_id, ...query } = router.query;
           shallowPush(router, query);
         },
@@ -43,6 +42,7 @@ const EditPostForm: FC<Props> = ({ post }) => {
     },
     resolver: yupResolver(postSchema),
   });
+
   return (
     <PostForm
       action="edit"
