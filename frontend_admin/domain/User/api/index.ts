@@ -54,3 +54,11 @@ export const login = async ({ code, url }: LoginProps) => {
 export const logout = () => {
   return axios.post(`${WINDOW_URL}/api/auth/logout`);
 };
+
+export const fetchUsers = async (name: string, isSeller?: boolean) => {
+  const res = await axios.post<{ users: User[] }>("/users", {
+    name,
+    isSeller,
+  });
+  return res.data.users;
+};

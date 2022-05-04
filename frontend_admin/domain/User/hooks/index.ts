@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
-import { login } from "domain/User/api";
+import { fetchUsers, login } from "domain/User/api";
 import { setAccessToken } from "domain/User/services/accessToken";
 
 import { fetchUser, fetchVerifyStatus, logout } from "../api";
@@ -63,4 +63,10 @@ export const useIsAuthenticated = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [axios.defaults.headers.common.Authorization, userQuery.isFetching]);
   return typeof axios.defaults.headers.common.Authorization === "string";
+};
+
+export const useUsers = (name: string, isSeller?: boolean) => {
+  return useQuery([name, isSeller], () => fetchUsers(name, isSeller), {
+    enabled: !!name,
+  });
 };
