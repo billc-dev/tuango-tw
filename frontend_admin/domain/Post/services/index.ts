@@ -1,4 +1,4 @@
-import { PostStatus, PostStorageType } from "../types";
+import { IPost, PostStatus, PostStorageType } from "../types";
 
 export * from "./image";
 
@@ -28,4 +28,12 @@ export const getStatus = (status: PostStatus) => {
     default:
       return "";
   }
+};
+
+export const getPostTitle = (post?: IPost) => {
+  if (post) {
+    const { postNum, title, displayName } = post;
+    return `#${postNum} ${title} ~${displayName}`;
+  }
+  return "";
 };

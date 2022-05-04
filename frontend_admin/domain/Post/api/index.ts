@@ -42,3 +42,15 @@ interface EditPostStatusParams {
 export const editPostStatus = ({ postId, status }: EditPostStatusParams) => {
   return axios.patch(`/posts/${postId}/status`, { status });
 };
+
+interface SetPostDeliveredParams {
+  postId: string;
+  delivered: boolean;
+}
+
+export const setPostDelivered = ({
+  postId,
+  delivered,
+}: SetPostDeliveredParams) => {
+  return axios.patch(`/posts/${postId}/delivered`, { delivered });
+};
