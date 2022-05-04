@@ -58,6 +58,7 @@ const PostForm: FC<Props> = (props) => {
         重置結單日
       </Button>
       <TextField
+        placeholder="到貨日"
         color="grey"
         type="date"
         error={errors.deliveryDate?.message}
