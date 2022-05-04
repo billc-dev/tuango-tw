@@ -58,7 +58,7 @@ export type Action = undefined | "comment" | "order";
 export interface PostQuery {
   postNum?: number;
   title?: string;
-  displayName?: string;
+  userId?: string;
   storageType?: PostStorageType;
   deadline?: string;
   deliveryDate?: string;

@@ -1,9 +1,11 @@
 import React, { FC } from "react";
 
+import { IUser } from "api/auth/userDB";
 import Select from "components/Select";
 import TableCell from "components/Table/TableCell";
 import TableRow from "components/Table/TableRow";
 import TextField from "components/TextField";
+import UserQuery from "domain/User/UserQuery";
 
 import { PostQuery } from "../types";
 
@@ -43,11 +45,14 @@ const PostQueryRow: FC<Props> = ({ setQuery }) => {
       page: 0,
     }));
   };
+  const setUser = (user: IUser) => {
+    setQuery((query) => ({ ...query, userId: user.username }));
+  };
   return (
     <TableRow>
       <TableCell noPadding>
         <TextField
-          className="w-20 lg:w-32"
+          className="w-20 xl:w-32"
           type="number"
           name="postNum"
           placeholder="流水編號"
@@ -60,7 +65,7 @@ const PostQueryRow: FC<Props> = ({ setQuery }) => {
       <TableCell></TableCell>
       <TableCell>
         <TextField
-          className="w-28 lg:w-60"
+          className="w-32 xl:w-60"
           name="title"
           placeholder="團購主題"
           noLabel
@@ -70,15 +75,7 @@ const PostQueryRow: FC<Props> = ({ setQuery }) => {
         />
       </TableCell>
       <TableCell>
-        <TextField
-          className="w-20 lg:w-40"
-          name="displayName"
-          placeholder="開單者"
-          noLabel
-          variant="standard"
-          onChange={handleReset}
-          onKeyDown={handleSetQuery}
-        />
+        <UserQuery placeholder="開單者" isSeller setUser={setUser} />
       </TableCell>
       <TableCell></TableCell>
       <TableCell>
@@ -98,7 +95,7 @@ const PostQueryRow: FC<Props> = ({ setQuery }) => {
       </TableCell>
       <TableCell>
         <TextField
-          className="w-14 lg:w-[114px]"
+          className="w-14 xl:w-[114px]"
           name="deadline"
           type="date"
           variant="standard"
@@ -107,7 +104,7 @@ const PostQueryRow: FC<Props> = ({ setQuery }) => {
       </TableCell>
       <TableCell>
         <TextField
-          className="w-14 lg:w-[114px]"
+          className="w-14 xl:w-[114px]"
           name="deliveryDate"
           type="date"
           variant="standard"
