@@ -13,7 +13,8 @@ import { getMonthAndDate } from "services/date";
 import { useSetPostDelivered } from "../hooks";
 import { getStorageType } from "../services";
 import { IPost } from "../types";
-import PostStatus from "./PostStatus";
+import PostChangeTotalCell from "./PostChangeTotalCell";
+import PostStatus from "./PostStatusCell";
 
 interface Props {
   post: IPost;
@@ -61,7 +62,10 @@ const PostRow: FC<Props> = ({ post }) => {
       <TableCell>
         {normalFee + extraFee > 0 && "$" + (normalFee + extraFee)}
       </TableCell>
-      <TableCell>{orderCount}</TableCell>
+      <TableCell>
+        <PostChangeTotalCell post={post} />
+      </TableCell>
+      <TableCell center>{orderCount}</TableCell>
       <TableCell>
         <IconButton
           onClick={() =>

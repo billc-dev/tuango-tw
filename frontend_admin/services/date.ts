@@ -15,6 +15,10 @@ export const getFullDate = (date: string) => {
   return dayjs(date).format("LLL");
 };
 
+export const getFullLengthDate = (date: string) => {
+  return dayjs(date).format("LLLL");
+};
+
 export const getFullDateFromNow = (date: string) => {
   return `${dayjs(date).format("LLLL")} ${dayjs(date).fromNow()}`;
 };
