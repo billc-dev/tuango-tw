@@ -19,7 +19,7 @@ const TableCell: FC<Props> = ({
 }) => {
   return (
     <td
-      className={`${!noPadding && "py-1 lg:py-2 pr-1 lg:pr-2"} ${
+      className={`${!noPadding && "py-1 xl:py-2 pr-1 xl:pr-2"} ${
         center && "text-center"
       } ${className}`}
       {...props}
