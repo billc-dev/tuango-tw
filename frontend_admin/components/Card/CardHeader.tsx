@@ -2,7 +2,11 @@ import React, { FC } from "react";
 
 import CardAvatar from "./CardAvatar";
 
-interface Props {
+interface Props
+  extends React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+  > {
   img: string;
   title: string;
   subtitle?: string;
@@ -11,9 +15,12 @@ interface Props {
 }
 
 const CardHeader: FC<Props> = (props) => {
-  const { img, title, subtitle, action, notifications } = props;
+  const { img, title, subtitle, action, notifications, ...rest } = props;
   return (
-    <div className="flex items-center justify-between py-4 select-none">
+    <div
+      className="flex items-center justify-between py-4 select-none"
+      {...rest}
+    >
       <div className="flex">
         <CardAvatar img={img} alt={title} notifications={notifications} />
         <div className="ml-1 flex flex-col pl-2">
