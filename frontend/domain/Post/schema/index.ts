@@ -43,7 +43,14 @@ export const postSchema = yup.object({
     .required()
     .default("roomTemp"),
   deadline: yup.string().default(""),
-  deliveryDate: yup.string().default(""),
+  deliveryDate: yup
+    .string()
+    .default("")
+    .test(
+      "isThursday",
+      "⚠️ 禮拜四為腳踏車進貨日！請勿將進貨日設為禮拜四！",
+      (value) => new Date(value).getDay() !== 4
+    ),
   body: yup.string().required("請輸入團購內容!").default("").trim(),
   items: itemsSchema,
   imageUrls: imageUrlsSchema,

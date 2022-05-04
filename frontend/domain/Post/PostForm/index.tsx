@@ -34,7 +34,7 @@ const PostForm: FC<Props> = (props) => {
     formState: { errors },
   } = postForm;
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="mt-2">
+    <form id="post-form" onSubmit={handleSubmit(onSubmit)} className="mt-2">
       <TextField
         color="grey"
         placeholder="團購主題"
@@ -58,6 +58,7 @@ const PostForm: FC<Props> = (props) => {
         重置結單日
       </Button>
       <TextField
+        placeholder="到貨日"
         color="grey"
         type="date"
         error={errors.deliveryDate?.message}

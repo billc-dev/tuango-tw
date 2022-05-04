@@ -1,9 +1,11 @@
 import React, { Dispatch, FC, SetStateAction, useState } from "react";
 
+import { DocumentAddIcon } from "@heroicons/react/outline";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
+import Button from "components/Button";
 import Dialog from "components/Dialog";
 import { useOrders } from "domain/Order/hooks";
 
@@ -57,7 +59,24 @@ const EditPost: FC<Props> = ({ open, setOpen, post }) => {
   };
 
   return (
-    <Dialog {...{ open, handleClose, title: "編輯貼文" }}>
+    <Dialog
+      {...{
+        open,
+        handleClose,
+        title: "編輯貼文",
+        action: (
+          <Button
+            icon={<DocumentAddIcon />}
+            variant="primary"
+            form="post-form"
+            type="submit"
+            size="lg"
+          >
+            編輯貼文
+          </Button>
+        ),
+      }}
+    >
       <PostForm
         action="edit"
         {...{
