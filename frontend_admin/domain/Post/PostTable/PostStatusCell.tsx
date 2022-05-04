@@ -34,44 +34,54 @@ const PostStatus: FC<Props> = ({ post }) => {
       {editStatus ? (
         <>
           {isSmallScreen ? (
-            <PopupDialog
-              open
-              title={getPostTitle(post)}
-              handleClose={() => setEditStatus(false)}
-            >
-              <div className="mt-2">
-                <p className="mb-2">狀態</p>
-                <Select
-                  height="normal"
-                  variant="contained"
-                  name="status"
-                  value={status}
-                  onChange={handleChange}
-                  options={[
-                    { label: "未結單", value: "open" },
-                    { label: "已結單", value: "closed" },
-                    { label: "已完成", value: "completed" },
-                    { label: "已取消", value: "canceled" },
-                  ]}
-                />
-                <div className="flex justify-end">
-                  <Button
-                    className="mr-3"
-                    loading={editPostStatus.isLoading}
-                    variant="primary"
-                    onClick={() =>
-                      editPostStatus.mutate(
-                        { postId: post._id, status },
-                        { onSuccess: () => setEditStatus(false) }
-                      )
-                    }
-                  >
-                    更改
-                  </Button>
-                  <Button onClick={handleClose}>取消</Button>
+            <>
+              <Button
+                fullWidth
+                disabled={post.status === "canceled"}
+                className="cursor-pointer"
+                onClick={() => setEditStatus(true)}
+              >
+                {getStatus(post.status)}
+              </Button>
+              <PopupDialog
+                open
+                title={getPostTitle(post)}
+                handleClose={() => setEditStatus(false)}
+              >
+                <div className="mt-2">
+                  <p className="mb-2">狀態</p>
+                  <Select
+                    height="normal"
+                    variant="contained"
+                    name="status"
+                    value={status}
+                    onChange={handleChange}
+                    options={[
+                      { label: "未結單", value: "open" },
+                      { label: "已結單", value: "closed" },
+                      { label: "已完成", value: "completed" },
+                      { label: "已取消", value: "canceled" },
+                    ]}
+                  />
+                  <div className="flex justify-end mt-4">
+                    <Button
+                      className="mr-3"
+                      loading={editPostStatus.isLoading}
+                      variant="primary"
+                      onClick={() =>
+                        editPostStatus.mutate(
+                          { postId: post._id, status },
+                          { onSuccess: () => setEditStatus(false) }
+                        )
+                      }
+                    >
+                      更改
+                    </Button>
+                    <Button onClick={handleClose}>取消</Button>
+                  </div>
                 </div>
-              </div>
-            </PopupDialog>
+              </PopupDialog>
+            </>
           ) : (
             <>
               <Select
