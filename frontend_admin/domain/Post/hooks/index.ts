@@ -1,7 +1,13 @@
 import toast from "react-hot-toast";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
-import { editPost, editPostStatus, fetchPost, fetchPosts } from "../api";
+import {
+  editPost,
+  editPostStatus,
+  fetchPost,
+  fetchPosts,
+  setPostDelivered,
+} from "../api";
 import { PostQuery } from "../types";
 
 export const usePost = (postId: string) => {
@@ -41,6 +47,15 @@ export const useEditPostStatus = () => {
     },
     onError() {
       toast.error("編輯貼文狀態失敗!", { id: "editPost" });
+    },
+  });
+};
+
+export const useSetPostDelivered = () => {
+  const queryClient = useQueryClient();
+  return useMutation(setPostDelivered, {
+    onSuccess() {
+      queryClient.invalidateQueries("posts");
     },
   });
 };
