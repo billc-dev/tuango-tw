@@ -58,7 +58,7 @@ const TopNavbar = () => {
           取貨
         </Button> */}
         </div>
-        <div>
+        <div className="mr-2">
           <Button variant="inherit" onClick={() => logout.mutate()}>
             登出
           </Button>
