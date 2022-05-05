@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { User } from "domain/User/types";
+
 import { PostFormSchema } from "../schema";
 import { IPost, PostQuery, PostStatus } from "../types";
 
@@ -21,8 +23,14 @@ export const fetchPosts = async (limit: number, query: PostQuery) => {
   return res.data;
 };
 
-export const createPost = (postForm: PostFormSchema) => {
-  return axios.post<{ post: IPost }>("/posts/post", { postForm });
+interface CreatePostParams {
+  postForm: PostFormSchema;
+  user: User;
+  postNum: number;
+}
+
+export const createPost = (params: CreatePostParams) => {
+  return axios.post<{ post: IPost }>("/posts/post", params);
 };
 
 interface EditPostParams {
@@ -53,4 +61,11 @@ export const setPostDelivered = ({
   delivered,
 }: SetPostDeliveredParams) => {
   return axios.patch(`/posts/${postId}/delivered`, { delivered });
+};
+
+export const checkDuplicatePostNum = async (postNum: number | undefined) => {
+  const res = await axios.get<{ isDuplicate: boolean }>(
+    `/posts/checkDuplicatePostNum/${postNum}`
+  );
+  return res.data.isDuplicate;
 };

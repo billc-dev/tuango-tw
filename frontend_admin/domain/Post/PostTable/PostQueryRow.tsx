@@ -80,7 +80,13 @@ const PostQueryRow: FC<Props> = ({ setQuery }) => {
         />
       </TableCell>
       <TableCell>
-        <UserQuery placeholder="開單者" isSeller setUser={setUser} />
+        <UserQuery
+          placeholder="開單者"
+          isSeller
+          setUser={setUser}
+          variant="standard"
+          noLabel
+        />
       </TableCell>
       <TableCell></TableCell>
       <TableCell>

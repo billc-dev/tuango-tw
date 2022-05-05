@@ -6,6 +6,7 @@ import IconButton from "components/Button/IconButton";
 import Table from "components/Table/Table";
 import TableBody from "components/Table/TableBody";
 import { getFullLengthDate } from "services/date";
+import { getPercentage } from "services/math";
 
 import { IDeliver } from "../types";
 import DeliverHead from "./DeliverHead";
@@ -51,10 +52,12 @@ const DeliverTable: FC<Props> = ({ deliver }) => {
         <div className="flex">
           <div>
             <p>
-              金額: ${normalTotal} 服務費: ${normalFee}
+              金額: ${normalTotal} 服務費: ${normalFee} 毛利率:{" "}
+              {getPercentage(normalFee, normalTotal)}
             </p>
             <p>
-              認購金額: ${extraTotal} 認購服務費: ${extraFee}
+              認購金額: ${extraTotal} 認購服務費: ${extraFee} 毛利率:{" "}
+              {getPercentage(extraFee, extraTotal)}
             </p>
           </div>
           <div className="flex items-center">

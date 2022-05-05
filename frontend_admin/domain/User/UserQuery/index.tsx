@@ -9,9 +9,15 @@ interface Props {
   placeholder: string;
   setUser: (user: IUser) => void;
   isSeller?: boolean;
+  variant?: "standard";
+  fullWidth?: boolean;
+  color?: "grey";
+  noLabel?: boolean;
 }
 
-const UserQuery: FC<Props> = ({ placeholder, isSeller, setUser }) => {
+const UserQuery: FC<Props> = (props) => {
+  const { placeholder, isSeller, setUser, variant, fullWidth, color, noLabel } =
+    props;
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [displayName, setDisplayName] = useState("");
@@ -26,12 +32,13 @@ const UserQuery: FC<Props> = ({ placeholder, isSeller, setUser }) => {
   return (
     <>
       <TextField
+        color={color}
         value={displayName}
-        className="w-32 xl:w-40"
+        className={`${fullWidth ? "w-full" : "w-32 xl:w-40"}`}
         name="displayName"
         placeholder={placeholder}
-        noLabel
-        variant="standard"
+        noLabel={noLabel}
+        variant={variant}
         onChange={(e) => setDisplayName(e.target.value)}
         onKeyDown={handleKeyDown}
       />

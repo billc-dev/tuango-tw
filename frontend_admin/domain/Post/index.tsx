@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
+import CreatePost from "./CreatePost";
 import EditPost from "./EditPost";
 import PostTable from "./PostTable";
 import { usePosts } from "./hooks";
@@ -19,6 +20,7 @@ const Post = () => {
         data={postsQuery.data}
         {...{ query, setQuery, limit, loading: postsQuery.isFetching }}
       />
+      {typeof router.query.createPost === "string" && <CreatePost />}
       {typeof router.query.edit_post_id === "string" && (
         <EditPost postId={router.query.edit_post_id} />
       )}

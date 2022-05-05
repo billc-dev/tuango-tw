@@ -1,14 +1,9 @@
-import toast from "react-hot-toast";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 
-import {
-  editPost,
-  editPostStatus,
-  fetchPost,
-  fetchPosts,
-  setPostDelivered,
-} from "../api";
+import { checkDuplicatePostNum, fetchPost, fetchPosts } from "../api";
 import { PostQuery } from "../types";
+
+export * from "./mutation";
 
 export const usePost = (postId: string) => {
   return useQuery(["post", postId], () => fetchPost(postId), {
@@ -23,39 +18,10 @@ export const usePosts = (limit: number, query: PostQuery) => {
   });
 };
 
-export const useEditPost = () => {
-  const queryClient = useQueryClient();
-  return useMutation(editPost, {
-    onMutate() {
-      toast.loading("貼文編輯中...", { id: "editPost" });
-    },
-    onSuccess() {
-      queryClient.invalidateQueries("posts");
-      toast.success("已成功編輯貼文!", { id: "editPost" });
-    },
-    onError() {
-      toast.error("編輯貼文失敗!", { id: "editPost" });
-    },
-  });
-};
-
-export const useEditPostStatus = () => {
-  const queryClient = useQueryClient();
-  return useMutation(editPostStatus, {
-    onSuccess() {
-      queryClient.invalidateQueries("posts");
-    },
-    onError() {
-      toast.error("編輯貼文狀態失敗!", { id: "editPost" });
-    },
-  });
-};
-
-export const useSetPostDelivered = () => {
-  const queryClient = useQueryClient();
-  return useMutation(setPostDelivered, {
-    onSuccess() {
-      queryClient.invalidateQueries("posts");
-    },
-  });
+export const useCheckDuplicatePostNum = (postNum: number | undefined) => {
+  return useQuery(
+    ["duplicatePostNum", postNum],
+    () => checkDuplicatePostNum(postNum),
+    { enabled: !!postNum }
+  );
 };
