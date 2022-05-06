@@ -40,11 +40,15 @@ const TextField: FC<Props> = React.forwardRef((props, ref) => {
         ${
           !variant
             ? "rounded-lg border px-3 w-full mb-2 border-zinc-200 dark:border-zinc-600 dark:bg-zinc-800"
-            : "border-0 border-b border-zinc-400 pl-0"
+            : "border-0 border-b border-zinc-400 px-0 rounded-none"
         }
         ${!variant ? (height === "tall" ? "h-16" : "h-14") : "h-8"} ${
           !error
-            ? "focus:border-line-400 focus:ring-line-400 focus:ring-1"
+            ? `focus:border-line-400 ${
+                !variant
+                  ? "focus:ring-line-400 focus:ring-1"
+                  : "focus:border-b-2"
+              }`
             : "border-red-500 ring-red-500 ring-1"
         } ${color === "grey" && "bg-zinc-100 dark:bg-zinc-800"} ${className}`}
         {...rest}

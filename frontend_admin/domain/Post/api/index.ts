@@ -3,7 +3,7 @@ import axios from "axios";
 import { User } from "domain/User/types";
 
 import { PostFormSchema } from "../schema";
-import { IPost, PostQuery, PostStatus } from "../types";
+import { IPost, Item, PostQuery, PostStatus } from "../types";
 
 export const fetchPost = async (postId: string) => {
   const res = await axios.get<{ post: IPost }>(`/posts/${postId}`);
@@ -68,4 +68,9 @@ export const checkDuplicatePostNum = async (postNum: number | undefined) => {
     `/posts/checkDuplicatePostNum/${postNum}`
   );
   return res.data.isDuplicate;
+};
+
+export const fetchPostItems = async (postId: string) => {
+  const res = await axios.get<{ items: Item[] }>(`/posts/${postId}/items`);
+  return res.data.items;
 };

@@ -1,6 +1,11 @@
 import { useQuery } from "react-query";
 
-import { checkDuplicatePostNum, fetchPost, fetchPosts } from "../api";
+import {
+  checkDuplicatePostNum,
+  fetchPost,
+  fetchPostItems,
+  fetchPosts,
+} from "../api";
 import { PostQuery } from "../types";
 
 export * from "./mutation";
@@ -24,4 +29,8 @@ export const useCheckDuplicatePostNum = (postNum: number | undefined) => {
     () => checkDuplicatePostNum(postNum),
     { enabled: !!postNum }
   );
+};
+
+export const usePostItems = (postId: string) => {
+  return useQuery(["postItems", postId], () => fetchPostItems(postId));
 };

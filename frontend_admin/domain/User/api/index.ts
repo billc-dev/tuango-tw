@@ -62,3 +62,8 @@ export const fetchUsers = async (name: string, isSeller?: boolean) => {
   });
   return res.data.users;
 };
+
+export const fetchUserByPickupNum = async (pickupNum: number) => {
+  const res = await axios.get<{ user: User }>(`/users/pickupNum/${pickupNum}`);
+  return res.data.user;
+};

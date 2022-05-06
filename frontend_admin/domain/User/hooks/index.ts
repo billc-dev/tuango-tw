@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
-import { fetchUsers, login } from "domain/User/api";
+import { fetchUserByPickupNum, fetchUsers, login } from "domain/User/api";
 import { setAccessToken } from "domain/User/services/accessToken";
 
 import { fetchUser, fetchVerifyStatus, logout } from "../api";
@@ -69,4 +69,8 @@ export const useUsers = (name: string, isSeller?: boolean) => {
   return useQuery([name, isSeller], () => fetchUsers(name, isSeller), {
     enabled: !!name,
   });
+};
+
+export const useGetUserByPickupNum = () => {
+  return useMutation(fetchUserByPickupNum);
 };

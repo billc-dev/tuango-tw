@@ -3,6 +3,13 @@ import { QueryTypes } from "domain/Search/types";
 type PostStatus = "open" | "closed" | "completed" | "canceled";
 
 export type PostStorageType = "roomTemp" | "refrigerated" | "frozen";
+export interface Item {
+  _id: string;
+  id: string;
+  item: string;
+  price: number;
+  itemQty: number;
+}
 
 export interface IPost {
   _id: string;
@@ -44,13 +51,6 @@ export interface ImageUrl {
   sm: string;
   md: string;
   lg: string;
-}
-export interface Item {
-  _id: string;
-  id: string;
-  item: string;
-  price: number;
-  itemQty: number;
 }
 
 export type Action = undefined | "comment" | "order";

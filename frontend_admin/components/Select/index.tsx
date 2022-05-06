@@ -1,7 +1,7 @@
 import React, { FC, SelectHTMLAttributes } from "react";
 
 interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
-  options: { value: string; label: string }[];
+  options: { value: any; label: string }[];
   variant?: "contained";
   height?: "normal" | "tall";
 }

@@ -12,7 +12,7 @@ export const getMonthAndDate = (date: string) => {
 };
 
 export const getFullDate = (date: string) => {
-  return dayjs(date).format("LLL");
+  return dayjs(date).format("LL");
 };
 
 export const getFullLengthDate = (date: string) => {
