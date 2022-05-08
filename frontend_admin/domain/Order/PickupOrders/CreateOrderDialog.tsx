@@ -1,8 +1,5 @@
 import React, { FC, useState } from "react";
 
-import { XIcon } from "@heroicons/react/outline";
-
-import IconButton from "components/Button/IconButton";
 import Dialog from "components/Dialog";
 import Table from "components/Table/Table";
 import TableBody from "components/Table/TableBody";

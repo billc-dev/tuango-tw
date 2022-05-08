@@ -17,7 +17,7 @@ interface Props {
   open: boolean;
   handleClose: () => void;
 }
-const ViewExtraOrder: FC<Props> = ({ username, open, handleClose }) => {
+const ViewExtraOrder: FC<Props> = ({ open, handleClose }) => {
   const [values, setValues] = useState<ExtraOrdersQuery>({});
   const [query, setQuery] = useState<ExtraOrdersQuery>({});
   const [order, setOrder] = useState<IOrder>();
