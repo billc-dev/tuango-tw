@@ -4,7 +4,13 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
-import { fetchUserByPickupNum, fetchUsers, login } from "domain/User/api";
+import {
+  fetchUserByPickupNum,
+  fetchUserComment,
+  fetchUsers,
+  login,
+  patchUserComment,
+} from "domain/User/api";
 import { setAccessToken } from "domain/User/services/accessToken";
 
 import { fetchUser, fetchVerifyStatus, logout } from "../api";
@@ -73,4 +79,17 @@ export const useUsers = (name: string, isSeller?: boolean) => {
 
 export const useGetUserByPickupNum = () => {
   return useMutation(fetchUserByPickupNum);
+};
+
+export const useUserComment = (username: string) => {
+  return useQuery(["userComment", username], () => fetchUserComment(username));
+};
+
+export const usePatchUserComment = () => {
+  const queryClient = useQueryClient();
+  return useMutation(patchUserComment, {
+    onSuccess(data, params) {
+      queryClient.setQueryData(["userComment", params.username], data);
+    },
+  });
 };

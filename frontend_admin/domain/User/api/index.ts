@@ -67,3 +67,26 @@ export const fetchUserByPickupNum = async (pickupNum: number) => {
   const res = await axios.get<{ user: User }>(`/users/pickupNum/${pickupNum}`);
   return res.data.user;
 };
+
+export const fetchUserComment = async (username: string) => {
+  const res = await axios.get<{ comment: string }>(
+    `/users/${username}/comment`
+  );
+  return res.data.comment;
+};
+
+interface PatchUserCommentParams {
+  username: string;
+  comment: string;
+}
+
+export const patchUserComment = async ({
+  username,
+  comment,
+}: PatchUserCommentParams) => {
+  const res = await axios.patch<{ comment: string }>(
+    `/users/${username}/comment`,
+    { comment }
+  );
+  return res.data.comment;
+};

@@ -23,12 +23,13 @@ interface Props {
 const OrderCard: FC<Props> = ({ order, username }) => {
   const [open, setOpen] = useState(false);
   return (
-    <Card className="mx-1 px-2 pt-2 bg-white border-t border-zinc-300 rounded-none">
+    <Card className="px-1 pt-2 bg-white border-t border-zinc-300 rounded-none">
       <p className="text-sm">🛒 {getPostTitle(order)}</p>
       <p className="text-sm">
         {getFullDate(order.deliveredAt ?? order.createdAt)}
       </p>
       <p className="text-sm">序號: {order.orderNum}</p>
+      {order.comment && <p className="font-medium">備註: {order.comment}</p>}
       {order.hasName && (
         <Button className="mt-2" variant="primary">
           有貼名字
@@ -37,31 +38,29 @@ const OrderCard: FC<Props> = ({ order, username }) => {
       <div className="flex items-center">
         <Table>
           <TableBody>
-            {order.order.map((item) => (
-              <TableRow key={item.id + item.item}>
+            {order.order.map((item, index) => (
+              <TableRow key={item.id + item.item + index}>
                 {item.status === "completed" ? (
                   <>
-                    <TableCell noPadding className="w-8/12">
+                    <TableCell noPadding className="w-7/12 text-sm">
                       <div className="flex items-center justify-between">
-                        <p
-                          className={`text ${item.qty > 1 && "font-semibold"}`}
-                        >
+                        <p className={`${item.qty > 1 && "font-semibold"}`}>
                           {item.id}.{item.item}+{item.qty} $
                           {item.price * item.qty}
                         </p>
                         {item.hasName && (
                           <Button variant="primary">
-                            <p className="text-sm">有貼名字</p>
+                            <p>有貼名字</p>
                           </Button>
                         )}
                       </div>
                     </TableCell>
-                    <TableCell className="text">
+                    <TableCell className="text-sm">
                       {item.location && `📍 ${item.location}`}
                     </TableCell>
                   </>
                 ) : (
-                  <TableCell>
+                  <TableCell className="text-sm">
                     {item.id}. 狀態:
                     {item.status === "delivered" && "已到貨 🚚"}
                     {item.status === "missing" && "尋貨中 🔍"}

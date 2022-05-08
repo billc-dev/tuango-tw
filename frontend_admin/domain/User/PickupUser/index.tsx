@@ -32,7 +32,7 @@ const PickupUser: FC<Props> = ({ user, setUser }) => {
     });
   };
   return (
-    <div className="mx-2">
+    <div>
       {user ? (
         <div className="mt-4">
           <Button fullWidth onClick={() => setUser(undefined)}>

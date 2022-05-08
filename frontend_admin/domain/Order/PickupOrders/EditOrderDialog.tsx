@@ -57,7 +57,8 @@ const EditOrderDialog: FC<Props> = ({ open, setOpen, username, ...props }) => {
       if (ord._id === order._id) return order;
       return ord;
     });
-    console.log(newOrders);
+    queryClient.setQueryData<IOrder[]>(["pickupOrders", username], newOrders);
+    setOpen(false);
   };
   return (
     <Dialog title="編輯訂單" {...{ open, handleClose }}>
@@ -127,7 +128,7 @@ const EditOrderDialog: FC<Props> = ({ open, setOpen, username, ...props }) => {
         color="grey"
         placeholder="備註"
         noLabel
-        className="mb-0"
+        className="mt-4"
         onChange={handleChange}
       />
       <Button fullWidth variant="primary" size="lg" onClick={handleSubmit}>

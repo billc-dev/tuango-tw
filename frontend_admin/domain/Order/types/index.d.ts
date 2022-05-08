@@ -54,3 +54,8 @@ export interface SumOrder {
   qty: number;
   amount: number;
 }
+
+export interface ExtraOrdersQuery {
+  text?: string;
+  postNum?: number;
+}
