@@ -68,7 +68,7 @@ const Button: FC<Props> = (props) => {
       case "square":
         return "px-1 py-1";
       default:
-        return "py-1 px-3";
+        return "py-1 px-2";
     }
   };
 
