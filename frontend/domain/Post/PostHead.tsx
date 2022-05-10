@@ -9,8 +9,6 @@ interface Props {
 
 const PostHead: FC<Props> = ({ post }) => {
   if (!post) return null;
-  console.log(post.body.slice(0, 150));
-
   return (
     <Head>
       <title>
