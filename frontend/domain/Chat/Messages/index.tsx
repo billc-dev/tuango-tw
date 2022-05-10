@@ -29,7 +29,7 @@ const Messages: FC<Props> = ({ roomId, otherUser }) => {
     };
   }, []);
   return (
-    <div className="mx-4">
+    <div>
       <LoadingIndicator loading={isLoading} />
       <LoadMoreMessage roomId={roomId} />
       {data?.pages.map((page, pageIndex) =>

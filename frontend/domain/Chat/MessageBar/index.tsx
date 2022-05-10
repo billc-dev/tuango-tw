@@ -68,7 +68,7 @@ const MessageBar: FC<Props> = ({ roomId }) => {
 
   return (
     <>
-      <div className="sticky flex items-center bottom-0 px-2 w-full min-h-[48px] bg-zinc-200 dark:bg-zinc-600">
+      <div className="fixed flex max-w-lg items-center bottom-0 px-2 -mx-4 w-full top-auto min-h-[48px] bg-zinc-200 dark:bg-zinc-600">
         <MessageActions roomId={roomId} />
         <TextareaAutosize
           value={text}
