@@ -59,12 +59,11 @@ const ChatDialog: FC<Props> = ({ chatId }) => {
           open={open}
           handleClose={handleClose}
           title={(otherUser?.user as IUser).displayName}
-          noPadding
         >
-          <div className="flex flex-col justify-between h-[93vh] md:h-[90vh]">
+          <div className="mb-12">
             <Messages roomId={data.data.room._id} otherUser={otherUser} />
-            <MessageBar roomId={data.data.room._id} />
           </div>
+          <MessageBar roomId={data.data.room._id} />
           {typeof chatPostId === "string" && (
             <PostDialog postId={chatPostId} chat />
           )}
