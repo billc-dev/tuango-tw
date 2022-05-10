@@ -35,7 +35,7 @@ const Dialog: FC<DialogProps> = (props) => {
     if (open) {
       // document.body.style.overflow = "hidden";
       setAnimate(true);
-      // ref.current?.focus();
+      ref.current?.focus();
     }
     // return () => {
     //   document.body.style.removeProperty("overflow");
