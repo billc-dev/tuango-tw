@@ -82,7 +82,7 @@ const OrderDialog: FC<Props> = ({ postId }) => {
                         <td className="py-2">
                           {order.order.map((item) => (
                             <div key={item.id}>
-                              {item.id}+{item.qty}
+                              {`${item.id}.${item.item}+${item.qty}`}{" "}
                             </div>
                           ))}
                         </td>

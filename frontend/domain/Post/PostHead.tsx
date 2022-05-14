@@ -18,8 +18,8 @@ const PostHead: FC<Props> = ({ post }) => {
         itemProp="name"
         content={`#${post.postNum} ${post.title} #${post.displayName} - 開心團購`}
       />
-      <meta name="description" content={post?.body} />
-      <meta property="og:image" content={post?.imageUrls[0].md} />
+      <meta name="description" content={post.body.slice(0, 150)} />
+      <meta property="og:image" content={post.imageUrls[0].md} />
     </Head>
   );
 };
