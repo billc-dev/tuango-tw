@@ -1,18 +1,26 @@
 import React, { FC, useState } from "react";
 
 import Button from "components/Button";
+import PopupDialog from "components/Dialog/PopupDialog";
+import Radio from "components/Radio";
 import TextField from "components/TextField";
+import { User } from "domain/User/types";
 
+import { useCompleteOrders } from "../hooks";
 import { getCompletedOrdersSum } from "../services";
 import { IOrder } from "../types";
 
 interface Props {
   orders: IOrder[];
+  setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
 }
 
-const Payment: FC<Props> = ({ orders }) => {
+const Payment: FC<Props> = ({ orders, setUser }) => {
   const [payment, setPayment] = useState<number>();
+  const [open, setOpen] = useState(false);
+  const [linePay, setLinePay] = useState(false);
   const sum = getCompletedOrdersSum(orders);
+  const completeOrders = useCompleteOrders(setOpen);
   const handleAdd = (amount: number) => {
     return () => {
       setPayment((payment) => {
@@ -20,6 +28,13 @@ const Payment: FC<Props> = ({ orders }) => {
         return amount;
       });
     };
+  };
+  const handleClose = () => setOpen(false);
+  const handleSubmit = () => {
+    completeOrders.mutate(
+      { linePay, orders, sum },
+      { onSuccess: () => setUser(undefined) }
+    );
   };
   return (
     <div>
@@ -61,9 +76,39 @@ const Payment: FC<Props> = ({ orders }) => {
           </div>
         </div>
       )}
-      <Button size="lg" variant="primary" fullWidth>
+      <Button
+        size="lg"
+        variant="primary"
+        fullWidth
+        onClick={() => setOpen(true)}
+      >
         合計${sum}
       </Button>
+      <PopupDialog
+        title="您確定要合計？"
+        confirmComponent
+        onSubmit={handleSubmit}
+        {...{ open, handleClose }}
+      >
+        <div>
+          <p className="text-lg">付款方式</p>
+          <Radio
+            radioSize="lg"
+            name="linePay"
+            label="現金付款"
+            checked={!linePay}
+            onChange={() => setLinePay(false)}
+          />
+          <Radio
+            radioSize="lg"
+            name="linePay"
+            label="LINE PAY"
+            className="text-line-400 focus:ring-line-400"
+            checked={linePay}
+            onChange={() => setLinePay(true)}
+          />
+        </div>
+      </PopupDialog>
     </div>
   );
 };

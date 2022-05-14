@@ -9,7 +9,7 @@ import { useUsers } from "../hooks";
 interface Props {
   placeholder: string;
   open: boolean;
-  handleClose: Function;
+  handleClose: () => void;
   name: string;
   isSeller?: boolean;
   setUser: (user: IUser) => void;

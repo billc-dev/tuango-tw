@@ -1,8 +1,9 @@
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 
 import {
   checkDuplicatePostNum,
   fetchPost,
+  fetchPostByPostNum,
   fetchPostItems,
   fetchPosts,
 } from "../api";
@@ -33,4 +34,8 @@ export const useCheckDuplicatePostNum = (postNum: number | undefined) => {
 
 export const usePostItems = (postId: string) => {
   return useQuery(["postItems", postId], () => fetchPostItems(postId));
+};
+
+export const useGetPostByPostNum = () => {
+  return useMutation(fetchPostByPostNum);
 };

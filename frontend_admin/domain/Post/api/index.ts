@@ -74,3 +74,10 @@ export const fetchPostItems = async (postId: string) => {
   const res = await axios.get<{ items: Item[] }>(`/posts/${postId}/items`);
   return res.data.items;
 };
+
+export const fetchPostByPostNum = async (postNum: string) => {
+  const res = await axios.get<{ post: IPost }>(
+    `/posts/post/postNum/${postNum}`
+  );
+  return res.data.post;
+};

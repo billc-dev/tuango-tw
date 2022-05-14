@@ -11,13 +11,14 @@ import { useExtraOrders } from "../hooks";
 import { ExtraOrdersQuery, IOrder } from "../types";
 import CreateOrderDialog from "./CreateOrderDialog";
 import ExtraOrderCard from "./ExtraOrderCard";
+import NewOrder from "./NewOrder";
 
 interface Props {
   username: string;
   open: boolean;
   handleClose: () => void;
 }
-const ViewExtraOrder: FC<Props> = ({ open, handleClose }) => {
+const ViewExtraOrder: FC<Props> = ({ username, open, handleClose }) => {
   const [values, setValues] = useState<ExtraOrdersQuery>({});
   const [query, setQuery] = useState<ExtraOrdersQuery>({});
   const [order, setOrder] = useState<IOrder>();
@@ -34,7 +35,7 @@ const ViewExtraOrder: FC<Props> = ({ open, handleClose }) => {
   return (
     <Dialog {...{ title: "新增訂單", open, handleClose }}>
       <div className="mt-2">
-        <Button fullWidth>新增無待認購訂單</Button>
+        <NewOrder {...{ username, handleClose }} />
         <div className="flex mt-4">
           <TextField
             name="text"
@@ -83,7 +84,7 @@ const ViewExtraOrder: FC<Props> = ({ open, handleClose }) => {
         <CreateOrderDialog
           open={!!order}
           handleClose={() => setOrder(undefined)}
-          {...{ order }}
+          {...{ order, username, handleCloseExtraDialog: handleClose }}
         />
       )}
     </Dialog>

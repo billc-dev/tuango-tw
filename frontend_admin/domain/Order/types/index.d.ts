@@ -59,3 +59,12 @@ export interface ExtraOrdersQuery {
   text?: string;
   postNum?: number;
 }
+
+export interface CreateOrderItem {
+  id: string;
+  item: string;
+  qty: number | undefined | "";
+  itemQty: number;
+  price: number;
+  location?: string;
+}

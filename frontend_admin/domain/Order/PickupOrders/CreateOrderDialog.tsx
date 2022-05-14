@@ -1,39 +1,84 @@
 import React, { FC, useState } from "react";
 
+import { PlusIcon } from "@heroicons/react/outline";
+import { AxiosError } from "axios";
+import toast from "react-hot-toast";
+import { useQueryClient } from "react-query";
+
+import Button from "components/Button";
 import Dialog from "components/Dialog";
-import Table from "components/Table/Table";
-import TableBody from "components/Table/TableBody";
-import TableCell from "components/Table/TableCell";
-import TableHead from "components/Table/TableHead";
-import TableRow from "components/Table/TableRow";
 import TextField from "components/TextField";
 
-import { IOrder } from "../types";
+import { useCreateDeliveredExtraOrder } from "../hooks";
+import { CreateOrderItem, IOrder } from "../types";
+import OrderTable from "./OrderTable";
 
 interface Props {
   open: boolean;
   handleClose: () => void;
+  handleCloseExtraDialog: () => void;
   order: IOrder;
+  username: string;
 }
 
-const CreateOrderDialog: FC<Props> = ({ open, handleClose, order }) => {
-  const [orderItems, setOrderItems] = useState(
+const CreateOrderDialog: FC<Props> = (props) => {
+  const { open, handleClose, order, username, handleCloseExtraDialog } = props;
+  const queryClient = useQueryClient();
+  const createOrder = useCreateDeliveredExtraOrder();
+  const [orderItems, setOrderItems] = useState<CreateOrderItem[]>(
     order.order.map((ord) => ({
       ...ord,
       qty: undefined,
       itemQty: ord.qty,
+      status: "delivered",
     }))
   );
+  const [comment, setComment] = useState("");
+  const enabled = orderItems.some((item) => item.qty && item.qty > 0);
   const handleChange = (index: number) => {
     return (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
       setOrderItems((orderItems) => {
         return orderItems.map((item, idx) => {
-          if (idx === index) return { ...item, [name]: value };
+          if (idx === index) return { ...item, [name]: Number(value) };
           return item;
         });
       });
     };
+  };
+  const handleSubmit = () => {
+    const items = orderItems.filter((item) => {
+      return item.qty;
+    });
+    createOrder.mutate(
+      {
+        orderItems: items,
+        orderId: order._id,
+        username,
+        comment,
+      },
+      {
+        onSuccess: () => {
+          handleClose();
+          handleCloseExtraDialog();
+        },
+        onError: async (err) => {
+          if (!(err instanceof AxiosError)) return;
+          if (err.response?.data.error !== "item quantity is over") {
+            return toast.error("訂單新增失敗");
+          }
+          toast.error("訂單數量超過認購數量！");
+          await queryClient.invalidateQueries("extraOrders");
+          setOrderItems(
+            order.order.map((ord) => ({
+              ...ord,
+              qty: "",
+              itemQty: ord.qty,
+            }))
+          );
+        },
+      }
+    );
   };
   return (
     <Dialog title="新增訂單" {...{ open, handleClose }}>
@@ -41,48 +86,25 @@ const CreateOrderDialog: FC<Props> = ({ open, handleClose, order }) => {
         <p>
           #{order.postNum} {order.title} #{order.sellerDisplayName}
         </p>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell noPadding>ID</TableCell>
-              <TableCell noPadding className="w-1/2">
-                商品名稱
-              </TableCell>
-              <TableCell noPadding>數量</TableCell>
-              <TableCell noPadding>單價</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {orderItems.map((item, index) => (
-              <TableRow key={item.id + index}>
-                <TableCell noPadding>{item.id}</TableCell>
-                <TableCell noPadding>{item.item}</TableCell>
-                <TableCell noPadding>
-                  <TextField
-                    className="w-10"
-                    variant="standard"
-                    name="qty"
-                    type="number"
-                    noLabel
-                    placeholder={item.itemQty.toString()}
-                    value={item.qty}
-                    onChange={handleChange(index)}
-                  />
-                </TableCell>
-                <TableCell noPadding>
-                  <TextField
-                    className="w-14"
-                    variant="standard"
-                    name="price"
-                    type="number"
-                    value={item.price}
-                    onChange={handleChange(index)}
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <OrderTable {...{ orderItems, handleChange }} />
+        <div className="mt-4">
+          <TextField
+            noLabel
+            placeholder="備註"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
+          <Button
+            disabled={!enabled}
+            fullWidth
+            size="lg"
+            icon={<PlusIcon />}
+            variant="primary"
+            onClick={handleSubmit}
+          >
+            新增訂單
+          </Button>
+        </div>
       </div>
     </Dialog>
   );

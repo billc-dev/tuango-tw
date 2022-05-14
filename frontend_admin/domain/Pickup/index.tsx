@@ -11,7 +11,9 @@ const Pickup = () => {
   return (
     <div className="max-w-lg mx-auto mt-2">
       <PickupUser {...{ user, setUser }} />
-      {user?.username && <PickupOrders username={user.username} />}
+      {user?.username && (
+        <PickupOrders username={user.username} {...{ setUser }} />
+      )}
       <Button className="mt-2" fullWidth variant="primary">
         取貨紀錄
       </Button>
