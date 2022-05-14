@@ -10,7 +10,7 @@ import { Post } from "../postDB";
 export const createPost = (
   validatedPost: ValidatedPost,
   user: IUser,
-  prevPostNum: number
+  postNum: number
 ) => {
   const items = validatedPost.items.map((item, index) => ({
     ...item,
@@ -23,7 +23,7 @@ export const createPost = (
     userId: user.username,
     displayName: user.displayName,
     pictureUrl: user.pictureUrl,
-    postNum: prevPostNum + 1,
+    postNum,
   });
   return post.save();
 };
