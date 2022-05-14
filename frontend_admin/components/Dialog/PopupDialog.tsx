@@ -2,6 +2,7 @@ import React, { FC, useEffect, useRef, useState } from "react";
 
 import { XIcon } from "@heroicons/react/outline";
 
+import Button from "components/Button";
 import IconButton from "components/Button/IconButton";
 
 interface DialogProps
@@ -10,15 +11,18 @@ interface DialogProps
     HTMLDialogElement
   > {
   open: boolean;
-  handleClose: Function;
+  handleClose: () => void;
   title: string;
   id?: string;
   className?: string;
   action?: React.ReactNode;
+  confirmComponent?: boolean;
+  onSubmit?: () => void;
 }
 
 const PopupDialog: FC<DialogProps> = (props) => {
   const { children, open, handleClose, title, id, className, action } = props;
+  const { confirmComponent, onSubmit } = props;
   const [animate, setAnimate] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -56,6 +60,16 @@ const PopupDialog: FC<DialogProps> = (props) => {
           </div>
           <div ref={ref} className="mx-auto max-w-lg px-4 pb-4 dark:text-white">
             {children}
+            {confirmComponent && (
+              <div className="flex mt-8 justify-around">
+                <Button variant="primary" size="lg" onClick={onSubmit}>
+                  確定
+                </Button>
+                <Button size="lg" onClick={handleClose}>
+                  取消
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </dialog>
