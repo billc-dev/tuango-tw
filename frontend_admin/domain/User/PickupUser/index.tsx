@@ -2,6 +2,7 @@ import React, { FC } from "react";
 
 import Button from "components/Button";
 import CardHeader from "components/Card/CardHeader";
+import LoadingIndicator from "components/Indicator/LoadingIndicator";
 import TextField from "components/TextField";
 
 import UserQuery from "../UserQuery";
@@ -82,6 +83,7 @@ const PickupUser: FC<Props> = ({ user, setUser }) => {
           />
         </div>
       )}
+      <LoadingIndicator loading={getUserByPickupNumQuery.isLoading} />
     </div>
   );
 };
