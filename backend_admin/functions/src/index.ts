@@ -8,7 +8,7 @@ import "source-map-support/register";
 
 import deliver from "api/deliver/deliverRouter";
 // import notify from "api/notify/notifyRouter";
-// import orders from "api/order/orderRouter";
+import orders from "api/order/orderRouter";
 import posts from "api/post/postRouter";
 import user from "api/user/userRouter";
 
@@ -22,7 +22,7 @@ const whitelist = [
 ];
 
 const corsOptions: cors.CorsOptions = {
-  origin: (origin: any, callback: any) => {
+  origin: (origin, callback) => {
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true);
     } else callback(new Error("Not allowed by CORS"));
@@ -36,7 +36,7 @@ app.use(compression());
 app.use("/users", user);
 app.use("/posts", posts);
 app.use("/delivers", deliver);
-// app.use("/orders", orders);
+app.use("/orders", orders);
 // app.use("/notify", notify);
 
 app.use((_, res) => {

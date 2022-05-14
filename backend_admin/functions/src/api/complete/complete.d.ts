@@ -1,6 +1,6 @@
 import { IReducedOrder } from "api/order/order";
 
-interface IOrder {
+interface IMinifiedOrder {
   id: string;
   item: string;
   price: number;
@@ -14,7 +14,7 @@ interface IReducedOrder {
   postNum: number;
   title: string;
   sellerDisplayName: string;
-  order: IOrder[];
+  order: IMinifiedOrder[];
   hasName: boolean;
 }
 

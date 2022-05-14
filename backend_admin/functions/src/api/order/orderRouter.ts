@@ -1,111 +1,162 @@
 import * as express from "express";
 
+import * as completeService from "api/complete/completeService";
 import { Post } from "api/post";
-import * as postService from "api/post/services";
+import { User } from "api/user/userDB";
 import asyncWrapper from "middleware/asyncWrapper";
 import { isAdmin } from "middleware/auth";
 
+import { IOrder, OrderStatus } from "./order";
 import Order from "./orderDB";
 import * as orderService from "./orderService";
 
 const router = express.Router();
 
 router.get(
-  "/post/:id",
+  "/delivered/user/:username",
   isAdmin,
   asyncWrapper(async (req, res) => {
-    const postId = req.params.id;
-    if (!postId) throw "post id invalid";
     const orders = await Order.find({
-      postId,
-      status: { $ne: "canceled" },
-      orderNum: { $ne: 0 },
-      ...(req.query?.status && { status: req.query.status }),
-    }).sort({ orderNum: 1 });
+      status: "delivered",
+      userId: req.params.username,
+    }).sort("order.location");
     return res.status(200).json({ orders });
   })
 );
 
-router.put(
-  "/order",
+interface FilterQuery {
+  userId?: string;
+  status?: OrderStatus;
+  postNum?: number;
+  $or?: { [key: string]: RegExp }[];
+}
+
+router.post(
+  "/",
   isAdmin,
   asyncWrapper(async (req, res) => {
-    const orderForm = await orderService.validateOrderForm(req.body.orderForm);
+    const { userId, status, text, postNum } = req.body;
+    const filter: FilterQuery = {};
+    if (userId) filter.userId = userId;
+    if (status) filter.status = status;
+    if (postNum) filter.postNum = postNum;
+    if (text) {
+      const regExp = new RegExp(text, "i");
+      filter.$or = [
+        { title: regExp },
+        { sellerDisplayName: regExp },
+        { "order.item": regExp },
+      ];
+    }
+    const sortBy = req.body.sortBy || "-createdAt";
 
-    const post = await Post.findById(orderForm.postId);
-    if (!post) throw "post not found";
-    if (post.status !== "open") throw "cannot order, post is not open";
-
-    const over = orderService.isOverItemQty(post.items, orderForm);
-    if (over) return res.json({ error: "剩餘數量已更新! 請重新下單!", post });
-
-    const order = await orderService.createNewOrder(
-      post,
-      orderForm,
-      res.locals.user
-    );
-    const updatedPost = await postService.decrementItemQty(orderForm, post);
-
-    //     if (order.comment) {
-    //       const message = `
-    // 🦓 ${order.displayName} 在#${order.postNum} ${order.title} 下單並備註 ⚠️ : ${order.comment}
-    // 貼文連結: www.開心團購.com/posts?postId=${order.postId}`;
-    //       notifyUser(post.userId, message);
-    //     }
-
-    return res.status(200).json({ post: updatedPost, order });
+    const orders = await Order.find(filter)
+      .sort(sortBy)
+      .select("-orderHistory");
+    return res.status(200).json({ orders });
   })
 );
 
-// router.patch(
-//   "/:orderId",
-//   isAdmin,
-//   asyncWrapper(async (req, res) => {
-//     const orderForm = await orderService.validateOrderForm(req.body.orderForm);
-
-//     const post = await Post.findById(orderForm.postId);
-//     if (!post) throw "post not found";
-//     if (post.status !== "open") throw "cannot order, post is not open";
-
-//     const over = orderService.isOverItemQty(post.items, orderForm);
-//     if (over) return res.json({ error: "剩餘數量已更新! 請重新下單!", post });
-
-//     const order = await orderService.createNewOrder(
-//       post,
-//       orderForm,
-//       res.locals.user
-//     );
-//     const updatedPost = await postService.decrementItemQty(orderForm, post);
-
-//     //     if (order.comment) {
-//     //       const message = `
-//     // 🦓 ${order.displayName} 在#${order.postNum} ${order.title} 下單並備註 ⚠️ : ${order.comment}
-//     // 貼文連結: www.開心團購.com/posts?postId=${order.postId}`;
-//     //       notifyUser(post.userId, message);
-//     //     }
-
-//     return res.status(200).json({ post: updatedPost, order });
-//   })
-// );
-
-router.delete(
-  "/order",
+router.post(
+  "/order/delivered",
   isAdmin,
   asyncWrapper(async (req, res) => {
-    const order = await Order.findById(req.body.orderId);
-    if (!order) throw "order not found";
-    if (order.userId !== res.locals.user.username) throw "unauthorized";
-    if (order.status !== "ordered") throw "order status cannot be changed";
-
-    const post = await Post.findById(order.postId);
+    const { postId, username, orderItems, comment } = req.body;
+    if (!orderItems || !username) throw "orderItems or username is missing";
+    const user = await User.findOne({ username });
+    if (!user) throw "user not found";
+    const post = await Post.findById(postId);
     if (!post) throw "post not found";
-    if (post.status !== "open") throw "post status not open";
+    const order = await orderService.createDeliveredOrder(
+      post,
+      orderItems,
+      user,
+      comment
+    );
+    await orderService.sendDeliveredMessage(order);
+    return res.status(200).json({ order });
+  })
+);
 
-    await orderService.cancelOrder(order);
+router.post(
+  "/order/delivered/extra",
+  isAdmin,
+  asyncWrapper(async (req, res) => {
+    const { username, orderId, orderItems, comment } = req.body;
+    if (!orderId || !orderItems || !username)
+      throw "orderItems or username is missing";
+    const user = await User.findOne({ username });
+    if (!user) throw "user not found";
+    const order = await Order.findById(orderId).lean();
+    if (!order) throw "order not found";
+    await orderService.checkQuantity(order, orderItems);
+    const newOrder = await orderService.createExtraOrderAndUpdate(
+      order,
+      orderItems,
+      user,
+      comment
+    );
+    await orderService.sendDeliveredMessage(newOrder);
+    return res.status(200).json({ order: newOrder });
+  })
+);
 
-    const updatedPost = await postService.incrementItemQty(order, post);
+interface CompleteOrdersBody {
+  orders: IOrder[];
+  linePay: boolean;
+  sum: number;
+}
 
-    return res.status(200).json({ post: updatedPost });
+router.patch(
+  "/complete",
+  isAdmin,
+  asyncWrapper(async (req, res) => {
+    const { orders, linePay, sum }: CompleteOrdersBody = req.body;
+    const total = orderService.getCompletedOrdersSum(orders);
+    if (sum !== total) throw "total is not equal to sum";
+
+    if (orders.length <= 0) throw "orders is missing";
+    const deliveredOrders = await Order.find({
+      userId: orders[0].userId,
+      status: "delivered",
+    }).select("userId status");
+
+    const session = await Order.startSession();
+    try {
+      session.startTransaction();
+      for (const order of orders as IOrder[]) {
+        const index = deliveredOrders.findIndex(
+          (ord) => ord._id.toString() === order._id
+        );
+        if (index === -1) throw "refresh pickupOrders";
+
+        const categories = orderService.categorizeOrders(order.order);
+        const categoryCount = Object.keys(categories).length;
+        if (categoryCount <= 0) throw "no orders to update";
+        await orderService.updateOrders(session, order, categories);
+      }
+      await session.commitTransaction();
+    } catch (error) {
+      await session.abortTransaction();
+      throw error;
+    } finally {
+      session.endSession();
+    }
+
+    const complete = await completeService.createComplete(
+      orders,
+      linePay,
+      res.locals.user.displayName,
+      total
+    );
+
+    await completeService.sendCompleteMessage(
+      total,
+      complete._id,
+      orders[0].userId
+    );
+
+    return res.status(200).json({});
   })
 );
 

@@ -53,7 +53,7 @@ export const UserSchema = new mongoose.Schema<IUser>({
   deliveredOrders: { type: Number, required: true, default: 0 },
   notified: { type: Boolean, required: true, default: false },
   linepay: { type: Boolean, required: true, default: false },
-  comment: String,
+  comment: { type: String, default: "" },
   message: {
     notified: { type: Boolean, default: false },
     notifiedAt: { type: String, default: () => new Date().toISOString() },

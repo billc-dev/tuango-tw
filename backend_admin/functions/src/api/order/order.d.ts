@@ -1,13 +1,13 @@
 import { Document } from "mongoose";
 
-type OrderStatus =
+export type OrderStatus =
   | "ordered"
   | "delivered"
   | "completed"
   | "missing"
   | "canceled";
 
-interface SingleOrder {
+export interface SingleOrder {
   id: string;
   item: string;
   qty: number;
@@ -44,7 +44,15 @@ export interface IOrder {
   status: OrderStatus;
 }
 
-export type MongooseOrder = Document<unknown, any, IOrder> &
+export type MongooseOrder = Document<unknown, unknown, IOrder> &
   IOrder & {
     _id: string;
   };
+
+export interface CreateOrderItem {
+  id: string;
+  item: string;
+  qty: number;
+  price: number;
+  location: string;
+}

@@ -3,7 +3,7 @@ import * as mongoose from "mongoose";
 
 import { DB_OPTIONS, IS_DEV } from "utils/constant";
 
-import { IOrder } from "./order";
+import { IOrder, SingleOrder } from "./order";
 
 export const ordersConn = mongoose.createConnection(
   IS_DEV
@@ -29,14 +29,14 @@ export const OrderSchema = new mongoose.Schema<IOrder>({
         item: { type: String, required: true },
         qty: {
           type: Number,
-          get: (v: any) => Number(v),
-          set: (v: any) => Number(v),
+          get: (v: number | string) => Number(v),
+          set: (v: number | string) => Number(v),
           required: true,
         },
         price: {
           type: Number,
-          get: (v: any) => Number(v),
-          set: (v: any) => Number(v),
+          get: (v: number | string) => Number(v),
+          set: (v: number | string) => Number(v),
           required: true,
         },
         status: {
@@ -48,8 +48,8 @@ export const OrderSchema = new mongoose.Schema<IOrder>({
         hasName: { type: Boolean, default: false },
       },
     ],
-    transform: (v: any) =>
-      v.sort((a: any, b: any) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0)),
+    transform: (v: SingleOrder[]) =>
+      v?.sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0)),
     required: true,
   },
   comment: String,
