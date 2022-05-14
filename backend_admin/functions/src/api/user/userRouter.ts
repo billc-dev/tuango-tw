@@ -67,6 +67,22 @@ router.patch(
   })
 );
 
+router.patch(
+  "/:username/linepay",
+  isAdmin,
+  asyncWrapper(async (req, res) => {
+    const username = req.params.username;
+    const { linepay } = req.body;
+    const user = await User.findOneAndUpdate(
+      { username },
+      { linepay },
+      { new: true }
+    );
+    if (!user) throw "user not found";
+    return res.status(200).json({ user });
+  })
+);
+
 router.post(
   "/",
   isAdmin,
