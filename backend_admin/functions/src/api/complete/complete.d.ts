@@ -1,5 +1,3 @@
-import { IReducedOrder } from "api/order/order";
-
 interface IMinifiedOrder {
   id: string;
   item: string;
@@ -30,4 +28,9 @@ export interface IComplete {
     linePay: boolean;
     confirmed: boolean;
   };
+}
+
+export interface CompleteQuery {
+  userId?: string;
+  unconfirmed?: boolean;
 }

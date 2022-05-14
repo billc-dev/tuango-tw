@@ -6,6 +6,7 @@ import * as cors from "cors";
 import "module-alias/register";
 import "source-map-support/register";
 
+import completes from "api/complete/completeRouter";
 import deliver from "api/deliver/deliverRouter";
 // import notify from "api/notify/notifyRouter";
 import orders from "api/order/orderRouter";
@@ -37,6 +38,7 @@ app.use("/users", user);
 app.use("/posts", posts);
 app.use("/delivers", deliver);
 app.use("/orders", orders);
+app.use("/completes", completes);
 // app.use("/notify", notify);
 
 app.use((_, res) => {

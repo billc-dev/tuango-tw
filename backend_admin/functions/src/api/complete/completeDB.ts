@@ -37,7 +37,7 @@ const CompleteSchema = new mongoose.Schema<IComplete>({
               item: { type: String, required: true },
               price: { type: Number, required: true },
               qty: { type: Number, required: true },
-              location: { type: String, required: true },
+              location: { type: String },
             },
           ],
           required: true,
