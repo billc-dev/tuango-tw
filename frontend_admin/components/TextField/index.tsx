@@ -54,7 +54,13 @@ const TextField: FC<Props> = React.forwardRef((props, ref) => {
         {...rest}
       />
       {error && (
-        <p className="-mt-1 text-red-600 text-center text-sm">{error}</p>
+        <p
+          className={`text-red-600 text-sm ${
+            variant !== "standard" && "-mt-1 text-center"
+          }`}
+        >
+          {error}
+        </p>
       )}
     </>
   );
