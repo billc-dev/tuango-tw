@@ -17,6 +17,19 @@ export const getStorageType = (storageType: PostStorageType) => {
   }
 };
 
+export const getStorageTypeLabel = (storageType: PostStorageType) => {
+  switch (storageType) {
+    case "roomTemp":
+      return "常溫";
+    case "refrigerated":
+      return "冷藏";
+    case "frozen":
+      return "冷凍";
+    default:
+      return "";
+  }
+};
+
 export const getStatus = (status: PostStatus) => {
   switch (status) {
     case "open":
@@ -38,4 +51,9 @@ export const getPostTitle = (post?: IPost | IOrder) => {
     return `#${postNum} ${title} ~${displayName}`;
   }
   return "";
+};
+
+export const getFullTitle = (post?: IPost) => {
+  if (!post) return "";
+  return `#${post.postNum} ${post.title} #${post.displayName}`;
 };

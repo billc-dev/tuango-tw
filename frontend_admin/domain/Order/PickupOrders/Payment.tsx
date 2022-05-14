@@ -87,7 +87,7 @@ const Payment: FC<Props> = ({ orders, setUser }) => {
       <PopupDialog
         title="您確定要合計？"
         confirmComponent
-        onSubmit={handleSubmit}
+        onConfirm={handleSubmit}
         {...{ open, handleClose }}
       >
         <div>

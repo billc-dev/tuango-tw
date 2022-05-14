@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 
 const Message: NextPage = () => {
-  return <div>pickup</div>;
+  return <div>message</div>;
 };
 
 export default Message;

@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import { IUser } from "api/auth/userDB";
 import CardHeader from "components/Card/CardHeader";
 import PopupDialog from "components/Dialog/PopupDialog";
+import LoadingIndicator from "components/Indicator/LoadingIndicator";
 
 import { useUsers } from "../hooks";
 
@@ -41,6 +42,7 @@ const UsersDialog: FC<Props> = (props) => {
           }}
         />
       ))}
+      <LoadingIndicator loading={usersQuery.isLoading} />
     </PopupDialog>
   );
 };

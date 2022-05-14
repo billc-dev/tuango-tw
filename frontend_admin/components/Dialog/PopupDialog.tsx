@@ -17,12 +17,13 @@ interface DialogProps
   className?: string;
   action?: React.ReactNode;
   confirmComponent?: boolean;
-  onSubmit?: () => void;
+  onConfirm?: () => void;
+  loading?: boolean;
 }
 
 const PopupDialog: FC<DialogProps> = (props) => {
   const { children, open, handleClose, title, id, className, action } = props;
-  const { confirmComponent, onSubmit } = props;
+  const { confirmComponent, onConfirm, loading } = props;
   const [animate, setAnimate] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -61,11 +62,16 @@ const PopupDialog: FC<DialogProps> = (props) => {
           <div ref={ref} className="mx-auto max-w-lg px-4 pb-4 dark:text-white">
             {children}
             {confirmComponent && (
-              <div className="flex mt-8 justify-around">
-                <Button variant="primary" size="lg" onClick={onSubmit}>
+              <div className="flex mt-8 justify-end">
+                <Button
+                  variant="primary"
+                  size="lg"
+                  onClick={onConfirm}
+                  loading={loading}
+                >
                   確定
                 </Button>
-                <Button size="lg" onClick={handleClose}>
+                <Button size="lg" onClick={handleClose} className="ml-2">
                   取消
                 </Button>
               </div>

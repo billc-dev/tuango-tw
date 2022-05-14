@@ -1,5 +1,6 @@
 import React, { FC, useEffect } from "react";
 
+import LoadingIndicator from "components/Indicator/LoadingIndicator";
 import OrderCard from "domain/Order/PickupOrders/OrderCard";
 import { User } from "domain/User/types";
 
@@ -35,6 +36,7 @@ const PickupOrders: FC<Props> = ({ username, setUser }) => {
           ))}
         </>
       )}
+      <LoadingIndicator loading={ordersQuery.isLoading} />
     </div>
   );
 };

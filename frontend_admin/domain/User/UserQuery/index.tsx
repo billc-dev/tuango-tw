@@ -41,6 +41,7 @@ const UserQuery: FC<Props> = (props) => {
         variant={variant}
         onChange={(e) => setDisplayName(e.target.value)}
         onKeyDown={handleKeyDown}
+        selectOnFocus
       />
       {open && (
         <UsersDialog

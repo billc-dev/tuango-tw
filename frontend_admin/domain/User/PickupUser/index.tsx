@@ -5,7 +5,7 @@ import CardHeader from "components/Card/CardHeader";
 import TextField from "components/TextField";
 
 import UserQuery from "../UserQuery";
-import { useGetUserByPickupNum } from "../hooks";
+import { useGetUserByPickupNum, useSetLinePay } from "../hooks";
 import { User } from "../types";
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
 
 const PickupUser: FC<Props> = ({ user, setUser }) => {
   const getUserByPickupNumQuery = useGetUserByPickupNum();
-
+  const setLinePay = useSetLinePay();
   const handleSetUser = (user: User) => {
     setUser(user);
   };
@@ -31,6 +31,17 @@ const PickupUser: FC<Props> = ({ user, setUser }) => {
       },
     });
   };
+  const handlePaymentMethod = () => {
+    if (!user) return;
+    setLinePay.mutate(
+      { username: user.username, linepay: !user.linepay },
+      {
+        onSuccess(data) {
+          setUser(data);
+        },
+      }
+    );
+  };
   return (
     <div>
       {user ? (
@@ -38,7 +49,20 @@ const PickupUser: FC<Props> = ({ user, setUser }) => {
           <Button fullWidth onClick={() => setUser(undefined)}>
             已合計
           </Button>
-          <CardHeader title={user.displayName} img={user.pictureUrl} />
+          <CardHeader
+            title={`${user.pickupNum}.${user.displayName}`}
+            img={user.pictureUrl}
+            action={
+              <Button
+                loading={setLinePay.isLoading}
+                className="whitespace-nowrap"
+                variant={user.linepay ? "primary" : undefined}
+                onClick={handlePaymentMethod}
+              >
+                {user.linepay ? "LINE PAY" : "現金付款"}
+              </Button>
+            }
+          />
         </div>
       ) : (
         <div className="flex">

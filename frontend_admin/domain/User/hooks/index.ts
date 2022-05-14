@@ -10,6 +10,7 @@ import {
   fetchUsers,
   login,
   patchUserComment,
+  setLinePay,
 } from "domain/User/api";
 import { setAccessToken } from "domain/User/services/accessToken";
 
@@ -92,4 +93,8 @@ export const usePatchUserComment = () => {
       queryClient.setQueryData(["userComment", params.username], data);
     },
   });
+};
+
+export const useSetLinePay = () => {
+  return useMutation(setLinePay);
 };

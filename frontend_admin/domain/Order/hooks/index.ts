@@ -68,7 +68,7 @@ export const useCompleteOrders = (
   const queryClient = useQueryClient();
   return useMutation(completeOrders, {
     onSuccess: () => {
-      queryClient.invalidateQueries("complete");
+      queryClient.invalidateQueries("completes");
     },
     onError: (error) => {
       if (!(error instanceof AxiosError)) return;

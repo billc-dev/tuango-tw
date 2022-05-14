@@ -1,6 +1,8 @@
+import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
 
 import { PencilIcon } from "@heroicons/react/outline";
+import { shallowPush } from "utils";
 
 import Button from "components/Button";
 import IconButton from "components/Button/IconButton";
@@ -21,10 +23,18 @@ interface Props {
 }
 
 const OrderCard: FC<Props> = ({ order, username }) => {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   return (
     <Card className="px-1 pt-2 bg-white border-t border-zinc-300 rounded-none">
-      <p className="text-sm">🛒 {getPostTitle(order)}</p>
+      <p
+        className="text-sm cursor-pointer"
+        onClick={() => {
+          shallowPush(router, { ...router.query, postId: order.postId });
+        }}
+      >
+        🛒 {getPostTitle(order)}
+      </p>
       <p className="text-sm">
         {getFullDate(order.deliveredAt ?? order.createdAt)}
       </p>

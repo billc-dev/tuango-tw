@@ -2,6 +2,7 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { WINDOW_URL } from "utils";
 
+import { IUser } from "api/auth/userDB";
 import {
   getAccessToken,
   setAccessToken,
@@ -89,4 +90,16 @@ export const patchUserComment = async ({
     { comment }
   );
   return res.data.comment;
+};
+
+interface SetLinePayParams {
+  username: string;
+  linepay: boolean;
+}
+
+export const setLinePay = async ({ username, linepay }: SetLinePayParams) => {
+  const res = await axios.patch<{ user: IUser }>(`/users/${username}/linepay`, {
+    linepay,
+  });
+  return res.data.user;
 };
