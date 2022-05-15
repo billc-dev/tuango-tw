@@ -1,6 +1,11 @@
 import axios from "axios";
 
-import { CreateOrderItem, ExtraOrdersQuery, IOrder } from "../types";
+import {
+  CreateOrderItem,
+  ExtraOrdersQuery,
+  IOrder,
+  OrderQuery,
+} from "../types";
 
 export const getUserOrders = async (username: string) => {
   const res = await axios.get<{ orders: IOrder[] }>(
@@ -76,4 +81,17 @@ interface CompleteOrdersParams {
 
 export const completeOrders = async (params: CompleteOrdersParams) => {
   await axios.patch<{}>("/orders/complete", params);
+};
+
+export const fetchOrders = async (limit: number, query: OrderQuery) => {
+  const res = await axios.post<{
+    orders: IOrder[];
+    hasNextPage: boolean;
+    length: number;
+  }>("/orders/paginate", {
+    limit,
+    page: query.page,
+    query,
+  });
+  return res.data;
 };

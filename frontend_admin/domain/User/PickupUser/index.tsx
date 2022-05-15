@@ -68,15 +68,15 @@ const PickupUser: FC<Props> = ({ user, setUser }) => {
         </div>
       ) : (
         <div className="flex">
-          <form onSubmit={(e) => e.preventDefault()}>
-            <TextField
-              type="number"
-              noLabel
-              variant="standard"
-              placeholder="會員編號"
-              onKeyDown={handleGetUserByPickupNum}
-            />
-          </form>
+          {/* <form onSubmit={(e) => e.preventDefault()}> */}
+          <TextField
+            type="number"
+            noLabel
+            variant="standard"
+            placeholder="會員編號"
+            onKeyDown={handleGetUserByPickupNum}
+          />
+          {/* </form> */}
           <UserQuery
             noLabel
             fullWidth

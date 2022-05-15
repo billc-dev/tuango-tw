@@ -7,9 +7,10 @@ import {
   createDeliveredOrder,
   createExtraDeliveredOrder,
   fetchExtraOrders,
+  fetchOrders,
   getUserOrders,
 } from "../api";
-import { ExtraOrdersQuery, IOrder } from "../types";
+import { ExtraOrdersQuery, IOrder, OrderQuery } from "../types";
 
 export const useGetUserOrders = () => {
   return useMutation(getUserOrders);
@@ -80,5 +81,11 @@ export const useCompleteOrders = (
       toast.error("部分訂單已完成！已刷新已到貨訂單！");
       setOpen(false);
     },
+  });
+};
+
+export const useOrders = (limit: number, query: OrderQuery) => {
+  return useQuery(["posts", limit, query], () => fetchOrders(limit, query), {
+    keepPreviousData: true,
   });
 };

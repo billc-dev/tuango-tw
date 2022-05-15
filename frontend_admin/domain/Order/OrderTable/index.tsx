@@ -5,27 +5,26 @@ import TableBody from "components/Table/TableBody";
 import TableHead from "components/Table/TableHead";
 import TablePagination from "components/Table/TablePagination";
 
-import CreatePostButton from "../CreatePost/CreatePostButton";
-import { usePosts } from "../hooks";
-import { PostQuery } from "../types";
-import PostHead from "./PostHead";
-import PostQueryRow from "./PostQueryRow";
-import PostRow from "./PostRow";
+import { useOrders } from "../hooks";
+import { OrderQuery } from "../types";
+import OrderHead from "./OrderHead";
+import OrderQueryRow from "./OrderQueryRow";
+import OrderRow from "./OrderRow";
 
 const limit = 20;
 
-const PostTable = () => {
-  const [query, setQuery] = useState<PostQuery>({ page: 0 });
-  const { data, isFetching } = usePosts(limit, query);
+const OrderTable = () => {
+  const [query, setQuery] = useState<OrderQuery>({ page: 0 });
+  const { data, isFetching } = useOrders(limit, query);
   const { page } = query;
   const handlePage = (page: number) => {
     return () => {
       setQuery((query) => ({ ...query, page: query.page + page }));
     };
   };
+
   return (
     <>
-      <CreatePostButton />
       <TablePagination
         {...{
           page,
@@ -40,13 +39,13 @@ const PostTable = () => {
       <div className="overflow-y-auto">
         <Table>
           <TableHead>
-            <PostHead />
-            <PostQueryRow {...{ setQuery }} />
+            <OrderHead />
+            <OrderQueryRow {...{ setQuery }} />
           </TableHead>
           <TableBody>
-            {data?.posts &&
-              data?.posts.map((post) => (
-                <PostRow key={post._id} {...{ post }} />
+            {data?.orders &&
+              data.orders.map((order) => (
+                <OrderRow key={order._id} {...{ order }} />
               ))}
           </TableBody>
         </Table>
@@ -66,4 +65,4 @@ const PostTable = () => {
   );
 };
 
-export default PostTable;
+export default OrderTable;

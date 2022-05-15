@@ -68,3 +68,10 @@ export interface CreateOrderItem {
   price: number;
   location?: string;
 }
+
+export interface OrderQuery {
+  userId?: string;
+  postNum?: number;
+  status?: OrderStatus;
+  page: number;
+}
