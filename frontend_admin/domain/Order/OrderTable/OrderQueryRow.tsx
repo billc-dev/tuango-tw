@@ -18,7 +18,7 @@ const OrderHead: FC<Props> = () => {
         <UserQuery
           placeholder="開單者"
           isSeller
-          setUser={(user) => {}}
+          setUser={() => {}}
           variant="standard"
           noLabel
         />
