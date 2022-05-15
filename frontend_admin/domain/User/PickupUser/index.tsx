@@ -23,6 +23,7 @@ const PickupUser: FC<Props> = ({ user, setUser }) => {
   const handleGetUserByPickupNum = (
     e: React.KeyboardEvent<HTMLInputElement>
   ) => {
+    alert(e.key);
     if (e.key !== "Enter") return;
     const pickupNum = Number(e.currentTarget.value);
     if (pickupNum < 0) return;
@@ -67,13 +68,15 @@ const PickupUser: FC<Props> = ({ user, setUser }) => {
         </div>
       ) : (
         <div className="flex">
-          <TextField
-            type="number"
-            noLabel
-            variant="standard"
-            placeholder="會員編號"
-            onKeyDown={handleGetUserByPickupNum}
-          />
+          <form onSubmit={(e) => e.preventDefault()}>
+            <TextField
+              type="number"
+              noLabel
+              variant="standard"
+              placeholder="會員編號"
+              onKeyDown={handleGetUserByPickupNum}
+            />
+          </form>
           <UserQuery
             noLabel
             fullWidth
