@@ -8,7 +8,12 @@ const ID = () => {
   const router = useRouter();
   const completeQuery = useComplete(router.query.id as string);
   if (!completeQuery.data) return null;
-  return <CompletedCard complete={completeQuery.data} />;
+  return (
+    <>
+      <p>{completeQuery.data.displayName}</p>
+      <CompletedCard complete={completeQuery.data} />
+    </>
+  );
 };
 
 export default ID;
