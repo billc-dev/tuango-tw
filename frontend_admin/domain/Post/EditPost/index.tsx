@@ -29,13 +29,6 @@ const EditPost: FC<Props> = ({ postId }) => {
     if (postQuery.data) setOpen(true);
   }, [postQuery.data]);
 
-  useEffect(() => {
-    return () => {
-      postQuery.remove();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <>
       <LoadingIndicator loading={postQuery.isLoading} />
