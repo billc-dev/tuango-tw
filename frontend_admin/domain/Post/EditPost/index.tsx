@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
 
-import { DocumentAddIcon } from "@heroicons/react/outline";
 import { shallowPush } from "utils";
 
 import Button from "components/Button";
@@ -29,6 +28,10 @@ const EditPost: FC<Props> = ({ postId }) => {
     if (postQuery.data) setOpen(true);
   }, [postQuery.data]);
 
+  useEffect(() => {
+    return () => postQuery.remove();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
       <LoadingIndicator loading={postQuery.isLoading} />
@@ -38,13 +41,7 @@ const EditPost: FC<Props> = ({ postId }) => {
           open,
           title: "編輯貼文",
           action: (
-            <Button
-              icon={<DocumentAddIcon />}
-              variant="primary"
-              form="post-form"
-              type="submit"
-              size="lg"
-            >
+            <Button variant="primary" form="post-form" type="submit" size="lg">
               編輯貼文
             </Button>
           ),
