@@ -8,6 +8,7 @@ import TableCell from "components/Table/TableCell";
 import TableHead from "components/Table/TableHead";
 import TableRow from "components/Table/TableRow";
 import TextField from "components/TextField";
+import TextArea from "components/TextField/TextArea";
 import { usePostItems } from "domain/Post/hooks";
 import { getFullLengthDate } from "services/date";
 
@@ -26,7 +27,9 @@ const EditOrderForm: FC<Props> = (props) => {
   const updateOrder = useUpdateOrder();
   const [order, setOrder] = useState(props.order);
   const { displayName, createdAt } = order;
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setOrder((order) => ({ ...order, [name]: value }));
   };
@@ -169,13 +172,14 @@ const EditOrderForm: FC<Props> = (props) => {
         {postItemsQuery.data && (
           <AddItem {...{ items: postItemsQuery.data, setOrder }} />
         )}
-        <TextField
+        <TextArea
+          className="mt-4"
           name="comment"
           value={order.comment}
+          hiddenLabel
+          minRows={1}
           color="grey"
           placeholder="備註"
-          noLabel
-          className="mt-4"
           onChange={handleChange}
         />
         <p className="text-2xl">訂單記錄</p>
