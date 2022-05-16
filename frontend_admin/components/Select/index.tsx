@@ -1,7 +1,7 @@
 import React, { FC, SelectHTMLAttributes } from "react";
 
 interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
-  options: { value: any; label: string }[];
+  options: { value: any; label: string; disabled?: boolean }[];
   variant?: "contained";
   height?: "normal" | "tall";
 }
@@ -33,7 +33,11 @@ const Select: FC<Props> = React.forwardRef((props, ref) => {
       {...rest}
     >
       {options.map((option, index) => (
-        <option key={option.label + index} value={option.value}>
+        <option
+          key={option.label + index}
+          value={option.value}
+          disabled={option.disabled}
+        >
           {option.label}
         </option>
       ))}
