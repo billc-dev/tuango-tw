@@ -25,8 +25,8 @@ const DeliverTable: FC<Props> = ({ deliver }) => {
     setOpen(false);
   };
   return (
-    <div className="mt-4">
-      <p className="font-medium -mb-4">{getFullLengthDate(createdAt)}</p>
+    <div className="mt-2">
+      <p className="font-medium">{getFullLengthDate(createdAt)}</p>
       {normalOrders && normalTotal > 0 && (
         <Table>
           <DeliverHead />
@@ -37,7 +37,7 @@ const DeliverTable: FC<Props> = ({ deliver }) => {
       )}
       {extraOrders && extraTotal > 0 && (
         <>
-          <p className="-mb-4 mt-4 font-medium">待認購</p>
+          <p className="mt-2 font-medium">待認購</p>
           <Table>
             <DeliverHead />
             <TableBody>
