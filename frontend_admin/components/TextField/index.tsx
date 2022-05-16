@@ -47,7 +47,7 @@ const TextField: FC<Props> = React.forwardRef((props, ref) => {
             ? `focus:border-line-400 ${
                 !variant
                   ? "focus:ring-line-400 focus:ring-1"
-                  : "focus:border-b-2"
+                  : "focus:border-b-2 hover:border-b-2"
               }`
             : "border-red-500 ring-red-500 ring-1"
         } ${color === "grey" && "bg-zinc-100 dark:bg-zinc-800"} ${className}`}
