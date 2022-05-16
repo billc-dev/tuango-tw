@@ -13,7 +13,7 @@ const Select: FC<Props> = React.forwardRef((props, ref) => {
       case "contained":
         return "rounded-lg border-zinc-200 bg-zinc-100 mb-2 px-2 py-1 focus:border-line-400 focus:ring-line-400";
       default:
-        return "border-zinc-400 border-0 border-b p-0 focus:ring-0 focus:border-0 focus:border-b";
+        return "border-zinc-400 border-0 border-b p-0 focus:ring-0 focus:border-0 focus:border-b focus:border-line-400";
     }
   };
   const getHeight = () => {
@@ -33,7 +33,7 @@ const Select: FC<Props> = React.forwardRef((props, ref) => {
       {...rest}
     >
       {options.map((option, index) => (
-        <option key={option.value + index} value={option.value}>
+        <option key={option.label + index} value={option.value}>
           {option.label}
         </option>
       ))}
