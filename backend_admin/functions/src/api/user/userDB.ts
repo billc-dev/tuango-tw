@@ -3,32 +3,14 @@ import * as mongoose from "mongoose";
 
 import { DB_OPTIONS, IS_DEV } from "utils/constant";
 
+import { IUser } from "./user";
+
 export const usersConn = mongoose.createConnection(
   IS_DEV
     ? functions.config().mongodb_uri.user_dev
     : functions.config().mongodb_uri.user_prod,
   DB_OPTIONS
 );
-
-export interface IUser {
-  _id: string;
-  username: string;
-  displayName: string;
-  pictureUrl: string;
-  createdAt: string;
-  pickupNum: number;
-  role: "basic" | "seller" | "admin";
-  status: "registered" | "approved" | "blocked";
-  deliveredOrders: number;
-  notified: boolean;
-  linepay: boolean;
-  comment: string;
-  message: {
-    notified: boolean;
-    notifiedAt: string;
-  };
-  fb: boolean;
-}
 
 export const UserSchema = new mongoose.Schema<IUser>({
   username: { type: String, required: true },

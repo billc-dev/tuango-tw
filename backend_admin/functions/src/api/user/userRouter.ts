@@ -4,6 +4,7 @@ import asyncWrapper from "middleware/asyncWrapper";
 import { isAdmin } from "middleware/auth";
 
 import { User } from "./userDB";
+import { parseUserQueryData } from "./userService";
 
 const router = express.Router();
 
@@ -50,6 +51,39 @@ router.get(
   })
 );
 
+router.post(
+  "/",
+  isAdmin,
+  asyncWrapper(async (req, res) => {
+    const { name, isSeller } = req.body;
+    if (!name) throw "name invalid";
+    const filter = {
+      displayName: new RegExp(name, "i"),
+      ...(isSeller && { role: { $ne: "basic" } }),
+    };
+
+    const users = await User.find(filter);
+    return res.status(200).json({ users });
+  })
+);
+
+router.post(
+  "/paginate",
+  isAdmin,
+  asyncWrapper(async (req, res) => {
+    const { limit, page, query } = parseUserQueryData(req.body);
+    const users = await User.find(query)
+      .skip(page * limit)
+      .limit(limit)
+      .sort("-createdAt");
+    const length = await User.find(query).countDocuments();
+
+    return res
+      .status(200)
+      .json({ users, hasNextPage: users.length === limit, length });
+  })
+);
+
 router.patch(
   "/:username/comment",
   isAdmin,
@@ -80,22 +114,6 @@ router.patch(
     );
     if (!user) throw "user not found";
     return res.status(200).json({ user });
-  })
-);
-
-router.post(
-  "/",
-  isAdmin,
-  asyncWrapper(async (req, res) => {
-    const { name, isSeller } = req.body;
-    if (!name) throw "name invalid";
-    const filter = {
-      displayName: new RegExp(name, "i"),
-      ...(isSeller && { role: { $ne: "basic" } }),
-    };
-
-    const users = await User.find(filter);
-    return res.status(200).json({ users });
   })
 );
 
