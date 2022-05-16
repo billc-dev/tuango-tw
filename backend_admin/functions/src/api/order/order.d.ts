@@ -56,3 +56,17 @@ export interface CreateOrderItem {
   price: number;
   location: string;
 }
+
+export interface OrderQuery {
+  userId?: string;
+  postNum?: number;
+  status?: OrderStatus;
+  text?: string;
+}
+
+export interface ParsedOrderQuery {
+  userId?: string;
+  postNum?: number;
+  status?: OrderStatus;
+  $or?: { [title | sellerDisplayName | "order.item"]: RegExp }[];
+}

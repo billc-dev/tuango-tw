@@ -24,6 +24,15 @@ router.get(
   })
 );
 
+router.get(
+  "/:orderId",
+  isAdmin,
+  asyncWrapper(async (req, res) => {
+    const order = await Order.findById(req.params.orderId);
+    return res.status(200).json({ order });
+  })
+);
+
 interface FilterQuery {
   userId?: string;
   status?: OrderStatus;
@@ -54,6 +63,24 @@ router.post(
       .sort(sortBy)
       .select("-orderHistory");
     return res.status(200).json({ orders });
+  })
+);
+
+router.post(
+  "/paginate",
+  isAdmin,
+  asyncWrapper(async (req, res) => {
+    const { limit, page, query } = orderService.parseOrderQueryData(req.body);
+    const orders = await Order.find(query)
+      .skip(page * limit)
+      .limit(limit)
+      .sort("-createdAt")
+      .select("-orderHistory");
+    const length = await Order.find(query).countDocuments();
+
+    return res
+      .status(200)
+      .json({ orders, hasNextPage: orders.length === limit, length });
   })
 );
 
@@ -157,6 +184,31 @@ router.patch(
     );
 
     return res.status(200).json({});
+  })
+);
+
+router.patch(
+  "/:orderId",
+  isAdmin,
+  asyncWrapper(async (req, res) => {
+    const { order } = req.body;
+    if (!order) throw "order is missing";
+    const session = await Order.startSession();
+    try {
+      session.startTransaction();
+      const categories = orderService.categorizeOrders(order.order);
+      const categoryCount = Object.keys(categories).length;
+      if (categoryCount <= 0) throw "no orders to update";
+      await orderService.updateOrders(session, order, categories);
+      await session.commitTransaction();
+    } catch (error) {
+      await session.abortTransaction();
+      throw error;
+    } finally {
+      session.endSession();
+    }
+
+    return res.status(200).json({ order });
   })
 );
 

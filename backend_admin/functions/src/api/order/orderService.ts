@@ -2,7 +2,7 @@ import { ClientSession } from "mongoose";
 
 import { notifyUser } from "api/notify/notifyService";
 import { IPost } from "api/post/post";
-import { IUser } from "api/user/userDB";
+import { IUser } from "api/user/user";
 import { getCurrentDate } from "utils/date";
 import { FRONTEND_URL } from "utils/url";
 
@@ -10,7 +10,9 @@ import {
   CreateOrderItem,
   IOrder,
   MongooseOrder,
+  OrderQuery,
   OrderStatus,
+  ParsedOrderQuery,
   SingleOrder,
 } from "./order";
 import Order from "./orderDB";
@@ -173,12 +175,14 @@ export const createDeliveredOrder = async (
 };
 
 export const categorizeOrders = (orderItems: SingleOrder[]) => {
+  const ordered = orderItems.filter((i) => i.status === "ordered");
   const delivered = orderItems.filter((i) => i.status === "delivered");
   const completed = orderItems.filter((i) => i.status === "completed");
   const missing = orderItems.filter((i) => i.status === "missing");
   const canceled = orderItems.filter((i) => i.status === "canceled");
 
   const categories: { [key in OrderStatus]?: SingleOrder[] } = {};
+  if (ordered.length > 0) categories["ordered"] = ordered;
   if (delivered.length > 0) categories["delivered"] = delivered;
   if (completed.length > 0) categories["completed"] = completed;
   if (missing.length > 0) categories["missing"] = missing;
@@ -280,4 +284,43 @@ export const sendDeliveredMessage = async (order: IOrder) => {
 ${getOrderList(order.order)}小計$${getOrderSum(order.order)}
 已到貨連結: ${FRONTEND_URL}/orders/delivered`;
   await notifyUser(userId, message);
+};
+
+interface OrderQueryData {
+  limit?: number;
+  page: number;
+  query?: OrderQuery;
+}
+
+export const parseOrderQueryData = (data: OrderQueryData) => {
+  const limit = getLimit(data.limit);
+  const page = data.page >= 0 ? data.page : 0;
+  const query = parseQuery(data.query);
+  return { limit, page, query };
+};
+
+export const parseQuery = (query?: OrderQuery) => {
+  if (!query) return {};
+  const { postNum, status, userId, text } = query;
+
+  const parsedQuery: ParsedOrderQuery = {};
+  if (postNum) parsedQuery.postNum = postNum;
+  if (userId) parsedQuery.userId = userId;
+  if (status) parsedQuery.status = status;
+  if (text) {
+    const regExp = new RegExp(text, "i");
+    parsedQuery.$or = [
+      { title: regExp },
+      { sellerDisplayName: regExp },
+      { "order.item": regExp },
+    ];
+  }
+
+  return parsedQuery;
+};
+
+const getLimit = (limit?: number) => {
+  if (!limit) return 20;
+  if (limit < 100) return limit;
+  return 100;
 };
