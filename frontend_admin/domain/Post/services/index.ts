@@ -1,5 +1,3 @@
-import { IOrder } from "domain/Order/types";
-
 import { IPost, PostStatus, PostStorageType } from "../types";
 
 export * from "./image";
@@ -45,10 +43,10 @@ export const getStatus = (status: PostStatus) => {
   }
 };
 
-export const getPostTitle = (post?: IPost | IOrder) => {
+export const getPostTitle = (post?: IPost) => {
   if (post) {
     const { postNum, title, displayName } = post;
-    return `#${postNum} ${title} ~${displayName}`;
+    return `#${postNum} ${title} #${displayName}`;
   }
   return "";
 };
