@@ -66,7 +66,7 @@ export interface Item {
   itemQty: number;
 }
 
-export type MongoosePost = Document<unknown, any, IPostComplete> &
+export type MongoosePost = Document<unknown, unknown, IPostComplete> &
   IPostComplete & {
     _id: string;
   };
@@ -83,7 +83,7 @@ export interface Query {
   value?: string | number;
 }
 
-interface ValidatedPost extends yup.InferType<typeof postSchema> {}
+type ValidatedPost = yup.InferType<typeof postSchema>;
 
 export interface SellerQuery {
   status?: PostStatus;

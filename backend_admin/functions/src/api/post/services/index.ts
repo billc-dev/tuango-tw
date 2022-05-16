@@ -22,7 +22,7 @@ export const parseQuery = (query?: PostQuery) => {
   const { postNum, title, userId, storageType } = query;
   const { deadline, deliveryDate, status } = query;
 
-  let parsedQuery: PostQuery = {};
+  const parsedQuery: PostQuery = {};
   if (postNum) parsedQuery.postNum = postNum;
   if (title) parsedQuery.title = new RegExp(title, "i");
   if (userId) parsedQuery.userId = userId;
