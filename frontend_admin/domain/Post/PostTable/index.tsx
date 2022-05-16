@@ -23,6 +23,9 @@ const PostTable = () => {
       setQuery((query) => ({ ...query, page: query.page + page }));
     };
   };
+  const handleSetPage = (page: number) => {
+    setQuery((query) => ({ ...query, page }));
+  };
   return (
     <>
       <CreatePostButton />
@@ -33,6 +36,7 @@ const PostTable = () => {
           isLoading: isFetching,
           length: data?.length || 0,
           hasNextPage: !!data?.hasNextPage,
+          onSetPage: handleSetPage,
         }}
         onPreviousPage={handlePage(-1)}
         onNextPage={handlePage(1)}
@@ -58,6 +62,7 @@ const PostTable = () => {
           isLoading: isFetching,
           length: data?.length || 0,
           hasNextPage: !!data?.hasNextPage,
+          onSetPage: handleSetPage,
         }}
         onPreviousPage={handlePage(-1)}
         onNextPage={handlePage(1)}
