@@ -73,5 +73,6 @@ export interface OrderQuery {
   userId?: string;
   postNum?: number;
   status?: OrderStatus;
+  text?: string;
   page: number;
 }

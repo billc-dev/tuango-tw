@@ -22,6 +22,9 @@ const OrderTable = () => {
       setQuery((query) => ({ ...query, page: query.page + page }));
     };
   };
+  const handleSetPage = (page: number) => {
+    setQuery((query) => ({ ...query, page }));
+  };
 
   return (
     <>
@@ -35,6 +38,7 @@ const OrderTable = () => {
         }}
         onPreviousPage={handlePage(-1)}
         onNextPage={handlePage(1)}
+        onSetPage={handleSetPage}
       />
       <div className="overflow-y-auto">
         <Table>
@@ -60,6 +64,7 @@ const OrderTable = () => {
         }}
         onPreviousPage={handlePage(-1)}
         onNextPage={handlePage(1)}
+        onSetPage={handleSetPage}
       />
     </>
   );

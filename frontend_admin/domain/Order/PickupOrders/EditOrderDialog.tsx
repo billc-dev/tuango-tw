@@ -12,8 +12,8 @@ import TableHead from "components/Table/TableHead";
 import TableRow from "components/Table/TableRow";
 import TextField from "components/TextField";
 import { usePostItems } from "domain/Post/hooks";
-import { getPostTitle } from "domain/Post/services";
 
+import { getOrderTitle } from "../services";
 import { IOrder } from "../types";
 import AddItem from "./AddItem";
 
@@ -63,7 +63,7 @@ const EditOrderDialog: FC<Props> = ({ open, setOpen, username, ...props }) => {
   return (
     <Dialog title="編輯訂單" {...{ open, handleClose }}>
       <div className="mt-2">
-        <p>{getPostTitle(order)}</p>
+        <p>{getOrderTitle(order)}</p>
         <Table>
           <TableHead>
             <TableRow>

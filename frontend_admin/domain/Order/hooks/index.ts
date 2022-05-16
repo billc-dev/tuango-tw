@@ -7,8 +7,10 @@ import {
   createDeliveredOrder,
   createExtraDeliveredOrder,
   fetchExtraOrders,
+  fetchOrder,
   fetchOrders,
   getUserOrders,
+  updateOrder,
 } from "../api";
 import { ExtraOrdersQuery, IOrder, OrderQuery } from "../types";
 
@@ -85,7 +87,26 @@ export const useCompleteOrders = (
 };
 
 export const useOrders = (limit: number, query: OrderQuery) => {
-  return useQuery(["posts", limit, query], () => fetchOrders(limit, query), {
+  return useQuery(["orders", limit, query], () => fetchOrders(limit, query), {
     keepPreviousData: true,
+    cacheTime: 0,
+  });
+};
+
+export const useOrder = (orderId: string) => {
+  return useQuery(["order", orderId], () => fetchOrder(orderId), {
+    cacheTime: 0,
+  });
+};
+
+export const useUpdateOrder = () => {
+  const queryClient = useQueryClient();
+  return useMutation(updateOrder, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("orders");
+    },
+    onError: () => {
+      toast.error("編輯失敗！請重新試一次！");
+    },
   });
 };

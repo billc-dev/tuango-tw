@@ -95,3 +95,12 @@ export const fetchOrders = async (limit: number, query: OrderQuery) => {
   });
   return res.data;
 };
+
+export const fetchOrder = async (orderId: string) => {
+  const res = await axios.get<{ order: IOrder }>(`/orders/${orderId}`);
+  return res.data.order;
+};
+
+export const updateOrder = async (order: IOrder) => {
+  return axios.patch(`/orders/${order._id}`, { order });
+};

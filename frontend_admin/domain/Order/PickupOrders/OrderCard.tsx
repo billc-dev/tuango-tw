@@ -12,9 +12,9 @@ import TableBody from "components/Table/TableBody";
 import TableCell from "components/Table/TableCell";
 import TableRow from "components/Table/TableRow";
 import { IOrder } from "domain/Order/types";
-import { getPostTitle } from "domain/Post/services";
 import { getFullDate } from "services/date";
 
+import { getOrderTitle } from "../services";
 import EditOrderDialog from "./EditOrderDialog";
 
 interface Props {
@@ -33,7 +33,7 @@ const OrderCard: FC<Props> = ({ order, username }) => {
           shallowPush(router, { ...router.query, postId: order.postId });
         }}
       >
-        🛒 {getPostTitle(order)}
+        🛒 {getOrderTitle(order)}
       </p>
       <p className="text-sm">
         {getFullDate(order.deliveredAt ?? order.createdAt)}

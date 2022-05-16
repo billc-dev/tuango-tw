@@ -29,3 +29,11 @@ export const getOrderStatusLabel = (status: OrderStatus) => {
       return "";
   }
 };
+
+export const getOrderTitle = (order?: IOrder) => {
+  if (order) {
+    const { postNum, title, sellerDisplayName } = order;
+    return `#${postNum} ${title} #${sellerDisplayName}`;
+  }
+  return "";
+};
