@@ -34,7 +34,7 @@ export const isAuthenticated = () => {
   }
 };
 
-export const fetchUser = async () => {
+export const fetchMe = async () => {
   if (!isAuthenticated()) await fetchNewAccessToken();
   return axios.get<{ user: User }>("/users/me");
 };
@@ -115,4 +115,36 @@ export const paginateUsers = async (limit: number, query: IUserQuery) => {
     query,
   });
   return res.data;
+};
+
+export const fetchUser = async (userId: string) => {
+  const res = await axios.get<{ user: User }>(`/users/${userId}`);
+  return res.data.user;
+};
+
+const AWS_UPLOAD_URL =
+  "https://4tr9p3bu1e.execute-api.ap-east-1.amazonaws.com/prod/upload-image?bucket=tuango-tw-images";
+
+interface UploadImageParams {
+  image: unknown;
+  filename: string;
+  imageType: "sm" | "md" | "profile";
+}
+
+export const uploadImage = async ({
+  image,
+  filename,
+  imageType,
+}: UploadImageParams) => {
+  await axios.put(
+    `${AWS_UPLOAD_URL}&key=${filename}/${imageType}.jpeg`,
+    image,
+    { headers: { "Content-Type": "image/jpeg" }, withCredentials: false }
+  );
+  return `https://d2lduww19xwizo.cloudfront.net/${filename}/${imageType}.jpeg`;
+};
+
+export const patchUser = async (user: IUser) => {
+  const res = await axios.patch<{ user: User }>(`/users/${user._id}`, { user });
+  return res.data.user;
 };

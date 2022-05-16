@@ -5,7 +5,7 @@ import { useQueryClient } from "react-query";
 
 import Button from "components/Button";
 import Menu from "components/Menu";
-import { useMutateLogout, useUser } from "domain/User/hooks";
+import { useMe, useMutateLogout } from "domain/User/hooks";
 import { getLocalStorageUser } from "domain/User/services";
 
 const TopNavbar = () => {
@@ -13,11 +13,11 @@ const TopNavbar = () => {
   const queryClient = useQueryClient();
   const logout = useMutateLogout();
   const [open, setOpen] = useState(false);
-  const { refetch } = useUser();
+  const { refetch } = useMe();
   useEffect(() => {
     const user = getLocalStorageUser();
     if (!user) return;
-    queryClient.setQueryData("user", user);
+    queryClient.setQueryData("me", user);
     refetch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
