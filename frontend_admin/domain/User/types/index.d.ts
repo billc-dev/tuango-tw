@@ -17,3 +17,12 @@ export interface User {
   };
   fb: boolean;
 }
+
+export interface IUserQuery {
+  pickupNum?: number;
+  username?: string;
+  notified?: boolean;
+  status?: "registered" | "approved" | "blocked";
+  role?: "basic" | "seller" | "admin";
+  page: number;
+}

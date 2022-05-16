@@ -9,12 +9,14 @@ import {
   fetchUserComment,
   fetchUsers,
   login,
+  paginateUsers,
   patchUserComment,
   setLinePay,
 } from "domain/User/api";
 import { setAccessToken } from "domain/User/services/accessToken";
 
 import { fetchUser, fetchVerifyStatus, logout } from "../api";
+import { IUserQuery } from "../types";
 
 export const useMutateLogin = () => {
   const queryClient = useQueryClient();
@@ -97,4 +99,11 @@ export const usePatchUserComment = () => {
 
 export const useSetLinePay = () => {
   return useMutation(setLinePay);
+};
+
+export const usePaginateUsers = (limit: number, query: IUserQuery) => {
+  return useQuery(["users", limit, query], () => paginateUsers(limit, query), {
+    keepPreviousData: true,
+    cacheTime: 0,
+  });
 };

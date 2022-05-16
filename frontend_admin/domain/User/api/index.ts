@@ -8,7 +8,7 @@ import {
   setAccessToken,
 } from "domain/User/services/accessToken";
 
-import { User } from "../types";
+import { IUserQuery, User } from "../types";
 
 export const fetchVerifyStatus = () => {
   return axios.post<{ authenticated: boolean }>(
@@ -102,4 +102,17 @@ export const setLinePay = async ({ username, linepay }: SetLinePayParams) => {
     linepay,
   });
   return res.data.user;
+};
+
+export const paginateUsers = async (limit: number, query: IUserQuery) => {
+  const res = await axios.post<{
+    users: IUser[];
+    hasNextPage: boolean;
+    length: number;
+  }>("/users/paginate", {
+    limit,
+    page: query.page,
+    query,
+  });
+  return res.data;
 };

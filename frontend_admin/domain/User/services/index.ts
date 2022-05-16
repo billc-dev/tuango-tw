@@ -2,6 +2,8 @@ import { AxiosResponse } from "axios";
 import { nanoid } from "nanoid";
 import { WINDOW_URL, isClient } from "utils";
 
+import { IUserRole, IUserStatus } from "api/auth/userDB";
+
 import { User } from "../types";
 
 export const getRedirectUrl = () => {
@@ -42,4 +44,30 @@ export const getLocalStorageUser = () => {
   if (!parsedUser.data) return false;
 
   return parsedUser;
+};
+
+export const getUserStatusLabel = (status: IUserStatus) => {
+  switch (status) {
+    case "registered":
+      return "已申請";
+    case "approved":
+      return "已核准";
+    case "blocked":
+      return "已封鎖";
+    default:
+      return "";
+  }
+};
+
+export const getUserRoleLabel = (role: IUserRole) => {
+  switch (role) {
+    case "basic":
+      return "買家";
+    case "seller":
+      return "賣家";
+    case "admin":
+      return "管理員";
+    default:
+      return "";
+  }
 };
