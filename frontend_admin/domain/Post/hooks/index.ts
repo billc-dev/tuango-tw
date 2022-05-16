@@ -12,15 +12,13 @@ import { PostQuery } from "../types";
 export * from "./mutation";
 
 export const usePost = (postId: string) => {
-  return useQuery(["post", postId], () => fetchPost(postId), {
-    enabled: !!postId,
-    refetchOnMount: "always",
-  });
+  return useQuery(["post", postId], () => fetchPost(postId), { cacheTime: 0 });
 };
 
 export const usePosts = (limit: number, query: PostQuery) => {
   return useQuery(["posts", limit, query], () => fetchPosts(limit, query), {
     keepPreviousData: true,
+    cacheTime: 0,
   });
 };
 
