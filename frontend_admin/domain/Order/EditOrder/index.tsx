@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
 
-import { DocumentAddIcon } from "@heroicons/react/outline";
 import { shallowPush } from "utils";
 
 import Button from "components/Button";
@@ -28,6 +27,11 @@ const EditOrder: FC<Props> = ({ orderId }) => {
   useEffect(() => {
     if (orderQuery.data) setOpen(true);
   }, [orderQuery.data]);
+
+  useEffect(() => {
+    return () => orderQuery.remove();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
       <LoadingIndicator loading={orderQuery.isLoading} />
@@ -37,13 +41,7 @@ const EditOrder: FC<Props> = ({ orderId }) => {
           open,
           title: "編輯訂單",
           action: (
-            <Button
-              icon={<DocumentAddIcon />}
-              variant="primary"
-              form="order-form"
-              type="submit"
-              size="lg"
-            >
+            <Button variant="primary" form="order-form" type="submit" size="lg">
               編輯訂單
             </Button>
           ),
