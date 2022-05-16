@@ -34,7 +34,7 @@ const UsersDialog: FC<Props> = (props) => {
         <CardHeader
           key={user._id}
           img={user.pictureUrl}
-          title={user.displayName}
+          title={`${user.pickupNum}.${user.displayName}`}
           onClick={() => {
             setUser(user);
             setDisplayName(user.displayName);
