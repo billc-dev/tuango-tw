@@ -1,6 +1,7 @@
-import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
+
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import LikeButton from "domain/Like/LikeButton";
 import { shallowPush } from "utils/routing";
@@ -24,24 +25,8 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
       className="hover:scale-[1.01] antialiased flex max-w-[180px] transform flex-col overflow-hidden rounded-3xl bg-white
               shadow-md transition hover:shadow-2xl dark:bg-zinc-800 dark:hover:shadow-gray-900"
     >
-      <div
-        className="relative h-[180px] w-[180px] cursor-pointer"
-        onClick={openDialog}
-      >
-        {post.imageUrls &&
-          (post.imageUrls[0].sm.includes("ibb.co") ? null : (
-            <Image
-              alt="product"
-              src={post.imageUrls[0].sm}
-              layout="fill"
-              objectFit="cover"
-              className={`transition-all duration-300 ${
-                loaded ? "opacity-100 blur-0" : "opacity-0 blur-sm"
-              }`}
-              onLoadingComplete={() => setLoaded(true)}
-            />
-          ))}
-        {/* <LazyLoadImage
+      <div className="h-[180px] w-[180px] cursor-pointer">
+        <LazyLoadImage
           alt="product"
           src={post.imageUrls && post.imageUrls[0].sm}
           onLoad={() => setLoaded(true)}
@@ -49,7 +34,7 @@ const PostCard: FC<PostCardProps> = ({ post }) => {
             loaded ? "opacity-100 blur-0" : "opacity-0 blur-sm"
           }`}
           onClick={openDialog}
-        /> */}
+        />
       </div>
       <div className="px-2 pt-2 pb-1">
         <div className="cursor-pointer" onClick={openDialog}>
