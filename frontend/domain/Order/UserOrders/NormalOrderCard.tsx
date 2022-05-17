@@ -1,9 +1,9 @@
+import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 
 import { PaperAirplaneIcon } from "@heroicons/react/outline";
 import toast from "react-hot-toast";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import Button from "components/Button";
 import Card from "components/Card";
@@ -20,6 +20,7 @@ interface Props {
 }
 
 const NormalOrderCard: FC<Props> = ({ order, type, chat }) => {
+  const [loaded, setLoaded] = useState(false);
   const sendMessage = useSendMessage();
   const sum = order.order.reduce((sum, ord) => (sum += ord.price * ord.qty), 0);
   const router = useRouter();
@@ -44,11 +45,23 @@ const NormalOrderCard: FC<Props> = ({ order, type, chat }) => {
       onClick={() => handleClick()}
     >
       <div className="grid grid-cols-4">
-        <div className="my-auto item col-span-1">
-          <LazyLoadImage
+        <div className="my-auto item col-span-1 relative w-full h-full">
+          {/* <LazyLoadImage
             className="h-full w-full object-cover"
             src={order.imageUrl}
-          />
+          /> */}
+          {order.imageUrl.includes("ibb.co") ? null : (
+            <Image
+              alt="product"
+              src={order.imageUrl}
+              layout="fill"
+              objectFit="contain"
+              className={` transition-all duration-300 ${
+                loaded ? "opacity-100 blur-0" : "opacity-0 blur-sm"
+              }`}
+              onLoadingComplete={() => setLoaded(true)}
+            />
+          )}
         </div>
         <div className="p-2 col-span-3">
           <p className="text-sm">
