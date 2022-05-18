@@ -21,7 +21,7 @@ const Menu: FC<Props> = ({ className, open, handleClose, items, children }) => {
   return open ? (
     <>
       <div
-        className={`absolute select-none bg-white overflow-hidden ring-1 ring-zinc-200 rounded-md drop-shadow-lg whitespace-nowrap top-10 z-20 ${className}`}
+        className={`absolute select-none bg-white overflow-hidden ring-1 ring-zinc-200 rounded-md whitespace-nowrap top-10 z-20 ${className}`}
       >
         {items.map((item) => (
           <button
