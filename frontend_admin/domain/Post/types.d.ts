@@ -36,6 +36,32 @@ export interface IPost {
   extraFee: number;
 }
 
+export interface ILocationPostItem {
+  id: string;
+  item: string;
+  location: string;
+  checked: boolean;
+}
+
+export interface ILocationOrderItem {
+  checked: boolean;
+  displayName: string;
+  id: string;
+  item: string;
+  location: string;
+  orderNum: number;
+  qty: number;
+  _id: string;
+}
+
+export interface ILocationPost {
+  postNum: number;
+  title: string;
+  displayName: string;
+  items: ILocationPostItem[];
+  orderItems: ILocationOrderItem[];
+}
+
 export interface IPostCard {
   _id: string;
   postNum: number;
