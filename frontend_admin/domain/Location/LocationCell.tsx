@@ -18,9 +18,14 @@ const LocationCell: FC<Props> = ({ location, setSelections, setLocation }) => {
     }
     setLocation(location.value);
   };
+  const getColSpan = () => {
+    if (location.span === 4) return "col-span-4";
+    else if (location.span === 6) return "col-span-6";
+    else return "col-span-12";
+  };
   return (
     <div
-      className={`${`col-span-${location.span}`} text-center px-4 py-4 bg-zinc-300 hover:bg-zinc-400 cursor-pointer ${
+      className={`${getColSpan()} text-center px-4 py-4 bg-zinc-300 hover:bg-zinc-400 cursor-pointer ${
         location.span === 4 ? "text-xl" : "text-2xl"
       }`}
       onClick={handleClick}
