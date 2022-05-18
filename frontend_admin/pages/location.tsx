@@ -1,7 +1,13 @@
 import type { NextPage } from "next";
 
-const Deliver: NextPage = () => {
-  return <div>pickup</div>;
+import Location from "domain/Location";
+
+const LocationPage: NextPage = () => {
+  return (
+    <div className="mx-2">
+      <Location />
+    </div>
+  );
 };
 
-export default Deliver;
+export default LocationPage;
