@@ -13,7 +13,7 @@ const index: FC<Props> = (props) => {
   return (
     <input
       type="checkbox"
-      className={`rounded cursor-pointer ${
+      className={`rounded cursor-pointer ml-1 ${
         checkboxSize === "large" && "w-5 h-5"
       } ${className}`}
       {...rest}
