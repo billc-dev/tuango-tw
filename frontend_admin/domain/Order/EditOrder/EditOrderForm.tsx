@@ -1,6 +1,7 @@
 import React, { FC, useState } from "react";
 
 import Button from "components/Button";
+import OrderHasNameButton from "components/Button/OrderHasNameButton";
 import Select from "components/Select";
 import Table from "components/Table/Table";
 import TableBody from "components/Table/TableBody";
@@ -159,16 +160,14 @@ const EditOrderForm: FC<Props> = (props) => {
             </TableBody>
           </Table>
         </div>
-        <Button
+        <OrderHasNameButton
           className="mt-4"
           fullWidth
-          variant={order.hasName ? "primary" : undefined}
+          hasName={order.hasName}
           onClick={() =>
             setOrder((order) => ({ ...order, hasName: !order.hasName }))
           }
-        >
-          {order.hasName ? "有貼名字" : "沒貼名字"}
-        </Button>
+        />
         {postItemsQuery.data && (
           <AddItem {...{ items: postItemsQuery.data, setOrder }} />
         )}
