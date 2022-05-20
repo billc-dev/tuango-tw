@@ -1,8 +1,12 @@
-import React, { ButtonHTMLAttributes, FC } from "react";
+import React, { FC } from "react";
 
 import AnimatedSpinner from "components/svg/AnimatedSpinner";
 
-interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface Props
+  extends React.DetailedHTMLProps<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
   size?: "lg" | "xl" | "square";
   variant?: "primary" | "secondary" | "danger" | "inherit" | "orange" | "info";
   fullWidth?: boolean;
@@ -68,7 +72,7 @@ const Button: FC<Props> = (props) => {
       case "square":
         return "px-1 py-1";
       default:
-        return "py-1 px-2";
+        return "py-1 px-3";
     }
   };
 
