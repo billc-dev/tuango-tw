@@ -1,7 +1,13 @@
 import type { NextPage } from "next";
 
-const Deliver: NextPage = () => {
-  return <div>deliver</div>;
+import Deliver from "domain/Deliver";
+
+const DeliverPage: NextPage = () => {
+  return (
+    <div className="mx-2">
+      <Deliver />
+    </div>
+  );
 };
 
-export default Deliver;
+export default DeliverPage;

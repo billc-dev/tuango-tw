@@ -1,5 +1,6 @@
 import axios from "axios";
 
+import { PostOrdersParams } from "../hooks";
 import {
   CreateOrderItem,
   ExtraOrdersQuery,
@@ -103,4 +104,15 @@ export const fetchOrder = async (orderId: string) => {
 
 export const updateOrder = async (order: IOrder) => {
   return axios.patch(`/orders/${order._id}`, { order });
+};
+
+export const getPostOrders = async ({
+  postId,
+  ...params
+}: PostOrdersParams) => {
+  const res = await axios.post<{ orders: IOrder[] }>(
+    `/orders/post/${postId}`,
+    params
+  );
+  return res.data.orders;
 };

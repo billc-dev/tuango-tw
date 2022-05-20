@@ -37,3 +37,9 @@ export const usePostItems = (postId: string) => {
 export const useGetPostByPostNum = () => {
   return useMutation(fetchPostByPostNum);
 };
+
+export const usePostByPostNum = (postNum: string) => {
+  return useQuery(["post", postNum], () => fetchPostByPostNum(postNum), {
+    enabled: !!postNum,
+  });
+};

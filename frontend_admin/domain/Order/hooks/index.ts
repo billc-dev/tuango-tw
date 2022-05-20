@@ -9,10 +9,11 @@ import {
   fetchExtraOrders,
   fetchOrder,
   fetchOrders,
+  getPostOrders,
   getUserOrders,
   updateOrder,
 } from "../api";
-import { ExtraOrdersQuery, IOrder, OrderQuery } from "../types";
+import { ExtraOrdersQuery, IOrder, OrderQuery, OrderStatus } from "../types";
 
 export const useGetUserOrders = () => {
   return useMutation(getUserOrders);
@@ -108,5 +109,17 @@ export const useUpdateOrder = () => {
     onError: () => {
       toast.error("編輯失敗！請重新試一次！");
     },
+  });
+};
+
+export interface PostOrdersParams {
+  postId?: string;
+  status?: OrderStatus;
+}
+
+export const usePostOrders = (params: PostOrdersParams) => {
+  return useQuery(["postOrders", params], () => getPostOrders(params), {
+    enabled: !!params.postId,
+    staleTime: Infinity,
   });
 };
