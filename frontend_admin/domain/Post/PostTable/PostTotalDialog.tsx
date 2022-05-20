@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 
 import Dialog from "components/Dialog";
-import DeliverTable from "domain/Deliver/DeliverTable";
+import DeliverTable from "domain/Deliver/EditDeliverTable";
 import { usePostDelivers } from "domain/Deliver/hooks";
 
 import { getPostTitle } from "../services";
