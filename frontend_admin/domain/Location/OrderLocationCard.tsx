@@ -71,6 +71,7 @@ const OrderLocationCard: FC<Props> = ({ post }) => {
               <TableRow>
                 <TableCell>
                   <Checkbox
+                    checkboxSize="large"
                     onChange={handleCheckAllItems(setPostItems, setOrderItems)}
                   />
                 </TableCell>
@@ -106,6 +107,7 @@ const OrderLocationCard: FC<Props> = ({ post }) => {
                 <TableRow key={item.id}>
                   <TableCell>
                     <Checkbox
+                      checkboxSize="large"
                       checked={item.checked}
                       onChange={handleItemCheck(
                         index,
@@ -148,7 +150,7 @@ const OrderLocationCard: FC<Props> = ({ post }) => {
                 <TableCell>序號</TableCell>
                 <TableCell>訂單</TableCell>
                 <TableCell>名稱</TableCell>
-                <TableCell>位置</TableCell>
+                <TableCell className="min-w-[60px]">位置</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -156,6 +158,7 @@ const OrderLocationCard: FC<Props> = ({ post }) => {
                 <TableRow key={order.orderNum}>
                   <TableCell>
                     <Checkbox
+                      checkboxSize="large"
                       checked={order.checked}
                       onChange={handleSingleCheck(index, setOrderItems)}
                     />
