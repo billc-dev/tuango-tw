@@ -11,6 +11,7 @@ import TableCell from "components/Table/TableCell";
 import TableHead from "components/Table/TableHead";
 import TableRow from "components/Table/TableRow";
 import TextField from "components/TextField";
+import { useHandleEditOrders } from "domain/Deliver/services";
 import { usePostItems } from "domain/Post/hooks";
 
 import { getOrderTitle } from "../services";
@@ -28,25 +29,8 @@ const EditOrderDialog: FC<Props> = ({ open, setOpen, username, ...props }) => {
   const queryClient = useQueryClient();
   const [order, setOrder] = useState(props.order);
   const postItemsQuery = usePostItems(props.order.postId);
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleItemChange = (index: number) => {
-    return (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-      const { name, value } = e.target;
-      setOrder((order) => {
-        const orderItems = order.order.map((item, idx) => {
-          if (idx === index) return { ...item, [name]: value };
-          return item;
-        });
-        return { ...order, order: orderItems };
-      });
-    };
-  };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setOrder((order) => ({ ...order, [name]: value }));
-  };
+  const { handleChange, handleItemChange } = useHandleEditOrders(setOrder);
+  const handleClose = () => setOpen(false);
   const handleSubmit = () => {
     const orders = queryClient.getQueryData<IOrder[]>([
       "pickupOrders",

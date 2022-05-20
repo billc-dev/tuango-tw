@@ -7,7 +7,7 @@ const OrderHead = () => {
   return (
     <TableRow className="whitespace-nowrap">
       <TableCell></TableCell>
-      <TableCell>序號</TableCell>
+      <TableCell className="whitespace-pre-line">序號</TableCell>
       <TableCell>名稱</TableCell>
       <TableCell>有貼名字</TableCell>
       <TableCell>訂單</TableCell>

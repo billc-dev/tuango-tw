@@ -114,5 +114,5 @@ export const getPostOrders = async ({
     `/orders/post/${postId}`,
     params
   );
-  return res.data.orders;
+  return res.data.orders.map((order) => ({ ...order, checked: false }));
 };

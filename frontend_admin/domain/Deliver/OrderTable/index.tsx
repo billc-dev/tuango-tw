@@ -15,17 +15,19 @@ interface Props {
 
 const OrderTable: FC<Props> = ({ orders }) => {
   return (
-    <Table>
-      <TableHead>
-        <OrderHead />
-        <OrderActionRow />
-      </TableHead>
-      <TableBody>
-        {orders.map((order) => (
-          <OrderRow key={order._id} {...{ order }} />
-        ))}
-      </TableBody>
-    </Table>
+    <div className="overflow-y-auto text-sm">
+      <Table>
+        <TableHead>
+          <OrderHead />
+          <OrderActionRow {...{ orders }} />
+        </TableHead>
+        <TableBody>
+          {orders.map((order) => (
+            <OrderRow key={order._id} {...{ order }} />
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 };
 

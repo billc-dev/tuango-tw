@@ -50,7 +50,7 @@ const Deliver = () => {
         <Button type="submit">搜尋</Button>
       </form>
       {ordersQuery.data && (
-        <div className="mt-2">
+        <div className="mt-2 overflow-y-auto -ml-1">
           <p className="font-medium">{getPostTitle(postQuery.data)}</p>
           <OrderTable orders={ordersQuery.data} />
         </div>

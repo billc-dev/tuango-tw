@@ -43,6 +43,7 @@ export interface IOrder {
   canceledAt?: string;
   orderHistory: OrderHistory[];
   status: OrderStatus;
+  checked?: boolean;
 }
 
 export interface IOrderItem extends yup.InferType<typeof orderItemSchema> {}

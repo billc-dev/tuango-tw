@@ -10,6 +10,7 @@ import TableHead from "components/Table/TableHead";
 import TableRow from "components/Table/TableRow";
 import TextField from "components/TextField";
 import TextArea from "components/TextField/TextArea";
+import { useHandleEditOrders } from "domain/Deliver/services";
 import { usePostItems } from "domain/Post/hooks";
 import { getFullLengthDate } from "services/date";
 
@@ -28,35 +29,8 @@ const EditOrderForm: FC<Props> = (props) => {
   const updateOrder = useUpdateOrder();
   const [order, setOrder] = useState(props.order);
   const { displayName, createdAt } = order;
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setOrder((order) => ({ ...order, [name]: value }));
-  };
-  const handleItemChange = (index: number) => {
-    return (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-      const { name, value } = e.target;
-      setOrder((order) => {
-        const orderItems = order.order.map((item, idx) => {
-          if (index !== idx) return item;
-          return { ...item, [name]: value };
-        });
-        return { ...order, order: orderItems };
-      });
-    };
-  };
-  const handleItemHasName = (index: number) => {
-    return () => {
-      setOrder((order) => {
-        const orderItems = order.order.map((item, idx) => {
-          if (index !== idx) return item;
-          return { ...item, hasName: !item.hasName };
-        });
-        return { ...order, order: orderItems };
-      });
-    };
-  };
+  const { handleChange, handleItemChange, handleItemHasName } =
+    useHandleEditOrders(setOrder);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     updateOrder.mutate(order, { onSuccess: () => props.handleClose() });

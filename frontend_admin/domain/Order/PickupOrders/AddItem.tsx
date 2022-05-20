@@ -6,14 +6,15 @@ import IconButton from "components/Button/IconButton";
 import Select from "components/Select";
 import { Item } from "domain/Post/types";
 
-import { IOrder, OrderItem } from "../types";
+import { IOrder, OrderItem, OrderStatus } from "../types";
 
 interface Props {
   items: Item[];
   setOrder: React.Dispatch<React.SetStateAction<IOrder>>;
+  status?: OrderStatus;
 }
 
-const AddItem: FC<Props> = ({ items, setOrder }) => {
+const AddItem: FC<Props> = ({ items, setOrder, status }) => {
   const [item_id, setItem_id] = useState(items[0]._id);
   const handleAdd = () => {
     const postItem = items.find((item) => item._id === item_id);
@@ -24,7 +25,7 @@ const AddItem: FC<Props> = ({ items, setOrder }) => {
       item,
       price,
       qty: 1,
-      status: "delivered",
+      status: status ?? "delivered",
       hasName: false,
       location: "",
     };
