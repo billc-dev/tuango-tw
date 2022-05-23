@@ -60,7 +60,7 @@ const OrderCard: FC<Props> = ({ order, username }) => {
                         </p>
                         {item.hasName && (
                           <Button variant="primary">
-                            <p>有貼名字</p>
+                            <p>有貼</p>
                           </Button>
                         )}
                       </div>

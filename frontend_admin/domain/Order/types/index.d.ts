@@ -77,3 +77,10 @@ export interface OrderQuery {
   text?: string;
   page: number;
 }
+
+export interface IOrderedOrderItem {
+  id: string;
+  item: string;
+  price: number;
+  qty: number | "";
+}

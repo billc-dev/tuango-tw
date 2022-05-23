@@ -19,7 +19,7 @@ const OrderTable: FC<Props> = ({ orders }) => {
       <Table>
         <TableHead>
           <OrderHead />
-          <OrderActionRow {...{ orders }} />
+          {orders.length > 0 && <OrderActionRow {...{ orders }} />}
         </TableHead>
         <TableBody>
           {orders.map((order) => (

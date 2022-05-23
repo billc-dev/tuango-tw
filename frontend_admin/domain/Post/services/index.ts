@@ -1,3 +1,5 @@
+import { IDeliver } from "domain/Deliver/types";
+
 import { ILocationPost, IPost, PostStatus, PostStorageType } from "../types";
 
 export * from "./image";
@@ -43,7 +45,7 @@ export const getStatus = (status: PostStatus) => {
   }
 };
 
-export const getPostTitle = (post?: IPost | ILocationPost) => {
+export const getPostTitle = (post?: IPost | ILocationPost | IDeliver) => {
   if (post) {
     const { postNum, title, displayName } = post;
     return `#${postNum} ${title} #${displayName}`;

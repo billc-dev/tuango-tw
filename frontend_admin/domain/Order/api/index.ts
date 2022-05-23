@@ -5,6 +5,7 @@ import {
   CreateOrderItem,
   ExtraOrdersQuery,
   IOrder,
+  IOrderedOrderItem,
   OrderQuery,
 } from "../types";
 
@@ -115,4 +116,15 @@ export const getPostOrders = async ({
     params
   );
   return res.data.orders.map((order) => ({ ...order, checked: false }));
+};
+
+interface CreateOrderParams {
+  userId: string;
+  postId: string;
+  orderItems: IOrderedOrderItem[];
+  comment: string;
+}
+export const createOrder = async (params: CreateOrderParams) => {
+  const res = await axios.post<{ order: IOrder }>("/orders/create", params);
+  return res.data.order;
 };

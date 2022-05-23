@@ -6,6 +6,7 @@ import {
   completeOrders,
   createDeliveredOrder,
   createExtraDeliveredOrder,
+  createOrder,
   fetchExtraOrders,
   fetchOrder,
   fetchOrders,
@@ -121,5 +122,10 @@ export const usePostOrders = (params: PostOrdersParams) => {
   return useQuery(["postOrders", params], () => getPostOrders(params), {
     enabled: !!params.postId,
     staleTime: Infinity,
+    refetchOnMount: false,
   });
+};
+
+export const useCreateOrder = () => {
+  return useMutation(createOrder);
 };

@@ -21,3 +21,35 @@ export interface IDeliver {
   extraFee: number;
   checked: boolean;
 }
+
+export interface IItemLocation {
+  _id: string;
+  id: string;
+  item: string;
+  location: string;
+  checked: boolean;
+  qty: number;
+}
+
+export interface DeliverQuery {
+  userId?: string;
+}
+
+export interface DeliverSums {
+  normalItemSum: number;
+  extraItemSum: number;
+  totalItemSum: number;
+}
+
+interface DeliverItem {
+  qty: number;
+  amount: number;
+  id: string;
+  item: string;
+}
+
+export interface DeliverItemsAndSums extends DeliverSums {
+  normalItems: DeliverItem[];
+  extraItems: DeliverItem[];
+  totalItems: DeliverItem[];
+}

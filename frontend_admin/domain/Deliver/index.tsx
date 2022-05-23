@@ -1,31 +1,24 @@
 import React, { useEffect, useState } from "react";
 
-import toast from "react-hot-toast";
-import { useQueryClient } from "react-query";
-
-import Button from "components/Button";
-import TextField from "components/TextField";
-import { usePostOrders } from "domain/Order/hooks";
+import { PostOrdersParams, usePostOrders } from "domain/Order/hooks";
 import { usePostByPostNum } from "domain/Post/hooks";
 import { getPostTitle } from "domain/Post/services";
 
+import CreateOrderedOrder from "./CreateOrderedOrder";
+import DeliverHistory from "./DeliverHistory";
+import DeliverQuery from "./DeliverQuery";
+import DeliverSummaryTable from "./DeliverTable";
 import OrderTable from "./OrderTable";
+import PostItemTable from "./PostItemTable";
 
 const Deliver = () => {
-  const queryClient = useQueryClient();
-  const [value, setValue] = useState("");
   const [postNum, setPostNum] = useState("");
-  const handleSubmit = () => {
-    if (!(Number(value) >= 0))
-      return toast.error("流水編號有誤！", { id: "postNumError" });
-    setPostNum(value);
-    queryClient.invalidateQueries("postOrders", { active: true });
-  };
   const postQuery = usePostByPostNum(postNum);
-  const ordersQuery = usePostOrders({
+  const queryKey: PostOrdersParams = {
     postId: postQuery.data?._id,
     status: "ordered",
-  });
+  };
+  const ordersQuery = usePostOrders(queryKey);
 
   useEffect(() => {
     return () => ordersQuery.remove();
@@ -33,28 +26,31 @@ const Deliver = () => {
   }, []);
   return (
     <div className="my-2 mx-auto">
-      <form
-        className="flex"
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmit();
-        }}
-      >
-        <TextField
-          value={value}
-          variant="standard"
-          noLabel
-          placeholder="流水編號"
-          onChange={(e) => setValue(e.target.value)}
-        />
-        <Button type="submit">搜尋</Button>
-      </form>
+      <DeliverQuery
+        isLoading={postQuery.isLoading || ordersQuery.isLoading}
+        {...{ setPostNum }}
+      />
       {ordersQuery.data && (
         <div className="mt-2 overflow-y-auto -ml-1">
           <p className="font-medium">{getPostTitle(postQuery.data)}</p>
-          <OrderTable orders={ordersQuery.data} />
+          {postQuery.data && (
+            <DeliverSummaryTable
+              {...{ queryKey, post: postQuery.data, setPostNum }}
+            />
+          )}
+          {ordersQuery.data.length > 0 && <PostItemTable {...{ postNum }} />}
+          <CreateOrderedOrder {...{ postNum }} />
+          {ordersQuery.data.length > 0 ? (
+            <>
+              <OrderTable orders={ordersQuery.data} />
+              <CreateOrderedOrder {...{ postNum }} />
+            </>
+          ) : (
+            <p className="text-center">目前沒有已下訂的訂單</p>
+          )}
         </div>
       )}
+      <DeliverHistory />
     </div>
   );
 };
