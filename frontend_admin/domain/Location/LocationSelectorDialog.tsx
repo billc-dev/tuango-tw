@@ -11,7 +11,7 @@ interface Props {
 }
 
 const LocationSelectorDialog: FC<Props> = ({ open, setOpen, setLocation }) => {
-  return (
+  return open ? (
     <Dialog title="位置" {...{ open, handleClose: () => setOpen(false) }}>
       <LocationSelector
         setLocation={(location) => {
@@ -20,7 +20,7 @@ const LocationSelectorDialog: FC<Props> = ({ open, setOpen, setLocation }) => {
         }}
       />
     </Dialog>
-  );
+  ) : null;
 };
 
 export default LocationSelectorDialog;

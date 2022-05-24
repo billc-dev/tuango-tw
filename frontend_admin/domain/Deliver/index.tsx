@@ -12,6 +12,7 @@ import OrderTable from "./OrderTable";
 import PostItemTable from "./PostItemTable";
 
 const Deliver = () => {
+  const [value, setValue] = useState("");
   const [postNum, setPostNum] = useState("");
   const postQuery = usePostByPostNum(postNum);
   const queryKey: PostOrdersParams = {
@@ -25,17 +26,17 @@ const Deliver = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className="my-2 mx-auto">
+    <div className="max-w-xl my-2 mx-auto">
       <DeliverQuery
         isLoading={postQuery.isLoading || ordersQuery.isLoading}
-        {...{ setPostNum }}
+        {...{ value, setValue, setPostNum }}
       />
       {ordersQuery.data && (
         <div className="mt-2 overflow-y-auto -ml-1">
           <p className="font-medium">{getPostTitle(postQuery.data)}</p>
           {postQuery.data && (
             <DeliverSummaryTable
-              {...{ queryKey, post: postQuery.data, setPostNum }}
+              {...{ queryKey, post: postQuery.data, setPostNum, setValue }}
             />
           )}
           {ordersQuery.data.length > 0 && <PostItemTable {...{ postNum }} />}

@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "react-query";
 
 import {
   checkDuplicatePostNum,
+  fetchDatePosts,
   fetchPost,
   fetchPostByPostNum,
   fetchPostItems,
@@ -41,5 +42,11 @@ export const useGetPostByPostNum = () => {
 export const usePostByPostNum = (postNum: string) => {
   return useQuery(["post", postNum], () => fetchPostByPostNum(postNum), {
     enabled: !!postNum,
+  });
+};
+
+export const useDatePosts = (date: string) => {
+  return useQuery(["post", date], () => fetchDatePosts(date), {
+    enabled: !!date,
   });
 };

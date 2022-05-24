@@ -15,9 +15,10 @@ interface Props {
   queryKey: PostOrdersParams;
   post: IPost;
   setPostNum: React.Dispatch<React.SetStateAction<string>>;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const DeliverTable: FC<Props> = ({ queryKey, post, setPostNum }) => {
+const DeliverTable: FC<Props> = ({ queryKey, post, setPostNum, setValue }) => {
   const ordersQuery = usePostOrders(queryKey);
   const sum = useDeliverSum(post, ordersQuery.data);
   const deliverOrders = useDeliverOrders();
@@ -55,6 +56,7 @@ const DeliverTable: FC<Props> = ({ queryKey, post, setPostNum }) => {
       {
         onSuccess: () => {
           setPostNum("");
+          setValue("");
           ordersQuery.remove();
         },
       }

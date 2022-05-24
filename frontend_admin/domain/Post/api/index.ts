@@ -81,3 +81,8 @@ export const fetchPostByPostNum = async (postNum: string) => {
   );
   return res.data.post;
 };
+
+export const fetchDatePosts = async (date: string) => {
+  const res = await axios.get<{ posts: IPost[] }>(`/posts/date/${date}`);
+  return res.data.posts;
+};
