@@ -27,6 +27,7 @@ interface CreatePostParams {
   postForm: PostFormSchema;
   user: User;
   postNum: number;
+  fb: boolean;
 }
 
 export const createPost = (params: CreatePostParams) => {

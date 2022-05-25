@@ -22,9 +22,9 @@ const CreatePost = () => {
   const router = useRouter();
   const createPost = useCreatePost();
   const [user, setUser] = useState<User>();
-  const [fb, setFB] = useState<boolean>(false);
+  const [fb, setFB] = useState(false);
   const [postNum, setPostNum] = useState<number>();
-  const [postNumError, setPostNumError] = useState<string>("");
+  const [postNumError, setPostNumError] = useState("");
   const duplicatePostNumQuery = useCheckDuplicatePostNum(postNum);
   const postForm = useForm<PostFormSchema>({
     defaultValues: postSchema.getDefault(),
@@ -49,7 +49,7 @@ const CreatePost = () => {
     }
     toast.loading("貼文製作中...", { id: "createPost" });
     createPost.mutate(
-      { postForm: data, postNum, user },
+      { postForm: data, postNum, user, fb },
       {
         onSuccess: () => {
           handleClose();
