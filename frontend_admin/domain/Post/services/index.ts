@@ -4,7 +4,7 @@ import { ILocationPost, IPost, PostStatus, PostStorageType } from "../types";
 
 export * from "./image";
 
-export const getStorageType = (storageType: PostStorageType) => {
+export const getStorageType = (storageType: PostStorageType | string) => {
   switch (storageType) {
     case "roomTemp":
       return "常溫";
@@ -17,7 +17,7 @@ export const getStorageType = (storageType: PostStorageType) => {
   }
 };
 
-export const getStorageTypeLabel = (storageType: PostStorageType) => {
+export const getStorageTypeLabel = (storageType: PostStorageType | string) => {
   switch (storageType) {
     case "roomTemp":
       return "常溫";

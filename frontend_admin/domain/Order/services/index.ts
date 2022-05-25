@@ -13,7 +13,7 @@ export const getCompletedOrdersSum = (orders?: IOrder[]) => {
   return sum;
 };
 
-export const getOrderStatusLabel = (status: OrderStatus) => {
+export const getOrderStatusLabel = (status: OrderStatus | string) => {
   switch (status) {
     case "ordered":
       return "已下訂 🦓";
