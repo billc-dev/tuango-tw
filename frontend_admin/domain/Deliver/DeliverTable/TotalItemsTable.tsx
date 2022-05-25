@@ -30,10 +30,12 @@ const TotalItemsTable: FC<Props> = ({ sum }) => {
           if (item.qty === 0) return null;
           return (
             <TableRow key={index}>
-              <TableCell>{item.id}</TableCell>
-              <TableCell>{item.item}</TableCell>
-              <TableCell className="text-right">{item.qty}</TableCell>
-              <TableCell className="text-right">
+              <TableCell noPadding>{item.id}</TableCell>
+              <TableCell noPadding>{item.item}</TableCell>
+              <TableCell noPadding className="text-right">
+                {item.qty}
+              </TableCell>
+              <TableCell noPadding className="text-right">
                 ${getNumberWithCommas(item.amount)}
               </TableCell>
             </TableRow>
