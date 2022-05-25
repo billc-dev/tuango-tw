@@ -60,14 +60,16 @@ const PostItems: FC<Props> = (props) => {
           ) : null}
         </div>
       ))}
-      <Button
-        className="mt-2"
-        fullWidth
-        icon={<PlusIcon />}
-        onClick={() => append({ item: "", price: undefined, itemQty: 100 })}
-      >
-        新增商品
-      </Button>
+      {fields.length < 26 && (
+        <Button
+          className="mt-2"
+          fullWidth
+          icon={<PlusIcon />}
+          onClick={() => append({ item: "", price: undefined, itemQty: 100 })}
+        >
+          新增商品
+        </Button>
+      )}
     </>
   );
 };
