@@ -97,7 +97,9 @@ const DeliverTable: FC<Props> = ({ queryKey, post, setPostNum, setValue }) => {
           {...{ open }}
         />
       )}
-      {sum && <TotalItemsTable {...{ sum }} />}
+      {sum && totalItems && totalItems.length > 0 && (
+        <TotalItemsTable {...{ sum }} />
+      )}
       {totalItems && totalItems.length > 0 && (
         <ItemsTable {...{ itemLocation, setItemLocation }} />
       )}
