@@ -2,3 +2,4 @@ frontend/.env.development
 frontend/.env
 frontend_admin/.env
 backend_admin/functions/.runtimeconfig.json
+frontend_fb/.env
