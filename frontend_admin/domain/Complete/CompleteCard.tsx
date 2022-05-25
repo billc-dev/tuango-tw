@@ -56,12 +56,7 @@ const CompleteCard: FC<Props> = (props) => {
   return (
     <div className="mt-4 first:mt-2">
       <div className="flex items-center">
-        <Button
-          onClick={() => {
-            copyToClipboard(displayName);
-            toast.success("已複製名稱");
-          }}
-        >
+        <Button onClick={() => copyToClipboard(displayName)}>
           <p className="line-clamp-1">{displayName}</p>
         </Button>
         <p className="line-clamp-1 ml-2">取貨員: {shorternAdminName(admin)}</p>
