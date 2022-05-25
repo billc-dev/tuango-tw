@@ -7,8 +7,15 @@ interface Props
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
   > {
-  size?: "lg" | "xl" | "square";
-  variant?: "primary" | "secondary" | "danger" | "inherit" | "orange" | "info";
+  size?: "lg" | "xl" | "square" | "small";
+  variant?:
+    | "primary"
+    | "secondary"
+    | "danger"
+    | "inherit"
+    | "orange"
+    | "info"
+    | "blue";
   fullWidth?: boolean;
   icon?: JSX.Element;
   loading?: boolean;
@@ -61,6 +68,8 @@ const Button: FC<Props> = (props) => {
       return "bg-orange-500 hover:bg-orange-700 text-white shadow";
     } else if (variant === "info") {
       return "bg-sky-500 text-white shadow";
+    } else if (variant === "blue") {
+      return "bg-blue-500 hover:bg-blue-700 text-white shadow";
     }
   };
   const getSize = () => {
@@ -71,6 +80,8 @@ const Button: FC<Props> = (props) => {
         return "px-12 py-8 text-4xl";
       case "square":
         return "px-1 py-1";
+      case "small":
+        return " text-sm px-1";
       default:
         return "py-1 px-3";
     }
