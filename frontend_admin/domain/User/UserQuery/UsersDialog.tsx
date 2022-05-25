@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 
 import { IUser } from "api/auth/userDB";
+import Button from "components/Button";
 import CardHeader from "components/Card/CardHeader";
 import PopupDialog from "components/Dialog/PopupDialog";
 import LoadingIndicator from "components/Indicator/LoadingIndicator";
@@ -34,7 +35,14 @@ const UsersDialog: FC<Props> = (props) => {
         <CardHeader
           key={user._id}
           img={user.pictureUrl}
-          title={`${user.pickupNum}.${user.displayName}`}
+          title={`${user.pickupNum}. ${user.displayName}`}
+          action={
+            user.fb ? (
+              <Button className="ml-1" variant="blue" size="small">
+                FB
+              </Button>
+            ) : null
+          }
           onClick={() => {
             setUser(user);
             setDisplayName(user.displayName);
