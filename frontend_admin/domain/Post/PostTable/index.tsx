@@ -1,58 +1,46 @@
-import React, { FC } from "react";
+import React, { useState } from "react";
 
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
-
-import IconButton from "components/Button/IconButton";
 import Table from "components/Table/Table";
 import TableBody from "components/Table/TableBody";
 import TableHead from "components/Table/TableHead";
+import TablePagination from "components/Table/TablePagination";
 
-import { IPost, PostQuery } from "../types";
+import CreatePostButton from "../CreatePost/CreatePostButton";
+import { usePosts } from "../hooks";
+import { PostQuery } from "../types";
 import PostHead from "./PostHead";
 import PostQueryRow from "./PostQueryRow";
 import PostRow from "./PostRow";
 
-interface Props {
-  query: PostQuery;
-  setQuery: React.Dispatch<React.SetStateAction<PostQuery>>;
-  limit: number;
-  loading: boolean;
-  data?: {
-    posts: IPost[];
-    hasNextPage: boolean;
-    length: number;
-  };
-}
+const limit = 20;
 
-const PostTable: FC<Props> = ({ data, query, setQuery, limit, loading }) => {
+const PostTable = () => {
+  const [query, setQuery] = useState<PostQuery>({ page: 0 });
+  const { data, isFetching } = usePosts(limit, query);
   const { page } = query;
-
+  const handlePage = (page: number) => {
+    return () => {
+      setQuery((query) => ({ ...query, page: query.page + page }));
+    };
+  };
+  const handleSetPage = (page: number) => {
+    setQuery((query) => ({ ...query, page }));
+  };
   return (
     <>
-      <div className="flex justify-end items-center mt-2">
-        <div>
-          {page * limit + 1} -{" "}
-          {data?.posts.length && data.posts.length + page * limit} 之{" "}
-          {data?.length}
-        </div>
-        <IconButton
-          disabled={page <= 0}
-          onClick={() => {
-            setQuery((query) => ({ ...query, page: query.page - 1 }));
-          }}
-        >
-          <ChevronLeftIcon />
-        </IconButton>
-        <IconButton
-          loading={loading}
-          disabled={!data?.hasNextPage}
-          onClick={() => {
-            setQuery((query) => ({ ...query, page: query.page + 1 }));
-          }}
-        >
-          <ChevronRightIcon />
-        </IconButton>
-      </div>
+      <CreatePostButton />
+      <TablePagination
+        {...{
+          page,
+          limit,
+          isLoading: isFetching,
+          length: data?.length || 0,
+          hasNextPage: !!data?.hasNextPage,
+          onSetPage: handleSetPage,
+        }}
+        onPreviousPage={handlePage(-1)}
+        onNextPage={handlePage(1)}
+      />
       <div className="overflow-y-auto">
         <Table>
           <TableHead>
@@ -67,6 +55,18 @@ const PostTable: FC<Props> = ({ data, query, setQuery, limit, loading }) => {
           </TableBody>
         </Table>
       </div>
+      <TablePagination
+        {...{
+          page,
+          limit,
+          isLoading: isFetching,
+          length: data?.length || 0,
+          hasNextPage: !!data?.hasNextPage,
+          onSetPage: handleSetPage,
+        }}
+        onPreviousPage={handlePage(-1)}
+        onNextPage={handlePage(1)}
+      />
     </>
   );
 };

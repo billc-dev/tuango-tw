@@ -1,0 +1,58 @@
+import React, { FC } from "react";
+
+import { IUser } from "api/auth/userDB";
+import Button from "components/Button";
+import CardHeader from "components/Card/CardHeader";
+import PopupDialog from "components/Dialog/PopupDialog";
+import LoadingIndicator from "components/Indicator/LoadingIndicator";
+
+import { useUsers } from "../hooks";
+
+interface Props {
+  placeholder: string;
+  open: boolean;
+  handleClose: () => void;
+  name: string;
+  isSeller?: boolean;
+  setUser: (user: IUser) => void;
+  setDisplayName: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const UsersDialog: FC<Props> = (props) => {
+  const {
+    placeholder,
+    open,
+    handleClose,
+    name,
+    isSeller,
+    setUser,
+    setDisplayName,
+  } = props;
+  const usersQuery = useUsers(name, isSeller);
+  return (
+    <PopupDialog title={placeholder} {...{ open, handleClose }}>
+      {usersQuery.data?.map((user) => (
+        <CardHeader
+          key={user._id}
+          img={user.pictureUrl}
+          title={`${user.pickupNum}. ${user.displayName}`}
+          action={
+            user.fb ? (
+              <Button className="ml-1" variant="blue" size="small">
+                FB
+              </Button>
+            ) : null
+          }
+          onClick={() => {
+            setUser(user);
+            setDisplayName(user.displayName);
+            handleClose();
+          }}
+        />
+      ))}
+      <LoadingIndicator loading={usersQuery.isLoading} />
+    </PopupDialog>
+  );
+};
+
+export default UsersDialog;

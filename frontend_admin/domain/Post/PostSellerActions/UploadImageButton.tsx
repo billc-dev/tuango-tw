@@ -4,7 +4,7 @@ import { PhotographIcon } from "@heroicons/react/outline";
 import { FormState, UseFormGetValues, UseFormSetValue } from "react-hook-form";
 
 import Button from "components/Button";
-import { useUser } from "domain/User/hooks";
+import { useMe } from "domain/User/hooks";
 
 import { PostFormSchema } from "../schema";
 import { uploadImageS3 } from "../services";
@@ -18,7 +18,7 @@ interface Props {
 const UploadImageButton: FC<Props> = (props) => {
   const { getValues, setValue, errors } = props;
   const [uploading, setUploading] = useState(false);
-  const userQuery = useUser();
+  const meQuery = useMe();
   const pictureUploadRef = useRef<HTMLInputElement>(null);
   const openRef = () => pictureUploadRef.current?.click();
   const imageUrls = getValues("imageUrls");
@@ -48,7 +48,7 @@ const UploadImageButton: FC<Props> = (props) => {
             setUploading,
             getValues,
             setValue,
-            userQuery.data?.data.user.username!
+            meQuery.data?.data.user.username!
           )
         }
         accept="image/*"
