@@ -7,7 +7,7 @@ import { getPostTitle } from "domain/Post/services";
 import CreateOrderedOrder from "./CreateOrderedOrder";
 import DeliverHistory from "./DeliverHistory";
 import DeliverQuery from "./DeliverQuery";
-import DeliverSummaryTable from "./DeliverTable";
+import DeliverTable from "./DeliverTable";
 import OrderTable from "./OrderTable";
 import PostItemTable from "./PostItemTable";
 
@@ -35,7 +35,7 @@ const Deliver = () => {
         <div className="mt-2 overflow-y-auto -ml-1">
           <p className="font-medium">{getPostTitle(postQuery.data)}</p>
           {postQuery.data && (
-            <DeliverSummaryTable
+            <DeliverTable
               {...{ queryKey, post: postQuery.data, setPostNum, setValue }}
             />
           )}
