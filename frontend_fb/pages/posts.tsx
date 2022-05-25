@@ -8,7 +8,6 @@ import PostDialog from "domain/Post/PostDialog";
 import PostHead from "domain/Post/PostHead";
 import PostTypeContainer from "domain/Post/PostTypeContainer";
 import { fetchPost } from "domain/Post/api";
-import NotifySetup from "domain/User/NotifySetup";
 
 import { IPost } from "../domain/Post/types";
 
@@ -32,7 +31,6 @@ const Posts: NextPage<Props> = (props) => {
   }, []);
   return (
     <>
-      <NotifySetup />
       <PostHead post={post} />
       <PostTypeContainer />
       {typeof postId === "string" && <PostDialog postId={postId} />}

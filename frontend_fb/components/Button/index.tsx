@@ -1,10 +1,21 @@
-import React, { ButtonHTMLAttributes, FC } from "react";
+import React, { FC } from "react";
 
 import AnimatedSpinner from "components/svg/AnimatedSpinner";
 
-interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface Props
+  extends React.DetailedHTMLProps<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
   size?: "sm" | "lg";
-  variant?: "primary" | "secondary" | "danger" | "inherit" | "orange" | "info";
+  variant?:
+    | "primary"
+    | "secondary"
+    | "danger"
+    | "inherit"
+    | "orange"
+    | "info"
+    | "blue";
   fullWidth?: boolean;
   icon?: JSX.Element;
   loading?: boolean;
@@ -61,6 +72,8 @@ const Button: FC<Props> = (props) => {
       return "bg-orange-500 hover:bg-orange-700 text-white";
     } else if (variant === "info") {
       return "bg-sky-500 text-white";
+    } else if (variant === "blue") {
+      return "bg-blue-700 text-white";
     }
   };
   return (

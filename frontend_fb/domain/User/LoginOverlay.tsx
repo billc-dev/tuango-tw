@@ -1,19 +1,19 @@
+import { useRouter } from "next/router";
 import React from "react";
 
+import { FB_LOGIN_URL, isClient } from "utils/constants";
+
 import { useIsVerified, useUser } from "./hooks";
-import { LINE_LOGIN_URL_WITH_PARAMS } from "./services";
 
 const LoginOverlay = () => {
+  const router = useRouter();
   const verifiedQuery = useIsVerified();
   const userQuery = useUser();
-
   const handleClick = () => {
     if (verifiedQuery.isLoading || userQuery.isLoading) return;
     if (!userQuery.data?.data.user) {
-      window.open(
-        LINE_LOGIN_URL_WITH_PARAMS(`?redirect=${window.location.href}`),
-        "_self"
-      );
+      window.open(FB_LOGIN_URL(), "_self");
+      isClient && localStorage.setItem("next", router.asPath);
     }
   };
   return !userQuery.data?.data.user ? (

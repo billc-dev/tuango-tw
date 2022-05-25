@@ -11,6 +11,5 @@ export const fbLogin = async (code: string, redirect_uri: string) => {
   const profileRes = await axios.get(
     `https://graph.facebook.com/v13.0/me?fields=id,name,picture&access_token=${access_token}`
   );
-
   return profileRes.data as FBProfile;
 };

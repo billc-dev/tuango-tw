@@ -16,6 +16,7 @@ import { API_URL, WINDOW_URL } from "utils/constants";
 import "../styles/globals.css";
 import GoogleAnalytics from "domain/GoogleAnalytics";
 import NextHead from "domain/NextHead";
+import Auth from "domain/Auth";
 
 // ANALYZE=true yarn build
 
@@ -62,6 +63,7 @@ export function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
         <ThemeProvider attribute="class">
+          <Auth />
           <NextHead />
           <GoogleAnalytics />
           <TopNavbar />
@@ -70,6 +72,7 @@ export function App({ Component, pageProps }: AppProps) {
           <BottomNavbar />
           <Toaster toastOptions={{ duration: 5000 }} />
         </ThemeProvider>
+
       </Hydrate>
       <ReactQueryDevtools initialIsOpen={false} position="top-right" />
     </QueryClientProvider>

@@ -26,7 +26,11 @@ const UserSchema = new mongoose.Schema<IUser>({
   username: { type: String, required: true },
   displayName: { type: String, required: true },
   pictureUrl: String,
-  createdAt: { type: String, required: true },
+  createdAt: {
+    type: String,
+    required: true,
+    default: () => new Date().toISOString(),
+  },
   pickupNum: { type: Number, required: true },
   role: {
     type: String,
@@ -44,7 +48,7 @@ const UserSchema = new mongoose.Schema<IUser>({
   comment: String,
   message: {
     notified: { type: Boolean, default: false },
-    notifiedAt: { type: String, default: new Date().toISOString() },
+    notifiedAt: { type: String, default: () => new Date().toISOString() },
   },
   fb: { type: Boolean, default: false },
 });

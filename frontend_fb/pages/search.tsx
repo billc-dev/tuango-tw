@@ -5,7 +5,6 @@ import Container from "components/Container";
 import PostDialog from "domain/Post/PostDialog";
 import SearchComponent from "domain/Search";
 import LoginOverlay from "domain/User/LoginOverlay";
-import NotifySetup from "domain/User/NotifySetup";
 
 const Search: NextPage = () => {
   const router = useRouter();
@@ -13,7 +12,6 @@ const Search: NextPage = () => {
 
   return (
     <>
-      <NotifySetup />
       <LoginOverlay />
       <Container>
         <SearchComponent />

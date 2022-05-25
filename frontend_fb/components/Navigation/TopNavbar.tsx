@@ -3,8 +3,8 @@ import React, { useEffect } from "react";
 
 import { useQueryClient } from "react-query";
 
+import FBLoginButton from "components/Button/FBLoginButton";
 import IconButton from "components/Button/IconButton";
-import LineLoginButton from "components/Button/LineLoginButton";
 import ThemeButton from "components/Button/ThemeButton";
 import CardAvatar from "components/Card/CardAvatar";
 import { useIsVerified, useUser } from "domain/User/hooks";
@@ -43,7 +43,7 @@ const TopNavbar = () => {
                   <p className="ml-2">會員編號: {data.data.user.pickupNum}</p>
                 </div>
               ) : (
-                <LineLoginButton size="lg" />
+                <FBLoginButton size="lg" />
               )}
             </>
           )}

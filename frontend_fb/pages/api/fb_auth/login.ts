@@ -27,6 +27,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
           .status(200)
           .json({ user, accessToken: createAccessToken(user.username) });
       } catch (error) {
+        console.log(error);
         return res.status(404).json({ error });
       }
     default:
