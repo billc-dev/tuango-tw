@@ -22,7 +22,7 @@ const MessageOrderTable = () => {
   });
   const ordersQuery = useOrders(query);
   return (
-    <div className="col-span-full md:col-span-2">
+    <div className="col-span-full md:col-span-2 md:h-[90vh] md:overflow-y-auto">
       <LoadingIndicator loading={ordersQuery.isLoading} />
       <Messager {...{ userIds, setUserIds, query, setQuery }} />
       <div className="my-2 flex">
@@ -60,22 +60,24 @@ const MessageOrderTable = () => {
           <span className="ml-2">昨天到貨</span>
         </label>
       </div>
-      <Table>
-        <TableHead>
-          <MessageOrderHead />
-          <MessageOrderQueryRow
-            {...{ query, setQuery, setUserIds, orders: ordersQuery.data }}
-          />
-        </TableHead>
-        <TableBody>
-          {ordersQuery.data?.map((order) => (
-            <MessageOrderRow
-              key={order._id}
-              {...{ order, userIds, setUserIds }}
+      <div className="overflow-x-auto">
+        <Table>
+          <TableHead>
+            <MessageOrderHead />
+            <MessageOrderQueryRow
+              {...{ query, setQuery, setUserIds, orders: ordersQuery.data }}
             />
-          ))}
-        </TableBody>
-      </Table>
+          </TableHead>
+          <TableBody>
+            {ordersQuery.data?.map((order) => (
+              <MessageOrderRow
+                key={order._id}
+                {...{ order, userIds, setUserIds }}
+              />
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 };

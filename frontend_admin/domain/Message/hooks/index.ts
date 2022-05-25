@@ -12,7 +12,7 @@ export const useSendMessage = () => {
 };
 
 export const useInfiniteMessageQuery = (limit: number) => {
-  const queryKeys = ["completes", limit];
+  const queryKeys = ["messages", limit];
   return useInfiniteQuery(
     queryKeys,
     ({ pageParam = "initial" }) => fetchInfiniteMessages(pageParam, limit),
