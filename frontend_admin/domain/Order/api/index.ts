@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { MessageOrderQuery } from "domain/Message/types";
+
 import { PostOrdersParams } from "../hooks";
 import {
   CreateOrderItem,
@@ -17,6 +19,11 @@ export const getUserOrders = async (username: string) => {
     ...order,
     order: order.order.map((item) => ({ ...item, status: "completed" })),
   })) as IOrder[];
+};
+
+export const fetchOrders = async (query: MessageOrderQuery) => {
+  const res = await axios.post<{ orders: IOrder[] }>("/orders", query);
+  return res.data.orders;
 };
 
 export const fetchExtraOrders = async (query: ExtraOrdersQuery) => {
@@ -85,7 +92,7 @@ export const completeOrders = async (params: CompleteOrdersParams) => {
   await axios.patch<{}>("/orders/complete", params);
 };
 
-export const fetchOrders = async (limit: number, query: OrderQuery) => {
+export const paginateOrders = async (limit: number, query: OrderQuery) => {
   const res = await axios.post<{
     orders: IOrder[];
     hasNextPage: boolean;

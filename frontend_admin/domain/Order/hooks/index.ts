@@ -2,6 +2,8 @@ import { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
+import { MessageOrderQuery } from "domain/Message/types";
+
 import {
   completeOrders,
   createDeliveredOrder,
@@ -12,6 +14,7 @@ import {
   fetchOrders,
   getPostOrders,
   getUserOrders,
+  paginateOrders,
   updateOrder,
 } from "../api";
 import { ExtraOrdersQuery, IOrder, OrderQuery, OrderStatus } from "../types";
@@ -24,6 +27,17 @@ export const usePickupOrders = (username: string) => {
   return useQuery(["pickupOrders", username], () => getUserOrders(username), {
     enabled: !!username,
     staleTime: Infinity,
+  });
+};
+
+export const useOrders = (query: MessageOrderQuery) => {
+  const enabled = () => {
+    const { userId, postNum, text, status } = query;
+    if (userId || postNum || text || status) return true;
+    return false;
+  };
+  return useQuery(["orders", query], () => fetchOrders(query), {
+    enabled: enabled(),
   });
 };
 
@@ -88,11 +102,15 @@ export const useCompleteOrders = (
   });
 };
 
-export const useOrders = (limit: number, query: OrderQuery) => {
-  return useQuery(["orders", limit, query], () => fetchOrders(limit, query), {
-    keepPreviousData: true,
-    cacheTime: 0,
-  });
+export const usePaginateOrders = (limit: number, query: OrderQuery) => {
+  return useQuery(
+    ["orders", limit, query],
+    () => paginateOrders(limit, query),
+    {
+      keepPreviousData: true,
+      cacheTime: 0,
+    }
+  );
 };
 
 export const useOrder = (orderId: string) => {

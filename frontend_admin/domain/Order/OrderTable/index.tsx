@@ -5,7 +5,7 @@ import TableBody from "components/Table/TableBody";
 import TableHead from "components/Table/TableHead";
 import TablePagination from "components/Table/TablePagination";
 
-import { useOrders } from "../hooks";
+import { usePaginateOrders } from "../hooks";
 import { OrderQuery } from "../types";
 import OrderHead from "./OrderHead";
 import OrderQueryRow from "./OrderQueryRow";
@@ -15,7 +15,7 @@ const limit = 20;
 
 const OrderTable = () => {
   const [query, setQuery] = useState<OrderQuery>({ page: 0 });
-  const { data, isFetching } = useOrders(limit, query);
+  const { data, isFetching } = usePaginateOrders(limit, query);
   const { page } = query;
   const handlePage = (page: number) => {
     return () => {

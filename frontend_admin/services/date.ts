@@ -45,3 +45,7 @@ export const getMessageDate = (date: string) => {
   }
   return dayjs(date).format("HH:MM");
 };
+
+export const getYesterday = () => {
+  return dayjs(new Date()).subtract(1, "day").endOf("day").toISOString();
+};
