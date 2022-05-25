@@ -1,8 +1,10 @@
-import { PostStatus, PostStorageType } from "../types";
+import { IDeliver } from "domain/Deliver/types";
+
+import { ILocationPost, IPost, PostStatus, PostStorageType } from "../types";
 
 export * from "./image";
 
-export const getStorageType = (storageType: PostStorageType) => {
+export const getStorageType = (storageType: PostStorageType | string) => {
   switch (storageType) {
     case "roomTemp":
       return "常溫";
@@ -10,6 +12,19 @@ export const getStorageType = (storageType: PostStorageType) => {
       return "冷藏 ❄️";
     case "frozen":
       return "冷凍 🧊";
+    default:
+      return "";
+  }
+};
+
+export const getStorageTypeLabel = (storageType: PostStorageType | string) => {
+  switch (storageType) {
+    case "roomTemp":
+      return "常溫";
+    case "refrigerated":
+      return "冷藏";
+    case "frozen":
+      return "冷凍";
     default:
       return "";
   }
@@ -28,4 +43,17 @@ export const getStatus = (status: PostStatus) => {
     default:
       return "";
   }
+};
+
+export const getPostTitle = (post?: IPost | ILocationPost | IDeliver) => {
+  if (post) {
+    const { postNum, title, displayName } = post;
+    return `#${postNum} ${title} #${displayName}`;
+  }
+  return "";
+};
+
+export const getFullTitle = (post?: IPost) => {
+  if (!post) return "";
+  return `#${post.postNum} ${post.title} #${post.displayName}`;
 };

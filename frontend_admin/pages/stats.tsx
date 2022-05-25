@@ -1,7 +1,14 @@
 import type { NextPage } from "next";
+import Head from "next/head";
 
-const Deliver: NextPage = () => {
-  return <div>pickup</div>;
+const StatsPage: NextPage = () => {
+  return (
+    <div>
+      <Head>
+        <title>營收 - 開心團購後台</title>
+      </Head>
+    </div>
+  );
 };
 
-export default Deliver;
+export default StatsPage;

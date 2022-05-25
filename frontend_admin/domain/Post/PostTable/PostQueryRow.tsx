@@ -1,9 +1,15 @@
+import { useRouter } from "next/router";
 import React, { FC } from "react";
 
+import { RefreshIcon } from "@heroicons/react/outline";
+
+import { IUser } from "api/auth/userDB";
+import IconButton from "components/Button/IconButton";
 import Select from "components/Select";
 import TableCell from "components/Table/TableCell";
 import TableRow from "components/Table/TableRow";
 import TextField from "components/TextField";
+import UserQuery from "domain/User/UserQuery";
 
 import { PostQuery } from "../types";
 
@@ -12,6 +18,7 @@ interface Props {
 }
 
 const PostQueryRow: FC<Props> = ({ setQuery }) => {
+  const router = useRouter();
   const handleSetQuery = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== "Enter") return;
     const { name, value } = e.currentTarget;
@@ -43,11 +50,14 @@ const PostQueryRow: FC<Props> = ({ setQuery }) => {
       page: 0,
     }));
   };
+  const setUser = (user: IUser) => {
+    setQuery((query) => ({ ...query, userId: user.username }));
+  };
   return (
     <TableRow>
       <TableCell noPadding>
         <TextField
-          className="w-20 lg:w-32"
+          className="w-20 xl:w-32"
           type="number"
           name="postNum"
           placeholder="流水編號"
@@ -60,7 +70,7 @@ const PostQueryRow: FC<Props> = ({ setQuery }) => {
       <TableCell></TableCell>
       <TableCell>
         <TextField
-          className="w-28 lg:w-60"
+          className="w-32 xl:w-60"
           name="title"
           placeholder="團購主題"
           noLabel
@@ -70,14 +80,12 @@ const PostQueryRow: FC<Props> = ({ setQuery }) => {
         />
       </TableCell>
       <TableCell>
-        <TextField
-          className="w-20 lg:w-40"
-          name="displayName"
+        <UserQuery
           placeholder="開單者"
-          noLabel
+          isSeller
+          setUser={setUser}
           variant="standard"
-          onChange={handleReset}
-          onKeyDown={handleSetQuery}
+          noLabel
         />
       </TableCell>
       <TableCell></TableCell>
@@ -98,7 +106,7 @@ const PostQueryRow: FC<Props> = ({ setQuery }) => {
       </TableCell>
       <TableCell>
         <TextField
-          className="w-14 lg:w-[114px]"
+          className="w-14 xl:w-[114px]"
           name="deadline"
           type="date"
           variant="standard"
@@ -107,7 +115,7 @@ const PostQueryRow: FC<Props> = ({ setQuery }) => {
       </TableCell>
       <TableCell>
         <TextField
-          className="w-14 lg:w-[114px]"
+          className="w-14 xl:w-[114px]"
           name="deliveryDate"
           type="date"
           variant="standard"
@@ -133,10 +141,11 @@ const PostQueryRow: FC<Props> = ({ setQuery }) => {
       <TableCell></TableCell>
       <TableCell></TableCell>
       <TableCell></TableCell>
+      <TableCell></TableCell>
       <TableCell>
-        {/* <IconButton onClick={() => setQuery({})}>
+        <IconButton onClick={() => router.reload()}>
           <RefreshIcon />
-        </IconButton> */}
+        </IconButton>
       </TableCell>
     </TableRow>
   );
