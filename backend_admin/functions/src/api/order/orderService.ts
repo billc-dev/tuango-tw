@@ -8,8 +8,10 @@ import { FRONTEND_URL } from "utils/url";
 
 import {
   CreateOrderItem,
+  ILocationPost,
   IOrder,
   MongooseOrder,
+  OrderLocationFilter,
   OrderQuery,
   OrderStatus,
   ParsedOrderQuery,
@@ -139,6 +141,48 @@ export const createExtraOrderAndUpdate = async (
   }
 };
 
+export const createOrderedOrder = async (
+  user: IUser,
+  post: IPost,
+  orderItems: CreateOrderItem[]
+) => {
+  let orderNum = 0;
+  if (user.username !== "extra") {
+    const prevOrder = await Order.findOne({
+      postId: post._id,
+      status: { $ne: "canceled" },
+    }).sort({ orderNum: -1 });
+    if (prevOrder) orderNum = prevOrder.orderNum + 1;
+  }
+  const { displayName, username: userId, pictureUrl } = user;
+  const {
+    displayName: sellerDisplayName,
+    postNum,
+    title,
+    _id,
+    imageUrls,
+  } = post;
+  const imageUrl = () => {
+    const image = imageUrls[0];
+    if (typeof image === "object" && image !== null) return image.sm;
+    else return image;
+  };
+  const order = new Order({
+    orderNum,
+    userId,
+    displayName,
+    sellerDisplayName,
+    postNum,
+    title,
+    pictureUrl,
+    postId: _id,
+    imageUrl: imageUrl(),
+    order: orderItems,
+  });
+  await order.save();
+  return order;
+};
+
 export const createDeliveredOrder = async (
   post: IPost,
   orderItems: CreateOrderItem[],
@@ -199,7 +243,13 @@ export const updateOrder = async (
 ) => {
   await Order.updateOne(
     { _id: order._id },
-    { status, order: orderItems },
+    {
+      status,
+      order: orderItems,
+      hasName: order.hasName,
+      comment: order.comment?.trim(),
+      ...(status === "delivered" && { deliveredAt: new Date().toISOString() }),
+    },
     { session }
   );
 };
@@ -217,6 +267,7 @@ export const createOrder = async (
     status,
     order: orderItems,
     orderHistory: [...orderHistory, { status }],
+    ...(status === "delivered" && { deliveredAt: new Date().toISOString() }),
   });
   await newOrder.save({ session });
 };
@@ -323,4 +374,80 @@ const getLimit = (limit?: number) => {
   if (!limit) return 20;
   if (limit < 100) return limit;
   return 100;
+};
+
+export const getLocationQueryFilter = (query: any) => {
+  const { location, postNum, text } = query;
+  const filter: OrderLocationFilter = {};
+  const orderLocation = location === "" ? "" : new RegExp(location, "i");
+  if (typeof location === "string") {
+    filter.$and = [{ "order.location": orderLocation }];
+    if (["A", "B"].includes(location)) {
+      filter.$and?.push({
+        "order.location": {
+          $nin: [new RegExp("凍", "i"), new RegExp("冰", "i")],
+        },
+      });
+    }
+  }
+  if (postNum) filter.postNum = postNum;
+  if (text) {
+    const regExp = new RegExp(text, "i");
+    filter.$or = [
+      { title: regExp },
+      { sellerDisplayName: regExp },
+      { "order.item": regExp },
+    ];
+  }
+  return { filter, orderLocation };
+};
+
+export const getLocationPosts = (
+  orders: IOrder[],
+  orderLocation: string | RegExp
+) => {
+  const posts: ILocationPost[] = [];
+  for (const order of orders) {
+    const { displayName, orderNum } = order;
+    for (const item of order.order) {
+      const index = posts.findIndex((post) => post.postNum === order.postNum);
+      if (!item.location.match(orderLocation)) continue;
+
+      const { _id, id, location, qty } = item;
+      const orderItem = {
+        displayName,
+        orderNum,
+        _id,
+        id,
+        item: item.item,
+        qty,
+        location,
+        checked: false,
+      };
+
+      if (index === -1) {
+        const { postNum, title, sellerDisplayName: displayName } = order;
+        posts.push({
+          postNum,
+          title,
+          displayName,
+          items: [{ id, item: item.item, location: "", checked: false }],
+          orderItems: [orderItem],
+        });
+      } else {
+        posts[index].orderItems.push(orderItem);
+        const itemsIndex = posts[index].items.findIndex(
+          (item) => item.id === id
+        );
+        if (itemsIndex !== -1) continue;
+        posts[index].items.push({
+          id,
+          item: item.item,
+          location: "",
+          checked: false,
+        });
+      }
+    }
+  }
+  return posts;
 };

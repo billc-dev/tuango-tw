@@ -16,6 +16,7 @@ export interface IUser {
     notifiedAt: string;
   };
   fb: boolean;
+  signupPlatform: "line" | "fb";
 }
 
 export interface UserQuery {

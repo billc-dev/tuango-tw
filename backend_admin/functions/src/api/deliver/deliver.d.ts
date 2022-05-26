@@ -19,5 +19,29 @@ export interface IDeliver {
   extraTotal: number;
   normalFee: number;
   extraFee: number;
-  checked: boolean;
+  checked?: boolean;
+}
+
+export interface DeliverSums {
+  normalItemSum: number;
+  extraItemSum: number;
+  totalItemSum: number;
+}
+
+interface DeliverItem {
+  qty: number;
+  amount: number;
+  id: string;
+  item: string;
+  price: number;
+}
+
+export interface DeliverItemsAndSums extends DeliverSums {
+  normalItems: DeliverItem[];
+  extraItems: DeliverItem[];
+  totalItems: DeliverItem[];
+}
+
+export interface DeliverQuery {
+  userId?: string;
 }

@@ -31,12 +31,26 @@ router.get(
 );
 
 router.get(
-  "/:postId/items",
+  "/date/:date",
   isAdmin,
   asyncWrapper(async (req, res) => {
-    const post = await Post.findById(req.params.postId).select("items");
-    if (!post) throw "post not found";
-    return res.status(200).json({ items: post.items });
+    const posts = await Post.find({ deliveryDate: req.params.date })
+      .sort({ displayName: -1, postNum: -1 })
+      .select("postNum title displayName");
+
+    const postIds = posts.map((post) => post._id);
+    const orderPostNums = await Order.find({
+      postId: { $in: postIds },
+      status: "ordered",
+    }).distinct("postNum");
+    const returnedPosts = posts.filter((post) => {
+      const index = orderPostNums.findIndex(
+        (postNum) => postNum === post.postNum
+      );
+      return index !== -1;
+    });
+
+    return res.json({ posts: returnedPosts });
   })
 );
 
@@ -49,6 +63,16 @@ router.get(
       status: { $ne: "canceled" },
     });
     return res.status(200).json({ isDuplicate: !!post });
+  })
+);
+
+router.get(
+  "/:postId/items",
+  isAdmin,
+  asyncWrapper(async (req, res) => {
+    const post = await Post.findById(req.params.postId).select("items");
+    if (!post) throw "post not found";
+    return res.status(200).json({ items: post.items });
   })
 );
 
@@ -89,7 +113,8 @@ router.post(
     const post = await postService.createPost(
       postForm,
       req.body.user,
-      req.body.postNum
+      req.body.postNum,
+      req.body.fb
     );
     return res.status(200).json({ post });
   })
