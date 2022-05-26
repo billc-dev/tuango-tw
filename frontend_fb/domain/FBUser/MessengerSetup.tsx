@@ -43,10 +43,12 @@ const MessengerSetup = () => {
           >
             複製認證碼
           </Button>
-          <p className="text-2xl mt-2 fixed bottom-14 w-1/2">
+          <p className="text-2xl mt-2 fixed bottom-4 w-1/2 bg-zinc-200 dark:bg-zinc-600 p-2 rounded">
             2.按Messenger並貼上認證碼
           </p>
-          <ArrowRightIcon className="fixed bottom-4 animate-bounce right-24 h-20" />
+          <div className="fixed bottom-4 right-24">
+            <ArrowRightIcon className="h-20" />
+          </div>
           <ChatPlugin />
         </>
       ) : (
