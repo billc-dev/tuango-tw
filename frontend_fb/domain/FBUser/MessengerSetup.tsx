@@ -47,7 +47,6 @@ const MessengerSetup = () => {
             2.按Messenger並貼上認證碼
           </p>
           <ArrowRightIcon className="fixed bottom-4 animate-bounce right-24 h-20" />
-
           <ChatPlugin />
         </>
       ) : (

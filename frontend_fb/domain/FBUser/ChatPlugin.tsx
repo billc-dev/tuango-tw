@@ -12,7 +12,7 @@ const ChatPlugin = () => {
   }, []);
   return (
     <>
-      <div id="fb-root" />
+      <div id="fb-root" className="z-[55]" />
       <div id="fb-customer-chat" className="fb-customerchat" />
       <Script
         id="chat-plugin"
