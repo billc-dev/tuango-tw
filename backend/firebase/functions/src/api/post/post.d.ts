@@ -43,6 +43,7 @@ export interface IPostComplete extends IPost {
   comment?: string;
   deliverImages?: string[];
   delivered: boolean;
+  fb: boolean;
 }
 
 export interface ImageUrl {

@@ -7,7 +7,10 @@ export const getParams = (req: Request) => {
   const limit = Math.min(Number(req.query.limit), 200);
   const query: SellerQuery | undefined =
     req.query.query && JSON.parse(req.query.query as string);
-  return { cursor, limit, query };
+  let fb = undefined;
+  if (req.query.fb === "true") fb = true;
+  else if (req.query.fb === "false") fb = false;
+  return { cursor, limit, query, fb };
 };
 
 export const getQueryConditions = (query: Query) => {

@@ -1,4 +1,5 @@
 import * as express from "express";
+import { FilterQuery } from "mongoose";
 
 import { Like } from "api/like/likeDB";
 import { notifyDeliveredPostCount } from "api/notify/notifyService";
@@ -6,7 +7,7 @@ import Order from "api/order/orderDB";
 import asyncWrapper from "middleware/asyncWrapper";
 import { isAuthorized } from "middleware/auth";
 
-import { Filter, Query, ValidatedPost } from "./post";
+import { Filter, IPost, Query, ValidatedPost } from "./post";
 import { Post } from "./postDB";
 import * as postService from "./postService";
 
@@ -15,11 +16,15 @@ const router = express.Router();
 router.get(
   "/paginate/:cursor",
   asyncWrapper(async (req, res) => {
-    const { cursor, limit, query } = postService.getParams(req);
+    const { cursor, limit, query, fb } = postService.getParams(req);
     postService.checkLimit(limit);
 
-    let filter: Filter = { status: "open" };
+    let filter: FilterQuery<IPost> = { status: "open" };
     if (cursor && cursor !== "initial") filter.postNum = { $lt: cursor };
+    if (typeof fb === "boolean") {
+      if (fb) filter.fb = true;
+      else filter.fb = { $ne: true };
+    }
 
     const postQuery = Post.find(filter).sort("-postNum").limit(limit);
     if (req.headers.type === "postCards") {
@@ -49,7 +54,6 @@ router.get(
 
     const likeFilter: any = {};
     if (cursor && cursor !== "initial") likeFilter.createdAt = { $lt: cursor };
-    console.log(cursor);
 
     const likes = await Like.find({ userId: res.locals.user.username })
       .limit(limit)
@@ -199,7 +203,7 @@ router.patch(
       res.locals.user.username,
       postForm
     );
-    if (post) {
+    if (post && post.deliveryDate) {
       await notifyDeliveredPostCount(post.deliveryDate);
     }
 
