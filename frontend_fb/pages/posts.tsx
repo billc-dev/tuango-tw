@@ -32,7 +32,7 @@ const Posts: NextPage<Props> = (props) => {
   return (
     <>
       <PostHead post={post} />
-      <PostTypeContainer />
+      <PostTypeContainer fb={false} />
       {typeof postId === "string" && <PostDialog postId={postId} />}
     </>
   );

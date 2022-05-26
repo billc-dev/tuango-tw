@@ -4,11 +4,7 @@ import React from "react";
 const NextHead = () => {
   return (
     <Head>
-      <title>開心團購</title>
-      <meta
-        name="description"
-        content="開心鮮拼鮮難瘦團，就是買買買，不買難受，買了難瘦，歡迎加入買買買。"
-      />
+      <title>善化超便宜團購</title>
       <link
         rel="apple-touch-icon"
         sizes="180x180"
