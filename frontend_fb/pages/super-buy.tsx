@@ -4,11 +4,11 @@ import { useEffect } from "react";
 
 import { useQueryClient } from "react-query";
 
+import MessengerSetup from "domain/FBUser/MessengerSetup";
 import PostDialog from "domain/Post/PostDialog";
 import PostHead from "domain/Post/PostHead";
 import PostTypeContainer from "domain/Post/PostTypeContainer";
 import { fetchPost } from "domain/Post/api";
-import NotifySetup from "domain/User/NotifySetup";
 
 import { IPost } from "../domain/Post/types";
 
@@ -32,7 +32,7 @@ const SuperBuy: NextPage<Props> = (props) => {
   }, []);
   return (
     <>
-      <NotifySetup />
+      <MessengerSetup />
       <PostHead post={post} />
       <PostTypeContainer fb={true} />
       {typeof postId === "string" && <PostDialog postId={postId} />}
