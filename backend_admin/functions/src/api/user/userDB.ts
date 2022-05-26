@@ -41,6 +41,11 @@ export const UserSchema = new mongoose.Schema<IUser>({
     notifiedAt: { type: String, default: () => new Date().toISOString() },
   },
   fb: { type: Boolean, default: false },
+  signupPlatform: {
+    type: String,
+    default: "line",
+    enum: ["line", "fb"],
+  },
 });
 
 export const User = usersConn.model<IUser>("User", UserSchema);

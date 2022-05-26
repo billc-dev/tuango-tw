@@ -102,6 +102,22 @@ router.patch(
 );
 
 router.patch(
+  "/:userId",
+  isAdmin,
+  asyncWrapper(async (req, res) => {
+    const userId = req.params.userId;
+    const { displayName, notified, status, role, pictureUrl } = req.body.user;
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { displayName, notified, status, role, pictureUrl },
+      { new: true }
+    ).select("comment");
+    if (!user) throw "user not found";
+    return res.status(200).json({ comment: user.comment });
+  })
+);
+
+router.patch(
   "/:username/linepay",
   isAdmin,
   asyncWrapper(async (req, res) => {
@@ -114,6 +130,16 @@ router.patch(
     );
     if (!user) throw "user not found";
     return res.status(200).json({ user });
+  })
+);
+
+router.patch(
+  "/:userId/approve",
+  isAdmin,
+  asyncWrapper(async (req, res) => {
+    const userId = req.params.userId;
+    await User.updateOne({ _id: userId }, { status: "approved" });
+    return res.status(200).json({});
   })
 );
 
