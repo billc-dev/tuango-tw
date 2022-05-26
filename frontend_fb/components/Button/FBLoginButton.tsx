@@ -20,8 +20,8 @@ const FBLoginButton: FC<Props> = ({ text, ...props }) => {
     <Button
       variant="blue"
       onClick={() => {
-        window.open(FB_LOGIN_URL(), "_self");
         isClient && localStorage.setItem("next", router.asPath);
+        window.open(FB_LOGIN_URL(), "_self");
       }}
       {...props}
     >
