@@ -7,7 +7,6 @@ import Button from "components/Button";
 import TextField from "components/TextField";
 import TextArea from "components/TextField/TextArea";
 
-import Agree from "../PostSellerActions/Agree";
 import ImageGrid from "../PostSellerActions/ImageGrid";
 import PostItems from "../PostSellerActions/PostItems";
 import StorageTypeSelect from "../PostSellerActions/StorageTypeSelect";
@@ -24,7 +23,6 @@ interface Props {
 
 const PostForm: FC<Props> = (props) => {
   const { postForm, onSubmit, action, submitting, noOrders } = props;
-  const [agree, setAgree] = useState(action === "edit");
   const {
     handleSubmit,
     register,
@@ -80,11 +78,9 @@ const PostForm: FC<Props> = (props) => {
       <PostItems {...{ control, errors, register, noOrders }} />
       <ImageGrid {...{ getValues, control }} />
       <UploadImageButton {...{ getValues, setValue, errors }} />
-      {action === "create" && <Agree {...{ agree, setAgree }} />}
       <Button
         loading={submitting}
         icon={<DocumentAddIcon />}
-        disabled={!agree}
         type="submit"
         variant="primary"
         fullWidth
