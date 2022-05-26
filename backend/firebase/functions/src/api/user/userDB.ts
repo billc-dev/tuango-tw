@@ -34,7 +34,11 @@ export const UserSchema = new mongoose.Schema<IUser>({
   username: { type: String, required: true },
   displayName: { type: String, required: true },
   pictureUrl: String,
-  createdAt: { type: String, required: true },
+  createdAt: {
+    type: String,
+    required: true,
+    default: () => new Date().toISOString(),
+  },
   pickupNum: { type: Number, required: true },
   role: {
     type: String,
