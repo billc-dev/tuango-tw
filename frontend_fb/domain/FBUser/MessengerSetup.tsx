@@ -1,13 +1,9 @@
 import React from "react";
 
-import { ArrowRightIcon, DuplicateIcon } from "@heroicons/react/outline";
-import toast from "react-hot-toast";
-
 import Button from "components/Button";
 import Dialog from "components/Dialog";
+import MessengerIcon from "components/svg/MessengerIcon";
 import { useUser } from "domain/User/hooks";
-
-import ChatPlugin from "./ChatPlugin";
 
 const MessengerSetup = () => {
   const userQuery = useUser();
@@ -27,29 +23,20 @@ const MessengerSetup = () => {
       {!notified ? (
         <>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <p className="text-2xl mt-2">1.按複製認證碼</p>
           <Button
+            icon={<MessengerIcon />}
+            className="mt-4"
             fullWidth
             size="lg"
-            variant="blue"
-            className="mt-2"
-            icon={<DuplicateIcon />}
             onClick={() => {
-              navigator.clipboard.writeText(
-                `認證碼: ${userQuery.data.data.user.username}`
+              window.open(
+                `http://m.me/superbuytw?ref=認證碼:${userQuery.data.data.user._id}`,
+                "_self"
               );
-              toast.success("已複製認證碼！");
             }}
           >
-            複製認證碼
+            設定FB通知
           </Button>
-          <p className="text-2xl mt-2 fixed bottom-4 w-1/2 bg-zinc-200 dark:bg-zinc-600 p-2 rounded">
-            2.按Messenger並貼上認證碼
-          </p>
-          <div className="fixed bottom-4 right-24">
-            <ArrowRightIcon className="h-20" />
-          </div>
-          <ChatPlugin />
         </>
       ) : (
         <>

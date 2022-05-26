@@ -25,7 +25,3 @@ textarea {
     @apply max-w-[384px] sm:max-w-[572px] md:max-w-[760px] lg:max-w-[896px];
   }
 }
-
-.fb_dialog_content {
-  z-index: 9999;
-}
