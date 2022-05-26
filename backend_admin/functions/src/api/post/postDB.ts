@@ -73,6 +73,7 @@ export const PostSchema = new mongoose.Schema<IPostComplete>({
   comment: String,
   deliverImages: { type: Array, default: [] },
   delivered: { type: Boolean, default: false },
+  fb: { type: Boolean, default: false },
 });
 
 export const Post = postsConn.model<IPostComplete>("Post", PostSchema);

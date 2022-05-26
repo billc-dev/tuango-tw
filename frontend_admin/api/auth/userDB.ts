@@ -2,6 +2,9 @@ import * as mongoose from "mongoose";
 
 const usersConn = mongoose.createConnection(process.env.MONGO_USER as string);
 
+export type IUserRole = "basic" | "seller" | "admin";
+export type IUserStatus = "registered" | "approved" | "blocked";
+
 export interface IUser {
   _id: string;
   username: string;
@@ -9,8 +12,8 @@ export interface IUser {
   pictureUrl: string;
   createdAt: string;
   pickupNum: number;
-  role: "basic" | "seller" | "admin";
-  status: "registered" | "approved" | "blocked";
+  role: IUserRole;
+  status: IUserStatus;
   deliveredOrders: number;
   notified: boolean;
   linepay: boolean;

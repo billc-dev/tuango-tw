@@ -37,7 +37,7 @@ export const decrementItemQty = async (
 ) => {
   const $set: SetObject = { orderCount: 1 };
 
-  order.items!.forEach((item) => {
+  order.items?.forEach((item) => {
     const index = post.items.findIndex((i) => i.id === item.id);
     $set[`items.${index}.itemQty`] = -item.qty;
   });
@@ -65,4 +65,11 @@ export const incrementLikeCount = (increment: number, postId: string) => {
     { $inc: { likeCount: increment } },
     { new: true }
   );
+};
+
+export const incrementPostOrderCount = async (
+  postId: string,
+  increment: number
+) => {
+  return Post.updateOne({ _id: postId }, { $inc: { orderCount: increment } });
 };

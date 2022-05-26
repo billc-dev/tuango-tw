@@ -1,46 +1,52 @@
-import toast from "react-hot-toast";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery } from "react-query";
 
-import { editPost, editPostStatus, fetchPost, fetchPosts } from "../api";
+import {
+  checkDuplicatePostNum,
+  fetchDatePosts,
+  fetchPost,
+  fetchPostByPostNum,
+  fetchPostItems,
+  fetchPosts,
+} from "../api";
 import { PostQuery } from "../types";
 
+export * from "./mutation";
+
 export const usePost = (postId: string) => {
-  return useQuery(["post", postId], () => fetchPost(postId), {
-    enabled: !!postId,
-    refetchOnMount: "always",
-  });
+  return useQuery(["post", postId], () => fetchPost(postId), { cacheTime: 0 });
 };
 
 export const usePosts = (limit: number, query: PostQuery) => {
   return useQuery(["posts", limit, query], () => fetchPosts(limit, query), {
     keepPreviousData: true,
+    cacheTime: 0,
   });
 };
 
-export const useEditPost = () => {
-  const queryClient = useQueryClient();
-  return useMutation(editPost, {
-    onMutate() {
-      toast.loading("貼文編輯中...", { id: "editPost" });
-    },
-    onSuccess() {
-      queryClient.invalidateQueries("posts");
-      toast.success("已成功編輯貼文!", { id: "editPost" });
-    },
-    onError() {
-      toast.error("編輯貼文失敗!", { id: "editPost" });
-    },
+export const useCheckDuplicatePostNum = (postNum: number | undefined) => {
+  return useQuery(
+    ["duplicatePostNum", postNum],
+    () => checkDuplicatePostNum(postNum),
+    { enabled: !!postNum }
+  );
+};
+
+export const usePostItems = (postId: string) => {
+  return useQuery(["postItems", postId], () => fetchPostItems(postId));
+};
+
+export const useGetPostByPostNum = () => {
+  return useMutation(fetchPostByPostNum);
+};
+
+export const usePostByPostNum = (postNum: string) => {
+  return useQuery(["post", postNum], () => fetchPostByPostNum(postNum), {
+    enabled: !!postNum,
   });
 };
 
-export const useEditPostStatus = () => {
-  const queryClient = useQueryClient();
-  return useMutation(editPostStatus, {
-    onSuccess() {
-      queryClient.invalidateQueries("posts");
-    },
-    onError() {
-      toast.error("編輯貼文狀態失敗!", { id: "editPost" });
-    },
+export const useDatePosts = (date: string) => {
+  return useQuery(["post", date], () => fetchDatePosts(date), {
+    enabled: !!date,
   });
 };

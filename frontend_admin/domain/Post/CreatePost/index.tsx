@@ -4,19 +4,28 @@ import React, { useEffect, useState } from "react";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { shallowPush } from "utils";
 
+import CardHeader from "components/Card/CardHeader";
+import Checkbox from "components/Checkbox";
 import Dialog from "components/Dialog";
+import TextField from "components/TextField";
+import UserQuery from "domain/User/UserQuery";
+import { User } from "domain/User/types";
 
 import PostForm from "../PostForm";
-// import { useCreatePost, useIfCreatedPostToday } from "../hooks";
+import { useCheckDuplicatePostNum, useCreatePost } from "../hooks";
 import { PostFormSchema, postSchema } from "../schema";
 
 const CreatePost = () => {
   const router = useRouter();
-  // const createPost = useCreatePost();
-  // const createdPostQuery = useIfCreatedPostToday();
-  const [submitting, setSubmitting] = useState(false);
+  const createPost = useCreatePost();
+  const [user, setUser] = useState<User>();
+  const [fb, setFB] = useState<boolean>(false);
+  const [postNum, setPostNum] = useState<number>();
+  const [postNumError, setPostNumError] = useState<string>("");
+  const duplicatePostNumQuery = useCheckDuplicatePostNum(postNum);
   const postForm = useForm<PostFormSchema>({
     defaultValues: postSchema.getDefault(),
     resolver: yupResolver(postSchema),
@@ -27,26 +36,29 @@ const CreatePost = () => {
     shallowPush(router, query);
   };
 
-  const onSubmit: SubmitHandler<PostFormSchema> = (data) => {
-    console.log(data);
-    setSubmitting(true);
-    // if (createdPostQuery.data) {
-    //   return toast.error("您今日已開過單，請明天再試！");
-    // }
-    // setSubmitting(true);
-    // toast.loading("貼文製作中...", { id: "createPost" });
-    // createPost.mutate(data, {
-    //   onSuccess: () => {
-    //     postForm.reset({
-    //       ...postSchema.getDefault(),
-    //       items: [{ item: "", price: undefined, itemQty: 100 }],
-    //     });
-    //     handleClose();
-    //   },
-    //   onSettled: () => {
-    //     setSubmitting(false);
-    //   },
-    // });
+  const onSubmit: SubmitHandler<PostFormSchema> = async (data) => {
+    if (!postNum) {
+      setPostNumError("請輸入流水編號！");
+      return toast.error("請輸入流水編號！");
+    }
+    if (!user) return toast.error("請選擇開單者！");
+    await duplicatePostNumQuery.refetch();
+    if (duplicatePostNumQuery.data) {
+      setPostNumError("流水編號重複了!");
+      return toast.error("流水編號重複了!");
+    }
+    toast.loading("貼文製作中...", { id: "createPost" });
+    createPost.mutate(
+      { postForm: data, postNum, user },
+      {
+        onSuccess: () => {
+          handleClose();
+        },
+      }
+    );
+  };
+  const handleSetUser = (user: User) => {
+    setUser(user);
   };
 
   useEffect(() => {
@@ -55,13 +67,48 @@ const CreatePost = () => {
   }, [router.query.createPost]);
 
   useEffect(() => {
-    // if (open) createdPostQuery.refetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
-
+    if (!duplicatePostNumQuery.data) setPostNumError("");
+  }, [duplicatePostNumQuery.data]);
   return open ? (
-    <Dialog open={open} handleClose={() => handleClose()} title="新增貼文">
-      <PostForm action="create" {...{ postForm, onSubmit, submitting }} />
+    <Dialog
+      open={open}
+      handleClose={() => handleClose()}
+      title={`新增${fb ? "FB" : "開心團購"}貼文`}
+    >
+      <div className="mt-2">
+        <UserQuery
+          isSeller
+          fullWidth
+          placeholder="開單者"
+          setUser={handleSetUser}
+          color="grey"
+        />
+      </div>
+      {user && (
+        <>
+          <CardHeader img={user.pictureUrl} title={user.displayName} />
+          <div className="mb-2 flex items-center">
+            <Checkbox checked={fb} onChange={(e) => setFB(e.target.checked)} />
+            <p className="ml-2">FB</p>
+          </div>
+          <TextField
+            type="number"
+            color="grey"
+            placeholder="流水編號"
+            value={postNum}
+            onChange={(e) => setPostNum(Number(e.target.value))}
+            error={
+              duplicatePostNumQuery.data
+                ? "流水編號重複了!"
+                : undefined || postNumError
+            }
+          />
+          <PostForm
+            action="create"
+            {...{ postForm, onSubmit, submitting: createPost.isLoading }}
+          />
+        </>
+      )}
     </Dialog>
   ) : null;
 };

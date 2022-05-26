@@ -13,7 +13,7 @@ interface Props
 }
 
 const TextArea: FC<Props> = React.forwardRef((props, ref) => {
-  const { color, hiddenLabel, error, ...rest } = props;
+  const { color, hiddenLabel, error, className, ...rest } = props;
   return (
     <>
       {!hiddenLabel
@@ -30,7 +30,7 @@ const TextArea: FC<Props> = React.forwardRef((props, ref) => {
           !error
             ? "focus:border-line-400 focus:ring-line-400 focus:ring-1"
             : "border-red-500 ring-red-500 ring-1"
-        }`}
+        } ${className}`}
         ref={ref}
         {...rest}
       />

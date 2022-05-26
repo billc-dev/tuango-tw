@@ -3,6 +3,13 @@ import { QueryTypes } from "domain/Search/types";
 type PostStatus = "open" | "closed" | "completed" | "canceled";
 
 export type PostStorageType = "roomTemp" | "refrigerated" | "frozen";
+export interface Item {
+  _id: string;
+  id: string;
+  item: string;
+  price: number;
+  itemQty: number;
+}
 
 export interface IPost {
   _id: string;
@@ -29,6 +36,32 @@ export interface IPost {
   extraFee: number;
 }
 
+export interface ILocationPostItem {
+  id: string;
+  item: string;
+  location: string;
+  checked: boolean;
+}
+
+export interface ILocationOrderItem {
+  checked: boolean;
+  displayName: string;
+  id: string;
+  item: string;
+  location: string;
+  orderNum: number;
+  qty: number;
+  _id: string;
+}
+
+export interface ILocationPost {
+  postNum: number;
+  title: string;
+  displayName: string;
+  items: ILocationPostItem[];
+  orderItems: ILocationOrderItem[];
+}
+
 export interface IPostCard {
   _id: string;
   postNum: number;
@@ -45,20 +78,13 @@ export interface ImageUrl {
   md: string;
   lg: string;
 }
-export interface Item {
-  _id: string;
-  id: string;
-  item: string;
-  price: number;
-  itemQty: number;
-}
 
 export type Action = undefined | "comment" | "order";
 
 export interface PostQuery {
   postNum?: number;
   title?: string;
-  displayName?: string;
+  userId?: string;
   storageType?: PostStorageType;
   deadline?: string;
   deliveryDate?: string;

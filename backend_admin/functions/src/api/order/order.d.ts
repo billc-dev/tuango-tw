@@ -8,11 +8,12 @@ export type OrderStatus =
   | "canceled";
 
 export interface SingleOrder {
+  _id: string;
   id: string;
   item: string;
   qty: number;
   price: number;
-  status: string;
+  status: OrderStatus;
   location: string;
   hasName: boolean;
 }
@@ -33,7 +34,7 @@ export interface IOrder {
   postId: string;
   imageUrl: string;
   order: SingleOrder[];
-  comment: string;
+  comment?: string;
   sellerComment: string;
   hasName: boolean;
   isExtra: boolean;
@@ -69,4 +70,36 @@ export interface ParsedOrderQuery {
   postNum?: number;
   status?: OrderStatus;
   $or?: { [title | sellerDisplayName | "order.item"]: RegExp }[];
+}
+
+export interface OrderLocationFilter {
+  $and?: { "order.location": RegExp | string | { $nin: RegExp[] } }[];
+  postNum?: number;
+  $or?: { [title | sellerDisplayName | "order.item"]: RegExp }[];
+}
+
+export interface ILocationPostItem {
+  id: string;
+  item: string;
+  location: string;
+  checked: boolean;
+}
+
+export interface ILocationOrderItem {
+  checked: boolean;
+  displayName: string;
+  id: string;
+  item: string;
+  location: string;
+  orderNum: number;
+  qty: number;
+  _id: string;
+}
+
+export interface ILocationPost {
+  postNum: number;
+  title: string;
+  displayName: string;
+  items: ILocationPostItem[];
+  orderItems: ILocationOrderItem[];
 }

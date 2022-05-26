@@ -7,7 +7,7 @@ interface Props {
 }
 
 const LoadingIndicator: FC<Props> = ({ loading }) => {
-  return (
+  return loading ? (
     <div
       className={`rounded shadow transition-opacity bg-zinc-200 dark:bg-zinc-600 p-1.5 fixed top-16 left-3 z-50 ${
         loading ? "opacity-95" : "opacity-0"
@@ -15,7 +15,7 @@ const LoadingIndicator: FC<Props> = ({ loading }) => {
     >
       <AnimatedSpinner />
     </div>
-  );
+  ) : null;
 };
 
 export default LoadingIndicator;

@@ -6,15 +6,15 @@ import toast from "react-hot-toast";
 import { shallowPush } from "utils";
 
 import AnimatedSpinner from "components/svg/AnimatedSpinner";
-import { useMutateLogin, useUser } from "domain/User/hooks";
+import { useMe, useMutateLogin } from "domain/User/hooks";
 import { LINE_REDIRECT_URL, getCode } from "domain/User/services";
 
 const Redirect: NextPage = () => {
   const code = getCode();
   const router = useRouter();
   const login = useMutateLogin();
-  const userQuery = useUser();
-  const user = userQuery?.data?.data.user;
+  const meQuery = useMe();
+  const user = meQuery?.data?.data.user;
 
   useEffect(() => {
     if (!router.isReady) return;

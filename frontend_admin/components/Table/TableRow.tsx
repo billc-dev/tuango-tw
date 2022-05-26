@@ -8,7 +8,9 @@ interface Props
   > {}
 
 const TableRow: FC<Props> = ({ children, className }) => {
-  return <tr className={`border-b ${className}`}>{children}</tr>;
+  return (
+    <tr className={`border-b ${className} last:border-b-0`}>{children}</tr>
+  );
 };
 
 export default TableRow;

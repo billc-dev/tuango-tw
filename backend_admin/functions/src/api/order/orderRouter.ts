@@ -1,12 +1,20 @@
 import * as express from "express";
+import { FilterQuery } from "mongoose";
 
 import * as completeService from "api/complete/completeService";
+import {
+  checkDeliverSums,
+  createDeliver,
+  getDeliverSums,
+  sendMessageToDeliveredOrders,
+} from "api/deliver/deliverService";
 import { Post } from "api/post";
+import * as postService from "api/post/services";
 import { User } from "api/user/userDB";
 import asyncWrapper from "middleware/asyncWrapper";
 import { isAdmin } from "middleware/auth";
 
-import { IOrder, OrderStatus } from "./order";
+import { ILocationOrderItem, ILocationPostItem, IOrder } from "./order";
 import Order from "./orderDB";
 import * as orderService from "./orderService";
 
@@ -33,22 +41,26 @@ router.get(
   })
 );
 
-interface FilterQuery {
-  userId?: string;
-  status?: OrderStatus;
-  postNum?: number;
-  $or?: { [key: string]: RegExp }[];
-}
-
 router.post(
   "/",
   isAdmin,
   asyncWrapper(async (req, res) => {
-    const { userId, status, text, postNum } = req.body;
-    const filter: FilterQuery = {};
+    const { userId, status, text, postNum, FB, deliveredAt, storageType } =
+      req.body;
+
+    let sortBy = "-createdAt";
+    if (req.body.sortBy) sortBy = req.body.sortBy;
+
+    const filter: FilterQuery<IOrder> = {};
     if (userId) filter.userId = userId;
     if (status) filter.status = status;
     if (postNum) filter.postNum = postNum;
+    if (deliveredAt) {
+      if (status === "delivered") {
+        filter.deliveredAt = { $lte: deliveredAt };
+        sortBy = "-deliveredAt";
+      }
+    }
     if (text) {
       const regExp = new RegExp(text, "i");
       filter.$or = [
@@ -57,12 +69,42 @@ router.post(
         { "order.item": regExp },
       ];
     }
-    const sortBy = req.body.sortBy || "-createdAt";
+    if (FB) filter.displayName = new RegExp("FB", "i");
+    if (storageType) {
+      const posts = await Post.find({
+        storageType,
+        status: { $ne: "canceled" },
+      }).select("_id");
+      const postIds = posts.map((post) => post._id);
+      filter.postId = { $in: postIds };
+    }
 
     const orders = await Order.find(filter)
       .sort(sortBy)
       .select("-orderHistory");
+
     return res.status(200).json({ orders });
+  })
+);
+
+router.post(
+  "/create",
+  isAdmin,
+  asyncWrapper(async (req, res) => {
+    const { userId, postId, orderItems } = req.body;
+    if (!userId || !postId || !orderItems)
+      throw "userId or orderItems is missing";
+
+    const user = await User.findById(userId);
+    if (!user) throw "user not found";
+    const post = await Post.findById(postId);
+    if (!post) throw "post not found";
+
+    const order = await orderService.createOrderedOrder(user, post, orderItems);
+    if (order && order.userId !== "extra") {
+      await postService.incrementPostOrderCount(post._id, 1);
+    }
+    return res.status(200).json({ order });
   })
 );
 
@@ -125,6 +167,124 @@ router.post(
     );
     await orderService.sendDeliveredMessage(newOrder);
     return res.status(200).json({ order: newOrder });
+  })
+);
+
+router.post(
+  "/post/:postId",
+  isAdmin,
+  asyncWrapper(async (req, res) => {
+    const postId = req.params.postId;
+    const { status } = req.body;
+    if (!postId) throw "postId is missing";
+
+    const filter: FilterQuery<IOrder> = {
+      postId,
+      status: { $ne: "canceled" },
+    };
+    if (status) filter.status = status;
+
+    const orders = await Order.find(filter).sort("orderNum");
+    return res.status(200).json({ orders });
+  })
+);
+
+router.post(
+  "/location",
+  asyncWrapper(async (req, res) => {
+    const { filter, orderLocation } = orderService.getLocationQueryFilter(
+      req.body.query
+    );
+
+    const orders = await Order.find({ status: "delivered", ...filter })
+      .sort({ postNum: -1, orderNum: 1 })
+      .select(
+        "order displayName orderNum postId sellerDisplayName title postNum"
+      );
+
+    const posts = orderService.getLocationPosts(orders, orderLocation);
+
+    return res.status(200).json({ posts });
+  })
+);
+
+interface PatchLocationBody {
+  postItems: ILocationPostItem[];
+  orderItems: ILocationOrderItem[];
+}
+
+router.patch(
+  "/location",
+  asyncWrapper(async (req, res) => {
+    const { postItems, orderItems }: PatchLocationBody = req.body;
+    const promises = [];
+    for (const orderItem of orderItems) {
+      if (!orderItem.checked) continue;
+      const index = postItems.findIndex((item) => item.id === orderItem.id);
+      if (index === -1) continue;
+      promises.push(
+        Order.updateMany(
+          { "order._id": orderItem._id },
+          { $set: { "order.$.location": postItems[index].location } }
+        )
+      );
+    }
+    await Promise.all(promises);
+    return res.status(200).json({ success: true });
+  })
+);
+
+interface DeliverOrdersBody {
+  orders: IOrder[];
+  normalItemSum: number;
+  extraItemSum: number;
+  totalItemSum: number;
+}
+
+router.patch(
+  "/deliver",
+  isAdmin,
+  asyncWrapper(async (req, res) => {
+    const { orders, ...sums }: DeliverOrdersBody = req.body;
+
+    const post = await Post.findById(orders[0].postId).lean();
+    if (!post) throw "post not found";
+
+    const deliverSums = getDeliverSums(post, orders);
+    checkDeliverSums(sums, deliverSums);
+
+    if (orders.length <= 0) throw "orders is missing";
+    const orderedOrders = await Order.find({
+      postId: post._id,
+      status: "ordered",
+    }).select("postId status");
+
+    const session = await Order.startSession();
+    try {
+      session.startTransaction();
+      for (const order of orders as IOrder[]) {
+        const index = orderedOrders.findIndex(
+          (ord) => ord._id.toString() === order._id
+        );
+        if (index === -1) throw "refresh postOrders";
+
+        const categories = orderService.categorizeOrders(order.order);
+        const categoryCount = Object.keys(categories).length;
+        if (categoryCount <= 0) throw "no orders to update";
+        await orderService.updateOrders(session, order, categories);
+      }
+      await session.commitTransaction();
+    } catch (error) {
+      await session.abortTransaction();
+      throw error;
+    } finally {
+      session.endSession();
+    }
+
+    const deliver = await createDeliver(post, deliverSums);
+    await sendMessageToDeliveredOrders(orders);
+
+    return res.status(200).json({ deliver });
   })
 );
 

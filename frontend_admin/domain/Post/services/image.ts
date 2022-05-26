@@ -8,6 +8,22 @@ import Resizer from "react-image-file-resizer";
 import { PostFormSchema } from "../schema";
 import { ImageUrl } from "../types";
 
+export const createProfilePic = (file: File) =>
+  new Promise((resolve) => {
+    Resizer.imageFileResizer(
+      file,
+      500,
+      500,
+      "JPEG",
+      60,
+      0,
+      (uri) => {
+        resolve(uri);
+      },
+      "file"
+    );
+  });
+
 const createThumbnail = (file: File) =>
   new Promise((resolve) => {
     Resizer.imageFileResizer(

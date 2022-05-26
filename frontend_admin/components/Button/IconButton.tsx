@@ -9,15 +9,11 @@ interface Props
   > {
   avatar?: JSX.Element;
   loading?: boolean;
+  variant?: "contained";
 }
 
-const IconButton: FC<Props> = ({
-  children,
-  avatar,
-  loading,
-  disabled,
-  ...props
-}) => {
+const IconButton: FC<Props> = (props) => {
+  const { children, avatar, loading, disabled, variant, ...rest } = props;
   const renderedChildren = () => {
     if (loading) return <AnimatedSpinner />;
     if (avatar) return avatar;
@@ -27,10 +23,10 @@ const IconButton: FC<Props> = ({
     <button
       disabled={loading || disabled}
       type="button"
-      {...props}
-      className={`flex items-center rounded-full p-2 active:bg-zinc-300 disabled:text-zinc-300  disabled:hover:bg-transparent disabled:active:bg-transparent md:hover:bg-zinc-200  ${
-        avatar && "p-0"
-      }`}
+      {...rest}
+      className={`flex items-center transition-colors rounded-full p-2 active:bg-zinc-300 disabled:text-zinc-300  disabled:hover:bg-transparent disabled:active:bg-transparent md:hover:bg-zinc-200 ${
+        variant === "contained" && "bg-zinc-100"
+      } ${avatar && "p-0"}`}
     >
       {renderedChildren()}
     </button>

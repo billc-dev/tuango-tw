@@ -8,7 +8,8 @@ import "source-map-support/register";
 
 import completes from "api/complete/completeRouter";
 import deliver from "api/deliver/deliverRouter";
-// import notify from "api/notify/notifyRouter";
+import messages from "api/message/messageRouter";
+import notify from "api/notify/notifyRouter";
 import orders from "api/order/orderRouter";
 import posts from "api/post/postRouter";
 import user from "api/user/userRouter";
@@ -39,7 +40,8 @@ app.use("/posts", posts);
 app.use("/delivers", deliver);
 app.use("/orders", orders);
 app.use("/completes", completes);
-// app.use("/notify", notify);
+app.use("/notify", notify);
+app.use("/messages", messages);
 
 app.use((_, res) => {
   return res.status(404).json({ error: "Route not defined" });
@@ -47,7 +49,7 @@ app.use((_, res) => {
 
 export const api_backend_admin = functions
   .region("asia-east1")
-  .runWith({ timeoutSeconds: 15 })
+  .runWith({ timeoutSeconds: 30 })
   .https.onRequest(app);
 
 // firebase functions:config:get > .runtimeconfig.json

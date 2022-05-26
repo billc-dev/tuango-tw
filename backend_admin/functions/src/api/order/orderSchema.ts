@@ -14,4 +14,4 @@ export const orderFormSchema = yup.object({
   comment: yup.string(),
 });
 
-export interface IOrderForm extends yup.InferType<typeof orderFormSchema> {}
+export type IOrderForm = yup.InferType<typeof orderFormSchema>;
