@@ -13,7 +13,7 @@ const ChatPlugin = () => {
   return (
     <div>
       <div id="fb-root" className="z-[9999]" />
-      <div id="fb-customer-chat" className="fb-customerchat" />
+      <div id="fb-customer-chat" className="fb-customerchat z-[9999]" />
       <Script
         id="chat-plugin"
         strategy="afterInteractive"
