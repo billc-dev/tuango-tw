@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
 
-import toast from "react-hot-toast";
 import { shallowPush } from "utils";
 
 import Button from "components/Button";
@@ -56,7 +55,7 @@ const CompleteCard: FC<Props> = (props) => {
   return (
     <div className="mt-4 first:mt-2">
       <div className="flex items-center">
-        <Button onClick={() => copyToClipboard(displayName)}>
+        <Button onClick={() => copyToClipboard(displayName, "名稱")}>
           <p className="line-clamp-1">{displayName}</p>
         </Button>
         <p className="line-clamp-1 ml-2">取貨員: {shorternAdminName(admin)}</p>
@@ -68,6 +67,7 @@ const CompleteCard: FC<Props> = (props) => {
           </Button>
           <label className="flex items-center ml-2">
             <Checkbox
+              checkboxSize="large"
               checked={payment.confirmed}
               className="text-line-400 focus:ring-line-400"
               onChange={handleConfirm}
@@ -110,15 +110,14 @@ const CompleteCard: FC<Props> = (props) => {
           ))}
         </div>
       ))}
-
       <Button
         className="mt-2"
         fullWidth
         onClick={() => {
           copyToClipboard(
-            `合計$${complete.total} 取貨記錄連結: www.開心團購.com/completed/${complete._id}`
+            `合計$${complete.total} 取貨記錄連結: www.開心團購.com/completed/${complete._id}`,
+            "取貨記錄連結"
           );
-          toast.success("已複製取貨記錄連結");
         }}
       >
         合計${complete.total}
