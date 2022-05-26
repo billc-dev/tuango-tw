@@ -1,6 +1,6 @@
 import React from "react";
 
-import { DuplicateIcon } from "@heroicons/react/outline";
+import { ArrowRightIcon, DuplicateIcon } from "@heroicons/react/outline";
 import toast from "react-hot-toast";
 
 import Button from "components/Button";
@@ -27,14 +27,12 @@ const MessengerSetup = () => {
       {!notified ? (
         <>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            className="mx-auto block border-4 border-black mt-2 w-10/12"
-            src="https://firebasestorage.googleapis.com/v0/b/tuango-tw.appspot.com/o/ezgif.com-gif-maker%20(1).gif?alt=media&token=f3479817-027e-4ace-8a01-65a5ec4f09d4"
-            alt="line notify setup tutorial"
-          />
+          <p className="text-2xl mt-2">1.按複製認證碼</p>
           <Button
+            fullWidth
+            size="lg"
             variant="blue"
-            className="mx-auto mt-2 mb-32"
+            className="mt-2"
             icon={<DuplicateIcon />}
             onClick={() => {
               navigator.clipboard.writeText(
@@ -45,6 +43,11 @@ const MessengerSetup = () => {
           >
             複製認證碼
           </Button>
+          <p className="text-2xl mt-2 fixed bottom-14 w-1/2">
+            2.按Messenger並貼上認證碼
+          </p>
+          <ArrowRightIcon className="fixed bottom-4 animate-bounce right-24 h-20" />
+
           <ChatPlugin />
         </>
       ) : (
