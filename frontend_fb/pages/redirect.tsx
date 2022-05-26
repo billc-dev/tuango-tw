@@ -25,7 +25,7 @@ const Redirect: NextPage = () => {
         onSuccess: () => {
           toast.success("登入成功！", { id: "login" });
           const next = localStorage.getItem("next");
-          if (!next) router.push("/posts");
+          if (!next) router.push("/super-buy");
           else router.push(next);
         },
         onError: () => {

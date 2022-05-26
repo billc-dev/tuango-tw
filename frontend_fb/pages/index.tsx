@@ -5,7 +5,7 @@ import { useEffect } from "react";
 const Home: NextPage = () => {
   const router = useRouter();
   useEffect(() => {
-    router.push("/posts");
+    router.push("/super-buy");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return null;

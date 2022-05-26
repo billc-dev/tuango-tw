@@ -7,6 +7,8 @@ import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import Resizer from "react-image-file-resizer";
 import { QueryClient } from "react-query";
 
+import { FRONT_END_URL } from "utils/constants";
+
 import { PostFormSchema } from "../schema";
 import {
   Action,
@@ -142,7 +144,7 @@ export const uploadImageS3 = async (
 };
 
 export const getPostUrl = (postId: string) => {
-  return `www.開心團購.com/posts?postId=${postId}`;
+  return `${FRONT_END_URL}/super-buy?postId=${postId}`;
 };
 
 export const updateInfinitePostsQueryData = (

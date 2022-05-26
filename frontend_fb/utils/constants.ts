@@ -14,3 +14,5 @@ export const API_URL = IS_DEV
 
 export const FB_LOGIN_URL = () =>
   `https://www.facebook.com/v13.0/dialog/oauth?client_id=${process.env.NEXT_PUBLIC_FB_APP_ID}&state=123ab&redirect_uri=${WINDOW_URL}/redirect`;
+
+export const FRONT_END_URL = "www.super-buy.app";
