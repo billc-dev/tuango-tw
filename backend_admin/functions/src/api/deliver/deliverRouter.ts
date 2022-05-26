@@ -1,12 +1,37 @@
 import * as express from "express";
+import { FilterQuery } from "mongoose";
 
 import { Post } from "api/post";
 import asyncWrapper from "middleware/asyncWrapper";
 import { isAdmin } from "middleware/auth";
 
+import { IDeliver } from "./deliver";
 import Deliver from "./deliverDB";
+import * as deliverService from "./deliverService";
 
 const router = express.Router();
+
+router.get(
+  "/paginate/:cursor",
+  isAdmin,
+  asyncWrapper(async (req, res) => {
+    const { cursor, limit, query } = deliverService.getParams(req);
+
+    const filter: FilterQuery<IDeliver> = {};
+    if (cursor && cursor !== "initial") filter.createdAt = { $lt: cursor };
+    if (query?.userId) filter.userId = query.userId;
+
+    const delivers = await Deliver.find(filter).sort("-createdAt").limit(limit);
+
+    const hasMore = delivers.length === limit;
+
+    return res.status(200).json({
+      delivers,
+      hasMore,
+      nextId: deliverService.getNextId(delivers),
+    });
+  })
+);
 
 router.get(
   "/post/:postId",
