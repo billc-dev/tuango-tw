@@ -5,6 +5,7 @@ import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
 import {
+  approveUser,
   fetchUser,
   fetchUserByPickupNum,
   fetchUserComment,
@@ -62,7 +63,7 @@ export const useMutateLogout = () => {
     onSuccess() {
       setAccessToken("");
       localStorage.removeItem("user");
-      axios.defaults.headers.common.Authorization = "";
+      axios.defaults.headers.common.Authorization = false;
       queryClient.clear();
       router.push("/login");
     },
@@ -122,6 +123,15 @@ export const useUploadImage = () => {
 export const usePatchUser = () => {
   const queryClient = useQueryClient();
   return useMutation(patchUser, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("users");
+    },
+  });
+};
+
+export const useApproveUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation(approveUser, {
     onSuccess: () => {
       queryClient.invalidateQueries("users");
     },
