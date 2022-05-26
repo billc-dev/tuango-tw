@@ -13,14 +13,19 @@ export const createComplete = async (
   admin: string,
   total: number
 ) => {
-  const reducedOrders = orders.map((order) => {
-    const completedOrders = order.order.filter((i) => i.status === "completed");
-    return {
-      ...order,
-      orderId: order._id,
-      order: completedOrders,
-    };
-  });
+  const reducedOrders = orders
+    .map((order) => {
+      const completedOrders = order.order.filter(
+        (i) => i.status === "completed"
+      );
+      if (completedOrders.length === 0) return undefined;
+      return {
+        ...order,
+        orderId: order._id,
+        order: completedOrders,
+      };
+    })
+    .filter((order) => order !== undefined);
 
   const complete = new Complete({
     userId: orders[0].userId,
