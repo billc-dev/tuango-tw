@@ -34,7 +34,17 @@ const OrderTable: FC<Props> = ({ orderItems, handleChange, notExtra }) => {
         {orderItems.map((item, index) => (
           <TableRow key={item.id + index}>
             <TableCell noPadding>{item.id}</TableCell>
-            <TableCell noPadding>{item.item}</TableCell>
+            <TableCell noPadding>
+              <TextField
+                className="w-32 sm:w-44"
+                variant="standard"
+                name="item"
+                noLabel
+                placeholder="商品名稱	"
+                value={item.item}
+                onChange={handleChange(index)}
+              />
+            </TableCell>
             <TableCell noPadding>
               <TextField
                 className="w-10 sm:w-14"
