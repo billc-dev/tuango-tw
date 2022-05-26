@@ -12,11 +12,11 @@ const PostHead: FC<Props> = ({ post }) => {
   return (
     <Head>
       <title>
-        #{post.postNum} {post.title} #{post.displayName} - 開心團購
+        #{post.postNum} {post.title} #{post.displayName} - 善化超便宜團購
       </title>
       <meta
         itemProp="name"
-        content={`#${post.postNum} ${post.title} #${post.displayName} - 開心團購`}
+        content={`#${post.postNum} ${post.title} #${post.displayName} - 善化超便宜團購`}
       />
       <meta name="description" content={post.body.slice(0, 150)} />
       <meta property="og:image" content={post.imageUrls[0].md} />
