@@ -21,6 +21,7 @@ const Search = () => {
     return () => {
       postCardsQuery.remove();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="p-2 m-auto">
