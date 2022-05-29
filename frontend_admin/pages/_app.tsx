@@ -62,7 +62,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <AuthRouter>
         <Component {...pageProps} />
       </AuthRouter>
-      <Toaster toastOptions={{ duration: 5000 }} />
+      <Toaster />
       <ReactQueryDevtools initialIsOpen={false} position="top-right" />
     </QueryClientProvider>
   );
