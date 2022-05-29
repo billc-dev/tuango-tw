@@ -28,10 +28,11 @@ export const fetchSellerPosts = async (
 export const fetchPosts = async (
   cursor: string,
   limit: number,
+  fb?: boolean,
   query?: PostQuery
 ) => {
   const res = await axios.get<PostsResponse>(`/posts/paginate/${cursor}`, {
-    params: { limit, query },
+    params: { limit, query, fb },
   });
 
   return {
@@ -49,11 +50,12 @@ interface PostCardsResponse {
 export const fetchPostCards = async (
   cursor: string,
   limit: number,
+  fb?: boolean,
   query?: PostQuery
 ) => {
   const res = await axios.get<PostCardsResponse>(`/posts/paginate/${cursor}`, {
     headers: { type: "postCards" },
-    params: { limit, query },
+    params: { limit, query, fb },
   });
 
   return {
