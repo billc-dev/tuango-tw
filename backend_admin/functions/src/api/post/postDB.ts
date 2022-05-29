@@ -28,14 +28,14 @@ export const PostSchema = new mongoose.Schema<IPostComplete>({
         item: { type: String, required: true },
         price: {
           type: Number,
-          get: (v: any) => Number(v),
-          set: (v: any) => Number(v),
+          get: (v: number | string) => Number(v),
+          set: (v: number | string) => Number(v),
           required: true,
         },
         itemQty: {
           type: Number,
-          get: (v: any) => Number(v),
-          set: (v: any) => Number(v),
+          get: (v: number | string) => Number(v),
+          set: (v: number | string) => Number(v),
           default: 100,
           required: true,
           min: 0,
@@ -62,7 +62,7 @@ export const PostSchema = new mongoose.Schema<IPostComplete>({
   storageType: {
     type: String,
     required: true,
-    enum: ["roomTemp", "refrigerated", "frozen"],
+    enum: ["roomTemp", "farmGoods", "refrigerated", "frozen"],
   },
   status: {
     type: String,
