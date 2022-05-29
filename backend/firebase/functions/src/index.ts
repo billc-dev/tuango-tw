@@ -19,12 +19,10 @@ import user from "api/user/userRouter";
 const app = express();
 
 const whitelist = [
-  "http://localhost:3000",
-  "https://tuango-tw.vercel.app",
-  "http://172.20.10.3:3000",
-  "https://tuango.billcheng.dev",
   "https://xn--ndsp5rmr3blfh.com",
+  "https://super-buy.app",
   "https://www.xn--ndsp5rmr3blfh.com",
+  "http://localhost:3000",
   "*",
   undefined,
 ];
@@ -61,6 +59,11 @@ export const api_tw_firebase = functions
   .region("asia-east1")
   .runWith({ timeoutSeconds: 10 })
   .https.onRequest(app);
+
+// export const api_fb_firebase = functions
+//   .region("asia-east1")
+//   .runWith({ timeoutSeconds: 10 })
+//   .https.onRequest(app);
 
 // firebase functions:config:get > .runtimeconfig.json
 // firebase functions:config:set mongodb_uri.post_dev="<url>"
