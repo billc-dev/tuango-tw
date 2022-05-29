@@ -40,15 +40,19 @@ const MessengerSetup = () => {
         </>
       ) : (
         <>
+          <p className="mt-4 text-center">
+            ⚠️ 需要加Candy Cheng為好友才會被核准喔!
+          </p>
           <Button
-            className="mt-4"
+            className="mx-auto mt-2"
+            variant="blue"
             onClick={() =>
               window.open(
                 "https://www.facebook.com/profile.php?id=100075794507933"
               )
             }
           >
-            ⚠️ 需要加Candy Cheng為好友才會被核准喔!
+            加Candy Cheng為好友
           </Button>
         </>
       )}

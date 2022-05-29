@@ -51,7 +51,7 @@ const updateUser = async (user: IUser, lineProfile: LineProfile) => {
 
 export const updateSellerPosts = async (userId: string) => {
   try {
-    await axios.post(`${API_URL}/users/login/update`, { userId });
+    await axios.post(`${API_URL}/user/login/update`, { userId });
   } catch (error) {
     console.log("could not update user");
   }

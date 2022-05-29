@@ -20,6 +20,7 @@ import Auth from "domain/Auth";
 
 // ANALYZE=true yarn build
 
+
 axios.defaults.baseURL = API_URL
 axios.defaults.withCredentials = true;
 

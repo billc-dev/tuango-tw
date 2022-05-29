@@ -35,7 +35,7 @@ const MessageOrderRow: FC<Props> = ({ order, userIds, setUserIds }) => {
         />
       </TableCell>
       <TableCell>
-        <Button onClick={() => copyToClipboard(displayName)}>
+        <Button onClick={() => copyToClipboard(displayName, "名稱")}>
           {displayName}
         </Button>
       </TableCell>
