@@ -14,7 +14,8 @@ const notifyConn = mongoose.createConnection(
 
 const NotifySchema = new mongoose.Schema<INotify>({
   username: { type: String, required: true },
-  token: { type: String, required: true },
+  token: { type: String, default: "" },
+  fbToken: { type: String, default: "" },
 });
 
 const Notify = notifyConn.model<INotify>("Notify", NotifySchema);
