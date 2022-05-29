@@ -70,7 +70,6 @@ const UserQueryRow: FC<Props> = ({ setQuery }) => {
       <TableCell noPadding className="max-w-[80px] align-bottom">
         <UserQuery
           placeholder="名稱"
-          isSeller
           setUser={setUser}
           variant="standard"
           noLabel
