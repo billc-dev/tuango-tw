@@ -7,7 +7,7 @@ import { LocationQuery } from "../types";
 export const useLocationOrders = (query: LocationQuery) => {
   const isEnabled = () => {
     const { location, postNum, text } = query;
-    if (location || postNum || text) return true;
+    if (typeof location === "string" || postNum || text) return true;
     return false;
   };
   return useQuery(["locationOrders", query], () => fetchLocationOrders(query), {

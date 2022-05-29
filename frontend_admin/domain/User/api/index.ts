@@ -148,3 +148,7 @@ export const patchUser = async (user: IUser) => {
   const res = await axios.patch<{ user: User }>(`/users/${user._id}`, { user });
   return res.data.user;
 };
+
+export const approveUser = async (userId: string) => {
+  return axios.patch(`/users/${userId}/approve`);
+};

@@ -7,6 +7,7 @@ import Table from "components/Table/Table";
 import TableBody from "components/Table/TableBody";
 import TableHead from "components/Table/TableHead";
 import { useOrders } from "domain/Order/hooks";
+import { storageTypeOptions } from "domain/Post/services";
 import { getYesterday } from "services/date";
 
 import { MessageOrderQuery } from "../types";
@@ -31,12 +32,7 @@ const MessageOrderTable = () => {
           <Select
             height="normal"
             className="w-24 ml-2"
-            options={[
-              { value: "", label: "全部" },
-              { value: "roomTemp", label: "常溫" },
-              { value: "refrigerated", label: "冷藏 ❄️" },
-              { value: "frozen", label: "冷凍 🧊" },
-            ]}
+            options={[{ value: "", label: "全部" }, ...storageTypeOptions]}
             onChange={(e) =>
               setQuery((query) => ({ ...query, storageType: e.target.value }))
             }

@@ -5,10 +5,12 @@ import { PencilIcon } from "@heroicons/react/outline";
 import { shallowPush } from "utils";
 
 import { IUser } from "api/auth/userDB";
+import Button from "components/Button";
 import IconButton from "components/Button/IconButton";
 import TableCell from "components/Table/TableCell";
 import TableRow from "components/Table/TableRow";
 
+import { useApproveUser } from "../hooks";
 import { getUserRoleLabel, getUserStatusLabel } from "../services";
 
 interface Props {
@@ -17,12 +19,28 @@ interface Props {
 
 const UserRow: FC<Props> = ({ user }) => {
   const { pickupNum, displayName, notified, status, role } = user;
+  const approveUser = useApproveUser();
+  const handleApproveUser = () => {
+    approveUser.mutate(user._id);
+  };
   return (
     <TableRow className="whitespace-nowrap">
       <TableCell>{pickupNum}</TableCell>
       <TableCell>{displayName}</TableCell>
       <TableCell>{notified ? "已設定" : "未設定 ❌"}</TableCell>
-      <TableCell>{getUserStatusLabel(status)}</TableCell>
+      <TableCell>
+        {notified ? (
+          status === "registered" ? (
+            <Button variant="primary" onClick={handleApproveUser}>
+              核准
+            </Button>
+          ) : (
+            getUserStatusLabel(status)
+          )
+        ) : (
+          getUserStatusLabel(status)
+        )}
+      </TableCell>
       <TableCell>{getUserRoleLabel(role)}</TableCell>
       <TableCell>
         <IconButton

@@ -1,9 +1,20 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 import LineLoginButton from "components/Button/LineLoginButton";
+import { useIsVerified } from "domain/User/hooks";
 
 const Login: NextPage = () => {
+  const router = useRouter();
+  const verifiedQuery = useIsVerified();
+
+  useEffect(() => {
+    if (!verifiedQuery.data?.data.authenticated) return;
+    router.push("/");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [verifiedQuery.data?.data.authenticated]);
   return (
     <div>
       <Head>
