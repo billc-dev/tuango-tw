@@ -26,7 +26,18 @@ const UserRow: FC<Props> = ({ user }) => {
   return (
     <TableRow className="whitespace-nowrap">
       <TableCell>{pickupNum}</TableCell>
-      <TableCell>{displayName}</TableCell>
+      <TableCell>
+        <div className="flex items-center">
+          <span>{displayName}</span>
+          <div>
+            {user.fb && (
+              <Button className=" ml-1" variant="blue" size="small">
+                FB
+              </Button>
+            )}
+          </div>
+        </div>
+      </TableCell>
       <TableCell>{notified ? "已設定" : "未設定 ❌"}</TableCell>
       <TableCell>
         {notified ? (
