@@ -29,7 +29,7 @@ export interface IPost {
   likeCount: number;
   commentCount: number;
   orderCount: number;
-  storageType: "roomTemp" | "refrigerated" | "frozen";
+  storageType: "roomTemp" | "farmGoods" | "refrigerated" | "frozen";
   status: PostStatus;
 }
 
