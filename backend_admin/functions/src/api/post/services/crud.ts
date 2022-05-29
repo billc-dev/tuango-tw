@@ -32,9 +32,7 @@ export const createPost = (
 
 export const findPrevPost = () => {
   return Post.findOne({ status: { $ne: "canceled" } })
-    .sort({
-      postNum: -1,
-    })
+    .sort({ postNum: -1 })
     .select("postNum status");
 };
 
