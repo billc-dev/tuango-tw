@@ -37,24 +37,19 @@ const CreatePost = () => {
   };
 
   const onSubmit: SubmitHandler<PostFormSchema> = async (data) => {
-    if (!postNum) {
-      setPostNumError("請輸入流水編號！");
-      return toast.error("請輸入流水編號！");
-    }
     if (!user) return toast.error("請選擇開單者！");
-    await duplicatePostNumQuery.refetch();
-    if (duplicatePostNumQuery.data) {
-      setPostNumError("流水編號重複了!");
-      return toast.error("流水編號重複了!");
+    if (postNum && postNum > 0) {
+      await duplicatePostNumQuery.refetch();
+      if (duplicatePostNumQuery.data) {
+        setPostNumError("流水編號重複了!");
+        return toast.error("流水編號重複了!");
+      }
     }
+
     toast.loading("貼文製作中...", { id: "createPost" });
     createPost.mutate(
       { postForm: data, postNum, user, fb },
-      {
-        onSuccess: () => {
-          handleClose();
-        },
-      }
+      { onSuccess: () => handleClose() }
     );
   };
   const handleSetUser = (user: User) => {

@@ -26,7 +26,7 @@ export const fetchPosts = async (limit: number, query: PostQuery) => {
 interface CreatePostParams {
   postForm: PostFormSchema;
   user: User;
-  postNum: number;
+  postNum?: number;
   fb: boolean;
 }
 
