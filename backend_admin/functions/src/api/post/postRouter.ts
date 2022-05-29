@@ -129,7 +129,7 @@ router.patch(
       req.body.postForm
     );
 
-    await postService.updatePost(postId, res.locals.user.username, postForm);
+    await postService.updatePost(postId, postForm);
 
     return res.status(200).json();
   })
