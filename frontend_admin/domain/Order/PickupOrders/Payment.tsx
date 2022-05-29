@@ -36,6 +36,14 @@ const Payment: FC<Props> = ({ orders, setUser }) => {
       { onSuccess: () => setUser(undefined) }
     );
   };
+  const hasCompletedOrder = () => {
+    for (const order of orders) {
+      for (const orderItem of order.order) {
+        if (orderItem.status === "completed") return true;
+      }
+    }
+    return false;
+  };
   return (
     <div>
       {sum > 0 && (
@@ -77,6 +85,7 @@ const Payment: FC<Props> = ({ orders, setUser }) => {
         </div>
       )}
       <Button
+        disabled={!hasCompletedOrder()}
         size="lg"
         variant="primary"
         fullWidth

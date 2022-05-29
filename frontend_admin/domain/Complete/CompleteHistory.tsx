@@ -43,6 +43,7 @@ const CompleteHistory = () => {
         />
         <label className="ml-2">
           <Checkbox
+            checkboxSize="large"
             checked={query.unconfirmed}
             onChange={(e) =>
               setQuery((query) => ({ ...query, unconfirmed: e.target.checked }))

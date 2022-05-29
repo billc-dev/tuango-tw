@@ -5,16 +5,11 @@ import { UseFormRegister } from "react-hook-form";
 import Select from "components/Select";
 
 import { PostFormSchema } from "../schema";
+import { storageTypeOptions } from "../services";
 
 interface Props {
   register: UseFormRegister<PostFormSchema>;
 }
-
-const options = [
-  { value: "roomTemp", label: "常溫" },
-  { value: "refrigerated", label: "冷藏" },
-  { value: "frozen", label: "冷凍" },
-];
 
 const StorageTypeSelect: FC<Props> = ({ register }) => {
   return (
@@ -23,7 +18,7 @@ const StorageTypeSelect: FC<Props> = ({ register }) => {
       <Select
         height="tall"
         variant="contained"
-        {...{ options }}
+        options={storageTypeOptions}
         {...register("storageType")}
       />
     </>
