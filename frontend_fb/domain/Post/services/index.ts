@@ -176,6 +176,8 @@ export const getStorageTypeLabel = (storageType: PostStorageType) => {
   switch (storageType) {
     case "roomTemp":
       return "常溫";
+    case "farmGoods":
+      return "農產品";
     case "refrigerated":
       return "冷藏";
     case "frozen":
@@ -189,3 +191,10 @@ export const getFullTitle = (post?: IPost) => {
   if (!post) return "";
   return `#${post.postNum} ${post.title} #${post.displayName}`;
 };
+
+export const storageTypeOptions = [
+  { label: "常溫", value: "roomTemp" },
+  { label: "農產品", value: "farmGoods" },
+  { label: "冷藏 ❄️", value: "refrigerated" },
+  { label: "冷凍 🧊", value: "frozen" },
+];

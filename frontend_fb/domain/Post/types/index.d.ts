@@ -2,7 +2,12 @@ import { QueryTypes } from "domain/Search/types";
 
 type PostStatus = "open" | "closed" | "completed" | "canceled";
 
-export type PostStorageType = "roomTemp" | "refrigerated" | "frozen";
+export type PostStorageType =
+  | "roomTemp"
+  | "farmGoods"
+  | "refrigerated"
+  | "frozen";
+
 export interface IPost {
   _id: string;
   postNum: number;
