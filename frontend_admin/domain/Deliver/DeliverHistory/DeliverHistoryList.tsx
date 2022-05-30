@@ -62,8 +62,8 @@ const DeliverHistoryList = () => {
         <LoadingIndicator loading={isLoading} />
       </InfiniteScroll>
       {checkedDelivers.length > 0 && (
-        <div className="fixed left-0 bottom-3 w-full">
-          <div className="bg-zinc-800 text-white mx-2 shadow-lg rounded px-3.5 py-4">
+        <div className="fixed bottom-3 left-0 right-0 w-full max-w-xl mx-auto">
+          <div className="bg-zinc-800 text-white mx-1 shadow-lg rounded px-3.5 py-4">
             {`總計$${getNumberWithCommas(sum)} 單數:${checkedDelivers.length}`}
           </div>
         </div>

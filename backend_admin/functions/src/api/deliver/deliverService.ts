@@ -30,7 +30,13 @@ export const createDeliver = async (post: IPost, sums: DeliverItemsAndSums) => {
     extraTotal: extraItemSum,
     extraFee: extraItemSum - Math.round(extraItemSum * 0.9),
   });
-  await deliver.save();
+  normalItems.filter((item) => item.qty > 0);
+  if (
+    normalItems.filter((item) => item.qty > 0).length > 0 ||
+    extraItems.filter((item) => item.qty > 0).length > 0
+  ) {
+    await deliver.save();
+  }
   return deliver;
 };
 

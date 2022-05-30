@@ -11,6 +11,7 @@ import TableRow from "components/Table/TableRow";
 import TextField from "components/TextField";
 import UserQuery from "domain/User/UserQuery";
 
+import { storageTypeOptions } from "../services";
 import { PostQuery } from "../types";
 
 interface Props {
@@ -96,12 +97,7 @@ const PostQueryRow: FC<Props> = ({ setQuery }) => {
           height="normal"
           name="storageType"
           onChange={handleChange}
-          options={[
-            { label: "全部", value: "" },
-            { label: "常溫", value: "roomTemp" },
-            { label: "冷藏 ❄️", value: "refrigerated" },
-            { label: "冷凍 🧊", value: "frozen" },
-          ]}
+          options={[{ label: "全部", value: "" }, ...storageTypeOptions]}
         />
       </TableCell>
       <TableCell>

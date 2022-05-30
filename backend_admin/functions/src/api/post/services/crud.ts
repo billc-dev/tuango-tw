@@ -32,23 +32,17 @@ export const createPost = (
 
 export const findPrevPost = () => {
   return Post.findOne({ status: { $ne: "canceled" } })
-    .sort({
-      postNum: -1,
-    })
+    .sort({ postNum: -1 })
     .select("postNum status");
 };
 
-export const updatePost = (
-  postId: string,
-  userId: string,
-  post: ValidatedPost
-) => {
+export const updatePost = (postId: string, post: ValidatedPost) => {
   const items = post.items.map((item, index) => ({
     ...item,
     id: item.id ? item.id : indexAlphabet[index],
   }));
   return Post.updateOne(
-    { _id: postId, userId },
+    { _id: postId },
     { ...post, items },
     { runValidators: true }
   );

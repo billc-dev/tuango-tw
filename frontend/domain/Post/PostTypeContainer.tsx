@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 
 import Container from "components/Container";
 import ActionArea from "domain/Settings/ActionArea";
@@ -18,13 +18,19 @@ const PostFeed = dynamic(() => import("./PostFeed"), {
 
 const limit = 20;
 
-const PostTypeContainer = () => {
+interface Props {
+  fb: boolean;
+}
+
+const PostTypeContainer: FC<Props> = ({ fb }) => {
   const [viewMode, setViewMode] = useState(getViewMode());
 
   const postCardsQuery = useInfinitePostCardQuery(limit, {
+    fb,
     enabled: viewMode === "cards",
   });
   const postsQuery = useInfinitePostsQuery(limit, {
+    fb,
     enabled: viewMode === "feed",
   });
   useEffect(() => {

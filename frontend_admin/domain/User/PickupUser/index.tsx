@@ -51,7 +51,14 @@ const PickupUser: FC<Props> = ({ user, setUser }) => {
             已合計
           </Button>
           <CardHeader
-            title={`${user.pickupNum}.${user.displayName}`}
+            title={`${user.pickupNum}. ${user.displayName}`}
+            titleElement={
+              user.fb ? (
+                <Button className="ml-1" variant="blue" size="small">
+                  FB
+                </Button>
+              ) : null
+            }
             img={user.pictureUrl}
             action={
               <Button

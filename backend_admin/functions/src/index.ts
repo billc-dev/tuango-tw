@@ -17,6 +17,7 @@ import user from "api/user/userRouter";
 const app = express();
 
 const whitelist = [
+  "https://admin.xn--ndsp5rmr3blfh.com",
   "http://localhost:3005",
   "https://tuango-tw-admin.vercel.app",
   "*",

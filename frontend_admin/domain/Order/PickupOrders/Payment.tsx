@@ -36,6 +36,14 @@ const Payment: FC<Props> = ({ orders, setUser }) => {
       { onSuccess: () => setUser(undefined) }
     );
   };
+  const hasCompletedOrder = () => {
+    for (const order of orders) {
+      for (const orderItem of order.order) {
+        if (orderItem.status === "completed") return true;
+      }
+    }
+    return false;
+  };
   return (
     <div>
       {sum > 0 && (
@@ -52,31 +60,21 @@ const Payment: FC<Props> = ({ orders, setUser }) => {
           />
           <span>{payment && payment - sum >= 0 && `找$${payment - sum}`} </span>
           <div className="flex mt-4">
-            <Button fullWidth onClick={handleAdd(1)}>
-              +1
-            </Button>
-            <Button fullWidth onClick={handleAdd(5)}>
-              +5
-            </Button>
-            <Button fullWidth onClick={handleAdd(10)}>
-              +10
-            </Button>
-            <Button fullWidth onClick={handleAdd(50)}>
-              +50
-            </Button>
-            <Button fullWidth onClick={handleAdd(100)}>
-              +100
-            </Button>
-            <Button fullWidth onClick={handleAdd(500)}>
-              +500
-            </Button>
-            <Button fullWidth onClick={handleAdd(1000)}>
-              +1000
-            </Button>
+            {[1, 5, 10, 50, 100, 500, 1000].map((amount) => (
+              <Button
+                key={amount}
+                className="px-0.5"
+                fullWidth
+                onClick={handleAdd(amount)}
+              >
+                +{amount}
+              </Button>
+            ))}
           </div>
         </div>
       )}
       <Button
+        disabled={!hasCompletedOrder()}
         size="lg"
         variant="primary"
         fullWidth

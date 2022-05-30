@@ -1,6 +1,6 @@
 import { IOrder } from "domain/Order/types";
 
-export const GA_TRACKING_ID = "G-LJCQZHWBKN";
+export const GA_TRACKING_ID = "G-5LRZRX4357";
 
 export const pageview = (url: URL) => {
   window.gtag("config", GA_TRACKING_ID, {

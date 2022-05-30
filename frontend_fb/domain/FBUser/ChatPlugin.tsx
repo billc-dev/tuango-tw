@@ -11,9 +11,9 @@ const ChatPlugin = () => {
     chatbox?.setAttribute("attribution", "biz_inbox");
   }, []);
   return (
-    <>
-      <div id="fb-root" />
-      <div id="fb-customer-chat" className="fb-customerchat" />
+    <div>
+      <div id="fb-root" className="z-[9999]" />
+      <div id="fb-customer-chat" className="fb-customerchat z-[9999]" />
       <Script
         id="chat-plugin"
         strategy="afterInteractive"
@@ -36,7 +36,7 @@ const ChatPlugin = () => {
           `,
         }}
       />
-    </>
+    </div>
   );
 };
 

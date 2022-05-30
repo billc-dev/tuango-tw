@@ -34,7 +34,7 @@ const Posts: NextPage<Props> = (props) => {
     <>
       <NotifySetup />
       <PostHead post={post} />
-      <PostTypeContainer />
+      <PostTypeContainer fb={false} />
       {typeof postId === "string" && <PostDialog postId={postId} />}
     </>
   );

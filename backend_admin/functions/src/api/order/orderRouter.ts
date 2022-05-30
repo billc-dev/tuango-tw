@@ -116,8 +116,9 @@ router.post(
     const orders = await Order.find(query)
       .skip(page * limit)
       .limit(limit)
-      .sort("-createdAt")
+      .sort("-_id")
       .select("-orderHistory");
+
     const length = await Order.find(query).countDocuments();
 
     return res
