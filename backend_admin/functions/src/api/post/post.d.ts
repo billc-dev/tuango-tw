@@ -6,7 +6,11 @@ import { postSchema } from "./postSchema";
 
 type PostStatus = "open" | "closed" | "completed" | "canceled";
 
-export type PostStorageType = "roomTemp" | "refrigerated" | "frozen";
+export type PostStorageType =
+  | "roomTemp"
+  | "farmGoods"
+  | "refrigerated"
+  | "frozen";
 
 export interface Filter {
   status: PostStatus | { $ne: PostStatus };

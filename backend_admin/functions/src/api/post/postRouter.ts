@@ -98,22 +98,30 @@ router.post(
   "/post",
   isAdmin,
   asyncWrapper(async (req, res) => {
+    const { user } = req.body;
+    let postNum = req.body.postNum;
+
     if (!req.body.postForm) throw "postForm is required";
-    if (!req.body.user) throw "user is required";
-    if (!req.body.postNum) throw "postNum is required";
+    if (!user) throw "user is required";
 
     const postForm = await postService.validatePost(req.body.postForm);
 
-    const duplicatePost = await Post.findOne({
-      postNum: req.body.postNum,
-      status: { $ne: "canceled" },
-    });
-    if (duplicatePost) throw "duplicate post number";
+    if (postNum > 0) {
+      const duplicatePost = await Post.findOne({
+        postNum: req.body.postNum,
+        status: { $ne: "canceled" },
+      });
+      if (duplicatePost) throw "duplicate post number";
+    } else {
+      const prevPost = await postService.findPrevPost();
+      if (!prevPost) throw "previous post not found";
+      postNum = prevPost.postNum + 1;
+    }
 
     const post = await postService.createPost(
       postForm,
       req.body.user,
-      req.body.postNum,
+      postNum,
       req.body.fb
     );
     return res.status(200).json({ post });
@@ -129,7 +137,7 @@ router.patch(
       req.body.postForm
     );
 
-    await postService.updatePost(postId, res.locals.user.username, postForm);
+    await postService.updatePost(postId, postForm);
 
     return res.status(200).json();
   })

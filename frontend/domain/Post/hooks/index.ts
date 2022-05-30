@@ -17,6 +17,7 @@ export * from "./mutation";
 interface Options {
   query?: PostQuery;
   enabled?: boolean;
+  fb?: boolean;
 }
 
 export const useInfinitePostsQuery = (limit: number, options?: Options) => {
@@ -30,11 +31,13 @@ export const useInfinitePostsQuery = (limit: number, options?: Options) => {
   const queryKeys = [
     "posts",
     limit,
+    options?.fb,
     ...(options?.query ? [options?.query.type, options?.query.value] : []),
   ];
   return useInfiniteQuery(
     queryKeys,
-    ({ pageParam = "initial" }) => fetchPosts(pageParam, limit, options?.query),
+    ({ pageParam = "initial" }) =>
+      fetchPosts(pageParam, limit, options?.fb, options?.query),
     { enabled: enabled(), getNextPageParam: (lastPage) => lastPage.nextId }
   );
 };
@@ -50,12 +53,13 @@ export const useInfinitePostCardQuery = (limit: number, options?: Options) => {
   const queryKeys = [
     "postCards",
     limit,
+    options?.fb,
     ...(options?.query ? [options?.query.type, options?.query.value] : []),
   ];
   return useInfiniteQuery(
     queryKeys,
     ({ pageParam = "initial" }) =>
-      fetchPostCards(pageParam, limit, options?.query),
+      fetchPostCards(pageParam, limit, options?.fb, options?.query),
     { enabled: enabled(), getNextPageParam: (lastPage) => lastPage.nextId }
   );
 };

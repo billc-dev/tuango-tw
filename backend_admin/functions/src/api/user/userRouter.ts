@@ -1,7 +1,9 @@
 import * as express from "express";
 
+import { notifyUser } from "api/notify/notifyService";
 import asyncWrapper from "middleware/asyncWrapper";
 import { isAdmin } from "middleware/auth";
+import { FRONTEND_URL } from "utils/url";
 
 import { User } from "./userDB";
 import { parseUserQueryData } from "./userService";
@@ -138,7 +140,9 @@ router.patch(
   isAdmin,
   asyncWrapper(async (req, res) => {
     const userId = req.params.userId;
-    await User.updateOne({ _id: userId }, { status: "approved" });
+    const user = await User.findByIdAndUpdate(userId, { status: "approved" });
+    if (!user) throw "user not found";
+    notifyUser(user.username, `您的帳號被核准了! 團購連結: ${FRONTEND_URL}`);
     return res.status(200).json({});
   })
 );

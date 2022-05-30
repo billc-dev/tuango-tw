@@ -54,7 +54,7 @@ export const useMutateLogout = () => {
     onSuccess: () => {
       setAccessToken("");
       localStorage.removeItem("user");
-      axios.defaults.headers.common.Authorization = "";
+      axios.defaults.headers.common.Authorization = false;
       queryClient.clear();
     },
   });

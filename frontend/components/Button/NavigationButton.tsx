@@ -22,7 +22,7 @@ const NavigationButton: FC<Props> = (props) => {
     >
       <div
         className={`flex flex-col items-center transition ${
-          selected && "scale-[1.1] text-blue-600 dark:text-blue-400"
+          selected && "scale-[1.05] text-blue-600 dark:text-blue-400"
         }`}
       >
         <div className="h-6 w-6">{children}</div>

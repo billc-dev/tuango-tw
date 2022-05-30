@@ -39,7 +39,7 @@ export const postSchema = yup.object({
   title: yup.string().required("請輸入團購主題!").default("").trim(),
   storageType: yup
     .mixed()
-    .oneOf(["roomTemp", "refrigerated", "frozen"])
+    .oneOf(["roomTemp", "farmGoods", "refrigerated", "frozen"])
     .required()
     .default("roomTemp"),
   deadline: yup.string().default(""),

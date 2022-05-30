@@ -16,7 +16,7 @@ interface Props {
   post: IPost | undefined;
 }
 
-const Posts: NextPage<Props> = (props) => {
+const SuperBuy: NextPage<Props> = (props) => {
   const router = useRouter();
   const { post } = props;
   const { postId } = router.query;
@@ -34,13 +34,13 @@ const Posts: NextPage<Props> = (props) => {
     <>
       <NotifySetup />
       <PostHead post={post} />
-      <PostTypeContainer fb={false} />
+      <PostTypeContainer fb={true} />
       {typeof postId === "string" && <PostDialog postId={postId} />}
     </>
   );
 };
 
-Posts.getInitialProps = async (ctx: NextPageContext) => {
+SuperBuy.getInitialProps = async (ctx: NextPageContext) => {
   const postId = ctx.query.postId;
   if (!postId || typeof postId !== "string") return { post: undefined };
   try {
@@ -51,4 +51,4 @@ Posts.getInitialProps = async (ctx: NextPageContext) => {
   }
 };
 
-export default Posts;
+export default SuperBuy;
