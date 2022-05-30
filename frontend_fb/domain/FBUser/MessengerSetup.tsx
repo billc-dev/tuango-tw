@@ -1,32 +1,31 @@
 import React from "react";
 
-import { DocumentDuplicateIcon } from "@heroicons/react/outline";
-
 import Button from "components/Button";
 import Dialog from "components/Dialog";
 import MessengerIcon from "components/svg/MessengerIcon";
-import { useUser } from "domain/User/hooks";
-import { copyToClipboard } from "services";
+import { useMutateLogout, useUser } from "domain/User/hooks";
 
 const MessengerSetup = () => {
   const userQuery = useUser();
+  const logout = useMutateLogout();
   if (!userQuery.data?.data.user) return null;
   const { notified } = userQuery.data.data.user;
   const isRegistered = userQuery.data.data.user.status === "registered";
-
+  const handleClose = async () => {
+    await userQuery.refetch();
+    if (userQuery.data.data.user.status === "registered") logout.mutate();
+  };
   return (!userQuery.isLoading && !notified) || isRegistered ? (
     <Dialog
       open={!notified || isRegistered}
       title={!notified ? "設定FB通知" : "審核中..."}
-      handleClose={() => {
-        userQuery.refetch();
-      }}
+      handleClose={handleClose}
       className="z-50"
     >
       {!notified ? (
         <>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <Button
+          {/* <Button
             icon={<DocumentDuplicateIcon />}
             className="mt-4"
             fullWidth
@@ -39,7 +38,7 @@ const MessengerSetup = () => {
             }
           >
             1. 複製認證碼
-          </Button>
+          </Button> */}
           <Button
             icon={<MessengerIcon />}
             className="mt-4"
@@ -53,7 +52,7 @@ const MessengerSetup = () => {
               );
             }}
           >
-            2. 設定FB通知
+            設定FB通知
           </Button>
         </>
       ) : (
