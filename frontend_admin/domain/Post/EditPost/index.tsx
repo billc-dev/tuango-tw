@@ -6,6 +6,7 @@ import { shallowPush } from "utils";
 import Button from "components/Button";
 import Dialog from "components/Dialog";
 import LoadingIndicator from "components/Indicator/LoadingIndicator";
+import { useSubmitting } from "hooks";
 
 import { usePost } from "../hooks";
 import EditPostForm from "./EditPostForm";
@@ -18,6 +19,7 @@ const EditPost: FC<Props> = ({ postId }) => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const postQuery = usePost(postId);
+  const submittingQuery = useSubmitting();
 
   const handleClose = () => {
     const { edit_post_id, ...query } = router.query;
@@ -41,7 +43,13 @@ const EditPost: FC<Props> = ({ postId }) => {
           open,
           title: "編輯貼文",
           action: (
-            <Button variant="primary" form="post-form" type="submit" size="lg">
+            <Button
+              variant="primary"
+              form="post-form"
+              type="submit"
+              size="lg"
+              loading={submittingQuery.data}
+            >
               編輯貼文
             </Button>
           ),

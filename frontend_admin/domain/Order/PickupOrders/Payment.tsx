@@ -86,6 +86,7 @@ const Payment: FC<Props> = ({ orders, setUser }) => {
         title="您確定要合計？"
         confirmComponent
         onConfirm={handleSubmit}
+        loading={completeOrders.isLoading}
         {...{ open, handleClose }}
       >
         <div>
