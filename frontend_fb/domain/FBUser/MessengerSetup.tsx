@@ -1,9 +1,12 @@
 import React from "react";
 
+import { DocumentDuplicateIcon } from "@heroicons/react/outline";
+
 import Button from "components/Button";
 import Dialog from "components/Dialog";
 import MessengerIcon from "components/svg/MessengerIcon";
 import { useUser } from "domain/User/hooks";
+import { copyToClipboard } from "services";
 
 const MessengerSetup = () => {
   const userQuery = useUser();
@@ -24,18 +27,33 @@ const MessengerSetup = () => {
         <>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <Button
+            icon={<DocumentDuplicateIcon />}
+            className="mt-4"
+            fullWidth
+            size="lg"
+            onClick={() =>
+              copyToClipboard(
+                `認證碼:${userQuery.data.data.user._id}`,
+                "認證碼"
+              )
+            }
+          >
+            1. 複製認證碼
+          </Button>
+          <Button
             icon={<MessengerIcon />}
             className="mt-4"
             fullWidth
             size="lg"
             onClick={() => {
               window.open(
+                // `http://m.me/superbuytw`,
                 `http://m.me/superbuytw?ref=認證碼:${userQuery.data.data.user._id}`,
                 "_self"
               );
             }}
           >
-            設定FB通知
+            2. 設定FB通知
           </Button>
         </>
       ) : (
