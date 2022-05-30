@@ -3,26 +3,42 @@ import React from "react";
 import Button from "components/Button";
 import Dialog from "components/Dialog";
 import MessengerIcon from "components/svg/MessengerIcon";
-import { useUser } from "domain/User/hooks";
+import { useMutateLogout, useUser } from "domain/User/hooks";
 
 const MessengerSetup = () => {
   const userQuery = useUser();
+  const logout = useMutateLogout();
   if (!userQuery.data?.data.user) return null;
   const { notified } = userQuery.data.data.user;
   const isRegistered = userQuery.data.data.user.status === "registered";
-
+  const handleClose = async () => {
+    await userQuery.refetch();
+    if (userQuery.data.data.user.status === "registered") logout.mutate();
+  };
   return (!userQuery.isLoading && !notified) || isRegistered ? (
     <Dialog
       open={!notified || isRegistered}
       title={!notified ? "設定FB通知" : "審核中..."}
-      handleClose={() => {
-        userQuery.refetch();
-      }}
+      handleClose={handleClose}
       className="z-50"
     >
       {!notified ? (
         <>
           {/* eslint-disable-next-line @next/next/no-img-element */}
+          {/* <Button
+            icon={<DocumentDuplicateIcon />}
+            className="mt-4"
+            fullWidth
+            size="lg"
+            onClick={() =>
+              copyToClipboard(
+                `認證碼:${userQuery.data.data.user._id}`,
+                "認證碼"
+              )
+            }
+          >
+            1. 複製認證碼
+          </Button> */}
           <Button
             icon={<MessengerIcon />}
             className="mt-4"
@@ -30,6 +46,7 @@ const MessengerSetup = () => {
             size="lg"
             onClick={() => {
               window.open(
+                // `http://m.me/superbuytw`,
                 `http://m.me/superbuytw?ref=認證碼:${userQuery.data.data.user._id}`,
                 "_self"
               );
