@@ -51,7 +51,7 @@ const UserQueryRow: FC<Props> = ({ setQuery }) => {
     }));
   };
   const setUser = (user: IUser) => {
-    setQuery((query) => ({ ...query, userId: user.username }));
+    setQuery((query) => ({ ...query, username: user.username }));
   };
   return (
     <TableRow className="whitespace-nowrap">
