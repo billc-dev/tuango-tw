@@ -162,7 +162,7 @@ const CreateDialog: FC<Props> = ({ open, handleClose, post }) => {
                     <TableCell noPadding>
                       <TextField
                         className="w-16"
-                        name="item"
+                        name="price"
                         variant="standard"
                         type="number"
                         value={item.price}
