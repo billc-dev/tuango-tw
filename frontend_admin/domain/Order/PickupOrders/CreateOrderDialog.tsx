@@ -47,9 +47,7 @@ const CreateOrderDialog: FC<Props> = (props) => {
     };
   };
   const handleSubmit = () => {
-    const items = orderItems.filter((item) => {
-      return item.qty;
-    });
+    const items = orderItems.filter((item) => item.qty && item.qty > 0);
     createOrder.mutate(
       {
         orderItems: items,
