@@ -111,8 +111,7 @@ const CreateDialog: FC<Props> = ({ open, handleClose, post }) => {
       <div className="my-2">
         <UserQuery
           fullWidth
-          noLabel
-          variant="standard"
+          color="grey"
           placeholder="名稱"
           setUser={setUser}
         />
