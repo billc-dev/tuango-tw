@@ -1,3 +1,5 @@
+import { AxiosError } from "axios";
+
 import { IOrder } from "domain/Order/types";
 
 export const GA_TRACKING_ID = "G-LJCQZHWBKN";
@@ -50,5 +52,15 @@ export const refundEvent = (order: IOrder) => {
     currency: "TWD",
     value,
     items,
+  });
+};
+
+export const exceptionEvent = (error: AxiosError, header: string) => {
+  event("exception", {
+    description: JSON.stringify({
+      ...error.response?.data,
+      header,
+    }),
+    fatal: true,
   });
 };

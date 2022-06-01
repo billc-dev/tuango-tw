@@ -1,3 +1,4 @@
+import axios from "axios";
 import toast from "react-hot-toast";
 import {
   useInfiniteQuery,
@@ -63,8 +64,14 @@ export const useCreateOrder = (setOrderForm: Updater<IOrderForm>) => {
       if (!order) return;
       gtag.purchaseEvent(order);
     },
-    onError: () => {
+    onError: (error) => {
       toast.error("訂單製作失敗！", { id: "orderToast" });
+      if (axios.isAxiosError(error)) {
+        gtag.exceptionEvent(
+          error,
+          axios.defaults.headers.common.Authorization as string
+        );
+      }
     },
   });
 };
