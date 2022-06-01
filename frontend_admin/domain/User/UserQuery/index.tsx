@@ -28,6 +28,7 @@ const UserQuery: FC<Props> = (props) => {
     if (e.key !== "Enter") return;
     setName(displayName);
     setOpen(true);
+    e.currentTarget.blur();
   };
   return (
     <>
