@@ -41,7 +41,7 @@ const PopupDialog: FC<DialogProps> = (props) => {
       <dialog
         id={id}
         open={open}
-        className={`fixed max-h-screen z-20 overflow-x-hidden overscroll-y-auto bg-white p-0 transition-opacity duration-300 top-0 left-0 inset-0 max-w-[98%] bottom-0 rounded shadow-lg dark:ring-1 ring-zinc-700 ${
+        className={`fixed z-20 overflow-x-hidden overscroll-y-auto bg-white p-0 transition-opacity duration-300 top-0 left-0 inset-0 max-w-[98%] max-h-[95%] bottom-0 rounded shadow-lg dark:ring-1 ring-zinc-700 ${
           animate ? "opacity-100" : "opacity-0"
         } ${className}`}
       >
