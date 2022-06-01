@@ -40,7 +40,7 @@ const CreateOrderDialog: FC<Props> = (props) => {
       const { name, value } = e.target;
       setOrderItems((orderItems) => {
         return orderItems.map((item, idx) => {
-          if (idx === index) return { ...item, [name]: Number(value) };
+          if (idx === index) return { ...item, [name]: value };
           return item;
         });
       });
