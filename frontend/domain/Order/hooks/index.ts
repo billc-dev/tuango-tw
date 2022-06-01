@@ -65,13 +65,19 @@ export const useCreateOrder = (setOrderForm: Updater<IOrderForm>) => {
       gtag.purchaseEvent(order);
     },
     onError: (error) => {
-      toast.error("訂單製作失敗！", { id: "orderToast" });
       if (axios.isAxiosError(error)) {
+        toast.error("訂單製作失敗！", {
+          id: "orderToast",
+        });
         gtag.exceptionEvent(
           error,
           axios.defaults.headers.common.Authorization as string
         );
-      }
+        alert("請把此錯誤訊息傳給May:\n" + error.response?.data.error.message);
+      } else
+        toast.error("訂單製作失敗！", {
+          id: "orderToast",
+        });
     },
   });
 };
