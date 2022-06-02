@@ -72,6 +72,10 @@ const TopNavbar = () => {
                         text: "用戶管理",
                         onClick: () => handleClick("/users"),
                       },
+                      {
+                        text: "營收",
+                        onClick: () => handleClick("/stats"),
+                      },
                     ]}
                   />
                 </div>
