@@ -44,8 +44,15 @@ const StatsQuery = () => {
   useEffect(() => {
     if (!router.isReady) return;
     const { startDate, endDate } = router.query;
-    if (typeof startDate !== "string" || typeof endDate !== "string") return;
-    setDates({ startDate, endDate });
+    if (typeof startDate === "string" && typeof endDate === "string") {
+      setDates({ startDate, endDate });
+    } else {
+      shallowPush(router, {
+        ...router.query,
+        startDate: getFormattedDate(-6),
+        endDate: getFormattedDate(),
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.isReady]);
 
