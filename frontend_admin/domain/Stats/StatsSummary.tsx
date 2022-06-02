@@ -12,6 +12,7 @@ import {
   YAxis,
 } from "recharts";
 
+import Checkbox from "components/Checkbox";
 import Select from "components/Select";
 import Table from "components/Table/Table";
 import TableBody from "components/Table/TableBody";
@@ -28,6 +29,7 @@ const StatsSummary = () => {
   const router = useRouter();
   const { startDate, endDate } = router.query;
   const [name, setName] = useState("Bill");
+  const [totalBar, setTotalBar] = useState(false);
   const statsQuery = useStats({
     startDate: startDate as string,
     endDate: endDate as string,
@@ -40,6 +42,13 @@ const StatsSummary = () => {
     userDelivers.reduce((sum, deliver) => (sum += deliver.fee), 0);
   return (
     <div>
+      <label className="flex items-center">
+        <Checkbox
+          checked={totalBar}
+          onChange={(e) => setTotalBar(e.target.checked)}
+        />
+        <span className="ml-2">總計</span>
+      </label>
       <ResponsiveContainer width="100%" height={250}>
         <BarChart data={summaryDelivers}>
           <CartesianGrid />
@@ -47,7 +56,7 @@ const StatsSummary = () => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="total" name="總計" fill="blue" />
+          {totalBar && <Bar dataKey="total" name="總計" fill="blue" />}
           <Bar dataKey="fee" name="服務費" fill="green" />
         </BarChart>
       </ResponsiveContainer>
