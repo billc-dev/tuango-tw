@@ -8,12 +8,11 @@ const Login = () => {
   const router = useRouter();
   const userQuery = useUser();
   useEffect(() => {
+    if (userQuery.isLoading) return;
     if (userQuery.data?.data.user) router.push("/super-buy");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userQuery.data?.data.user]);
-  useEffect(() => {
     window.open(FB_LOGIN_URL(), "_self");
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userQuery]);
   return <div></div>;
 };
 
