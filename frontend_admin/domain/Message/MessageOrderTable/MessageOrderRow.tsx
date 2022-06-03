@@ -35,9 +35,16 @@ const MessageOrderRow: FC<Props> = ({ order, userIds, setUserIds }) => {
         />
       </TableCell>
       <TableCell>
-        <Button onClick={() => copyToClipboard(displayName, "名稱")}>
-          {displayName}
-        </Button>
+        <div className="flex items-center">
+          <Button onClick={() => copyToClipboard(displayName, "名稱")}>
+            {displayName}
+          </Button>
+          {order.fb && (
+            <Button className="ml-1" variant="blue" size="small">
+              FB
+            </Button>
+          )}
+        </div>
       </TableCell>
       <TableCell>
         <p>{getOrderTitle(order)}</p>
