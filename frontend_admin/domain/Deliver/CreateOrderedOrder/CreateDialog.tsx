@@ -6,7 +6,6 @@ import { useQueryClient } from "react-query";
 import { IUser } from "api/auth/userDB";
 import Button from "components/Button";
 import IconButton from "components/Button/IconButton";
-import CardHeader from "components/Card/CardHeader";
 import Dialog from "components/Dialog";
 import Select from "components/Select";
 import Table from "components/Table/Table";
@@ -18,6 +17,7 @@ import TextField from "components/TextField";
 import { useCreateOrder } from "domain/Order/hooks";
 import { IOrder, IOrderedOrderItem } from "domain/Order/types";
 import { IPost } from "domain/Post/types";
+import UserHeader from "domain/User/UserHeader";
 import UserQuery from "domain/User/UserQuery";
 
 interface Props {
@@ -117,10 +117,7 @@ const CreateDialog: FC<Props> = ({ open, handleClose, post }) => {
         />
         {user && (
           <>
-            <CardHeader
-              title={`${user.pickupNum}. ${user.displayName}`}
-              img={user.pictureUrl}
-            />
+            <UserHeader user={user} />
             <Table className="text-sm">
               <TableHead>
                 <TableRow>

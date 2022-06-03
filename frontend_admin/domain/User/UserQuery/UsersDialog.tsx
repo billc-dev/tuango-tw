@@ -1,11 +1,10 @@
 import React, { FC } from "react";
 
 import { IUser } from "api/auth/userDB";
-import Button from "components/Button";
-import CardHeader from "components/Card/CardHeader";
 import PopupDialog from "components/Dialog/PopupDialog";
 import LoadingIndicator from "components/Indicator/LoadingIndicator";
 
+import UserHeader from "../UserHeader";
 import { useUsers } from "../hooks";
 
 interface Props {
@@ -32,17 +31,9 @@ const UsersDialog: FC<Props> = (props) => {
   return (
     <PopupDialog title={placeholder} {...{ open, handleClose }}>
       {usersQuery.data?.map((user) => (
-        <CardHeader
+        <UserHeader
           key={user._id}
-          img={user.pictureUrl}
-          title={`${user.pickupNum}. ${user.displayName}`}
-          action={
-            user.fb ? (
-              <Button className="ml-1" variant="blue" size="small">
-                FB
-              </Button>
-            ) : null
-          }
+          user={user}
           onClick={() => {
             setUser(user);
             setDisplayName(user.displayName);
