@@ -69,6 +69,7 @@ export interface CreateOrderItem {
   itemQty: number;
   price: number;
   location?: string;
+  status: OrderStatus;
 }
 
 export interface OrderQuery {

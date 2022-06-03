@@ -38,7 +38,9 @@ const NewOrderDialog: FC<Props> = ({
     getPostByPostNum.mutate(postNum, {
       onSuccess: (post) => {
         setPost(post);
-        setOrderItems(post.items.map((item) => ({ ...item, qty: "" })));
+        setOrderItems(
+          post.items.map((item) => ({ ...item, qty: "", status: "delivered" }))
+        );
       },
     });
   };
