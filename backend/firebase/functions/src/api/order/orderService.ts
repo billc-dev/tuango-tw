@@ -55,6 +55,7 @@ export const createNewOrder = async (
     order: orderForm.items,
     comment: orderForm.comment,
     orderHistory: [{ status: "ordered" }],
+    fb: user.fb,
   });
 
   await order.save();

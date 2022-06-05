@@ -85,6 +85,7 @@ export const OrderSchema = new mongoose.Schema<IOrder>({
     default: "ordered",
     enum: ["ordered", "delivered", "completed", "missing", "canceled"],
   },
+  fb: { type: Boolean, default: false },
 });
 
 const Order = ordersConn.model<IOrder>("Order", OrderSchema);
