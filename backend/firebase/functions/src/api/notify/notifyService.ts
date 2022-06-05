@@ -7,6 +7,7 @@ import { Post } from "api/post/postDB";
 import { IS_DEV } from "utils/constant";
 import { FRONTEND_URL, SUPER_BUY_URL } from "utils/url";
 
+import { FBPageUserProfile } from "./notify";
 import Notify from "./notifyDB";
 
 export const notifyUser = async (
@@ -79,4 +80,30 @@ const sendFBMessage = async (message: string, token: string) => {
     },
     { params: { access_token: functions.config().fb.page_access_token } }
   );
+};
+
+export const sendFirstFBMessage = (message: string, token: string) => {
+  return axios.post(
+    "https://graph.facebook.com/v13.0/me/messages",
+    { recipient: { id: token }, message: { text: message } },
+    { params: { access_token: functions.config().fb.page_access_token } }
+  );
+};
+
+export const getFBPageUserProfile = (senderId: string) => {
+  return axios.get<{ first_name: string; last_name: string }>(
+    `https://graph.facebook.com/v13.0/${senderId}?access_token=${
+      functions.config().fb.page_access_token
+    }`
+  );
+};
+
+export const isSameFBName = async (
+  fbProfile: FBPageUserProfile,
+  displayName: string
+) => {
+  const { first_name, last_name } = fbProfile;
+  if (!displayName.includes(first_name)) return false;
+  if (!displayName.includes(last_name)) return false;
+  return true;
 };

@@ -18,8 +18,13 @@ export interface FBMessaging {
   referral?: {
     ref?: string;
   };
-  message: {
+  message?: {
     mid: string;
     text?: string;
   };
+}
+
+export interface FBPageUserProfile {
+  first_name: string;
+  last_name: string;
 }
