@@ -40,16 +40,14 @@ const CreateOrderDialog: FC<Props> = (props) => {
       const { name, value } = e.target;
       setOrderItems((orderItems) => {
         return orderItems.map((item, idx) => {
-          if (idx === index) return { ...item, [name]: Number(value) };
+          if (idx === index) return { ...item, [name]: value };
           return item;
         });
       });
     };
   };
   const handleSubmit = () => {
-    const items = orderItems.filter((item) => {
-      return item.qty;
-    });
+    const items = orderItems.filter((item) => item.qty && item.qty > 0);
     createOrder.mutate(
       {
         orderItems: items,

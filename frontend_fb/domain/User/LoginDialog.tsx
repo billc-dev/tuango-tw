@@ -14,12 +14,12 @@ const LoginDialog = () => {
     if (verifiedQuery.isLoading || userQuery.isLoading) return;
     if (!userQuery.data?.data.user) setOpen(true);
   }, [verifiedQuery.isLoading, userQuery.isLoading, userQuery.data?.data.user]);
-  return (
+  return open ? (
     <NormalDialog title="" {...{ open, setOpen }}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <FBLoginButton size="lg" text="用FB登入" className="w-full py-6" />
     </NormalDialog>
-  );
+  ) : null;
 };
 
 export default LoginDialog;

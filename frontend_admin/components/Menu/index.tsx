@@ -24,14 +24,16 @@ const Menu: FC<Props> = ({ className, open, handleClose, items, children }) => {
         className={`absolute select-none bg-white overflow-hidden ring-1 ring-zinc-200 rounded-md whitespace-nowrap top-10 z-20 ${className}`}
       >
         {items.map((item) => (
-          <button
-            key={item.text}
-            className="flex items-center px-5 py-3 transition active:bg-zinc-400 hover:bg-zinc-200"
-            onClick={() => item.onClick && item.onClick()}
-          >
-            {item.icon && <div className="h-6 w-6 mr-4">{item.icon}</div>}
-            <span>{item.text}</span>
-          </button>
+          <div key={item.text}>
+            <button
+              type="button"
+              className="flex w-full items-center justify-center px-5 py-3 transition active:bg-zinc-400 hover:bg-zinc-200"
+              onClick={() => item.onClick && item.onClick()}
+            >
+              {item.icon && <div className="h-6 w-6 mr-4">{item.icon}</div>}
+              <span>{item.text}</span>
+            </button>
+          </div>
         ))}
         {children}
       </div>

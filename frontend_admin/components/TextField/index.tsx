@@ -36,7 +36,7 @@ const TextField: FC<Props> = React.forwardRef((props, ref) => {
         onFocus={(e) => {
           selectOnFocus && e.target.select();
         }}
-        className={`focus:ring-0 ring-0 placeholder-zinc-400 disabled:opacity-60
+        className={`focus:ring-0 text-base ring-0 placeholder-zinc-400 disabled:opacity-60
         ${
           !variant
             ? "rounded-lg border px-3 w-full mb-2 border-zinc-200 dark:border-zinc-600 dark:bg-zinc-800"

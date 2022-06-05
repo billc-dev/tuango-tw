@@ -19,15 +19,19 @@ export const useCreatePost = () => {
 export const useEditPost = () => {
   const queryClient = useQueryClient();
   return useMutation(editPost, {
-    onMutate() {
+    onMutate: () => {
+      queryClient.setQueryData("submitting", true);
       toast.loading("貼文編輯中...", { id: "editPost" });
     },
-    onSuccess() {
+    onSuccess: () => {
       queryClient.invalidateQueries("posts");
       toast.success("已成功編輯貼文!", { id: "editPost" });
     },
-    onError() {
+    onError: () => {
       toast.error("編輯貼文失敗!", { id: "editPost" });
+    },
+    onSettled: () => {
+      queryClient.setQueryData("submitting", false);
     },
   });
 };
@@ -35,10 +39,10 @@ export const useEditPost = () => {
 export const useEditPostStatus = () => {
   const queryClient = useQueryClient();
   return useMutation(editPostStatus, {
-    onSuccess() {
+    onSuccess: () => {
       queryClient.invalidateQueries("posts");
     },
-    onError() {
+    onError: () => {
       toast.error("編輯貼文狀態失敗!", { id: "editPost" });
     },
   });

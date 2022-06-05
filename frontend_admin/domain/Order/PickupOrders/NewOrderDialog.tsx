@@ -38,7 +38,9 @@ const NewOrderDialog: FC<Props> = ({
     getPostByPostNum.mutate(postNum, {
       onSuccess: (post) => {
         setPost(post);
-        setOrderItems(post.items.map((item) => ({ ...item, qty: "" })));
+        setOrderItems(
+          post.items.map((item) => ({ ...item, qty: "", status: "delivered" }))
+        );
       },
     });
   };
@@ -56,8 +58,9 @@ const NewOrderDialog: FC<Props> = ({
   const handleSubmit = () => {
     if (!orderItems) return;
     if (!post) return;
+    const items = orderItems.filter((item) => item.qty && item.qty > 0);
     createOrder.mutate(
-      { username, comment, orderItems, postId: post._id },
+      { username, comment, orderItems: items, postId: post._id },
       {
         onSuccess: () => {
           handleClose();

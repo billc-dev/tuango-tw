@@ -18,14 +18,14 @@ interface Props {
 
 const OrderRow: FC<Props> = ({ order }) => {
   const router = useRouter();
-  const { displayName, createdAt } = order;
+  const { displayName, createdAt, deliveredAt } = order;
   const { orderNum, status } = order;
   return (
     <TableRow>
       <TableCell>{displayName}</TableCell>
       <TableCell>
         <p>{getOrderTitle(order)}</p>
-        <p>{getFullLengthDate(createdAt)}</p>
+        <p>{getFullLengthDate(deliveredAt ?? createdAt)}</p>
         <p>序號: {orderNum}</p>
         {order.order.map((item, index) => (
           <p key={item.id + index}>

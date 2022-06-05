@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 
 import Button from "components/Button";
-import CardHeader from "components/Card/CardHeader";
 import LoadingIndicator from "components/Indicator/LoadingIndicator";
 import TextField from "components/TextField";
 
+import UserHeader from "../UserHeader";
 import UserQuery from "../UserQuery";
 import { useGetUserByPickupNum, useSetLinePay } from "../hooks";
 import { User } from "../types";
@@ -50,16 +50,8 @@ const PickupUser: FC<Props> = ({ user, setUser }) => {
           <Button fullWidth onClick={() => setUser(undefined)}>
             已合計
           </Button>
-          <CardHeader
-            title={`${user.pickupNum}. ${user.displayName}`}
-            titleElement={
-              user.fb ? (
-                <Button className="ml-1" variant="blue" size="small">
-                  FB
-                </Button>
-              ) : null
-            }
-            img={user.pictureUrl}
+          <UserHeader
+            user={user}
             action={
               <Button
                 loading={setLinePay.isLoading}

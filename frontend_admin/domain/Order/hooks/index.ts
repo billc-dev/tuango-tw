@@ -122,11 +122,17 @@ export const useOrder = (orderId: string) => {
 export const useUpdateOrder = () => {
   const queryClient = useQueryClient();
   return useMutation(updateOrder, {
+    onMutate: () => {
+      queryClient.setQueryData("submitting", true);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries("orders");
     },
     onError: () => {
       toast.error("編輯失敗！請重新試一次！");
+    },
+    onSettled: () => {
+      queryClient.setQueryData("submitting", false);
     },
   });
 };

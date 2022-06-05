@@ -16,7 +16,7 @@ interface Props {
 }
 
 const MessageOrderRow: FC<Props> = ({ order, userIds, setUserIds }) => {
-  const { displayName, createdAt, orderNum, status } = order;
+  const { displayName, createdAt, deliveredAt, orderNum, status } = order;
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
     if (!checked) {
@@ -35,13 +35,20 @@ const MessageOrderRow: FC<Props> = ({ order, userIds, setUserIds }) => {
         />
       </TableCell>
       <TableCell>
-        <Button onClick={() => copyToClipboard(displayName, "名稱")}>
-          {displayName}
-        </Button>
+        <div className="flex items-center">
+          <Button onClick={() => copyToClipboard(displayName, "名稱")}>
+            {displayName}
+          </Button>
+          {order.fb && (
+            <Button className="ml-1" variant="blue" size="small">
+              FB
+            </Button>
+          )}
+        </div>
       </TableCell>
       <TableCell>
         <p>{getOrderTitle(order)}</p>
-        <p>{getFullLengthDate(createdAt)}</p>
+        <p>{getFullLengthDate(deliveredAt ?? createdAt)}</p>
         <p>序號: {orderNum}</p>
         {order.order.map((item, index) => (
           <p key={item.id + index}>

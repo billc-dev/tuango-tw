@@ -6,6 +6,7 @@ import { shallowPush } from "utils";
 import Button from "components/Button";
 import Dialog from "components/Dialog";
 import LoadingIndicator from "components/Indicator/LoadingIndicator";
+import { useSubmitting } from "hooks";
 
 import { useOrder } from "../hooks";
 import EditOrderForm from "./EditOrderForm";
@@ -17,6 +18,7 @@ interface Props {
 const EditOrder: FC<Props> = ({ orderId }) => {
   const router = useRouter();
   const orderQuery = useOrder(orderId);
+  const submittingQuery = useSubmitting();
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -41,7 +43,13 @@ const EditOrder: FC<Props> = ({ orderId }) => {
           open,
           title: "編輯訂單",
           action: (
-            <Button variant="primary" form="order-form" type="submit" size="lg">
+            <Button
+              variant="primary"
+              form="order-form"
+              type="submit"
+              size="lg"
+              loading={submittingQuery.data}
+            >
               編輯訂單
             </Button>
           ),

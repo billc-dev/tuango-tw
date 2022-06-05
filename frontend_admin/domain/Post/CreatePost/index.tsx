@@ -7,10 +7,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { shallowPush } from "utils";
 
-import CardHeader from "components/Card/CardHeader";
 import Checkbox from "components/Checkbox";
 import Dialog from "components/Dialog";
 import TextField from "components/TextField";
+import UserHeader from "domain/User/UserHeader";
 import UserQuery from "domain/User/UserQuery";
 import { User } from "domain/User/types";
 
@@ -81,7 +81,7 @@ const CreatePost = () => {
       </div>
       {user && (
         <>
-          <CardHeader img={user.pictureUrl} title={user.displayName} />
+          <UserHeader user={user} />
           <div className="mb-2 flex items-center">
             <Checkbox checked={fb} onChange={(e) => setFB(e.target.checked)} />
             <p className="ml-2">FB</p>

@@ -32,7 +32,7 @@ const Deliver = () => {
         {...{ value, setValue, setPostNum }}
       />
       {ordersQuery.data && (
-        <div className="mt-2 overflow-y-auto -ml-1">
+        <div className="mt-2 overflow-y-auto">
           <p className="font-medium">{getPostTitle(postQuery.data)}</p>
           {postQuery.data && (
             <DeliverTable

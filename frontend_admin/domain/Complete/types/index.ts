@@ -23,7 +23,7 @@ export interface IComplete {
   createdAt: string;
   total: number;
   orders: IReducedOrder[];
-  admin: string;
+  admin?: string;
   payment: {
     linePay: boolean;
     confirmed: boolean;

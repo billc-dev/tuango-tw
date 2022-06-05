@@ -1,10 +1,11 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 
 import { RefreshIcon, SearchIcon } from "@heroicons/react/outline";
 
 import Button from "components/Button";
 import IconButton from "components/Button/IconButton";
 import Dialog from "components/Dialog";
+import LoadingIndicator from "components/Indicator/LoadingIndicator";
 import TextField from "components/TextField";
 
 import { useExtraOrders } from "../hooks";
@@ -32,8 +33,13 @@ const ViewExtraOrder: FC<Props> = ({ username, open, handleClose }) => {
     handleSubmit();
   };
   const handleSubmit = () => setQuery({ ...values });
+  useEffect(() => {
+    return () => extraOrdersQuery.remove();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <Dialog {...{ title: "新增訂單", open, handleClose }}>
+      <LoadingIndicator loading={extraOrdersQuery.isLoading} />
       <div className="mt-2">
         <NewOrder {...{ username, handleClose }} />
         <div className="flex mt-4">

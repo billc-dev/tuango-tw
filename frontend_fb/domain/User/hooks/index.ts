@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 import axios, { AxiosResponse } from "axios";
@@ -48,6 +49,7 @@ export const useUser = () => {
 };
 
 export const useMutateLogout = () => {
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   return useMutation(logout, {
@@ -56,6 +58,7 @@ export const useMutateLogout = () => {
       localStorage.removeItem("user");
       axios.defaults.headers.common.Authorization = false;
       queryClient.clear();
+      router.reload();
     },
   });
 };

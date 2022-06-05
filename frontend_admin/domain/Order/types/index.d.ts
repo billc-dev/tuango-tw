@@ -44,6 +44,7 @@ export interface IOrder {
   orderHistory: OrderHistory[];
   status: OrderStatus;
   checked?: boolean;
+  fb?: boolean;
 }
 
 export interface IOrderItem extends yup.InferType<typeof orderItemSchema> {}
@@ -68,6 +69,7 @@ export interface CreateOrderItem {
   itemQty: number;
   price: number;
   location?: string;
+  status: OrderStatus;
 }
 
 export interface OrderQuery {
