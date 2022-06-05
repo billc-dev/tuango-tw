@@ -6,6 +6,7 @@
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions:api_tw_firebase",
+    "deploy-test": "firebase deploy --only functions:api_fb_firebase",
     "logs": "firebase functions:log",
     "dev": "concurrently \"tsc --watch\" \"firebase emulators:start\""
   },
