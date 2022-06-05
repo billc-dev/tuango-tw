@@ -22,6 +22,7 @@ const whitelist = [
   "https://xn--ndsp5rmr3blfh.com",
   "https://super-buy.app",
   "https://www.xn--ndsp5rmr3blfh.com",
+  "http://localhost:3001",
   "http://localhost:3000",
   "*",
   undefined,
