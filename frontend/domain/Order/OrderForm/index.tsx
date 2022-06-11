@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 
 import toast from "react-hot-toast";
-import { Updater } from "use-immer";
 
 import Card from "components/Card";
 import CardSubmitButton from "components/Card/CardSubmitButton";
@@ -16,7 +15,7 @@ import OrderItem from "./OrderItem";
 
 interface Props {
   orderForm: IOrderForm;
-  setOrderForm: Updater<IOrderForm>;
+  setOrderForm: React.Dispatch<React.SetStateAction<IOrderForm>>;
   post: IPost;
 }
 
@@ -48,10 +47,7 @@ const OrderForm: FC<Props> = ({ orderForm, setOrderForm, post }) => {
       </div>
       <div className="flex flex-col items-center justify-center p-3">
         {orderForm?.items?.map((item, index) => (
-          <OrderItem
-            key={index}
-            {...{ index, item, setOrderForm, sumOrders }}
-          />
+          <OrderItem key={index} {...{ item, setOrderForm, sumOrders }} />
         ))}
       </div>
       <div className="px-2">
@@ -60,9 +56,10 @@ const OrderForm: FC<Props> = ({ orderForm, setOrderForm, post }) => {
           placeholder="備註"
           value={orderForm.comment}
           onChange={(e) =>
-            setOrderForm((draft) => {
-              draft.comment = e.target.value;
-            })
+            setOrderForm((orderForm) => ({
+              ...orderForm,
+              comment: e.target.value,
+            }))
           }
         />
       </div>

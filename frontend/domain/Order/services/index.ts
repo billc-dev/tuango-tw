@@ -8,6 +8,18 @@ import { IPost } from "domain/Post/types";
 import { orderFormSchema } from "../schema";
 import { IOrder, IOrderForm, IOrderItem } from "../types";
 
+export const incrementOrderItemQty = (
+  item: IOrderItem,
+  items: IOrderItem[],
+  amount: number
+) => {
+  const orderItems: IOrderItem[] = items.map((i) => {
+    if (item.id !== i.id) return i;
+    return { ...i, qty: Math.max(0, i.qty + amount) };
+  });
+  return orderItems;
+};
+
 type HandleChangeItemQty = (
   amount: number,
   index: number,

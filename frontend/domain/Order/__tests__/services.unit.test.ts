@@ -1,7 +1,7 @@
 import { posts } from "domain/Post/mock";
 
 import { items, orders } from "../mock";
-import { calcSumOrders, getOrderSum } from "../services";
+import { calcSumOrders, getOrderSum, incrementOrderItemQty } from "../services";
 
 describe("getOrderSum", () => {
   test("should return 0 if no items in array", () => {
@@ -35,5 +35,32 @@ describe("calcSumOrders", () => {
         qty: 2,
       },
     ]);
+  });
+});
+
+describe("incrementOrderItemQty", () => {
+  test("should increment order itemQty", () => {
+    expect(incrementOrderItemQty(items[0], items, 1)).toEqual(
+      items.map((item) => {
+        if (item.id !== items[0].id) return item;
+        return { ...item, qty: item.qty + 1 };
+      })
+    );
+  });
+  test("should decrement order itemQty", () => {
+    expect(incrementOrderItemQty(items[0], items, -1)).toEqual(
+      items.map((item) => {
+        if (item.id !== items[0].id) return item;
+        return { ...item, qty: item.qty + -1 };
+      })
+    );
+  });
+  test("should return 0 if decrement to negative amount", () => {
+    expect(incrementOrderItemQty(items[0], items, -4)).toEqual(
+      items.map((item) => {
+        if (item.id !== items[0].id) return item;
+        return { ...item, qty: 0 };
+      })
+    );
   });
 });

@@ -6,7 +6,6 @@ import {
   useQuery,
   useQueryClient,
 } from "react-query";
-import { Updater } from "use-immer";
 
 import * as gtag from "domain/GoogleAnalytics/gtag";
 import { updateInfinitePostsQueryData } from "domain/Post/services";
@@ -29,7 +28,9 @@ interface OrderQueryData {
   orders: IOrder[];
 }
 
-export const useCreateOrder = (setOrderForm: Updater<IOrderForm>) => {
+export const useCreateOrder = (
+  setOrderForm: React.Dispatch<React.SetStateAction<IOrderForm>>
+) => {
   const queryClient = useQueryClient();
   return useMutation(createOrder, {
     onSuccess: (
@@ -54,11 +55,9 @@ export const useCreateOrder = (setOrderForm: Updater<IOrderForm>) => {
       queryClient.setQueryData(["post", postId], { post });
       updateInfinitePostsQueryData(queryClient, post);
 
-      setOrderForm((draft) => {
+      setOrderForm((orderForm) => {
         const { postId, items, comment } = getInitialOrderForm(post);
-        draft.postId = postId;
-        draft.items = items;
-        draft.comment = comment;
+        return { ...orderForm, postId, items, comment };
       });
 
       if (!order) return;
