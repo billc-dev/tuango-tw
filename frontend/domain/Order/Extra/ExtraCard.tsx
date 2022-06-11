@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import React, { FC } from "react";
 
 import { DocumentDuplicateIcon } from "@heroicons/react/outline";
+import copy from "copy-to-clipboard";
 import toast from "react-hot-toast";
 
 import Button from "components/Button";
@@ -55,7 +56,7 @@ const ExtraCard: FC<Props> = ({ order }) => {
           className="my-2"
           icon={<DocumentDuplicateIcon />}
           onClick={() => {
-            navigator.clipboard.writeText(
+            copy(
               `😍🛒#${postNum} ${title} #${sellerDisplayName}\n${itemList()}`
             );
             toast.success("已複製貼文連結！");
