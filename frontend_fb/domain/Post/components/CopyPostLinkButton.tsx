@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 
 import { LinkIcon } from "@heroicons/react/outline";
+import copy from "copy-to-clipboard";
 import toast from "react-hot-toast";
 
 import Button from "components/Button";
@@ -22,7 +23,7 @@ const CopyPostLinkButton: FC<Props> = ({ post }) => {
       variant="primary"
       className="mb-2"
       onClick={() => {
-        navigator.clipboard.writeText(
+        copy(
           `🤗#${postNum} ${title} ~${displayName}\n貼文連結: ${getPostUrl(_id)}`
         );
         toast.success("已複製貼文連結！");
