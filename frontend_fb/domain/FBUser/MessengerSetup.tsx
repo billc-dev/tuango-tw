@@ -24,21 +24,6 @@ const MessengerSetup = () => {
     >
       {!notified ? (
         <>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          {/* <Button
-            icon={<DocumentDuplicateIcon />}
-            className="mt-4"
-            fullWidth
-            size="lg"
-            onClick={() =>
-              copyToClipboard(
-                `認證碼:${userQuery.data.data.user._id}`,
-                "認證碼"
-              )
-            }
-          >
-            1. 複製認證碼
-          </Button> */}
           <Button
             icon={<MessengerIcon />}
             className="mt-4"
@@ -46,7 +31,6 @@ const MessengerSetup = () => {
             size="lg"
             onClick={() => {
               window.open(
-                // `http://m.me/superbuytw`,
                 `http://m.me/superbuytw?ref=認證碼:${userQuery.data.data.user._id}`,
                 "_self"
               );
