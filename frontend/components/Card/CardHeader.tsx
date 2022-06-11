@@ -8,13 +8,14 @@ interface Props {
   subtitle?: string;
   action?: JSX.Element | null;
   notifications?: number;
+  onClick?: () => void;
 }
 
 const CardHeader: FC<Props> = (props) => {
-  const { img, title, subtitle, action, notifications } = props;
+  const { img, title, subtitle, action, notifications, onClick } = props;
   return (
     <div className="flex items-center justify-between py-4 select-none">
-      <div className="flex">
+      <div className={`flex ${onClick && "cursor-pointer"}`} onClick={onClick}>
         <CardAvatar img={img} alt={title} notifications={notifications} />
         <div className="ml-1 flex flex-col pl-2">
           <div className="line-clamp-1 text-sm">{title}</div>

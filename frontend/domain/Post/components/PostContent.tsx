@@ -26,6 +26,7 @@ const PostContent: FC<Props> = (props) => {
   return (
     <>
       <CardHeader
+        onClick={() => router.push(`/posts/${post.userId}`)}
         img={post.pictureUrl}
         title={post.displayName}
         subtitle={getFullDateFromNow(post.createdAt)}
