@@ -5,12 +5,14 @@ import { IOrder } from "domain/Order/types";
 export const GA_TRACKING_ID = "G-LJCQZHWBKN";
 
 export const pageview = (url: URL) => {
+  if (typeof window.gtag === "undefined") return;
   window.gtag("config", GA_TRACKING_ID, {
     page_path: url,
   });
 };
 
 export const event = (action: Gtag.EventNames, params: Gtag.EventParams) => {
+  if (typeof window.gtag === "undefined") return;
   window.gtag("event", action, params);
 };
 
