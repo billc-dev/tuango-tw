@@ -12,7 +12,7 @@ const Login = () => {
   useEffect(() => {
     if (isVerified.isLoading) return;
     if (userQuery.data?.data.user) {
-      router.push("/super-buy");
+      router.push("/posts");
       return;
     }
     window.open(FB_LOGIN_URL(), "_self");
