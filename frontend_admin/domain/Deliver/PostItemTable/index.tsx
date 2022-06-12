@@ -8,20 +8,18 @@ import TableBody from "components/Table/TableBody";
 import TableCell from "components/Table/TableCell";
 import TableHead from "components/Table/TableHead";
 import TableRow from "components/Table/TableRow";
+import { PostOrdersParams } from "domain/Order/hooks";
 import { IOrder } from "domain/Order/types";
-import { usePostByPostNum } from "domain/Post/hooks";
+import { IPost } from "domain/Post/types";
 
 interface Props {
-  postNum: string;
+  post: IPost;
+  postQueryKey: PostOrdersParams;
 }
 
-const PostItemTable: FC<Props> = ({ postNum }) => {
+const PostItemTable: FC<Props> = ({ post }) => {
   const queryClient = useQueryClient();
-  const postQuery = usePostByPostNum(postNum);
-  const queryKey = [
-    "postOrders",
-    { postId: postQuery.data?._id, status: "ordered" },
-  ];
+  const queryKey = ["postOrders", { postId: post._id, status: "ordered" }];
   const handleItemChange = (id: string) => {
     return (e: React.ChangeEvent<HTMLSelectElement>) => {
       const { name, value } = e.target;
@@ -49,7 +47,7 @@ const PostItemTable: FC<Props> = ({ postNum }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {postQuery.data?.items.map((item, index) => (
+          {post.items.map((item, index) => (
             <TableRow key={index}>
               <TableCell>{item.id}</TableCell>
               <TableCell>{item.item}</TableCell>

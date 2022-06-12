@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { PostOrdersParams, usePostOrders } from "domain/Order/hooks";
 import { usePostByPostNum } from "domain/Post/hooks";
@@ -39,7 +39,11 @@ const Deliver = () => {
               {...{ queryKey, post: postQuery.data, setPostNum, setValue }}
             />
           )}
-          {ordersQuery.data.length > 0 && <PostItemTable {...{ postNum }} />}
+          {postQuery.data && ordersQuery.data.length > 0 && (
+            <PostItemTable
+              {...{ post: postQuery.data, postQueryKey: queryKey }}
+            />
+          )}
           <CreateOrderedOrder {...{ postNum }} />
           {ordersQuery.data.length > 0 ? (
             <>
