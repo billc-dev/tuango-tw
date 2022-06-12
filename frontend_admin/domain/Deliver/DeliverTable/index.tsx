@@ -68,7 +68,7 @@ const DeliverTable: FC<Props> = ({ queryKey, post, setPostNum, setValue }) => {
       if (!totalItems) return itemLocation;
       return itemLocation.map((item) => {
         const index = totalItems.findIndex((i) => i.id === item.id);
-        if (index === -1) return item;
+        if (index === -1) return { ...item, qty: 0 };
         return {
           ...item,
           qty: totalItems[index].qty,
