@@ -104,6 +104,7 @@ const ItemsTable: FC<Props> = ({ itemLocation, setItemLocation }) => {
         <TableRow>
           <TableCell>
             <Checkbox
+              checkboxSize="large"
               checked={!itemLocation.some((item) => !item.checked)}
               onChange={handleCheckAll}
             />
@@ -131,6 +132,7 @@ const ItemsTable: FC<Props> = ({ itemLocation, setItemLocation }) => {
             <TableRow key={index}>
               <TableCell>
                 <Checkbox
+                  checkboxSize="large"
                   checked={item.checked}
                   onChange={handleCheck(item.id)}
                 />
