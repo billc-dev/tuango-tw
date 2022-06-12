@@ -105,8 +105,21 @@ const OrderRow: FC<Props> = ({ order }) => {
       </TableCell>
       <TableCell>
         {order.order.map((item, index) => (
-          <p key={index} className="my-4">
-            {item.id}+{item.qty}
+          <p key={index} className="my-4 flex items-center">
+            <p className="hidden sm:block text-base">{item.id}+</p>
+            <TextField
+              name="qty"
+              type="number"
+              placeholder="數量"
+              value={item.qty}
+              noLabel
+              className="hidden sm:block max-w-[60px] h-9"
+              variant="standard"
+              onChange={handleItemChange(index)}
+            />
+            <p className="sm:hidden my-4">
+              {item.id}+{item.qty}
+            </p>
           </p>
         ))}
       </TableCell>
