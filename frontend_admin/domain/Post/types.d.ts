@@ -38,6 +38,7 @@ export interface IPost {
   extraTotal: number;
   normalFee: number;
   extraFee: number;
+  fb: boolean;
 }
 
 export interface ILocationPostItem {

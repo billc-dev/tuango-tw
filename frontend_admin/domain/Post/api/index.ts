@@ -37,10 +37,11 @@ export const createPost = (params: CreatePostParams) => {
 interface EditPostParams {
   postId: string;
   postForm: PostFormSchema;
+  fb: boolean;
 }
 
-export const editPost = ({ postId, postForm }: EditPostParams) => {
-  return axios.patch(`/posts/${postId}`, { postForm });
+export const editPost = ({ postId, postForm, fb }: EditPostParams) => {
+  return axios.patch(`/posts/${postId}`, { postForm, fb });
 };
 
 interface EditPostStatusParams {
