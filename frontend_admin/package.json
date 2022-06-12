@@ -6,7 +6,8 @@
     "dev": "next dev -p 3005",
     "build": "next build",
     "start": "next start -p 3005",
-    "lint": "next lint"
+    "lint": "next lint",
+    "analyze": "ANALYZE=true yarn build"
   },
   "dependencies": {
     "@heroicons/react": "^1.0.6",
@@ -35,6 +36,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^12.1.6",
     "@tailwindcss/forms": "^0.5.0",
     "@tailwindcss/line-clamp": "^0.4.0",
     "@trivago/prettier-plugin-sort-imports": "^3.2.0",
