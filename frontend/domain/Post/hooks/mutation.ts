@@ -1,3 +1,4 @@
+import { Axios, AxiosError } from "axios";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "react-query";
 
@@ -19,8 +20,8 @@ export const useCreatePost = () => {
       queryClient.invalidateQueries("postCards");
       toast.success("已成功新增貼文!", { id: "createPost" });
     },
-    onError: () => {
-      toast.error("新增貼文失敗!", { id: "createPost" });
+    onError: (error: AxiosError) => {
+      toast.error("新增貼文失敗! " + error.message, { id: "createPost" });
     },
   });
 };
