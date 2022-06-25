@@ -1,4 +1,7 @@
+import { IDeliver } from "api/deliver/deliver";
+
 import { PostQuery } from "../post";
+import { Post } from "../postDB";
 
 export * from "./increment";
 export * from "./validate";
@@ -38,4 +41,36 @@ const getLimit = (limit?: number) => {
   if (!limit) return 20;
   if (limit < 100) return limit;
   return 100;
+};
+
+export const updatePostSums = async (
+  postId: string,
+  deliver: IDeliver,
+  normalTotal: number,
+  normalFee: number,
+  extraTotal: number,
+  extraFee: number
+) => {
+  await Post.findByIdAndUpdate(
+    postId,
+    {
+      $inc: {
+        normalTotal: normalTotal - deliver.normalTotal,
+        normalFee: normalFee - deliver.normalFee,
+        extraTotal: extraTotal - deliver.extraTotal,
+        extraFee: extraFee - deliver.extraFee,
+      },
+    },
+    { new: true }
+  );
+};
+
+export const incrementPostSums = async (postId: string, deliver: IDeliver) => {
+  const { normalTotal, normalFee, extraTotal, extraFee } = deliver;
+
+  await Post.findByIdAndUpdate(
+    postId,
+    { $inc: { normalTotal, normalFee, extraTotal, extraFee } },
+    { new: true }
+  );
 };

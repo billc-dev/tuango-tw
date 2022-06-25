@@ -1,7 +1,7 @@
 import * as express from "express";
 import { FilterQuery } from "mongoose";
 
-import { Post } from "api/post";
+import { updatePostSums } from "api/post/services";
 import asyncWrapper from "middleware/asyncWrapper";
 import { isAdmin } from "middleware/auth";
 
@@ -44,6 +44,20 @@ router.get(
   })
 );
 
+router.get(
+  "/stats/:startDate/:endDate",
+  isAdmin,
+  asyncWrapper(async (req, res) => {
+    const delivers = await Deliver.find({
+      createdAt: { $gte: req.params.startDate, $lte: req.params.endDate },
+    })
+      .sort("_id")
+      .select("-orders -normalOrders -extraOrders -displayName -postId")
+      .lean();
+    return res.status(200).json({ delivers });
+  })
+);
+
 router.patch(
   "/:deliverId",
   isAdmin,
@@ -57,17 +71,13 @@ router.patch(
       extraFee,
     });
     if (!deliver) throw "deliver not found";
-    await Post.findByIdAndUpdate(
+    await updatePostSums(
       deliver.postId,
-      {
-        $inc: {
-          normalTotal: normalTotal - deliver.normalTotal,
-          normalFee: normalFee - deliver.normalFee,
-          extraTotal: extraTotal - deliver.extraTotal,
-          extraFee: extraFee - deliver.extraFee,
-        },
-      },
-      { new: true }
+      deliver,
+      normalTotal,
+      normalFee,
+      extraTotal,
+      extraFee
     );
     return res.status(200).json({ deliver });
   })
