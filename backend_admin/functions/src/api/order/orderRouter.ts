@@ -33,6 +33,14 @@ router.get(
 );
 
 router.get(
+  "/ping",
+  asyncWrapper(async (req, res) => {
+    const order = await Order.findOne({});
+    return res.status(200).json({ order });
+  })
+);
+
+router.get(
   "/:orderId",
   isAdmin,
   asyncWrapper(async (req, res) => {
@@ -49,11 +57,15 @@ router.post(
       req.body;
 
     let sortBy = "-createdAt";
-    if (req.body.sortBy) sortBy = req.body.sortBy;
 
     const filter: FilterQuery<IOrder> = {};
     if (userId) filter.userId = userId;
-    if (status) filter.status = status;
+    if (status) {
+      filter.status = status;
+      if (status === "delivered") {
+        sortBy = "-deliveredAt";
+      }
+    }
     if (postNum) filter.postNum = postNum;
     if (deliveredAt) {
       if (status === "delivered") {
@@ -78,6 +90,8 @@ router.post(
       const postIds = posts.map((post) => post._id);
       filter.postId = { $in: postIds };
     }
+
+    if (req.body.sortBy) sortBy = req.body.sortBy;
 
     const orders = await Order.find(filter)
       .sort(sortBy)
@@ -283,6 +297,7 @@ router.patch(
     }
 
     const deliver = await createDeliver(post, deliverSums);
+    await postService.incrementPostSums(post._id, deliver);
     await sendMessageToDeliveredOrders(orders);
 
     return res.status(200).json({ deliver });
