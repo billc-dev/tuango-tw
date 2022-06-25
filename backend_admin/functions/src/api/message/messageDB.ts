@@ -25,7 +25,7 @@ const MessageSchema = new mongoose.Schema<IMessage>({
   createdAt: {
     type: String,
     required: true,
-    default: new Date().toISOString(),
+    default: () => new Date().toISOString(),
   },
 });
 
