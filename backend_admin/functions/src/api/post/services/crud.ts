@@ -36,7 +36,10 @@ export const findPrevPost = () => {
     .select("postNum status");
 };
 
-export const updatePost = (postId: string, post: ValidatedPost) => {
+export const updatePost = (
+  postId: string,
+  post: ValidatedPost & { fb: boolean }
+) => {
   const items = post.items.map((item, index) => ({
     ...item,
     id: item.id ? item.id : indexAlphabet[index],

@@ -137,7 +137,7 @@ router.patch(
       req.body.postForm
     );
 
-    await postService.updatePost(postId, postForm);
+    await postService.updatePost(postId, { ...postForm, fb: req.body.fb });
 
     return res.status(200).json();
   })
