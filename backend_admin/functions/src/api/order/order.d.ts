@@ -43,6 +43,7 @@ export interface IOrder {
   canceledAt: string;
   orderHistory: OrderHistory[];
   status: OrderStatus;
+  fb?:boolean
 }
 
 export type MongooseOrder = Document<unknown, unknown, IOrder> &
