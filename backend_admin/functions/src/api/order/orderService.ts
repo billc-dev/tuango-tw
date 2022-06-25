@@ -56,6 +56,7 @@ export const createNewOrder = async (
     order: orderForm.items,
     comment: orderForm.comment,
     orderHistory: [{ status: "ordered" }],
+    fb: user.fb,
   });
 
   await order.save();
@@ -112,6 +113,7 @@ export const createExtraOrderAndUpdate = async (
       deliveredAt: new Date().toISOString(),
       orderHistory: [{ status: "delivered" }],
       comment,
+      fb: user.fb,
     });
     await newOrder.save({ session });
 
@@ -146,14 +148,15 @@ export const createOrderedOrder = async (
   post: IPost,
   orderItems: CreateOrderItem[]
 ) => {
-  let orderNum = 0;
+  let orderNum = 1;
   if (user.username !== "extra") {
     const prevOrder = await Order.findOne({
       postId: post._id,
       status: { $ne: "canceled" },
     }).sort({ orderNum: -1 });
     if (prevOrder) orderNum = prevOrder.orderNum + 1;
-  }
+  } else orderNum = 0;
+
   const { displayName, username: userId, pictureUrl } = user;
   const {
     displayName: sellerDisplayName,
@@ -178,6 +181,7 @@ export const createOrderedOrder = async (
     postId: _id,
     imageUrl: imageUrl(),
     order: orderItems,
+    fb: user.fb,
   });
   await order.save();
   return order;
@@ -208,11 +212,12 @@ export const createDeliveredOrder = async (
     title,
     pictureUrl,
     imageUrl: imageUrls[0].sm,
-    order: orderItems,
+    order: orderItems.filter((item) => item.qty > 0),
     status: "delivered",
     deliveredAt: new Date().toISOString(),
     orderHistory: [{ status: "delivered" }],
     comment,
+    fb: user.fb,
   });
   await order.save();
   return order;
