@@ -46,16 +46,16 @@ const MessageHistory = () => {
                       {message.query.displayName}
                     </p>
                   )}
-                  <p>訊息:</p>
-                  <p>{message.message}</p>
                   {message.query.status && (
                     <p>狀態: {getOrderStatusLabel(message.query.status)}</p>
                   )}
                   {message.query.storageType && (
-                    <p>狀態: {getStorageType(message.query.storageType)}</p>
+                    <p>儲存方式: {getStorageType(message.query.storageType)}</p>
                   )}
                 </>
               )}
+              <p>訊息:</p>
+              <p>{message.message}</p>
               <p>用戶:</p>
               {message.sentTo.map((user, index) => (
                 <p key={index} className="text-sm">
