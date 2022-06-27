@@ -34,8 +34,8 @@ export const useIsVerified = () => {
 };
 
 export const useUser = () => {
+  const logout = useMutateLogout();
   const { data } = useIsVerified();
-
   return useQuery("user", fetchUser, {
     refetchOnReconnect: "always",
     refetchOnMount: true,
@@ -43,6 +43,9 @@ export const useUser = () => {
     retry: !!data?.data.authenticated,
     onSuccess: (userResponse) => {
       localStorage.setItem("user", JSON.stringify(userResponse));
+    },
+    onError: () => {
+      if (!data?.data.authenticated) logout.mutate();
     },
   });
 };
