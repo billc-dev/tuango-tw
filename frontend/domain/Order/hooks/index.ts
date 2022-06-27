@@ -65,6 +65,12 @@ export const useCreateOrder = (setOrderForm: Updater<IOrderForm>) => {
       gtag.purchaseEvent(order);
     },
     onError: (error) => {
+      if (typeof error === "object") {
+        axios.post("/notify/error", { message: JSON.stringify(error) });
+      } else if (typeof error === "string") {
+        axios.post("/notify/error", { message: error });
+      }
+
       if (axios.isAxiosError(error)) {
         toast.error("訂單製作失敗！", {
           id: "orderToast",
