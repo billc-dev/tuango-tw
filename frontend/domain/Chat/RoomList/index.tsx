@@ -18,6 +18,7 @@ const RoomList = () => {
       {roomQuery.data?.data.rooms.map((room) => {
         const otherUser = room.users.find((u) => {
           if (typeof u.user === "string") return false;
+          if (u.user === null) return false;
           return u.user._id !== userQuery.data?.data.user._id;
         });
         const user = room.users.find((u) => {

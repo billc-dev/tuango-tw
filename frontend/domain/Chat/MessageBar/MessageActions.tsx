@@ -85,7 +85,7 @@ const MessageActions: FC<Props> = ({ roomId }) => {
   return (
     <div className="relative">
       <IconButton onClick={() => setOpen(true)}>
-        <PlusIcon className="text-zinc-700" />
+        <PlusIcon className="text-zinc-700 dark:text-zinc-100" />
       </IconButton>
       <Menu open={open} handleClose={() => setOpen(false)} items={items} />
       <input

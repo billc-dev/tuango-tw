@@ -76,10 +76,10 @@ const MessageBar: FC<Props> = ({ roomId }) => {
           ref={ref}
           placeholder="輸入訊息"
           maxRows={5}
-          className="border-none px-0 my-2 py-0 w-full focus:ring-0 bg-zinc-200 dark:bg-zinc-600"
+          className="border-none px-0 my-2 py-0 w-full focus:ring-0 bg-zinc-200 dark:bg-zinc-600 placeholder:dark:text-zinc-300"
         />
         <IconButton onClick={handleSend} loading={isSendingMessage.data}>
-          <PaperAirplaneIcon className="rotate-90 text-zinc-700" />
+          <PaperAirplaneIcon className="rotate-90 text-zinc-700 dark:text-zinc-100" />
         </IconButton>
       </div>
       {query["send_order"] === "open" && <SendOrder />}
