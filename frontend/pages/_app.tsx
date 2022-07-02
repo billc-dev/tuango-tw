@@ -1,5 +1,5 @@
 import type { AppProps } from "next/app";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import axios from "axios";
 import { ThemeProvider } from "next-themes";
@@ -16,6 +16,7 @@ import { API_URL, WINDOW_URL } from "utils/constants";
 import "../styles/globals.css";
 import GoogleAnalytics from "domain/GoogleAnalytics";
 import NextHead from "domain/NextHead";
+import { hotjar } from "react-hotjar";
 
 // ANALYZE=true yarn build
 
@@ -57,7 +58,9 @@ export function App({ Component, pageProps }: AppProps) {
         },
       })
   );
-
+      useEffect(() => {
+        hotjar.initialize(3049150,6)
+      },[])
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
