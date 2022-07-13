@@ -33,7 +33,17 @@ const OrderLocationCard: FC<Props> = ({ post }) => {
   const updateLocationOrders = useUpdateLocationOrders();
   const [allLocation, setAllLocation] = useState("");
   const [postItems, setPostItems] = useState(
-    post.items.sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0))
+    post.items
+      .sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0))
+      .map((item) => {
+        return {
+          ...item,
+          qty: post.orderItems.reduce((sum, orderItem) => {
+            if (orderItem.id === item.id) return sum + orderItem.qty;
+            return sum;
+          }, 0),
+        };
+      })
   );
   const [orderItems, setOrderItems] = useState(post.orderItems);
   const [open, setOpen] = useState(false);
@@ -41,14 +51,11 @@ const OrderLocationCard: FC<Props> = ({ post }) => {
     setOrderItems(post.orderItems);
   }, [post.orderItems]);
   return (
-    <Card className="p-2 bg-white ring-1 ring-zinc-400">
-      <div
-        className="flex justify-between items-center cursor-pointer"
-        onClick={() => setOpen(!open)}
-      >
-        <p>{getPostTitle(post)}</p>
+    <Card className="p-2 bg-white ring-1 ring-zinc-300">
+      <div className="flex justify-between items-center cursor-pointer">
+        <p onClick={() => !open && setOpen(!open)}>{getPostTitle(post)}</p>
         <div>
-          <IconButton>
+          <IconButton onClick={() => setOpen(!open)}>
             {open ? <ChevronUpIcon /> : <ChevronDownIcon />}
           </IconButton>
         </div>
@@ -77,6 +84,7 @@ const OrderLocationCard: FC<Props> = ({ post }) => {
                 </TableCell>
                 <TableCell>ID</TableCell>
                 <TableCell>商品名稱</TableCell>
+                <TableCell>數量</TableCell>
                 <TableCell noPadding className="flex">
                   <TextField
                     className="w-32"
@@ -118,6 +126,7 @@ const OrderLocationCard: FC<Props> = ({ post }) => {
                   </TableCell>
                   <TableCell>{item.id}</TableCell>
                   <TableCell>{item.item}</TableCell>
+                  <TableCell>{item.qty}</TableCell>
                   <TableCell noPadding className="flex">
                     <TextField
                       value={item.location}

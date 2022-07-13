@@ -46,6 +46,7 @@ export interface ILocationPostItem {
   item: string;
   location: string;
   checked: boolean;
+  qty: number;
 }
 
 export interface ILocationOrderItem {

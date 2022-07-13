@@ -67,3 +67,15 @@ export const fetchDelivers = async (
     nextId: res.data.hasMore ? res.data.nextId : undefined,
   };
 };
+
+export const editDeliverUserId = async ({
+  deliverIds,
+  userId,
+}: {
+  deliverIds: string[];
+  userId: string;
+}) => {
+  return axios.patch(`/delivers/deliverUserId/${userId}`, {
+    deliverIds,
+  });
+};

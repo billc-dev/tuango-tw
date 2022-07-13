@@ -1,17 +1,16 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 
 import { CashIcon } from "@heroicons/react/outline";
 
 import IconButton from "components/Button/IconButton";
 
-import { IPost } from "../types";
 import PostTotalDialog from "./PostTotalDialog";
 
 interface Props {
-  post: IPost;
+  postId: string;
 }
 
-const PostChangeTotalCell: FC<Props> = ({ post }) => {
+const PostChangeTotalButton: FC<Props> = ({ postId }) => {
   const [open, setOpen] = useState(false);
   const handleClose = () => {
     setOpen(false);
@@ -22,10 +21,10 @@ const PostChangeTotalCell: FC<Props> = ({ post }) => {
         <CashIcon />
       </IconButton>
       {open && (
-        <PostTotalDialog open={open} handleClose={handleClose} post={post} />
+        <PostTotalDialog handleClose={handleClose} {...{ open, postId }} />
       )}
     </>
   );
 };
 
-export default PostChangeTotalCell;
+export default PostChangeTotalButton;

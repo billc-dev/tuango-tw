@@ -8,5 +8,7 @@ export const useStats = (query: IStatsQuery) => {
     if (query.startDate && query.endDate) return true;
     return false;
   };
-  return useQuery([query], () => fetchStats(query), { enabled: isEnabled() });
+  return useQuery(["stats", query], () => fetchStats(query), {
+    enabled: isEnabled(),
+  });
 };

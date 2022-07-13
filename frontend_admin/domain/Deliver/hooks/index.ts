@@ -9,6 +9,7 @@ import {
 
 import {
   deliverOrders,
+  editDeliverUserId,
   fetchDelivers,
   fetchPostDelivers,
   patchDeliverAmount,
@@ -25,6 +26,7 @@ export const useEditDeliverAmount = () => {
     onSuccess() {
       queryClient.invalidateQueries("postDelivers");
       queryClient.invalidateQueries("posts");
+      queryClient.invalidateQueries("stats");
     },
   });
 };
@@ -81,4 +83,13 @@ export const useDeliverHistorySum = (deliver: IDeliver) => {
     totalItems: totalItems,
   };
   return sum;
+};
+
+export const useEditDeliverUserId = () => {
+  const queryClient = useQueryClient();
+  return useMutation(editDeliverUserId, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("stats");
+    },
+  });
 };

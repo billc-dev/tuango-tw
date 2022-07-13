@@ -12,6 +12,7 @@ export const useLocationOrders = (query: LocationQuery) => {
   };
   return useQuery(["locationOrders", query], () => fetchLocationOrders(query), {
     staleTime: Infinity,
+    cacheTime: 0,
     enabled: isEnabled(),
   });
 };

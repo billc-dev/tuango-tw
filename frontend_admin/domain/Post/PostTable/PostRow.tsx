@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { FC } from "react";
+import { FC } from "react";
 
 import { PencilIcon } from "@heroicons/react/solid";
 import { shallowPush } from "utils";
@@ -13,7 +13,7 @@ import { getMonthAndDate } from "services/date";
 import { useSetPostDelivered } from "../hooks";
 import { getStorageType } from "../services";
 import { IPost } from "../types";
-import PostChangeTotalCell from "./PostChangeTotalCell";
+import PostChangeTotalButton from "./PostChangeTotalButton";
 import PostStatus from "./PostStatusCell";
 
 interface Props {
@@ -63,7 +63,7 @@ const PostRow: FC<Props> = ({ post }) => {
         {normalFee + extraFee > 0 && "$" + (normalFee + extraFee)}
       </TableCell>
       <TableCell>
-        <PostChangeTotalCell post={post} />
+        <PostChangeTotalButton postId={post._id} />
       </TableCell>
       <TableCell center>{orderCount}</TableCell>
       <TableCell>
