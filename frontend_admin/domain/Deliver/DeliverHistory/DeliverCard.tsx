@@ -39,10 +39,7 @@ const DeliverCard: FC<Props> = (props) => {
           />
           {getPostTitle(deliver)}
         </p>
-        <PostChangeTotalButton
-          postId={deliver.postId}
-          postTitle={getPostTitle(deliver)}
-        />
+        <PostChangeTotalButton postId={deliver.postId} />
       </div>
       <p className="text-sm">{getFullDateFromNow(deliver.createdAt)}</p>
       <TotalItemsTable {...{ sum }} />

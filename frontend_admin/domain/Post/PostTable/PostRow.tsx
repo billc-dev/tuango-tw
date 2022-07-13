@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { FC } from "react";
+import { FC } from "react";
 
 import { PencilIcon } from "@heroicons/react/solid";
 import { shallowPush } from "utils";
@@ -11,7 +11,7 @@ import TableRow from "components/Table/TableRow";
 import { getMonthAndDate } from "services/date";
 
 import { useSetPostDelivered } from "../hooks";
-import { getPostTitle, getStorageType } from "../services";
+import { getStorageType } from "../services";
 import { IPost } from "../types";
 import PostChangeTotalButton from "./PostChangeTotalButton";
 import PostStatus from "./PostStatusCell";
@@ -63,10 +63,7 @@ const PostRow: FC<Props> = ({ post }) => {
         {normalFee + extraFee > 0 && "$" + (normalFee + extraFee)}
       </TableCell>
       <TableCell>
-        <PostChangeTotalButton
-          postId={post._id}
-          postTitle={getPostTitle(post)}
-        />
+        <PostChangeTotalButton postId={post._id} />
       </TableCell>
       <TableCell center>{orderCount}</TableCell>
       <TableCell>

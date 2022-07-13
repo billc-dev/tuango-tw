@@ -8,10 +8,9 @@ import PostTotalDialog from "./PostTotalDialog";
 
 interface Props {
   postId: string;
-  postTitle: string;
 }
 
-const PostChangeTotalButton: FC<Props> = ({ postId, postTitle }) => {
+const PostChangeTotalButton: FC<Props> = ({ postId }) => {
   const [open, setOpen] = useState(false);
   const handleClose = () => {
     setOpen(false);
@@ -22,10 +21,7 @@ const PostChangeTotalButton: FC<Props> = ({ postId, postTitle }) => {
         <CashIcon />
       </IconButton>
       {open && (
-        <PostTotalDialog
-          handleClose={handleClose}
-          {...{ open, postId, postTitle }}
-        />
+        <PostTotalDialog handleClose={handleClose} {...{ open, postId }} />
       )}
     </>
   );
