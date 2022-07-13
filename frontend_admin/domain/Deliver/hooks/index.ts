@@ -25,6 +25,7 @@ export const useEditDeliverAmount = () => {
     onSuccess() {
       queryClient.invalidateQueries("postDelivers");
       queryClient.invalidateQueries("posts");
+      queryClient.invalidateQueries("stats");
     },
   });
 };
