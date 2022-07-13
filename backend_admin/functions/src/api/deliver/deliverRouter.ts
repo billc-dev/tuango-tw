@@ -2,6 +2,7 @@ import * as express from "express";
 import { FilterQuery } from "mongoose";
 
 import { updatePostSums } from "api/post/services";
+import { User } from "api/user/userDB";
 import asyncWrapper from "middleware/asyncWrapper";
 import { isAdmin } from "middleware/auth";
 
@@ -52,7 +53,7 @@ router.get(
       createdAt: { $gte: req.params.startDate, $lte: req.params.endDate },
     })
       .sort("_id")
-      .select("-orders -normalOrders -extraOrders -displayName -postId")
+      .select("-orders -normalOrders -extraOrders -displayName")
       .lean();
     return res.status(200).json({ delivers });
   })
@@ -80,6 +81,22 @@ router.patch(
       extraFee
     );
     return res.status(200).json({ deliver });
+  })
+);
+
+router.patch(
+  "/deliverUserId/:userId",
+  isAdmin,
+  asyncWrapper(async (req, res) => {
+    const { deliverIds } = req.body;
+    if (!Array.isArray(deliverIds)) throw "deliverIds is invalid";
+    const user = await User.findOne({ username: req.params.userId });
+    if (!user) throw "User not found";
+    await Deliver.updateMany(
+      { _id: { $in: deliverIds } },
+      { userId: user.username, displayName: user.displayName }
+    );
+    return res.status(200).json({});
   })
 );
 
