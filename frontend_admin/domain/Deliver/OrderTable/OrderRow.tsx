@@ -117,7 +117,7 @@ const OrderRow: FC<Props> = ({ order }) => {
               variant="standard"
               onChange={handleItemChange(index)}
             />
-            <p className="sm:hidden my-4">
+            <p className="sm:hidden sm:my-4">
               {item.id}+{item.qty}
             </p>
           </p>
