@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 
 import Checkbox from "components/Checkbox";
+import PostChangeTotalButton from "domain/Post/PostTable/PostChangeTotalButton";
 import { getPostTitle } from "domain/Post/services";
 import { getFullDateFromNow } from "services/date";
 
@@ -28,15 +29,21 @@ const DeliverCard: FC<Props> = (props) => {
   };
   return (
     <div className="my-2">
-      <p>
-        <Checkbox
-          checkboxSize="large"
-          className="mr-2"
-          checked={!!checked}
-          onChange={handleChange}
+      <div className="flex items-center">
+        <p>
+          <Checkbox
+            checkboxSize="large"
+            className="mr-2"
+            checked={!!checked}
+            onChange={handleChange}
+          />
+          {getPostTitle(deliver)}
+        </p>
+        <PostChangeTotalButton
+          postId={deliver.postId}
+          postTitle={getPostTitle(deliver)}
         />
-        {getPostTitle(deliver)}
-      </p>
+      </div>
       <p className="text-sm">{getFullDateFromNow(deliver.createdAt)}</p>
       <TotalItemsTable {...{ sum }} />
     </div>
