@@ -105,7 +105,7 @@ const OrderRow: FC<Props> = ({ order }) => {
       </TableCell>
       <TableCell>
         {order.order.map((item, index) => (
-          <p key={index} className="my-4 flex items-center">
+          <p key={index} className="flex items-center">
             <p className="hidden sm:block text-base">{item.id}+</p>
             <TextField
               name="qty"
@@ -117,7 +117,7 @@ const OrderRow: FC<Props> = ({ order }) => {
               variant="standard"
               onChange={handleItemChange(index)}
             />
-            <p className="sm:hidden sm:my-4">
+            <p className="sm:hidden my-2">
               {item.id}+{item.qty}
             </p>
           </p>
