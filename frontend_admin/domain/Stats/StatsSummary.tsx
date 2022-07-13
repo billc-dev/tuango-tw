@@ -12,6 +12,7 @@ import {
   YAxis,
 } from "recharts";
 
+import Button from "components/Button";
 import Checkbox from "components/Checkbox";
 import Select from "components/Select";
 import Table from "components/Table/Table";
@@ -19,6 +20,7 @@ import TableBody from "components/Table/TableBody";
 import TableCell from "components/Table/TableCell";
 import TableHead from "components/Table/TableHead";
 import TableRow from "components/Table/TableRow";
+import { useEditDeliverUserId } from "domain/Deliver/hooks";
 import PostChangeTotalButton from "domain/Post/PostTable/PostChangeTotalButton";
 import { getMonthAndDate } from "services/date";
 import { getNumberWithCommas, getPercentage } from "services/math";
@@ -30,8 +32,10 @@ const StatsSummary = () => {
   const router = useRouter();
   const { startDate, endDate } = router.query;
   const [name, setName] = useState("Bill");
+  const [userId, setUserId] = useState("Uff198d960ec3bc20513bfc583a09dde3");
   const [totalBar, setTotalBar] = useState(false);
-  const [checkedDeliverIds, setCheckedDeliverIds] = useState<string[]>([]);
+  const [deliverIds, setDeliverIds] = useState<string[]>([]);
+  const editDeliverUserId = useEditDeliverUserId();
   const statsQuery = useStats({
     startDate: startDate as string,
     endDate: endDate as string,
@@ -98,7 +102,7 @@ const StatsSummary = () => {
         value={name}
         onChange={(e) => {
           setName(e.target.value);
-          setCheckedDeliverIds([]);
+          setDeliverIds([]);
         }}
         className="w-28"
         options={[
@@ -123,6 +127,43 @@ const StatsSummary = () => {
           </TableRow>
         </TableHead>
         <TableBody>
+          {deliverIds.length > 0 && (
+            <TableRow>
+              <TableCell></TableCell>
+              <TableCell>
+                <strong>更改團主</strong>
+              </TableCell>
+              <TableCell colSpan={5}>
+                <div className="flex">
+                  <Select
+                    value={userId}
+                    onChange={(e) => setUserId(e.target.value)}
+                    className="w-20"
+                    options={[
+                      {
+                        label: "Bill",
+                        value: "Uff198d960ec3bc20513bfc583a09dde3",
+                      },
+                      {
+                        label: "Andy",
+                        value: "Ua98233a523a24bdf724a6385c01a51c4",
+                      },
+                    ]}
+                  />
+                  <Button
+                    variant="primary"
+                    loading={editDeliverUserId.isLoading}
+                    onClick={() => {
+                      if (deliverIds.length < 0) return;
+                      editDeliverUserId.mutate({ deliverIds, userId });
+                    }}
+                  >
+                    更改
+                  </Button>
+                </div>
+              </TableCell>
+            </TableRow>
+          )}
           {userDelivers
             .find((d) => d.name === name)
             ?.delivers.map((deliver) => {
@@ -137,18 +178,18 @@ const StatsSummary = () => {
                       onChange={(e) => {
                         const { checked } = e.target;
                         if (checked)
-                          setCheckedDeliverIds((checkedDeliverIds) => [
+                          setDeliverIds((checkedDeliverIds) => [
                             ...checkedDeliverIds,
                             deliver._id,
                           ]);
                         else
-                          setCheckedDeliverIds((checkedDeliverIds) =>
+                          setDeliverIds((checkedDeliverIds) =>
                             checkedDeliverIds.filter(
                               (deliverId) => deliverId !== deliver._id
                             )
                           );
                       }}
-                      checked={checkedDeliverIds.some(
+                      checked={deliverIds.some(
                         (deliverId) => deliverId === deliver._id
                       )}
                     />
