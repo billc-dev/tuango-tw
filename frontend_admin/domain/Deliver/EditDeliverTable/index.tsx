@@ -27,7 +27,7 @@ const DeliverTable: FC<Props> = ({ deliver }) => {
   return (
     <div className="mt-2">
       <p className="font-medium">{getFullLengthDate(createdAt)}</p>
-      {normalOrders && normalTotal > 0 && (
+      {normalOrders.some((item) => item.qty > 0) && (
         <Table>
           <DeliverHead />
           <TableBody>
@@ -35,7 +35,7 @@ const DeliverTable: FC<Props> = ({ deliver }) => {
           </TableBody>
         </Table>
       )}
-      {extraOrders && extraTotal > 0 && (
+      {extraOrders.some((item) => item.qty > 0) && (
         <>
           <p className="mt-2 font-medium">待認購</p>
           <Table>
