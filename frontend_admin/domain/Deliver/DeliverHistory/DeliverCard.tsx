@@ -29,7 +29,7 @@ const DeliverCard: FC<Props> = (props) => {
   };
   return (
     <div className="my-2">
-      <div className="flex items-center">
+      <div className="flex items-center justify-between">
         <p>
           <Checkbox
             checkboxSize="large"
