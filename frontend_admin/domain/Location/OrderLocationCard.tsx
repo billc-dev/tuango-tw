@@ -51,14 +51,11 @@ const OrderLocationCard: FC<Props> = ({ post }) => {
     setOrderItems(post.orderItems);
   }, [post.orderItems]);
   return (
-    <Card className="p-2 bg-white ring-1 ring-zinc-400">
-      <div
-        className="flex justify-between items-center cursor-pointer"
-        onClick={() => setOpen(!open)}
-      >
-        <p>{getPostTitle(post)}</p>
+    <Card className="p-2 bg-white ring-1 ring-zinc-300">
+      <div className="flex justify-between items-center cursor-pointer">
+        <p onClick={() => !open && setOpen(!open)}>{getPostTitle(post)}</p>
         <div>
-          <IconButton>
+          <IconButton onClick={() => setOpen(!open)}>
             {open ? <ChevronUpIcon /> : <ChevronDownIcon />}
           </IconButton>
         </div>
