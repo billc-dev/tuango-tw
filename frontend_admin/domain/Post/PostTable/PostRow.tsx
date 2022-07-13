@@ -11,9 +11,9 @@ import TableRow from "components/Table/TableRow";
 import { getMonthAndDate } from "services/date";
 
 import { useSetPostDelivered } from "../hooks";
-import { getStorageType } from "../services";
+import { getPostTitle, getStorageType } from "../services";
 import { IPost } from "../types";
-import PostChangeTotalCell from "./PostChangeTotalCell";
+import PostChangeTotalButton from "./PostChangeTotalButton";
 import PostStatus from "./PostStatusCell";
 
 interface Props {
@@ -63,7 +63,10 @@ const PostRow: FC<Props> = ({ post }) => {
         {normalFee + extraFee > 0 && "$" + (normalFee + extraFee)}
       </TableCell>
       <TableCell>
-        <PostChangeTotalCell post={post} />
+        <PostChangeTotalButton
+          postId={post._id}
+          postTitle={getPostTitle(post)}
+        />
       </TableCell>
       <TableCell center>{orderCount}</TableCell>
       <TableCell>
