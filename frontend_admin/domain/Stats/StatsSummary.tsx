@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import {
   Bar,
@@ -19,6 +19,7 @@ import TableBody from "components/Table/TableBody";
 import TableCell from "components/Table/TableCell";
 import TableHead from "components/Table/TableHead";
 import TableRow from "components/Table/TableRow";
+import PostChangeTotalButton from "domain/Post/PostTable/PostChangeTotalButton";
 import { getMonthAndDate } from "services/date";
 import { getNumberWithCommas, getPercentage } from "services/math";
 
@@ -30,6 +31,7 @@ const StatsSummary = () => {
   const { startDate, endDate } = router.query;
   const [name, setName] = useState("Bill");
   const [totalBar, setTotalBar] = useState(false);
+  const [checkedDeliverIds, setCheckedDeliverIds] = useState<string[]>([]);
   const statsQuery = useStats({
     startDate: startDate as string,
     endDate: endDate as string,
@@ -44,6 +46,7 @@ const StatsSummary = () => {
     <div>
       <label className="flex items-center">
         <Checkbox
+          checkboxSize="large"
           checked={totalBar}
           onChange={(e) => setTotalBar(e.target.checked)}
         />
@@ -93,7 +96,10 @@ const StatsSummary = () => {
       </Table>
       <Select
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={(e) => {
+          setName(e.target.value);
+          setCheckedDeliverIds([]);
+        }}
         className="w-28"
         options={[
           { label: "Bill", value: "Bill" },
@@ -105,11 +111,15 @@ const StatsSummary = () => {
       <Table>
         <TableHead>
           <TableRow className="font-medium">
+            <TableCell></TableCell>
             <TableCell>流水編號</TableCell>
             <TableCell>進貨日</TableCell>
             <TableCell>團購主題</TableCell>
             <TableCell align="right">金額</TableCell>
             <TableCell align="right">服務費</TableCell>
+            <TableCell className="min-w-[48px] w-12" center>
+              更改金額
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -121,6 +131,28 @@ const StatsSummary = () => {
               const { extraTotal, extraFee } = deliver;
               return (
                 <TableRow key={deliver._id}>
+                  <TableCell>
+                    <Checkbox
+                      checkboxSize="large"
+                      onChange={(e) => {
+                        const { checked } = e.target;
+                        if (checked)
+                          setCheckedDeliverIds((checkedDeliverIds) => [
+                            ...checkedDeliverIds,
+                            deliver._id,
+                          ]);
+                        else
+                          setCheckedDeliverIds((checkedDeliverIds) =>
+                            checkedDeliverIds.filter(
+                              (deliverId) => deliverId !== deliver._id
+                            )
+                          );
+                      }}
+                      checked={checkedDeliverIds.some(
+                        (deliverId) => deliverId === deliver._id
+                      )}
+                    />
+                  </TableCell>
                   <TableCell>{postNum}</TableCell>
                   <TableCell>{getMonthAndDate(createdAt)}</TableCell>
                   <TableCell>{title}</TableCell>
@@ -130,13 +162,14 @@ const StatsSummary = () => {
                   <TableCell align="right">
                     ${getNumberWithCommas(normalFee + extraFee)}
                   </TableCell>
+                  <TableCell>
+                    <PostChangeTotalButton postId={deliver.postId} />
+                  </TableCell>
                 </TableRow>
               );
             })}
           <TableRow className="font-medium">
-            <TableCell></TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
+            <TableCell colSpan={4} />
             <TableCell align="right">
               $
               {getNumberWithCommas(
