@@ -246,6 +246,7 @@ export const updateOrder = async (
   status: OrderStatus,
   orderItems: SingleOrder[]
 ) => {
+  const deliveredAt = order.deliveredAt ?? new Date().toISOString();
   await Order.updateOne(
     { _id: order._id },
     {
@@ -253,7 +254,12 @@ export const updateOrder = async (
       order: orderItems,
       hasName: order.hasName,
       comment: order.comment?.trim(),
-      ...(status === "delivered" && { deliveredAt: new Date().toISOString() }),
+      deliveredAt,
+      ...(status === "delivered" &&
+        order.orderHistory[order.orderHistory.length - 1].status !==
+          "delivered" && {
+          $push: { orderHistory: { status: "delivered" } },
+        }),
     },
     { session }
   );
