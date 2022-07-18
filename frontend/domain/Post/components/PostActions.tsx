@@ -57,7 +57,7 @@ const PostActions: FC<Props> = ({ post }) => {
           selected={action === "order" || !action}
           onClick={() => setAction("order", router)}
         >
-          {post.orderCount} 訂單
+          {post.status !== "completed" && post.orderCount} 訂單
         </TabButton>
       </TabContainer>
       {isPostCreator && (
