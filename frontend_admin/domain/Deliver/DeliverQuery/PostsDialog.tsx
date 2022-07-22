@@ -4,6 +4,7 @@ import Button from "components/Button";
 import PopupDialog from "components/Dialog/PopupDialog";
 import { useDatePosts } from "domain/Post/hooks";
 import { getPostTitle } from "domain/Post/services";
+import { getFullDateWithWeek } from "services/date";
 
 interface Props {
   open: boolean;
@@ -16,7 +17,10 @@ const PostsDialog: FC<Props> = ({ open, handleClose, date, setPostNum }) => {
   const postsQuery = useDatePosts(date);
   return (
     <>
-      <PopupDialog title={date} {...{ open, handleClose }}>
+      <PopupDialog
+        title={`${getFullDateWithWeek(date)} - ${postsQuery.data?.length}團`}
+        {...{ open, handleClose }}
+      >
         {postsQuery.data?.map((post) => (
           <Button
             className="my-2"
