@@ -15,6 +15,10 @@ export const getFullDate = (date: string) => {
   return dayjs(date).format("LL");
 };
 
+export const getFullDateWithWeek = (date: string) => {
+  return dayjs(date).format("M月D日dddd");
+};
+
 export const getFullLengthDate = (date: string) => {
   return dayjs(date).format("LLLL");
 };
